@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Contacts_Related_Partner_Account</fullName>
+    <active>false</active>
+    <description>DEPRECATED - For Distributor / Reseller contacts are required if partner is selected at the stage &apos;PriceQuote&apos;</description>
+    <errorConditionFormula>AND(
+  OR(
+     $Profile.Name = &apos;Apollo: Custom- Sales_China Profile&apos;,
+     $Profile.Name = &apos;Apollo: Custom- Sales Profile&apos;,
+     $Profile.Name = &apos;Apollo: Custom- Sales Engineers Profile&apos;,
+     $Profile.Name = &apos;Apollo: Custom- Renewals Profile&apos;
+  ),  
+  OR(
+     AND(RecordType.DeveloperName = &apos;New_Business&apos;, NOT(ISPICKVAL(StageName, &apos;Accepted&apos;))),
+     AND(RecordType.DeveloperName = &apos;Renewal&apos;, NOT(ISPICKVAL(StageName, &apos;Not Contacted&apos;)))
+  ),
+  OR(
+     AND(
+      NOT(ISBLANK(Distributor__c)), NOT(ISBLANK(Distributor_Contact__c)), Distributor_Contact__r.AccountId &lt;&gt; Distributor__c
+     ),
+     AND(
+      NOT(ISBLANK(Reseller__c)), NOT(ISBLANK(Reseller_Contact__c)), Reseller_Contact__r.AccountId &lt;&gt; Reseller__c
+     )
+  )
+)</errorConditionFormula>
+    <errorMessage>DEPRECATED - Please ensure that Distributor / Reseller contacts are associated with the Distributor / Reseller accounts</errorMessage>
+</ValidationRule>

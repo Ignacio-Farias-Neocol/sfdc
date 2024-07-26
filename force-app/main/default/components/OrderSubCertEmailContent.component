@@ -1,0 +1,42 @@
+<apex:component access="global" >
+  <apex:attribute name="thisOrder" 
+                  description="Order record for which email is being sent." 
+                  type="Order" />
+   <!-- HEADER LOGO AND CERT LABEL-->
+   <div class="logo">
+    <!--<apex:image id="barracudaLogo" 
+                value="{!$Resource.BarracudaLogo}" 
+                width="200px" 
+                height="65px" 
+                alt="Barracuda Logo" />-->
+   <!-- <apex:image id="barracudaLogo" value="{!$Label.Barracuda_Logo_Document_URL}" width="90px" 
+                height="10px"/>-->
+  </div>
+  <!-- /HEADER LOGO AND CERT LABEL -->
+  <p style="font-family:Arial;font-size:15px">Hi,</p>
+  <p style="font-family:Arial;font-size:15px">Thanks for your Barracuda order.</p>
+
+  <!--<div style="padding-bottom:20px">-->
+    <!--<div style="display:block;margin-top:20px;margin-bottom:20px;">-->
+      <table style="font-family:Arial;font-size:15px;color:#42525f;width:100%">
+        <tr>
+          <td><b>Customer:&nbsp;</b>{!thisOrder.Account.Name}</td>
+        </tr>
+        <tr>
+          <td><b>PO#:&nbsp;</b>{!thisOrder.PoNumber}</td>
+        </tr>
+        <tr>
+          <td><b>Barracuda Quote#:&nbsp;</b>{!thisOrder.SBQQ__Quote__r.Name}</td>
+        </tr>
+      </table>
+    <!--</div>-->
+  <!--</div>-->
+  <p style="font-family:Arial;font-size:15px">Please retain the attached Subscription Certificate for your records.</p>
+  <div>
+    <p style="font-family:Arial;font-size:15px;">If you have questions or need any changes, email <a href="mailto:customer_services@barracuda.com">customer_services@barracuda.com</a></p>
+    <p style="font-family:Arial;font-size:15px;"></p>
+    <p style="font-family:Arial;font-size:15px;">The Barracuda Team</p>
+    <!--<p style="font-family:Arial;font-size:12px;">p: APAC +852 3001 3645</p>
+    <p style="font-family:Arial;font-size:12px;">e: customer_services@barracuda.com</p>-->
+  </div>
+</apex:component>

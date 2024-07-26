@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <description>Force user to logout</description>
+        <name>Force_user_Logout</name>
+        <label>Force Logout</label>
+        <locationX>1081</locationX>
+        <locationY>65</locationY>
+        <assignmentItems>
+            <assignToReference>LoginFlow_ForceLogout</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_user</name>
+        <label>Update user</label>
+        <locationX>554</locationX>
+        <locationY>55</locationY>
+        <assignmentItems>
+            <assignToReference>user.Accepted_Terms_Conditions__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>By_checking_this_box_I_accept_Barracuda_Terms_Conditions</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>user.Date_Community_Terms_Accepted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_User_obj</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Force_Logout</name>
+        <label>Force Logout?</label>
+        <locationX>827</locationX>
+        <locationY>68</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Force_Logout_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Login_Flow_Attributes.Force_Logout__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Force_user_Logout</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>New_User_or_Returning_User</name>
+        <label>New User or Returning User</label>
+        <locationX>343</locationX>
+        <locationY>303</locationY>
+        <defaultConnector>
+            <targetReference>Get_Login_Flow_Attributes</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Existing User</defaultConnectorLabel>
+        <rules>
+            <name>New_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>user.Accepted_Terms_Conditions__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Terms_and_Conditions</targetReference>
+            </connector>
+            <label>New User</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if maintenance message needs to be shown or not</description>
+        <name>Show_Maintenance_Message</name>
+        <label>Show Maintenance Message?</label>
+        <locationX>828</locationX>
+        <locationY>458</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Show_Message</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Login_Flow_Attributes</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Maintenance_Message</targetReference>
+            </connector>
+            <label>Show Message</label>
+        </rules>
+    </decisions>
+    <description>Called from Login Flow definitions for the communities</description>
+    <interviewLabel>Community Login TC Screen {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Community Login TC Screen</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Get login flow attributes to determine maintenance message</description>
+        <name>Get_Login_Flow_Attributes</name>
+        <label>Get Login Flow Attributes</label>
+        <locationX>616</locationX>
+        <locationY>452</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Show_Maintenance_Message</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>End_Date_Time__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Start_Date_Time__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Login_Flow_Attribute__mdt</object>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_User_Details</name>
+        <label>Get User Details</label>
+        <locationX>218</locationX>
+        <locationY>294</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>New_User_or_Returning_User</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>LoginFlow_UserId</elementReference>
+            </value>
+        </filters>
+        <object>User</object>
+        <outputReference>user</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Accepted_Terms_Conditions__c</queriedFields>
+        <queriedFields>Date_Community_Terms_Accepted__c</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_User_obj</name>
+        <label>Update User obj</label>
+        <locationX>718</locationX>
+        <locationY>270</locationY>
+        <connector>
+            <targetReference>Get_Login_Flow_Attributes</targetReference>
+        </connector>
+        <inputReference>user</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>Maintenance_Message</name>
+        <label>Maintenance Message</label>
+        <locationX>835</locationX>
+        <locationY>220</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Force_Logout</targetReference>
+        </connector>
+        <fields>
+            <name>Maintenance_Message_Text</name>
+            <fieldText>&lt;p&gt;System will be under maintenance from {!Get_Login_Flow_Attributes.Start_Date_Time__c} to {!Get_Login_Flow_Attributes.End_Date_Time__c}.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!Get_Login_Flow_Attributes.Flow_Message__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Terms_and_Conditions</name>
+        <label>Terms and Conditions</label>
+        <locationX>546</locationX>
+        <locationY>238</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Update_user</targetReference>
+        </connector>
+        <fields>
+            <name>T_and_C_Text</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;Terms &amp;amp; Conditions&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://assets.barracuda.com/assets/docs/dms/Community_Use_Terms.pdf&quot; target=&quot;_blank&quot;&gt;Click here to view our Terms &amp;amp; Conditions&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>By_checking_this_box_I_accept_Barracuda_Terms_Conditions</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <elementReference>user.Accepted_Terms_Conditions__c</elementReference>
+            </defaultValue>
+            <fieldText>By clicking this checkbox, I accept Barracuda Network&apos;s terms &amp; conditions</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;Please click the checkbox to proceed&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please click the checkbox&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!By_checking_this_box_I_accept_Barracuda_Terms_Conditions} = true</formulaExpression>
+            </validationRule>
+        </fields>
+        <helpText>&lt;p&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;By clicking this checkbox, I accept Barracuda Network&apos;s terms &amp;amp; conditions&lt;/span&gt;&lt;/p&gt;</helpText>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>92</locationX>
+        <locationY>56</locationY>
+        <connector>
+            <targetReference>Get_User_Details</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Standard attribute to force users to logout</description>
+        <name>LoginFlow_ForceLogout</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>LoginFlow_UserId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>user</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>User</objectType>
+    </variables>
+</Flow>

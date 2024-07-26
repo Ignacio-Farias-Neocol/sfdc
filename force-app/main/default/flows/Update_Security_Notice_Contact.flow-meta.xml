@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <description>SFDC-17432</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Security Notice Contact field {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Security Notice Contact</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>When the &apos;Contact Status&apos; of the security contact is changed to &quot;No Longer With Company&quot;, update the &apos;Security Notice Contact&apos; to False</description>
+        <name>Contact_Status_No_Longer_With_Company</name>
+        <label>Contact Status - No Longer With Company</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Contact_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>No Longer with Company</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Security_Notice_Contact__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Contact_Status_No_Longer_With_Company</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Contact_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>No Longer with Company</stringValue>
+            </value>
+        </filters>
+        <object>Contact</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

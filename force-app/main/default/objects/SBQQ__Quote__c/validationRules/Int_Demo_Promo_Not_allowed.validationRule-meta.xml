@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Int_Demo_Promo_Not_allowed</fullName>
+    <active>true</active>
+    <description>SFDC-10752: International Demo promo code is not allowed for Domestic Quotes. So no quotes with Account&apos;s Sub-theater as Canada or US.</description>
+    <errorConditionFormula>AND( 
+	Promo__r.PromoCode__c == &apos;International Demo Conversion Promo&apos;, 
+	OR(
+	  SBQQ__Account__r.Terr_Sub_Theater__c == &apos;CANADA - SUB THEATER&apos;,
+	  SBQQ__Account__r.Terr_Sub_Theater__c == &apos;US - SUB THEATER&apos;
+	)
+)</errorConditionFormula>
+    <errorMessage>You may not use the &quot;International Demo Conversion Promo&apos; for a US or Canada Quote.</errorMessage>
+</ValidationRule>

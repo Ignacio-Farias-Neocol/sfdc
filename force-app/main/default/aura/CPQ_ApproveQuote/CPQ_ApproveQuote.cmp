@@ -1,0 +1,10 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId,force:hasSObjectName" controller="CPQ_ApproveQuote_Controller">
+    <aura:attribute name="recordId" type="String" access="public"/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <aura:attribute name="inprogress" type="Boolean" access="private"/>
+    <aura:if isTrue="{!v.inprogress == true}">
+        <lightning:spinner class="slds-spinner_container slds-is-fixed" variant="brand" size="large"/>
+    </aura:if>
+</aura:component>

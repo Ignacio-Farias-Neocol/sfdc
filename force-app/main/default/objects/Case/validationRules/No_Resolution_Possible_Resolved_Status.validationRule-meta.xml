@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Resolution_Possible_Resolved_Status</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( 
+(RecordType.DeveloperName = &apos;Technical_Support&apos;),
+ISPICKVAL(Status, &quot;Resolved&quot;),
+ISPICKVAL(Case_Reason__c, &quot;No Resolution Possible&quot;))</errorConditionFormula>
+    <errorMessage>You can&apos;t select &apos;No Resolution Possible&apos; as the Case Reason when the Status is &apos;Resolved.&apos; Please move the Status to &apos;Closed&apos;.</errorMessage>
+</ValidationRule>

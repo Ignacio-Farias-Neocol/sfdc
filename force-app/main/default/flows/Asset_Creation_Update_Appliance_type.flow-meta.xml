@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Update_Appliance_type_to_Std</name>
+        <label>Update Appliance type to Std</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Appliance_Line_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Standard</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>SFDC-16664: Appliance Line Type on Asset on a Demo conversion contract should be changed to Standard</description>
+    <environments>Default</environments>
+    <interviewLabel>Asset Creation Update Appliance type {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Asset Creation Update Appliance type</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Appliance_type_to_Std</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Appliance_Line_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Demo conversion</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Business_Group__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Core</stringValue>
+            </value>
+        </filters>
+        <object>Asset</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

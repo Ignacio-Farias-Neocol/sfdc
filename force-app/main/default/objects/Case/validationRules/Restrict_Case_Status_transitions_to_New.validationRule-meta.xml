@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Case_Status_transitions_to_New</fullName>
+    <active>true</active>
+    <description>Case cannot be moved to New from In Progress, Resolved, Closed, Waiting on Customer Response</description>
+    <errorConditionFormula>OR (
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;New&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;In Progress&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;New&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;Resolved&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;New&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;Vendor Hold&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;New&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;New&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;Waiting for Customer Response&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>The Case status can&apos;t be moved back to &apos;New&apos;.</errorMessage>
+</ValidationRule>

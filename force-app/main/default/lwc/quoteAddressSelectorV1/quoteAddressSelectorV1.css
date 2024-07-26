@@ -1,0 +1,16 @@
+.slds-modal__container{
+    height : auto;
+    width: 70%;
+    max-width: 70rem;
+    }
+    .modal-body{
+    height : 500px !important;
+    max-height: 550px !important;
+    }
+    .scrollerSize {
+    height: 350px;
+    }
+    .slds-tabs_default__link{
+    text-transform: capitalize;
+    font-size: 16px;
+    }

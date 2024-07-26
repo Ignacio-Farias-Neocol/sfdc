@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Contact_Name</fullName>
+    <active>true</active>
+    <description>Primary Contact MUST have a direct relationship to the End User account + Oppty Contact Role Mapping</description>
+    <errorConditionFormula>AND(
+SBQQ__AmendedContract__c = null,
+SBQQ__RenewedContract__c = null,
+ISPICKVAL(Business_Group__c , &quot;Core&quot;),
+NOT(ISBLANK(Primary_Contact__c)),
+Primary_Contact__r.AccountId &lt;&gt; AccountId,
+OR(ISNEW(),ISCLONE(),
+DATEVALUE(CreatedDate) &gt;= DATEVALUE(&apos;2023-02-26&apos;))
+)</errorConditionFormula>
+    <errorMessage>Please enter a valid Contact Name related to the Account in this Opportunity</errorMessage>
+</ValidationRule>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Owner_Id_updates_for_Webservice</fullName>
+    <active>true</active>
+    <description>SFDC-19421</description>
+    <errorConditionFormula>AND(
+ISCHANGED(OwnerId), OR($User.Full_Name__c = &quot;Web Service&quot; , $User.Full_Name__c = &quot;One Trust User&quot;)
+)</errorConditionFormula>
+    <errorMessage>Please don&apos;t update the Case Owner. Reach out SF Support Team</errorMessage>
+</ValidationRule>

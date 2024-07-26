@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order_In_Process_Quote_Check</fullName>
+    <active>false</active>
+    <description>Check to see if the Primary Quote has Quote Lines / Only has Optional Lines or if Quote Total is $0</description>
+    <errorConditionFormula>AND( 
+ ISPICKVAL(StageName, &apos;Order in Process&apos;), 
+ NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+ OR(
+   SBQQ__PrimaryQuote__r.SBQQ__NetAmount__c = 0,
+   SBQQ__PrimaryQuote__r.SBQQ__LineItemCount__c = 0,
+   SBQQ__PrimaryQuote__r.SBCF_Has_Optional_Product__c = SBQQ__PrimaryQuote__r.SBQQ__LineItemCount__c
+ )
+)</errorConditionFormula>
+    <errorMessage>Check to see if the Primary Quote has Quote Lines / Only has Optional Lines or if Quote Total is $0</errorMessage>
+</ValidationRule>

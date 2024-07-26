@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Field_Or_Class_2</fullName>
+    <active>true</active>
+    <description>Must have either a Field or a Class.</description>
+    <errorConditionFormula>AND(
+  ISBLANK(Field_API_Name__c),
+  ISBLANK(Apex_Class_Name__c)
+)</errorConditionFormula>
+    <errorMessage>You must reference either a Field or a Class.</errorMessage>
+</ValidationRule>

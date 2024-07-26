@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_DPL_Check_contact</fullName>
+    <active>false</active>
+    <description>Cannot create cases &quot;technical support&quot; if account / contact is banned</description>
+    <errorConditionFormula>RecordType.DeveloperName = &quot;Technical_Support&quot; &amp;&amp; 
+
+OR(
+/* ISPICKVAL( Contact.Contact_Status__c , &apos;Suspect&apos;),
+IF(NOT(ISBLANK(Related_Contact__c)), TEXT(Related_Contact__r.Contact_Status__c) == &quot;Suspect&quot;, false), */
+
+ISPICKVAL( Contact.Contact_Status__c , &apos;Banned&apos;),
+IF(NOT(ISBLANK(Related_Contact__c)), TEXT(Related_Contact__r.Contact_Status__c) == &quot;Banned&quot;, false)
+
+)</errorConditionFormula>
+    <errorDisplayField>ContactId</errorDisplayField>
+    <errorMessage>Sorry - We can&apos;t create the Case because the Contact or Account Status is set to &apos;Banned&apos;.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Support_Internal_Case_Status_Update_Notification</name>
+        <label>Case.Support_Internal_Case_Status_Update_Notification</label>
+        <locationX>50</locationX>
+        <locationY>575</locationY>
+        <actionName>Case.Support_Internal_Case_Status_Update_Notification</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Case.Support_Internal_Case_Status_Update_Notification</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <description>If Flow Switch Support Active Run the Flow else end execution of Flow</description>
+        <name>Is_Flow_Switch_Support_Active</name>
+        <label>Is Flow Switch Support Active?</label>
+        <locationX>182</locationX>
+        <locationY>455</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Flow_Switch_Support_Active1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Flow_Switch_Support</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Support_Internal_Case_Status_Update_Notification</targetReference>
+            </connector>
+            <label>Is Flow Switch Support Active</label>
+        </rules>
+    </decisions>
+    <description>SFDC-18092
+Workflow Rule - When Tech Support and Community Help Cases move to IP 
+(Description - When Tech Support and Community Help Cases move to IP from WOC, VH, Resolved&quot;)</description>
+    <environments>Default</environments>
+    <interviewLabel>When Tech Support and Community Help Cases move to IP {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>When Tech Support and Community Help Cases move to IP</label>
+    <migratedFromWorkflowRuleName>When Tech Support and Community Help Cases move to IP</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get Custom Metadata Flow Switch Support</description>
+        <name>Get_Flow_Switch_Support</name>
+        <label>Get Flow Switch Support</label>
+        <locationX>182</locationX>
+        <locationY>335</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Flow_Switch_Support_Active</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Flow_Switch_Support__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Flow_Switch_Support</targetReference>
+        </connector>
+        <filterFormula>ISPICKVAL( {!$Record.Status} ,&apos;In Progress&apos;) &amp;&amp; (( {!$Record.RecordType.DeveloperName} = &apos;Technical_Support&apos; &amp;&amp; (ispickval(PRIORVALUE({!$Record.Status}),&apos;Waiting for Customer Response&apos;) || ispickval(PRIORVALUE({!$Record.Status}),&apos;Vendor Hold&apos;) || ispickval(PRIORVALUE({!$Record.Status}),&apos;Resolved&apos;))) ||({!$Record.RecordType.DeveloperName} = &apos;Community_Help&apos; &amp;&amp; ispickval(PRIORVALUE({!$Record.Status}),&apos;Waiting for Requester Response&apos;) )) &amp;&amp; (  NOT(RIGHT({!$Record.Owner:Queue.DeveloperName} ,3) == &quot;Dev&quot; )&amp;&amp; NOT(RIGHT({!$Record.Owner:Queue.DeveloperName} ,3) == &quot;DEV&quot;) &amp;&amp; NOT({!$Record.Owner:Queue.DeveloperName} == &quot;Phishline&quot;))</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

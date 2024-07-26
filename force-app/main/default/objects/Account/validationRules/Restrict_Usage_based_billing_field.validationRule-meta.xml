@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Usage_based_billing_field</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT(ISPICKVAL( Type, &quot;Distributor - MSP&quot;)),
+NOT(ISPICKVAL( Type, &quot;Partner - MSP&quot;)),
+NOT(ISPICKVAL( Type, &quot;End User - MSP&quot;)),
+Usage_Based_Billing__c = TRUE,
+ISCHANGED( Usage_Based_Billing__c),
+$Profile.Name = &apos;System Administrator&apos;)</errorConditionFormula>
+    <errorMessage>Sorry - You can&apos;t select &apos;Usage-Based Billing&apos; because it&apos;s only applicable to MSP Accounts.</errorMessage>
+</ValidationRule>

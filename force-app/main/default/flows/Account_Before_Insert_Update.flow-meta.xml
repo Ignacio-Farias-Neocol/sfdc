@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <assignments>
+        <name>Agreement_Territory_and_Partner_Level</name>
+        <label>Agreement Territory and Partner Level</label>
+        <locationX>380</locationX>
+        <locationY>2087</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Agreement_Territory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Partner_Level__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpdateAccount</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Partner_Level_changed_fields</name>
+        <label>Partner Level changed fields</label>
+        <locationX>248</locationX>
+        <locationY>995</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Partner_Level_Change_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Partner_Level_Changed_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UserName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Partner_Number_Is_not_empty</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Renewal_Pricing_method</name>
+        <label>Set Renewal Pricing method</label>
+        <locationX>248</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__RenewalPricingMethod__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RenewalPricingMethod</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Usage_Based_Billing__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SetUsageBilling</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Employee_Override_fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Customer_Account_RT</name>
+        <label>Update Customer Account RT</label>
+        <locationX>50</locationX>
+        <locationY>1811</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Customer_Record_Type.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Agreement_Territory_and_Partner_Level</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Employee_Override</name>
+        <label>Update Employee Override</label>
+        <locationX>248</locationX>
+        <locationY>695</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Employee_Override_Last_Modified_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Employee_Override_Last_Modified_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Partner_Level_changed_by_fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Partner_Account_RT</name>
+        <label>Update Partner Account RT</label>
+        <locationX>314</locationX>
+        <locationY>1811</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Partner_Record_Type.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Agreement_Territory_and_Partner_Level</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Partner_Birthdate_and_status</name>
+        <label>Update Partner Birthdate and status</label>
+        <locationX>248</locationX>
+        <locationY>1295</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Partner_Birthdate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PartnerBirthdate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AccountStatus</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Validated</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Customer_or_Partner</name>
+        <label>Customer or Partner</label>
+        <locationX>182</locationX>
+        <locationY>1595</locationY>
+        <defaultConnector>
+            <targetReference>Get_Partner_Record_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Partner</defaultConnectorLabel>
+        <rules>
+            <name>Customer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Customer_Record_Type</targetReference>
+            </connector>
+            <label>Customer</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_New_or_Type_changed</name>
+        <label>Is New or Type changed</label>
+        <locationX>380</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Update_Employee_Override_fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Account_type_changed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Renewal_Pricing_method</targetReference>
+            </connector>
+            <label>Account type changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Partner_Number_Is_not_empty</name>
+        <label>Partner Number Is not empty</label>
+        <locationX>380</locationX>
+        <locationY>1187</locationY>
+        <defaultConnector>
+            <targetReference>Validated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Partner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Partner</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Partner_Number__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Partner_Birthdate_and_status</targetReference>
+            </connector>
+            <label>Is Partner</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_Employee_Override_fields</name>
+        <label>Update Employee Override fields</label>
+        <locationX>380</locationX>
+        <locationY>587</locationY>
+        <defaultConnector>
+            <targetReference>Update_Partner_Level_changed_by_fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Employee_Count_is_changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Employee_Count_Override__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Employee_Override</targetReference>
+            </connector>
+            <label>Employee Count is changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_Partner_Level_changed_by_fields</name>
+        <label>Update Partner Level changed by fields</label>
+        <locationX>380</locationX>
+        <locationY>887</locationY>
+        <defaultConnector>
+            <targetReference>Partner_Number_Is_not_empty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Partner_Level_Is_changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Partner_Level__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Partner_Level_changed_fields</targetReference>
+            </connector>
+            <label>Partner Level Is changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validated</name>
+        <label>Validated</label>
+        <locationX>380</locationX>
+        <locationY>1487</locationY>
+        <defaultConnector>
+            <targetReference>Agreement_Territory_and_Partner_Level</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Validated__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Validated__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Customer_or_Partner</targetReference>
+            </connector>
+            <label>Valid</label>
+        </rules>
+    </decisions>
+    <description>Removed territory assignment as its been moved to after save flow</description>
+    <formulas>
+        <name>AccountStatus</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISNULL(TEXT({!$Record.Partner_Level__c}))) &amp;&amp; ISPICKVAL({!$Record.Status__c},&apos;Prospect&apos;) ,&apos;Active&apos;,TEXT({!$Record.Status__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>BillingCountry</name>
+        <dataType>String</dataType>
+        <expression>IF(ISNEW() &amp;&amp; NOT(ISNULL(TEXT({!$Record.BillingCountryCode}))), Text({!$Record.BillingCountryCode}),PRIORVALUE({!$Record.Agreement_Territory__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>CustomerTerritory</name>
+        <dataType>Boolean</dataType>
+        <expression>OR (
+  AND(OR({!$Record.RecordType.DeveloperName} = &apos;Customer&apos;, 
+                  {!$Record.RecordType.DeveloperName} = &apos;Validation&apos;), ISNEW()),
+  AND(
+     OR({!$Record.RecordType.DeveloperName} = &apos;Customer&apos;, 
+            {!$Record.RecordType.DeveloperName} = &apos;Validation&apos;),
+     NOT(ISCHANGED( {!$Record.OwnerId} )),
+     OR (
+          ISCHANGED( {!$Record.State_Code__c} ),
+          ISCHANGED( {!$Record.BillingCountryCode} ),
+          ISCHANGED( {!$Record.Named_Account__c} ),
+          ISCHANGED({!$Record.Terr_Alignment_Run__c})
+         )
+     )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>IsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <name>PartnerBirthdate</name>
+        <dataType>Date</dataType>
+        <expression>IF(ISNULL({!$Record.Partner_Birthdate__c}),TODAY(), {!$Record.Partner_Birthdate__c})</expression>
+    </formulas>
+    <formulas>
+        <name>PartnerTerritory</name>
+        <dataType>Boolean</dataType>
+        <expression>OR (
+  AND({!$Record.RecordType.DeveloperName} = &apos;Partner&apos;, ISNEW()),
+  AND(
+     {!$Record.RecordType.DeveloperName}  = &apos;Partner&apos;,
+     NOT(ISCHANGED( {!$Record.OwnerId} )),
+     OR (
+          ISCHANGED( {!$Record.State_Code__c} ),
+          ISCHANGED( {!$Record.BillingCountryCode} ),
+          ISCHANGED( {!$Record.Terr_Alignment_Run__c} )
+         )
+     )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>RenewalPricingMethod</name>
+        <dataType>String</dataType>
+        <expression>IF( ISPICKVAL({!$Record.Type},&apos;Partner - MSP&apos; ) || ISPICKVAL({!$Record.Type}, &apos;Partner - Sonian&apos;) || ISPICKVAL({!$Record.Type}, &apos;Distributor - MSP&apos;) || ISPICKVAL({!$Record.Type}, &apos;End User - MSP&apos;) || ISPICKVAL({!$Record.Type}, &apos;End User - Sonian&apos;) , &apos;Same&apos;, &apos;List&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>SetUsageBilling</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(ISPICKVAL({!$Record.Type}, &apos;Partner - Referral&apos;) || ISPICKVAL({!$Record.Type}, &apos;Partner - MSP&apos;) || ISPICKVAL({!$Record.Type}, &apos;Distributor - MSP&apos;) || ISPICKVAL({!$Record.Type}, &apos;End User - MSP&apos;),true ,{!$Record.Usage_Based_Billing__c})</expression>
+    </formulas>
+    <formulas>
+        <name>UpdateAccount</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!$Record.Type},&apos;Partner - Reseller&apos;) &amp;&amp; ISBLANK(TEXT({!$Record.Partner_Level__c})) , &apos;Affiliate&apos;,TEXT( {!$Record.Partner_Level__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>UserName</name>
+        <dataType>String</dataType>
+        <expression>{!$User.FirstName} + &apos; &apos; +{!$User.LastName}</expression>
+    </formulas>
+    <interviewLabel>Account Before Insert Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account Before Insert Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Customer_Record_Type</name>
+        <label>Get Customer Record Type</label>
+        <locationX>50</locationX>
+        <locationY>1703</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Customer_Account_RT</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Customer</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Partner_Record_Type</name>
+        <label>Get Partner Record Type</label>
+        <locationX>314</locationX>
+        <locationY>1703</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Partner_Account_RT</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Partner</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_New_or_Type_changed</targetReference>
+        </connector>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>AssignedTerrid</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ObjectTerritory2Association</objectType>
+    </variables>
+    <variables>
+        <name>Territory2_Obj</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Territory2</objectType>
+    </variables>
+</Flow>

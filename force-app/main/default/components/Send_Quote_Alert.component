@@ -1,0 +1,115 @@
+<apex:component access="global" >
+    
+    <apex:attribute name="quote" description="This is the Order SObject." type="SBQQ__Quote__c" />
+    <apex:attribute name="asPDFAttachment" description="Where is it used." type="Boolean" />
+    
+    <table style="font-family:Arial;font-size:20px;margin-top:20px;color:#42525f;width:100%; background-color:#f2f2f2;">
+        <tr>
+            <td style="color:grey"><apex:image id="Logo" width="150px" value="{!IF(asPDFAttachment=TRUE, 'https://barracuda2018.my.salesforce.com/resource/1578002621000/BarracudaLogo', 'https://barracuda2018.my.salesforce.com/servlet/servlet.ImageServer?id=015f2000002xyvf&oid=00Df2000001LA50&lastMod=1550892259000')}" /></td>
+            <td style="color:grey; text-align:right;">QUOTE ALERT</td>
+        </tr>
+    </table>
+   
+    <p><span style="font-weight:400">Hi,</span></p>
+    <p><span style="font-weight:400">We’re writing to remind you that you have a Barracuda solution that expires on <apex:outputText value="{0, date, MMMM d','  yyyy}">
+    <apex:param value="{!quote.SBQQ__Opportunity2__r.Expiration_Date__c}" /> 
+    </apex:outputText>. To avoid any possible lapse in service, and ensure continuous protection, renew the subscription before it expires.</span></p>
+    <p><span style="font-weight:400">Please contact your Barracuda reseller or reply to this email to make sure your renewal is processed in a timely manner.</span></p>
+    <p><span style="font-weight:400">Thank you for being a Barracuda customer. </span></p>
+    
+    <hr style="border: 2px solid #42525f;"/>
+    <p style="margin: 0;">&nbsp;</p>
+    <p style="margin: 0;font-family:Arial;font-size: 16px;color:#42525f;"><strong>Quote#:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong>{!quote.Name}</p>
+    <p style="margin: 0;font-family:Arial;font-size: 16px;color:#42525f;"><strong>Expires:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong><apex:outputText value="{0, date, MMMM d','  yyyy}">
+    <apex:param value="{!quote.SBQQ__ExpirationDate__c}" /> 
+    </apex:outputText></p> 
+    
+    <div style="border-bottom:1px solid #ccc;padding-bottom:20px">
+        <div style="display:block;margin-top:10px;margin-bottom:20px;">
+            <table style="font-family: Arial; font-size: 16px; color: #42525f; width: 100%;">
+            <tbody>
+                <tr>
+                <td style="width: 425.333px;"><strong>Bill To:</strong></td>
+                <td style="width: 349.333px;"><strong>Ship To:</strong></td>
+                <td style="width: 315.333px;"><strong>End User:</strong></td>
+                </tr>
+                <tr>
+                <td style="line-height: normal; width: 425.333px;">{!quote.SBQQ__Opportunity2__r.Bill_To_Account__r.Name}</td>
+                <td style="line-height: normal; width: 349.333px;">{!quote.Shipping_Address__r.Account__r.Name}</td>
+                <td style="line-height: normal; width: 315.333px;">{!quote.SBQQ__Account__r.Name}</td>
+                </tr>
+                <tr>
+                <td style="line-height: normal; width: 425.333px;">&nbsp;</td>
+                <td style="line-height: normal; width: 349.333px;">&nbsp;</td>
+                <td style="line-height: normal; width: 315.333px;">&nbsp;</td>
+                </tr>
+                <tr>
+                <td style="line-height: normal; width: 425.333px;">{!quote.Billing_Address__r.Street__c}</td>
+                <td style="line-height: normal; width: 349.333px;">{!quote.Shipping_Address__r.Street__c}</td>
+                <td style="line-height: normal; width: 315.333px;">{!quote.SBQQ__Account__r.BillingStreet}</td>
+                </tr>
+                <tr>
+                <td style="line-height: normal; width: 425.333px;">{!quote.Billing_Address__r.City__c + ', ' + quote.Billing_Address__r.State__r.Name + ' ' + quote.Billing_Address__r.Zip_Postal_Code__c}</td>
+                <td style="line-height: normal; width: 349.333px;">{!quote.Shipping_Address__r.City__c + ', ' + quote.Shipping_Address__r.State__r.Name + ' ' + quote.Shipping_Address__r.Zip_Postal_Code__c}</td>
+                <td style="line-height: normal; width: 315.333px;">{!quote.SBQQ__Account__r.BillingCity + ', ' + quote.SBQQ__Account__r.BillingState + ' ' + quote.SBQQ__Account__r.BillingPostalCode}</td>
+                </tr>
+                <tr>
+                <td style="line-height: normal; width: 425.333px;">{!quote.Billing_Address__r.Country__r.Name}</td>
+                <td style="line-height: normal; width: 349.333px;">{!quote.Shipping_Address__r.Country__r.Name}</td>
+                <td style="line-height: normal; width: 315.333px;">{!quote.SBQQ__Account__r.BillingCountry}</td>
+                </tr>
+           </tbody>
+           </table>
+        </div>
+       
+        <table cellspacing="0" border="1" style="font-family:Arial;width:100%;border-color:white">
+            <thead style="font-size:16px;color:white;font-weight:bold;background-color:#42525f;">
+                <tr>
+                    <th style="text-align:left;white-space:nowrap;padding:15px;padding-right:20px">Item #</th>
+                    <th style="text-align:left;white-space:nowrap;padding:15px">Item Description</th>
+                    <th style="padding:15px">Qty</th>
+                    <th style="padding:15px">Term (Month)</th>
+                    <apex:outputPanel layout="none" rendered="{!quote.SBCF_Reseller__c != null || quote.SBQQ__Distributor__c != null}"><th style="padding:15px; ">Disti / Partner Discount</th></apex:outputPanel>
+                    <th style="text-align:right;white-space:nowrap;padding:15px">Final Price</th>
+                </tr>
+            </thead>
+           
+            <tbody style="font-size:13px">
+                <apex:repeat var="li" value="{!quote.SBQQ__LineItems__r}">
+                    <tr>
+                        <td style="white-space:nowrap;padding:5px"><apex:outputField value="{!li.SBQQ__ProductCode__c}"/></td>
+                        <td style="overflow-wrap:normal;padding:5px;"><apex:outputField value="{!li.Product_Name_for_Quote_Core__c}"/></td>
+                        <td style="text-align:right;padding:5px"><apex:outputField value="{!li.SBCF_Document_Capacity__c}"/></td>
+                        <td style="text-align:right;padding:5px"><apex:outputField value="{!li.SBCF_Document_Term__c}"/></td>
+                        <apex:outputPanel layout="none" rendered="{!quote.SBCF_Reseller__c != null || quote.SBQQ__Distributor__c != null}"><td style="text-align:right;padding:5px "><apex:outputField value="{!li.SBCF_Document_Distrt_Partner_Discount__c}"/></td></apex:outputPanel>
+                        <td style="text-align:right;padding:5px"><apex:outputField value="{!li.SBCF_Document_Total_Price__c}"/></td>
+                    </tr>  
+                </apex:repeat>
+            </tbody>
+           
+            <tfoot>
+                <tr>
+                    <td style="background-color:#42525f;"></td>
+                    <td style="background-color:#42525f;"></td>
+                    <td style="background-color:#42525f;"></td>
+                    <td style="background-color:#42525f;"></td>
+                    <apex:outputPanel layout="none" rendered="{!quote.SBCF_Reseller__c != null || quote.SBQQ__Distributor__c != null}"><td style="background-color:#42525f;"></td></apex:outputPanel>
+                    <td style="white-space:nowrap;text-align:right;padding:5px;background-color:#ccc;"><apex:outputField value="{!quote.SBQQ__NetAmount__c}"/></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+   
+    <p style="font-family:Arial;padding-top:15px;">Best,</p>
+    <p style="margin:0"><strong>The Barracuda Team</strong></p>
+    <p style="margin:0"><strong>Email&nbsp;</strong><span style="font-weight:400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="mailto:renewals@barracuda.com" target="_blank"><span style="font-weight:400">renewals@barracuda.com</span></a><span style="font-weight:400">&nbsp;</span></p>
+    <p style="margin:0"><strong>Address</strong><strong>&nbsp;&nbsp;</strong><span style="font-weight:400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3175 S. Winchester Blvd | Campbell, CA. 95008</span></p>
+   
+    <div>
+        <apex:image id="SignLogo" width="180px" value="{!IF(asPDFAttachment=TRUE, 'https://barracuda2018.my.salesforce.com/resource/1578002621000/BarracudaLogo', 'https://barracuda2018.my.salesforce.com/servlet/servlet.ImageServer?id=015f2000002xyvf&oid=00Df2000001LA50&lastMod=1550892259000')}" />
+    </div>
+    
+    <!-- TODO: Change the Image URL after Depoloyments -->
+    <a href="https://www.barracuda.com/covid-19-security"><apex:image id="SignBanner" value="https://barracuda2018--uat--c.cs16.content.force.com/servlet/servlet.ImageServer?id=015f00000015e94&oid=00Df0000003f0gb&lastMod=1588890947000" /></a>
+   
+</apex:component>

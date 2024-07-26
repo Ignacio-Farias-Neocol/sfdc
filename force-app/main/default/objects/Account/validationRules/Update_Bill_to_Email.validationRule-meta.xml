@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Update_Bill_to_Email</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED(Bill_To_Email__c),
+NOT($Permission.Update_Bill_to_Email),
+NOT(ISBLANK(PRIORVALUE(Bill_To_Email__c))))</errorConditionFormula>
+    <errorMessage>Sorry - You can&apos;t update the &apos;Bill to Email&apos;. If you need to change it, please open an internal support ticket.</errorMessage>
+</ValidationRule>

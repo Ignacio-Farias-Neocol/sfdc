@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>54.0</apiVersion>
+	<isExposed>true</isExposed>
+	<targets>
+		<target>lightning__FlowScreen</target>
+	</targets>
+	<targetConfigs>
+		<targetConfig	targets="lightning__FlowScreen">
+			<property name="autoRenew" label="Auto Renew" type="Boolean" role="inputOnly" description="Set up order for auto-renewal"/>
+			<property name="selectedCreditCard" type="String" role="inputOnly"></property>
+			<property name="poNumber" type="String" role="inputOnly"></property>
+			<property name="ccDigits" type="String" role="outputOnly"></property>
+			<property name="shippingAccountName" type="String" role="outputOnly"></property>
+			<property name="shippingStreet" type="String" role="outputOnly"></property>
+			<property name="shippingState" type="String" role="outputOnly"></property>
+			<property name="shippingCity" type="String" role="outputOnly"></property>
+			<property name="shippingZipCode" type="String" role="outputOnly"></property>
+			<property name="shippingCountry" type="String" role="outputOnly"></property>
+			<property name="billingStreet" type="String" role="outputOnly"></property>
+			<property name="billingAccountName" type="String" role="outputOnly"></property>
+			<property name="billingAccountEmail" type="String" role="outputOnly"></property>
+			<property name="billingState" type="String" role="outputOnly"></property>
+			<property name="billingCity" type="String" role="outputOnly"></property>
+			<property name="billingZipCode" type="String" role="outputOnly"></property>
+			<property name="billingCountry" type="String" role="outputOnly"></property>
+			<property name="orderId" type="String" role="outputOnly"></property>
+		</targetConfig>
+	</targetConfigs>
+</LightningComponentBundle>

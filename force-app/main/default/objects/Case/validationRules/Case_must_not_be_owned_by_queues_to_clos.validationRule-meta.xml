@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_must_not_be_owned_by_queues_to_clos</fullName>
+    <active>true</active>
+    <description>SFDC-17659</description>
+    <errorConditionFormula>AND(
+ISCHANGED(Status),
+TEXT(Status) = &quot;Closed&quot;,
+ OR
+(Owner:Queue.QueueName = &quot;Internal Ticket - Tier 1&quot;,
+ Owner:Queue.QueueName = &quot;Internal Ticket - Tier 2&quot;,
+ Owner:Queue.QueueName = &quot;Internal Ticket - Communities&quot;
+)
+)</errorConditionFormula>
+    <errorMessage>Case cannot be closed in Queue. Please assign it to user before close.</errorMessage>
+</ValidationRule>

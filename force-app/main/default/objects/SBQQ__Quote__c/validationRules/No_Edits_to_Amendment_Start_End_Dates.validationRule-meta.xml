@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Edits_to_Amendment_Start_End_Dates</fullName>
+    <active>false</active>
+    <description>users cannot change Start &amp; End Dates for amendments to accidentally give free time.</description>
+    <errorConditionFormula>AND (ISPICKVAL(SBQQ__Type__c,&quot;Amendment&quot;), 
+ISCHANGED(SBQQ__EndDate__c) 
+)</errorConditionFormula>
+    <errorMessage>You may not change the Start/End Date for Amendments.</errorMessage>
+</ValidationRule>

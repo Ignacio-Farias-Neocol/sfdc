@@ -1,0 +1,128 @@
+<template>
+    <template if:true={spinnerVisibility}>
+        <div class="spinnerHolder">
+            <c-custom-spinner></c-custom-spinner>
+        </div>
+    </template>
+    <template if:false={spinnerVisibility}>
+        <lightning-card>
+            <div slot="title" class="slds-m-top_medium">
+                <lightning-icon icon-name="standard:quotes" size="small" class="slds-media__figure"></lightning-icon>
+                Payment Selection
+            </div>
+        </lightning-card>
+        <div class="slds-grid slds-grid_align-center slds-var-m-around_medium">
+            <div class="slds-col slds-size_12-of-12">
+                <template if:true={isPOEligible}>
+                    <div class="slds-box">
+                        <lightning-card>
+                            <h3 slot="title">
+                                <input type="radio" id="poRadio" onchange={selectPONumberPayment} checked={poSelected}  class="slds-m-right_small"/>
+                                PO Number (for payment reference purposes only)
+                            </h3>
+                            <div class="slds-var-p-horizontal_large">
+                                <template if:true={showPOInput}>
+                                    <lightning-input variant="label-inline" type="text" label="Enter PO Number" value={poNumber} onchange={handlePONumber}></lightning-input>
+                                </template>
+                            </div>
+                        </lightning-card>
+                    </div>
+                </template> 
+            </div>
+        </div>
+        <div class="slds-grid slds-grid_align-center slds-var-m-around_medium">
+            <div class="slds-col slds-size_12-of-12">
+                <div class="slds-box">
+                    <lightning-card variant="Narrow">
+                        <h3 slot="title">
+                                <input type="radio" id="creditCardRadio" onchange={selectCreditCardPayment} checked={ccSelected}  class="slds-m-right_small"/>
+                            Credit Card
+                        </h3>
+                    <template if:true={isCreditCardsAvailable}>
+                    
+                        
+                            <div class="slds-var-p-horizontal_large">
+                                <lightning-radio-group name="creditCards"
+                                                label="Select Credit Card"
+                                                options={creditCardOptions}
+                                                type="radio"
+                                                onchange={onSelectCreditCard}
+                                                variant="label-inline"></lightning-radio-group>
+                            </div> 
+                        
+                        </template>
+                        <template if:false={isCreditCardsAvailable}>
+                            No Credit Cards available.
+                        </template>
+                        <br> <br>
+                        To add a new credit card on file please <a onclick={addCreditCard}>click here </a>
+                        <br>
+                        Once new credit card has been added,<lightning-button variant="base" label="click here" onclick={refreshCreditCard} class="slds-var-m-left_x-small"></lightning-button> to refresh credit cards on file
+                    </lightning-card>                                             
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-grid_align-center slds-var-m-around_medium">
+            <div class="slds-col slds-size_12-of-12">
+                <div class="slds-box">
+                    <lightning-card  title="Additional Information" icon-name="utility:info" style="display: block;">
+                        <div class="slds-var-p-horizontal_large">
+                            <lightning-input type="checkbox" label="Set up auto-renewal" value={autoRenew} onchange={handleAutoRenew} class="slds-m-bottom_small"></lightning-input>
+                            <lightning-formatted-rich-text value={emailToBeSentTo}></lightning-formatted-rich-text>
+                        </div>
+                    </lightning-card>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-grid_align-center slds-var-m-around_medium">
+            <div class="slds-col slds-size_12-of-12">
+                <div class="slds-box">
+                    <lightning-card  title="Terms and Conditions" icon-name="standard:product_warranty_term" style="display: block;">
+                        <h3 slot="title" class="bold">
+                            <lightning-icon icon-name="standard:product_warranty_term" size="small" class="slds-m-right_small"></lightning-icon>
+                            Terms and Conditions
+                        </h3>
+                        <div class="slds-var-p-horizontal_large">
+                            <div class="slds-scrollable slds-m-bottom_medium" style="height:5rem">
+                                <lightning-formatted-rich-text value={label.termsAndCondition1}></lightning-formatted-rich-text>
+                                <br>
+                                __ 
+                                <br>
+                                <lightning-formatted-rich-text value={label.termsAndCondition2}></lightning-formatted-rich-text>
+                                <br>
+                                <br>   
+                                __ 
+                                <br>
+                                <lightning-formatted-rich-text value={label.termsAndCondition3}></lightning-formatted-rich-text>
+                                <br>
+                                <template if:true={showTermsAndConditions}>
+                                <lightning-input type="checkbox" label="I agree to the Terms and Conditions" value={agreedToTermsAndConditions} onchange={handleTermsAndCondition}></lightning-input>
+                                </template>
+                            </div>
+                            <template if:false={showTermsAndConditions}>
+                                <lightning-input type="checkbox" label="I agree to the Terms and Conditions" value={agreedToTermsAndConditions} onchange={handleTermsAndCondition}></lightning-input>
+                            </template>
+                        </div>
+                        <div slot="footer">
+                            <lightning-button variant="neutral" 
+                              label="PREVIOUS"
+                              onclick={handlePrevious}
+                              disabled={modificationDisabled}
+                              class="slds-p-horizontal_xx-small"
+                            >
+                            </lightning-button>
+                            <lightning-button variant="brand" 
+                              label="NEXT"
+                              onclick={validate}
+                              disabled={modificationDisabled}
+                              class="slds-p-horizontal_xx-small"
+                            >
+                            </lightning-button>
+                        </div>
+                    </lightning-card>
+                </div>
+            </div>
+        </div>
+    </template>
+    <c-credit-card-entry-l-w-c record-id={opportunityId}></c-credit-card-entry-l-w-c>
+</template>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Address_with_P_O_Box</fullName>
+    <active>true</active>
+    <errorConditionFormula>(Text (Type__c) = &quot;Shipping&quot;)
+&amp;&amp;
+(
+CONTAINS( Street__c , &quot;PO Box&quot;)
+||
+CONTAINS( Street__c , &quot;Po Box&quot;)
+||
+CONTAINS( Street__c , &quot;P.o. Box&quot;)
+||
+CONTAINS( Street__c , &quot;po box&quot;)
+||
+CONTAINS( Street__c , &quot;p.o. box&quot;)
+||
+CONTAINS( Street__c , &quot;p.o. box&quot;)
+||
+CONTAINS( Street__c , &quot;po Box&quot;)
+||
+CONTAINS( Street__c , &quot;p.o. Box&quot;)
+||
+CONTAINS( Street__c , &quot;PO BOX&quot;)
+||
+CONTAINS( Street__c , &quot;P.O. Box&quot;)
+||
+CONTAINS( Street__c , &quot;Po box&quot;)
+||
+CONTAINS( Street__c , &quot;P. O. Box&quot;)
+||
+CONTAINS( Street__c , &quot;PO BOx&quot;)
+)</errorConditionFormula>
+    <errorMessage>Please enter a street address for the shipping. We can&apos;t ship to a P.O. Box.</errorMessage>
+</ValidationRule>

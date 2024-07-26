@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Updation_Banned_Compliance_Check</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(  NOT(ISCHANGED(Case_Reason__c)) ,    NOT(ISCHANGED(Closed_Case_Reason__c)),
+NOT(AND( ISPICKVAL(Status, &apos;In Progress&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;New&apos;))),  
+OR(RecordType.DeveloperName = &apos;Technical_Support&apos;,
+RecordType.DeveloperName = &apos;Professional_Services&apos;,
+RecordType.DeveloperName = &apos;Web_Case&apos;),
+ NOT(ISNEW()) , NOT( ISPICKVAL( Status , &apos;Closed&apos;) )  ,Is_Account_Banned__c)</errorConditionFormula>
+    <errorMessage>This case can not be worked on as the status for the Contact or the Account is Banned</errorMessage>
+</ValidationRule>

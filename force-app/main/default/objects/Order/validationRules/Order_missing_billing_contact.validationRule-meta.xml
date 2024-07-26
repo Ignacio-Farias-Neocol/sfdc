@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order_missing_billing_contact</fullName>
+    <active>true</active>
+    <description>Blocks Activation of an Order with no billing contact</description>
+    <errorConditionFormula>AND(
+ISBLANK(Opportunity.Bill_To_Account__r.Bill_To_Contact__c),
+Skout_Legacy_Order__c = FALSE,
+OR(
+TEXT(Status)=&quot;Activated&quot;,
+TEXT(Status)=&quot;Placed&quot;)
+)</errorConditionFormula>
+    <errorMessage>Please be sure a Bill To Contact is defined on the Bill To Account before activating this order.</errorMessage>
+</ValidationRule>

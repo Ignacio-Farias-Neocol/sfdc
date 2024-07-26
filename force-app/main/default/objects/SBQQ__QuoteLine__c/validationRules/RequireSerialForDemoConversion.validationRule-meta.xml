@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RequireSerialForDemoConversion</fullName>
+    <active>true</active>
+    <description>Requires that a Serial Number be entered for any Demo Conversion lines or children of Demo Conversion lines</description>
+    <errorConditionFormula>OR(
+ 
+   AND( 
+       TEXT(Appliance_Line_Type__c)=&quot;Demo conversion&quot;,
+       (ISBLANK(SBCF_Serial_Number__c) || ISBLANK(Revised_Serial__c))),
+   AND(
+       TEXT(SBQQ__RequiredBy__r.Appliance_Line_Type__c)=&quot;Demo conversion&quot;,
+       ISBLANK(SBCF_Serial_Number__c))
+) &amp;&amp;
+Business_Group__c=&quot;Core&quot; &amp;&amp;
+Quote_Type__c = &apos;Quote&apos;</errorConditionFormula>
+    <errorMessage>Missing Serial Number(s) for a Demo Conversion. In the Quote Line Drawers, select &apos;Revised Serial&apos; to access the Demo Conversion lines.</errorMessage>
+</ValidationRule>

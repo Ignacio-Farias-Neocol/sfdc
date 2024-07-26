@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Update_Product_Lookup</name>
+        <label>Update Product Lookup</label>
+        <locationX>346</locationX>
+        <locationY>700</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Product__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Products.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Product_Lookup_to_Blank</name>
+        <label>Update Product Lookup to Blank</label>
+        <locationX>299</locationX>
+        <locationY>506</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Product__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Base_Product_SKU_Populated</name>
+        <label>Base Product SKU Populated</label>
+        <locationX>579</locationX>
+        <locationY>488</locationY>
+        <defaultConnector>
+            <targetReference>Update_Product_Lookup_to_Blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>SKU Is Null</defaultConnectorLabel>
+        <rules>
+            <name>SKU_is_Not_Null</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Base_Product_SKU__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Products</targetReference>
+            </connector>
+            <label>SKU is Not Null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Base_SKU_Changed</name>
+        <label>Base SKU Changed</label>
+        <locationX>878</locationX>
+        <locationY>391</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Base_Product_SKU__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Base_Product_SKU_Populated</targetReference>
+            </connector>
+            <label>Is Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>New_Serial_Created</name>
+        <label>New Serial Created</label>
+        <locationX>581</locationX>
+        <locationY>298</locationY>
+        <defaultConnector>
+            <targetReference>Base_SKU_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Existing</defaultConnectorLabel>
+        <rules>
+            <name>New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Base_Product_SKU_Populated</targetReference>
+            </connector>
+            <label>New</label>
+        </rules>
+    </decisions>
+    <description>SFDC-19162: Prior record get record check removed</description>
+    <environments>Default</environments>
+    <interviewLabel>Serial Before Save Operations {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Serial Before Save Operations</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Products</name>
+        <label>Get Products</label>
+        <locationX>596</locationX>
+        <locationY>703</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Product_Lookup</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ProductCode</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Base_Product_SKU__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Product2</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>464</locationX>
+        <locationY>46</locationY>
+        <connector>
+            <targetReference>New_Serial_Created</targetReference>
+        </connector>
+        <object>Serial__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

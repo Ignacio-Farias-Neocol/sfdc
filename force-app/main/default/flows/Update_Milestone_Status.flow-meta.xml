@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <decisions>
+        <name>Check_Is_Milestone_Violated</name>
+        <label>Check Is Milestone Violated</label>
+        <locationX>182</locationX>
+        <locationY>455</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Is_Milestone_Violated1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Completed_Milestone_Status__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Completed_Milestone_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Violation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Back_to_Violation</targetReference>
+            </connector>
+            <label>Check Is Milestone Violated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Milestone_and_Ownership</name>
+        <label>Check Milestone and Ownership</label>
+        <locationX>644</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Milestone_Status_Completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Completed_Milestone_Status__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Is_Milestone_Violated</targetReference>
+            </connector>
+            <label>Check Milestone Status Completed</label>
+        </rules>
+        <rules>
+            <name>Check_Ownership_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Premium_Emails__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.Username</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$User.Username</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Completed_Milestone_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Violation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Completed_Milestone_Status</targetReference>
+            </connector>
+            <label>Check Ownership Changed</label>
+        </rules>
+        <rules>
+            <name>Premium_Queue</name>
+            <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TAC America Premium</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TAC EMEA Premium</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TAC India Premium</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Completed_Milestone_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Violation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Update_Completed_Milestone_Status</targetReference>
+            </connector>
+            <label>Premium Queue</label>
+        </rules>
+    </decisions>
+    <description>Add ownership xxx</description>
+    <interviewLabel>Update Milestone Status {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Milestone Status</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Copy_1_of_Update_Completed_Milestone_Status</name>
+        <label>Update Completed Milestone Status</label>
+        <locationX>842</locationX>
+        <locationY>455</locationY>
+        <inputAssignments>
+            <field>Completed_Milestone_Status__c</field>
+            <value>
+                <stringValue>Compliant</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Back_to_Violation</name>
+        <label>Update Back to Violation</label>
+        <locationX>50</locationX>
+        <locationY>575</locationY>
+        <inputAssignments>
+            <field>Completed_Milestone_Status__c</field>
+            <value>
+                <stringValue>Violation</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Completed_Milestone_Status</name>
+        <label>Update Completed Milestone Status</label>
+        <locationX>578</locationX>
+        <locationY>455</locationY>
+        <inputAssignments>
+            <field>Completed_Milestone_Status__c</field>
+            <value>
+                <stringValue>Compliant</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>518</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Milestone_and_Ownership</targetReference>
+        </connector>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

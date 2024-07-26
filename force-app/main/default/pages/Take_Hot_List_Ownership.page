@@ -1,0 +1,11 @@
+<apex:page standardController="Hot_List__c" tabStyle="Hot_List__c" recordSetVar="SelectedHotList" >
+    
+    <apex:repeat value="{!SelectedHotList}" var="h" rendered="false">
+        {!h.Id} {!h.OwnerId}
+    </apex:repeat>
+    
+    <flow:interview name="Take_Ownership_of_Hot_List" finishLocation="{!URLFOR('/')}">
+        <apex:param name="Selected_Hot_Lists" value="{!Selected}"/>
+        <apex:param name="Current_User_Id" value="{!$User.Id}"/>
+    </flow:interview>
+</apex:page>

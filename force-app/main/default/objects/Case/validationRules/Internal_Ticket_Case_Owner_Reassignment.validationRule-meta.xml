@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Internal_Ticket_Case_Owner_Reassignment</fullName>
+    <active>false</active>
+    <description>Can&apos;t change Internal Ticket Owner or Status fields unless you are the Case Owner or have the Internal Ticket Permission Set</description>
+    <errorConditionFormula>AND(NOT($Permission.Internal_Ticket_Ops_User),
+BEGINS(Owner:Queue.QueueName, &quot;Internal Ticket&quot;),
+ISCHANGED( OwnerId ))</errorConditionFormula>
+    <errorDisplayField>OwnerId</errorDisplayField>
+    <errorMessage>You do not have the permissions to change the Case Owner to an Internal Ticket Queue.</errorMessage>
+</ValidationRule>

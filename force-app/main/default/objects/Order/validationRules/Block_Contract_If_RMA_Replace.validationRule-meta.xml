@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Contract_If_RMA_Replace</fullName>
+    <active>true</active>
+    <description>Prevents CPQ Contracting process from proceeding for RMA Replace order</description>
+    <errorConditionFormula>AND(
+    Has_RMA_Replace__c,
+     SBQQ__Contracted__c 
+)</errorConditionFormula>
+    <errorMessage>RMA Replacement Orders may not initiate contracting process.</errorMessage>
+</ValidationRule>

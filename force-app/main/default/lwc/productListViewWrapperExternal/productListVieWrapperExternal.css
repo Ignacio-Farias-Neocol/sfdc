@@ -1,0 +1,19 @@
+.sticky-div{
+    position:sticky; 
+    top:105px;
+}
+
+.spinnerHolder{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.right-aligned{
+    text-align: right;
+}
+.slds-card__body {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}

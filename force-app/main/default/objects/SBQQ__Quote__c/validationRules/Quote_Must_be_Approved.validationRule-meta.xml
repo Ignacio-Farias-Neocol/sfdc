@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quote_Must_be_Approved</fullName>
+    <active>true</active>
+    <description>For Status to be switched to &quot;Customer Accepted&quot;</description>
+    <errorConditionFormula>ISPICKVAL(SBQQ__Status__c, &quot;Customer Accepted&quot;) &amp;&amp; NOT(ISPICKVAL(ApprovalStatus__c, &quot;Approved&quot;))</errorConditionFormula>
+    <errorMessage>Quote must be Approved before it can be &quot;Customer Accepted&quot;.</errorMessage>
+</ValidationRule>

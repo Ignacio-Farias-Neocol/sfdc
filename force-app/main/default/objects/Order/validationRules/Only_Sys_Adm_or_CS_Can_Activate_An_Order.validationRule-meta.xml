@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Only_Sys_Adm_or_CS_Can_Activate_An_Order</fullName>
+    <active>true</active>
+    <description>This rule enforces that only a System Administrator or Customer Service user can activate an order.</description>
+    <errorConditionFormula>AND ( 
+ISPICKVAL(Status, &apos;Activated&apos;), 
+NOT ( 
+OR ( 
+$Permission.Activate_Orders, 
+$Profile.Name = &apos;System Administrator&apos;, 
+$Profile.Name = &apos;Apollo: CCPlus Barracuda Admin&apos;, 
+$Profile.Name = &apos;Apollo: Custom- Customer Services&apos;, 
+$Profile.Name = &apos;Apollo: Custom- Sales Operations&apos; 
+) 
+) 
+)</errorConditionFormula>
+    <errorMessage>Only System Administrators or Customer Service Agents can activate an Order.</errorMessage>
+</ValidationRule>

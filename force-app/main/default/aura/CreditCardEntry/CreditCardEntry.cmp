@@ -1,0 +1,26 @@
+<!--
+- Created by iyeung on 1/3/19.
+-->
+
+<aura:component controller="WebIntegrationController"  implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" description="CreditCardEntry" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="status" description="indicator if there is any validation error" type="boolean" default="true" />
+    <aura:attribute name="success_message" description="success message" type="String" default="" />
+    <aura:attribute name="failure_message" description="failure message" type="String" default="" />
+
+
+    <aura:if isTrue="{!v.status}">
+        <!-- content renders if true -->
+        <div class="container">
+                {!v.success_message}
+        </div>
+        <aura:set attribute="else">
+            <!-- content renders if false -->
+            <div class="container">
+                    {!v.failure_message}
+            </div>
+        </aura:set>
+    </aura:if>
+
+
+</aura:component>

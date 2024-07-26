@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Order_Placement_if_no_Contract</fullName>
+    <active>true</active>
+    <description>Exclude Hardware Only &amp; Replace RMA Orders, also if there are no Subscriptions.</description>
+    <errorConditionFormula>AND(ISCHANGED(Status),
+ISPICKVAL(Status, &apos;Placed&apos;),
+NOT(Has_RMA_Replace__c),
+NOT(SBQQ__Quote__r.HasDemoProducts__c),
+Count_Subscriptions__c &gt; 0,
+OR(ISBLANK(Active_Contract__c),
+NOT(SBQQ__Contracted__c)),
+NOT(Pending_Cancellation__c),
+$User.Full_Name__c &lt;&gt; &apos;Automated Process&apos;
+)</errorConditionFormula>
+    <errorMessage>You can&apos;t place an Order without a Contract. Please check the &apos;Contracted&apos; checkbox to manually generate one.</errorMessage>
+</ValidationRule>

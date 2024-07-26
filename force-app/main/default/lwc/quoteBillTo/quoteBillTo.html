@@ -1,0 +1,109 @@
+<template>
+    <template if:true = {isDataLoading}> 
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <div class="slds-grid slds-grid_vertical-align-start slds-grid_align-end slds-var-m-around_medium">
+        <div class="slds-col slds-size_1-of-3">
+            <p>Current Address: </p>
+            <template if:true = {showadd}> 
+                <lightning-formatted-address
+                    street= {qt.SBQQ__BillingStreet__c}
+                    city= {qt.SBQQ__BillingCity__c}
+                    country= {qt.SBQQ__BillingCountry__c}
+                    province= {qt.SBQQ__BillingState__c}
+                    postal-code= {qt.SBQQ__BillingPostalCode__c}
+                ></lightning-formatted-address>
+            </template>
+            <template if:false = {showadd}>
+                <div class="slds-text-color_error">MISSING</div>
+            </template>
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+            <span>
+                <lightning-combobox
+                    readonly="true"
+                    name="billToSource"
+                    label="Bill To Address Source:"
+                    value={BillToValue}
+                    placeholder="Select Bill To Address Source"
+                    options={QuoteAddOptions}
+                    onchange={handleChangeBillTo} >
+                </lightning-combobox>
+               </span>
+        </div>
+    </div>
+    <lightning-accordion active-section-name="CurrentBillToAddr" class="slds-p-bottom_large">
+        <lightning-accordion-section name="CurrentBillToAddr" label="Available Addresses">
+            <div class="slds-grid slds-grid_vertical-align-end slds-grid_align-end slds-p-bottom_small">
+                <div class="slds-col slds-size_2-of-3"></div>
+                <div class="slds-col slds-size_1-of-3">
+                <span>
+                    <lightning-button label="Update Quote Bill To" title="Update Quote Bill To" onclick={handleUpdateBillTo}></lightning-button>
+                </span>
+                </div>
+            </div>
+        <template if:true = {AvaiBillAdd}> 
+            <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-p-horizontal_small slds-p-top_medium" role="grid">
+                <thead>
+                <tr class="slds-text-title_caps">
+                    <th class="slds-cell-shrink" scope="col">
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="Street">Street</div>
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="City">City</div>
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="StateProvince">State/Province</div>
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="Postal">Postal code</div>
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="Country">Country</div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <template for:each={BillAddress} for:item="row">
+                    <tr key={row.Id} class="slds-hint-parent">
+                        <td data-label="" scope="row">
+                            <lightning-input name={row.Id} data-id={row.Account__c} type="checkbox" onchange={onBillToCheckboxChange} ></lightning-input> 
+                        </td>
+                        <td data-label="Street">
+                            <div class="slds-truncate" title={row.Street__c}>{row.Street__c}</div>
+                        </td>
+                        <td data-label="City">
+                            <div class="slds-truncate" title={row.City__c}>{row.City__c}</div>
+                        </td>
+                        <td data-label="StateProvince">
+                            <div class="slds-truncate" title={row.State__r.Name}>{row.State__r.Name}</div>
+                        </td>
+                        <td data-label="Postal">
+                            <div class="slds-truncate" title={row.Zip_Postal_Code__c}>{row.Zip_Postal_Code__c}</div>
+                        </td>
+                        <td data-label="Country">
+                            <div class="slds-truncate" title={row.Country__r.Name}>{row.Country__r.Name}</div>
+                        </td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+        </template>
+        <template if:false = {AvaiBillAdd}> 
+            <div class="slds-text-color_error slds-p-top_large slds-p-bottom_large slds-grid_vertical-align-start slds-grid_align-start">No Address Found</div>
+        </template>
+        </lightning-accordion-section>
+    
+        
+            <!--div class="slds-grid slds-grid_vertical-align-end slds-grid_align-end slds-p-bottom_small">
+                <div class="slds-col slds-size_2-of-3"></div>
+                <div class="slds-col slds-size_1-of-3">
+                <span>
+                <lightning-button  title="Update Bill To" onclick={updateBillToDetails}  label="Update Bill To"></lightning-button>
+                </span>
+                </div>
+            </div-->
+    </lightning-accordion>
+</template>

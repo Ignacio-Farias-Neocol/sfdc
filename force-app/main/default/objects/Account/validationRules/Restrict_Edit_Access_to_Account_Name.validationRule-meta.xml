@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Edit_Access_to_Account_Name</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT( ISNEW() ),
+ISCHANGED(Name),
+OR($Profile.Name = &quot;Apollo: Custom- Marketing Profile&quot;,
+$Profile.Name = &quot;Apollo: Custom- Renewals Profile&quot;,
+$Profile.Name = &quot;Apollo: Custom- Sales Engineers Profile&quot;,
+$Profile.Name = &quot;Apollo: Custom- Sales Profile&quot;,
+$Profile.Name = &quot;Apollo: Custom- Sales_China Profile&quot;,
+$Profile.Name = &quot;Apollo: Custom- Support Profile&quot;,
+$Profile.Name = &quot;Apollo: Custom- Support Profile - Omni Channel&quot;)
+)</errorConditionFormula>
+    <errorMessage>Sorry - You don&apos;t have permission to  change the Account Name. Please open an internal ticket with Customer Services to update the field.</errorMessage>
+</ValidationRule>

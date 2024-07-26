@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Promo_Has_Expired</fullName>
+    <active>true</active>
+    <description>This rule will prevent the user from closing an opportunity if the promo associated with the primary quote has expired.  Story SFDC-329.</description>
+    <errorConditionFormula>AND (
+     SBQQ__PrimaryQuote__r.PromoExpirationDate__c &lt;  CloseDate,
+     ISPICKVAL(StageName, &apos;Closed Won&apos;)
+    )</errorConditionFormula>
+    <errorMessage>Oh no! This Opportunity can&apos;t be closed because the promotion on the Primary Quote has expired.</errorMessage>
+</ValidationRule>

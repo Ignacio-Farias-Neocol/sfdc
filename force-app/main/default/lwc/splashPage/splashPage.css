@@ -1,0 +1,77 @@
+.main-container{
+    padding:0px;
+    color:white;
+}
+.title{
+    letter-spacing: var(0px);
+    text-align: center;
+    font: normal normal normal 72px/80px Museo Slab;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 6px #0000004D;
+    opacity: 1;
+    padding: 65px;
+    padding-top: 100px;
+    padding-bottom:20px;
+}
+.notice-content{
+    letter-spacing: var(0px);
+   
+    text-align: left;
+    font: normal normal 300 35px/43px Proxima Nova;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding:100px;
+    padding-bottom: 10px;
+    padding-top: 0px;
+}
+
+.notice-content-steps-heading{
+    letter-spacing: var(0px);   
+    text-align: left;
+    font: normal normal 300 35px/43px Proxima Nova;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding:100px;
+    padding-bottom: 10px;
+    padding-top: 15px;
+
+}
+.notice-content-steps{
+    letter-spacing: var(0px);   
+    text-align: left;
+    font: normal normal 300 35px/43px Proxima Nova;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding:100px;
+    padding-bottom: 10px;
+    padding-top: 0px;
+    padding-left: 125px;
+}
+
+
+.notice-content-second{
+    letter-spacing: var(0px);
+    text-align: left;
+    font: normal normal 300 35px/43px Proxima Nova;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding:100px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.button-container{
+    letter-spacing: var(0px);
+    text-align: center;
+    font: normal normal 300 25px/33px Proxima Nova;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding:65px;
+    padding-bottom: 30px;
+    padding-top: 10px;
+}

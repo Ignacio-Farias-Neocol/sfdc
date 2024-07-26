@@ -1,0 +1,3 @@
+button:hover + .slds-popover.slds-popover_tooltip.slds-hide {
+    display : block!important;
+}

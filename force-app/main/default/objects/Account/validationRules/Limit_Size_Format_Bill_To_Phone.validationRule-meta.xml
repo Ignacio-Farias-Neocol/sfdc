@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Limit_Size_Format_Bill_To_Phone</fullName>
+    <active>true</active>
+    <description>Check Bill_To_Phone__c (21 chars limit) has only numbers &amp; phone symbols (pluses, hyphens, and parentheses)</description>
+    <errorConditionFormula>AND(
+NOT(OR($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY,$Profile.Name = &apos;Apollo: Custom- Support Profile&apos;,$Profile.Name = &apos;Apollo: Custom- Support Profile - Omni Channel&apos;,$Profile.Name = &apos;Apollo: Custom- Support Knowledge Profile&apos;)),
+OR(
+AND(
+LEN(Bill_To_Phone__c) &gt; 0,
+NOT(REGEX(Bill_To_Phone__c,&quot;[0-9+ ()-]+&quot;))
+),
+LEN(Bill_To_Phone__c) &gt; 21
+)
+)</errorConditionFormula>
+    <errorDisplayField>Bill_To_Phone__c</errorDisplayField>
+    <errorMessage>Please check that Bill To Phone (21 chars limit) contains only numbers &amp; phone symbols (plus signs, hyphens, and parentheses).</errorMessage>
+</ValidationRule>

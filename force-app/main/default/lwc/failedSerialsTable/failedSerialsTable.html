@@ -1,0 +1,11 @@
+<template>
+  <h3 class="slds-text-heading_small">Failed Serials</h3>
+  <div class="slds-box slds-m-top_x-small">
+    <lightning-datatable
+    key-field="serialNumber"
+    data={failedSerials}
+    columns={columns}
+    hide-checkbox-column>
+  </lightning-datatable>
+  </div>
+</template>

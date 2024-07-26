@@ -1,0 +1,50 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader"
+                controller="VoidOrderController" access="global" >
+    
+    <aura:attribute name="isOrder" type="boolean" default="false"/>
+    <aura:attribute name="isLoading" type="boolean" default="true"/>
+    <aura:attribute name="errorMessage" type="String"/>
+    <aura:attribute name="returnStatus" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.isLoading}">
+        <div class="exampleHolder">
+            <lightning:spinner alternativeText="Loading" size="small" />
+        </div>
+        <aura:set attribute="else">
+            <aura:if isTrue="{!!v.isOrder}">
+                <div>
+                    <br/><br/>
+                    <div class="slds-page-header" style="background-color: #ee212173;">
+                        <div class="slds-page-header__row">
+                            <div class="slds-page-header__col-title">
+                                <div class="slds-media__body">
+                                    <p class="slds-page-header__name-meta" style="font-size: 19px;">"{!v.errorMessage}"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.isOrder}">
+                <div class="slds-page-header" style="background-color: #80808047;">
+                    <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                            <div class="slds-media">
+                                <div class="slds-media__body">
+                                    <div class="slds-page-header__name">
+                                        <span class="slds-page-header__title slds-truncate" >Void Order cancellation Please confirm.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <lightning:button label="Yes" variant="brand" onclick="{!c.handleChangeStatus}"/>
+                <lightning:button label="No" variant="brand" onclick="{!c.handleClickNo}"/>
+            </aura:if>
+        </aura:set>
+    </aura:if>
+    
+</aura:component>

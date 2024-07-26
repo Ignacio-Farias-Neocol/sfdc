@@ -1,0 +1,110 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="RequestForClosurePopupController">
+    
+    <aura:attribute name="caseRecord" type="Object"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="showSuccessMessage" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="errorMessage" type="String" default="" />
+    <aura:attribute name="options" type="String[]" />
+
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      fields="Community_Request_Close_Reason__c,RecordType.Name"
+                      targetFields="{!v.caseRecord}"
+                      />    
+    
+    <aura:if isTrue="{!v.caseRecord.RecordType.Name == 'Web Message' || v.caseRecord.RecordType.Name == 'Technical Support'}">
+        <aura:if isTrue="{! and(v.caseRecord.Community_Request_Close_Reason__c == null, !v.showSuccessMessage) }">
+            <div class="slds-clearfix">
+                <div class="slds-float_right">
+                    <lightning:button variant="brand" label="REQUEST FOR CLOSURE" title="REQUEST FOR CLOSURE" onclick="{!c.openModel}"/>
+                </div>
+            </div>                
+        </aura:if>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.isModalOpen}">
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <aura:if isTrue="{!!v.showSuccessMessage}">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-title_bold">REQUEST FOR CASE CLOSURE</h2>
+                        <aura:set attribute="else">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-title_bold">THANK YOU</h2>
+                        </aura:set>
+                    </aura:if>                    
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <aura:if isTrue="{! v.errorMessage != ''}">
+                        <div class="slds-notify slds-notify_toast slds-theme_error">
+                            <span class="slds-assistive-text">error</span>
+                            <div class="slds-notify__content">
+                                <h5 class="slds-text-heading_small slds-align_absolute-center">Error Message </h5>
+                                <br/>
+                                <p class="slds-align_absolute-center">{!v.errorMessage}</p>                
+                            </div>
+                        </div>                     
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!!v.showSuccessMessage}">
+                        <div class="slds-text-regular slds-text-align_center"> <b> Please provide the following information for your request to close your case.
+                            <p class="slds-text-align_center"> Requests are sent to support and will be processed as soon as possible.</p> </b></div>
+                        <div>
+                            <div>
+                                <lightning:select name="select1" label="Community Request Close Reason" required="true" aura:id="reason">
+                                    <aura:iteration items="{!v.options}" var="option">
+                                        <option text="{!option}"></option>
+                                    </aura:iteration>
+                                </lightning:select>                                                             
+                                <br/>
+                                <lightning:textarea name="input1" label="Close Reason Comments" required="true" aura:id="comment"/>
+                            </div>
+                            
+                        </div>
+                        <aura:set attribute="else">
+                            <div>
+                                <div class="slds-text-regular slds-text-align_center">Your closure request has been received.</div> 
+                                <div class="slds-text-regular slds-text-align_center">Your technician will be notified, and will action your request shortly.</div>                                
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    <aura:if isTrue="{!!v.showSuccessMessage}">
+                        <div>
+                            <lightning:button variant="neutral"
+                                              label="CANCEL"
+                                              title="CANCEL"
+                                              onclick="{! c.closeModel }"/>
+                            <lightning:button variant="brand"
+                                              label="SUBMIT"
+                                              title="SUBMIT"
+                                              onclick="{!c.submitDetails}"/>                 
+                        </div>
+                        <aura:set attribute="else">
+                            <div>
+                                <lightning:button variant="neutral"
+                                                  label="OK"
+                                                  title="OK"
+                                                  onclick="{! c.closeModel }"/>                            
+                            </div>
+                        </aura:set>
+                    </aura:if>                    
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+</aura:component>

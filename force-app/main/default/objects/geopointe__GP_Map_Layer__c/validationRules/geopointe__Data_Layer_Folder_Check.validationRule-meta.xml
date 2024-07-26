@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>geopointe__Data_Layer_Folder_Check</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+	LOWER(TEXT(geopointe__Type__c)) = &apos;datalayer&apos;,
+	AND(NOT(geopointe__Personal__c), ISBLANK(geopointe__Folder__c))
+)</errorConditionFormula>
+    <errorDisplayField>geopointe__Folder__c</errorDisplayField>
+    <errorMessage>Data layers must be associated with a folder if they are not personal.</errorMessage>
+</ValidationRule>

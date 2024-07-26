@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_Lost_Note_Required</fullName>
+    <active>true</active>
+    <description>User is required to enter a comment on why the opportunity was lost if the lost reason is &quot;Lacks Key Feature&quot; or &quot;Performance/Failed POC&quot;.  User Story SFDC-1184.</description>
+    <errorConditionFormula>AND (
+     OR (
+         ISPICKVAL(ReasonLost__c, &apos;Lacks Key Feature / Did not Meeting Reqs.&apos;),
+         ISPICKVAL(ReasonLost__c, &apos;Performance / Failed POC&apos;)
+        ),
+     ISBLANK(ReasonLostNotes__c)
+    )</errorConditionFormula>
+    <errorMessage>You must enter a Lost Reason Note if the lost reason is either &apos;Lacks Key Feature&apos; or &apos;Performance/Failed POC&apos;.</errorMessage>
+</ValidationRule>

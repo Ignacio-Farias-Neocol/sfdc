@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Distributor_Field_has_Disti</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY) ,
+ISCHANGED(StageName),
+NOT(ISNEW()), 
+NOT(ISBLANK( Terr_Region__c)),
+NOT(ISBLANK(Distributor__c)),
+IF(Terr_Region__c != &quot;JAPAN - REGION&quot; &amp;&amp;
+(TEXT(Distributor__r.Type) = &quot;Customer&quot; ||
+TEXT(Distributor__r.Type) = &quot;End User - MSP&quot; ||
+TEXT(Distributor__r.Type) = &quot;Partner - Hybrid&quot;||
+TEXT(Distributor__r.Type) = &quot;Partner - MSP&quot;||
+TEXT(Distributor__r.Type) = &quot;Partner - Referral&quot; ||
+TEXT(Distributor__r.Type) = &quot;Partner - Reseller&quot; ||
+TEXT(Distributor__r.Type) = &quot;Partner - Sonian&quot; ||
+TEXT(Distributor__r.Type) = &quot;End User - Sonian&quot;),
+TRUE,
+IF(Terr_Region__c = &quot;JAPAN - REGION&quot; &amp;&amp;
+(TEXT(Distributor__r.Type) = &quot;Customer&quot; ||
+TEXT(Distributor__r.Type) = &quot;End User - MSP&quot; ||
+TEXT(Distributor__r.Type) = &quot;Partner - Hybrid&quot;||
+TEXT(Distributor__r.Type) = &quot;Partner - MSP&quot;||
+TEXT(Distributor__r.Type) = &quot;Partner - Referral&quot; ||
+TEXT(Distributor__r.Type) = &quot;Partner - Sonian&quot; ||
+TEXT(Distributor__r.Type) = &quot;End User - Sonian&quot;),
+TRUE,
+FALSE)))</errorConditionFormula>
+    <errorMessage>Please make sure you have selected a Distributor.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <description>Called from PB: Contact Management - Create/Edit used to update record type after validation</description>
+    <interviewLabel>Update Contact Record Type {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Contact Record Type</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Contact_Record_Type</name>
+        <label>Get Contact Record Type</label>
+        <locationX>246</locationX>
+        <locationY>127</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Contact_Recod_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Contact</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Contact</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Contact_Record_Type_Id</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Contact_Recod_Type</name>
+        <label>Update Contact Recod Type</label>
+        <locationX>442</locationX>
+        <locationY>133</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Contact_Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Contact_Record_Type_Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+    </recordUpdates>
+    <startElementReference>Get_Contact_Record_Type</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>Contact_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Contact_Record_Type_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

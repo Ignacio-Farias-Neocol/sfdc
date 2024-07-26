@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Close_with_Expired_Deal_Reg</fullName>
+    <active>true</active>
+    <description>Blocks Closed Won of Opportunity with deal registration that expired before the Close Date</description>
+    <errorConditionFormula>AND(
+OR(
+Deal_Reg_Expiration__c&lt;CloseDate,
+Deal_Reg_Exp_Date__c&lt;CloseDate),
+OR( TEXT(StageName)=&quot;Closed Won&quot;,
+TEXT(StageName)=&quot;Order in Process&quot;)
+)</errorConditionFormula>
+    <errorMessage>The Deal Registration on this Opportunity has expired OR the Close Date of your Opportunity is past the Deal Reg Expiration Date. Please extend the Deal Reg Expiration Date OR move the Close Date of your Opportunity to today.</errorMessage>
+</ValidationRule>

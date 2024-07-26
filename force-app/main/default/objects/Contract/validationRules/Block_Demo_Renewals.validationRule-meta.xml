@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Demo_Renewals</fullName>
+    <active>false</active>
+    <description>Prevents Renewal Opportunity or Quote generation from Demo contracts.</description>
+    <errorConditionFormula>AND( 
+SBQQ__Order__r.SBQQ__Quote__r.HasDemoProducts__c, 
+OR(SBQQ__RenewalForecast__c, 
+SBQQ__RenewalQuoted__c) 
+)</errorConditionFormula>
+    <errorDisplayField>AccountId</errorDisplayField>
+    <errorMessage>Demo products may not be renewed.</errorMessage>
+</ValidationRule>

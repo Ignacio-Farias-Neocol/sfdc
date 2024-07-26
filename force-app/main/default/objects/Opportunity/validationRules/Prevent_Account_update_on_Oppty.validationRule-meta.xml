@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Account_update_on_Oppty</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED(AccountId),
+OR(
+NOT(ISBLANK(SBQQ__AmendedContract__c)),
+NOT(ISBLANK(SBQQ__RenewedContract__c))),
+NOT (
+OR (
+$Profile.Name = &apos;System Administrator&apos;,
+$Permission.Access_to_Account_Name_Change_on_Oppty
+)))</errorConditionFormula>
+    <errorMessage>You can’t update the Account on a Renewal or Amendment Oppty. Create an internal ticket to move the Contract to a different Account. Include a justification and any/all supporting documentation. After the Contract is moved, recreate your Opportunity.</errorMessage>
+</ValidationRule>

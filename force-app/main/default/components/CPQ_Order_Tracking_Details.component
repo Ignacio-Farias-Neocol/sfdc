@@ -1,0 +1,58 @@
+<apex:component access="global" >
+    <apex:attribute name="orderSO" 
+                    description="This is the Order SObject." 
+                    type="Order" />
+    <apex:attribute name="asPDFAttachment" 
+                    description="Where is it used." 
+                    type="Boolean" />
+
+
+<table style="font-family:Arial;font-size:20px;margin-top:20px;color:#42525f;width:100%; background-color:#f2f2f2;">
+    <tr>
+        <td style="color:grey"><apex:image id="Logo" width="150px" value="{!IF(asPDFAttachment=TRUE, 'https://barracuda2018.my.salesforce.com/resource/1578002621000/BarracudaLogo', 'https://barracuda2018.my.salesforce.com/servlet/servlet.ImageServer?id=015f2000002xyvf&oid=00DRT000000xfFG&lastMod=1550892259000')}" /></td>
+        <td style="color:grey; text-align:right;">TRACKING DETAILS </td>
+    </tr>
+ </table>
+
+<p style="font-family:Arial;font-size:15px">Hi,</p>
+<p style="font-family:Arial;font-size:15px">Here are the shipping details for your order.</p>
+<div style="border-bottom:1px solid #ccc;padding-bottom:20px">
+    <table  cellspacing="0" border="1" style="font-family:Arial;width:100%;border-color:white">
+        <thead style="font-size:16px;color:white;font-weight:bold;background-color:#42525f;">
+            <tr>
+                <th style="text-align:center;white-space:nowrap;padding:15px;padding-right:20px;width:30%">Product(s)</th>
+                <th style="text-align:center;white-space:nowrap;padding:15px;padding-right:20px;width:40%">Product Description</th>
+                <th style="text-align:center;white-space:nowrap;padding:15px;width:15%">Serial Number</th>
+                <th style="text-align:center;padding:15px;width:15%">Tracking #(s)</th>
+            </tr>
+        </thead>
+
+        <tbody style="font-size:13px">
+            <apex:repeat var="oi" value="{!orderSO.OrderItems}">
+                 <apex:outputPanel rendered="{!oi.SBCF_Is_Shipped__c = TRUE}">
+                      <tr>
+                            <td style="text-align:center;white-space:nowrap;padding:5px"><apex:outputField value="{!oi.SBQQ__QuoteLine__r.Output_Product_Code__c}"/></td>
+                            <td style="text-align:center;white-space:nowrap;padding:5px"><apex:outputField value="{!oi.SBQQ__QuoteLine__r.Output_Product_Description__c}"/></td>
+                            <td style="text-align:center;overflow-wrap:normal;padding:5px;"><apex:outputField value="{!oi.SBQQ__Asset__r.SerialNumber}"/></td>
+                            <td style="text-align:center;padding:5px"><apex:outputField value="{!oi.SBQQ__Asset__r.TrackingNumber__c}"/></td>
+                      </tr>   
+                </apex:outputPanel>
+            </apex:repeat>
+        </tbody>
+    </table>
+       <script>                 
+                    $("td").each(function() {
+    if (this.innerText === '') {
+        this.closest('tr').remove();
+    }
+});
+</script>
+</div>
+
+<!--
+<p style="font-family:Arial; ̰;padding-top:15px;padding-bottom:20px;">Thank you for your Business!</p>
+{!orderSO.Opportunity.Owner.Name}<br/>
+{!orderSO.Opportunity.Owner.Title}<br/>
+{!orderSO.Opportunity.Owner.Phone}<br/>
+{!orderSO.Opportunity.Owner.Email}<br/> -->
+</apex:component>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Close_Won_Payment_Term_isnot_Credit_Card</fullName>
+    <active>true</active>
+    <description>If payment terms is not credit card then the opportunity needs to have a purchase order number to close won</description>
+    <errorConditionFormula>AND( 
+ISPICKVAL(Business_Group__c, &apos;Core&apos;), 
+ISPICKVAL(StageName, &apos;Closed Won&apos;), 
+NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY ),
+NOT(ISPICKVAL(Payment_Terms__c, &apos;Credit Card&apos;)), 
+NOT(ISPICKVAL(SBQQ__PrimaryQuote__r.SBCF_Order_Type__c, &apos;New - Return&apos;)), 
+NOT(ISPICKVAL(SBQQ__PrimaryQuote__r.SBCF_Order_Type__c, &apos;Renewal - Return&apos;)), 
+ISBLANK(PurchaseOrderID__c), 
+SBQQ__PrimaryQuote__r.Has_RMA_Replace__c=False 
+)</errorConditionFormula>
+    <errorMessage>Oops! Missing Purchase Order No. You must enter a Purchase Order Number to move the Opportunity to Closed Won if &apos;Payment Terms&apos; are anything other than Credit Card.</errorMessage>
+</ValidationRule>

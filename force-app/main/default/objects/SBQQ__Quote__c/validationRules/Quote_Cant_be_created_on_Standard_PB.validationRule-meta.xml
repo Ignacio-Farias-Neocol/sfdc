@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quote_Cant_be_created_on_Standard_PB</fullName>
+    <active>true</active>
+    <description>Quote/ Opportunity should not be created on Standard Pricebook.</description>
+    <errorConditionFormula>AND(
+ISNEW(),
+OR(
+SBQQ__PriceBook__r.Name = &quot;Standard Price Book&quot;,
+SBQQ__PriceBook__r.IsStandard = TRUE),
+NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY))
+
+
+
+/*OR(
+$Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY ,
+$Profile.Name = &apos;System Administrator&apos;)
+)
+)*/</errorConditionFormula>
+    <errorMessage>Quote should not be created using the Standard Price Book. Please populate the Account Territory Hierarchy and try again.</errorMessage>
+</ValidationRule>

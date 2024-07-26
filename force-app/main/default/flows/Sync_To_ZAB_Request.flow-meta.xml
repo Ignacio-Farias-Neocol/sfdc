@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Call API to request ZAB sync</description>
+        <name>Sync_To_ZAB</name>
+        <label>Sync To ZAB</label>
+        <locationX>50</locationX>
+        <locationY>806</locationY>
+        <actionName>ZABSyncRequest</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Screen_Final_Message</targetReference>
+        </connector>
+        <inputParameters>
+            <name>accountIdList</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>ZABSyncRequest</nameSegment>
+        <outputParameters>
+            <assignToReference>Message</assignToReference>
+            <name>message</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>success</assignToReference>
+            <name>result</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <description>This node should never be executed. However, adding it for redundancy.</description>
+        <name>Default_Outcome_Error_Message</name>
+        <label>Default Outcome Error Message</label>
+        <locationX>578</locationX>
+        <locationY>806</locationY>
+        <assignmentItems>
+            <assignToReference>Message</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>It looks like an option was not selected in the previous screen.</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>success</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Final_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set error message</description>
+        <name>No_Contracts_Error_Message</name>
+        <label>No Contracts Error Message</label>
+        <locationX>697</locationX>
+        <locationY>655</locationY>
+        <assignmentItems>
+            <assignToReference>Message</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No eligible contracts available for sync.</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>success</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Final_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set error message</description>
+        <name>No_Contracts_Error_Message_0</name>
+        <label>No Contracts Error Message</label>
+        <locationX>845</locationX>
+        <locationY>462</locationY>
+        <assignmentItems>
+            <assignToReference>Message</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>You do not have permission to submit the request.</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>success</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Final_Message</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <description>Registers &apos;No&apos; response from the customer.</description>
+        <name>No_Contract_Push</name>
+        <choiceText>No</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <description>Registers &apos;Yes&apos; response by the user</description>
+        <name>Yes_Contract_Push</name>
+        <choiceText>Yes</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <decisions>
+        <description>Check if there are any eligible contracts to be pushed.</description>
+        <name>Check_Eligible_Contracts</name>
+        <label>Check Eligible Contracts</label>
+        <locationX>578</locationX>
+        <locationY>446</locationY>
+        <defaultConnector>
+            <targetReference>No_Contracts_Error_Message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Contracts</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Contracts_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Eligible_Contracts</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_ZAB_Sync_Confirmation</targetReference>
+            </connector>
+            <label>Contracts Present</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if a user has the permission to sync.</description>
+        <name>Decision_Check_User_Has_Permission_to_Sync</name>
+        <label>Check User Has Permission to Sync</label>
+        <locationX>842</locationX>
+        <locationY>206</locationY>
+        <defaultConnector>
+            <targetReference>No_Contracts_Error_Message_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Don&apos;t Allow</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Allow_Sync</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Permission.Submit_ZAB_Sync_Request</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>System Administrator</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Apollo: Custom- Sales Operations</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Eligible_Contracts</targetReference>
+            </connector>
+            <label>Allow Sync</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the user requested ZAB sync.</description>
+        <name>Decision_Request_ZAB_Sync</name>
+        <label>Request ZAB Sync?</label>
+        <locationX>314</locationX>
+        <locationY>686</locationY>
+        <defaultConnector>
+            <targetReference>Default_Outcome_Error_Message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Sync_to_ZAB</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Question_Contract_Push</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Yes_Contract_Push</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sync_To_ZAB</targetReference>
+            </connector>
+            <label>Sync to ZAB</label>
+        </rules>
+        <rules>
+            <name>Do_Not_Sync_to_ZAB</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Question_Contract_Push</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>No_Contract_Push</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Do Not Sync to ZAB</label>
+        </rules>
+    </decisions>
+    <description>Flow initiating the request to push subscription information to ZAB</description>
+    <interviewLabel>Sync To ZAB Request {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Sync To ZAB Request</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Check if there are any eligible contracts to be pushed</description>
+        <name>Get_Eligible_Contracts</name>
+        <label>Get Eligible Contracts</label>
+        <locationX>578</locationX>
+        <locationY>326</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Eligible_Contracts</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SBQQ__ActiveContract__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Business_Group__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>MSP</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Contract</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <description>Screen displaying error message.</description>
+        <name>Screen_Final_Message</name>
+        <label>Final Message</label>
+        <locationX>887</locationX>
+        <locationY>1197</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Message_Text</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;{!Message}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>success</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Success_Message_Text</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(2, 126, 70);&quot;&gt;{!Message}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>success</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen asking users to confirm the request to push contract information to ZAB.</description>
+        <name>Screen_ZAB_Sync_Confirmation</name>
+        <label>ZAB Sync Confirmation</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decision_Request_ZAB_Sync</targetReference>
+        </connector>
+        <fields>
+            <name>Question_Contract_Push</name>
+            <choiceReferences>Yes_Contract_Push</choiceReferences>
+            <choiceReferences>No_Contract_Push</choiceReferences>
+            <dataType>Boolean</dataType>
+            <defaultSelectedChoiceReference>No_Contract_Push</defaultSelectedChoiceReference>
+            <fieldText>Are you sure you want to proceed with requesting the contract push?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>716</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Decision_Check_User_Has_Permission_to_Sync</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Message variable to capture messages to be displayed on the screen.</description>
+        <name>Message</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Record Id passed by the custom action</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Determines if the request was successful or not</description>
+        <name>success</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

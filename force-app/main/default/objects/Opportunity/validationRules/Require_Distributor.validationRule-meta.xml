@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Distributor</fullName>
+    <active>true</active>
+    <description>Require Distributor when Reseller&apos;s Partner Number is blank</description>
+    <errorConditionFormula>AND(Auto_Renewal_Eligible_Core__c = FALSE,
+OR(ISPICKVAL(StageName, &apos;Order in Process&apos;), ISPICKVAL(StageName, &apos;Closed Won&apos;)),
+ISPICKVAL(Business_Group__c, &apos;Core&apos;),
+Distributor__c = NULL,
+Reseller__c &lt;&gt; NULL,
+ISPICKVAL(Reseller__r.Partner_Level__c, &apos;Affiliate&apos;),
+ISBLANK(Reseller__r.Partner_Number__c),
+ NOT( ISNEW() ) )</errorConditionFormula>
+    <errorMessage>Affiliate partners without a valid partner number are required to purchase through a distributor. Please add a distributor to your opportunity and update your quote.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>sets the contact center based on the email from address and case owner</description>
+        <name>set_contact_center</name>
+        <label>set contact center</label>
+        <locationX>50</locationX>
+        <locationY>397</locationY>
+        <actionName>CaseModelFlowHelper</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>multiplePremiumEmails</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>caseList</name>
+            <value>
+                <elementReference>CaseObj</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>CaseModelFlowHelper</nameSegment>
+        <outputParameters>
+            <assignToReference>modifiedCaseRecord</assignToReference>
+            <name>output</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <name>multiplePremiumEmails</name>
+        <label>multiplePremiumEmails</label>
+        <locationX>111</locationX>
+        <locationY>562</locationY>
+        <assignmentItems>
+            <assignToReference>CaseObj.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>modifiedCaseRecord.Priority</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseObj.Is_Priority_updated__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>modifiedCaseRecord.Is_Priority_updated__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseObj.Premium_Emails__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>modifiedCaseRecord.Premium_Emails__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseObj.Contact_Center_Workaround__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>modifiedCaseRecord.Contact_Center_Workaround__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseObj.IsProfessionalService__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>modifiedCaseRecord.IsProfessionalService__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_CaseObj</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <description>semi colon string</description>
+        <name>semiColon</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>;</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Is_Null_Case</name>
+        <label>Is Null Case</label>
+        <locationX>393</locationX>
+        <locationY>337</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCase</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>set_contact_center</targetReference>
+            </connector>
+            <label>Has Case</label>
+        </rules>
+    </decisions>
+    <description>Set case from address &amp; Priority from emailmessage.toAddress if toAddress contains more than one email address - Optimized Flow</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>casePriority</name>
+        <dataType>String</dataType>
+        <expression>IF({!isCasePremium}, &apos;P2&apos;, &apos;P3&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>ContactCenter</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;emeasupport_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;emeasupport@barracuda.com&apos;), &apos;EMEA&apos;, 
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;emeapremiumsupport_team_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;emeapremiumsupport_team@barracuda.com&apos;), &apos;EMEA PREMIUM&apos;, 
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;emeaprofessionalservice_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;emeaprofessionalservice@barracuda.com&apos;), &apos;EMEA&apos;,
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;apac_professionalservice_team_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;apac_professionalservice_team@barracuda.com&apos;), &apos;APAC&apos;,
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;indiasupport_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;wafsupportteam_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;indiasupport@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;wafsupportteam@barracuda.com&apos;), &apos;INDIA&apos;, 
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;wafpremium_team_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;wafpremiumsupport_team@barracuda.com&apos;), &apos;INDIA PREMIUM&apos;, 
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;support_qa@barracuda.com.cn&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;support@barracuda.com.cn&apos;), &apos;CHINA&apos;, 
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;jsupport_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;jsupport@barracuda.com&apos;), &apos;JAPAN&apos;, 
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;intronis_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;support_qa@barracudamsp.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;intronis@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;support@barracudamsp.com&apos;), &apos;MSP&apos;, 
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;mwsupport_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;mwsupport@barracuda.com&apos;), &apos;MW&apos;, 
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;archivetechsupport@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;techsupport@sonian.net&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;archivetechsupport_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;techsupport_qa@sonian.net&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;sonian&apos;), &apos;SONIAN&apos;, 
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;premiumsupport_team_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;premiumsupport_team@barracuda.com&apos;), &apos;AMERICAS PREMIUM&apos;,
+
+
+IF(CONTAINS({!CaseObj.From_Address_New__c}, &apos;support_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;techsupport_qa@sonian.net&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;msp_support_qa@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;support@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;support03@barracuda.com&apos;) || CONTAINS({!CaseObj.From_Address_New__c}, &apos;msp_support@barracuda.com&apos;) , &apos;AMERICAS&apos;,
+
+NULL)))))))))))))</expression>
+    </formulas>
+    <formulas>
+        <name>IsPremiumCcEmail</name>
+        <dataType>String</dataType>
+        <expression>CASE(LOWER({!EmailMessageObj.CcAddress}),&quot;emeapremiumsupport_team@barracuda.com&quot;,&quot;true&quot;,&quot;premiumsupport_team@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremiumsupport@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremiumsupport_team@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremium_team@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremium_team_qa@barracuda.com&quot;,&quot;true&quot;,&quot;emeapremiumsupport_team_qa@barracuda.com&quot;,&quot;true&quot;,&quot;premiumsupport_team_qa@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremiumsupport_qa@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremiumsupport_team_qa@barracuda.com&quot;,&quot;true&quot;,&quot;false&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>IsPremiumToEmail</name>
+        <dataType>String</dataType>
+        <expression>CASE(LOWER({!EmailMessageObj.ToAddress}),&quot;emeapremiumsupport_team@barracuda.com&quot;,&quot;true&quot;,&quot;premiumsupport_team@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremiumsupport@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremiumsupport_team@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremium_team@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremium_team_qa@barracuda.com&quot;,&quot;true&quot;,&quot;emeapremiumsupport_team_qa@barracuda.com&quot;,&quot;true&quot;,&quot;premiumsupport_team_qa@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremiumsupport_qa@barracuda.com&quot;,&quot;true&quot;,&quot;wafpremiumsupport_team_qa@barracuda.com&quot;,&quot;true&quot;,&quot;false&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>Priority</name>
+        <dataType>String</dataType>
+        <expression>IF
+(
+	{!CaseObj.Is_Priority_updated__c},
+	TEXT({!CaseObj.Priority}),
+	IF(
+		OR(
+			{!IsPremiumCcEmail} = &apos;true&apos;,
+			{!IsPremiumToEmail} = &apos;true&apos;,
+			CONTAINS(LOWER({!EmailMessageObj.ToAddress}),&quot;premiumsupport_team&quot;)
+		),
+		&apos;P2&apos;,
+		&apos;P3&apos;
+	)
+)</expression>
+    </formulas>
+    <interviewLabel>Email Message - Set Case.FromAddress {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Email Message - Set Case.FromAddress</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>GetCase</name>
+        <label>GetCase</label>
+        <locationX>112</locationX>
+        <locationY>202</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Null_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>EmailMessageObj.RelatedToId</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputReference>CaseObj</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Priority</queriedFields>
+        <queriedFields>Premium_Emails__c</queriedFields>
+        <queriedFields>Is_Priority_updated__c</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+        <queriedFields>From_Address_New__c</queriedFields>
+        <queriedFields>Contact_Center_Workaround__c</queriedFields>
+        <queriedFields>IsProfessionalService__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>getEmailMessage</name>
+        <label>getEmailMessage</label>
+        <locationX>528</locationX>
+        <locationY>200</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetCase</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>passEmailMessageID</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>1</stringValue>
+            </value>
+        </filters>
+        <object>EmailMessage</object>
+        <outputReference>EmailMessageObj</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ToAddress</queriedFields>
+        <queriedFields>RelatedToId</queriedFields>
+        <queriedFields>CcAddress</queriedFields>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
+    <recordUpdates>
+        <description>update case after from address assignment</description>
+        <name>Update_CaseObj</name>
+        <label>Update CaseObj</label>
+        <locationX>530</locationX>
+        <locationY>552</locationY>
+        <inputReference>CaseObj</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>517</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>getEmailMessage</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <variables>
+        <name>CaseObj</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>contact_center</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>EmailMessageObj</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>EmailMessage</objectType>
+    </variables>
+    <variables>
+        <name>isCasePremium</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>check if premium support case</description>
+        <name>isPremiumSupportCase</name>
+        <dataType>Boolean</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>modifiedCaseRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>passEmailMessageID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Case record with updated Contact Center</description>
+        <name>transformedCaseRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

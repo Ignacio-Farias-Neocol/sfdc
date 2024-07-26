@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Contact_Phone_Number</fullName>
+    <active>true</active>
+    <description>Check Phone (21 chars limit) has only numbers &amp; phone symbols (pluses, hyphens, and parentheses)</description>
+    <errorConditionFormula>IF(
+AND(
+(ISCHANGED(Disposition__c)&amp;&amp; (TEXT(Disposition__c) = &quot;Sales Accepted Lead&quot; ||
+TEXT(Disposition__c) = &quot;Approved&quot;)),  
+NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+NOT($Permission.BYPASS_FOR_MARKETO),
+NOT(ISBLANK(Lead__c)),
+((LEN(Lead__r.Phone) &gt; 0 &amp;&amp;
+NOT(REGEX(Lead__r.Phone,&quot;[0-9+ ()-]+&quot;))
+)|| 
+LEN(Lead__r.Phone) &gt; 21)),
+TRUE,
+IF(AND(
+(ISCHANGED(Disposition__c)&amp;&amp; (TEXT(Disposition__c) = &quot;Sales Accepted Lead&quot; ||
+TEXT(Disposition__c) = &quot;Approved&quot;)),
+NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+NOT($Permission.BYPASS_FOR_MARKETO),
+NOT(ISBLANK(Contact__c)),
+((LEN(Contact__r.Phone) &gt; 0 &amp;&amp;
+NOT(REGEX(Contact__r.Phone,&quot;[0-9+ ()-]+&quot;))
+)|| 
+LEN(Contact__r.Phone) &gt; 21)),
+TRUE,
+FALSE))</errorConditionFormula>
+    <errorMessage>Check the phone number associated with your Hot List Lead or Contact.  It has a limit of 21 characters and should only contain numbers and phone symbols (pluses, hyphens, and parentheses).</errorMessage>
+</ValidationRule>

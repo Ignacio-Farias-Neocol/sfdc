@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <decisions>
+        <name>Update_Serial_Capacity</name>
+        <label>Update Serial Capacity</label>
+        <locationX>752</locationX>
+        <locationY>508</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Serial</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CheckSerial</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Serial_with_Capacity</targetReference>
+            </connector>
+            <label>Check Serial</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Verify_the_conditions</name>
+        <label>Verify the conditions</label>
+        <locationX>512</locationX>
+        <locationY>358</locationY>
+        <defaultConnector>
+            <targetReference>Update_Serial_Capacity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Sub_and_Parent_Sub_are_same_for_MSP</name>
+            <conditionLogic>8 AND 1 AND 2 AND 3 AND 4 AND (5 OR 6 OR 7)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MSP</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subscription__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent_Subscription__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subscription__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Parent_Subscription__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subscription__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent_Subscription__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Serial__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Serial_Parent_Product_Name</targetReference>
+            </connector>
+            <label>Sub and Parent Sub are same for MSP</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>Asset</name>
+        <dataType>String</dataType>
+        <expression>IF(BEGINS({!$Record.Subscription__r.SBQQ__RootId__c}, &apos;02i&apos;) , {!$Record.Subscription__r.SBQQ__RootId__c}, null)</expression>
+    </formulas>
+    <formulas>
+        <name>CheckAsset</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(AND(
+{!$Record.Asset__c} &lt;&gt; NULL,
+{!$Record.Asset__r.AccountId} &lt;&gt; NULL,
+OR(ISNEW(),
+ISCHANGED({!$Record.Asset__c}))),TRUE, FALSE)</expression>
+    </formulas>
+    <formulas>
+        <name>CheckSerial</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(AND(ISNEW(),
+{!$Record.Serial__c} &lt;&gt; NULL,
+{!$Record.Subscription__c} &lt;&gt; NULL), TRUE, FALSE)</expression>
+    </formulas>
+    <formulas>
+        <name>CheckSubscription</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(AND({!$Record.Subscription__c}&lt;&gt; NULL,
+OR(ISNEW(),
+ISCHANGED({!$Record.Subscription__c}))),TRUE, FALSE)</expression>
+    </formulas>
+    <interviewLabel>Assigned Serial Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Assigned Serial Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Serial_Parent_Product_Name</name>
+        <label>Update Serial Parent Product Name</label>
+        <locationX>541</locationX>
+        <locationY>513</locationY>
+        <connector>
+            <targetReference>Update_Serial_Capacity</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Parent_Product_Name__c</field>
+            <value>
+                <elementReference>$Record.Parent_Subscription__r.SBQQ__ProductName__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Serial__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Serial_with_Capacity</name>
+        <label>Update Serial with Capacity</label>
+        <locationX>991</locationX>
+        <locationY>513</locationY>
+        <inputAssignments>
+            <field>Recent_Quantity__c</field>
+            <value>
+                <elementReference>$Record.Subscription__r.SBQQ__Quantity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Serial__r</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>393</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Verify_the_conditions</targetReference>
+        </connector>
+        <object>Assigned_Serial__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

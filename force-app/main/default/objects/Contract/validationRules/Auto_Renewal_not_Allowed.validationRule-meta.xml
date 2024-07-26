@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Auto_Renewal_not_Allowed</fullName>
+    <active>true</active>
+    <description>Based on Region and Account Type</description>
+    <errorConditionFormula>AND(
+	CONTAINS(TEXT( Auto_Renewal_Status_Core__c ), &quot;Included&quot;),
+	NOT(ISBLANK(SBQQ__Opportunity__c )),
+	NOT(ISBLANK(SBQQ__Opportunity__r.Bill_To_Account__c)),
+	OR(
+		NOT(SBQQ__Opportunity__r.Bill_To_Account__r.Terr_Theater__c = &apos;AMERICAS&apos;),
+		OR(
+			CONTAINS(TEXT(SBQQ__Opportunity__r.Bill_To_Account__r.Type), &apos;MSP&apos;),
+			CONTAINS(TEXT(SBQQ__Opportunity__r.Bill_To_Account__r.Type), &apos;Sonian&apos;),
+			CONTAINS(TEXT(SBQQ__Opportunity__r.Bill_To_Account__r.Type), &apos;Distributor&apos;)
+		)
+	)
+)</errorConditionFormula>
+    <errorMessage>This Contract is NOT eligible for Auto Renewal (Core). Please clear out the Auto Renewal Status (Core) field.</errorMessage>
+</ValidationRule>

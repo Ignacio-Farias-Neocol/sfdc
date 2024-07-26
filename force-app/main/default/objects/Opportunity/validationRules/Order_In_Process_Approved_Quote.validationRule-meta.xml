@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order_In_Process_Approved_Quote</fullName>
+    <active>true</active>
+    <description>For Core &amp; Sonian, Opty Stage cannot be &apos;Order In Process&apos; if there is no approved quote</description>
+    <errorConditionFormula>AND(
+NOT(ISPICKVAL( Type , &apos;De-book Re-book&apos;)),
+ISPICKVAL( StageName , &apos;Order in Process&apos;),
+NOT(ISPICKVAL(SBQQ__PrimaryQuote__r.ApprovalStatus__c,&quot;Approved&quot;)),
+OR(ISPICKVAL(Business_Group__c,&quot;Core&quot;),ISPICKVAL(Business_Group__c,&quot;Sonian&quot;), ISPICKVAL(Business_Group__c,&quot;MSP&quot;)),
+NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+NOT(  $Profile.Name = &apos;Apollo: Custom- Customer Services&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>End_Customers_Under_an_MSP_Contract__c</errorDisplayField>
+    <errorMessage>You can&apos;t move the Opportunity to &apos;Order in Process&apos; until the Primary Quote is approved.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Group_validation_with_Accounts</fullName>
+    <active>true</active>
+    <description>Business Group of the opportunity should be in sync with Parent Account, Bill To Account, Ship To Account, Reseller and Distributor. Otherwise stop opportunity record to move forward from Accepted/Not Contacted stage to any other stages.</description>
+    <errorConditionFormula>AND(
+BypassBusinessGroupValidation__c = FALSE,
+NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY) ,
+NOT(ISNEW()),
+ISCHANGED( StageName ),
+NOT(ISPICKVAL(StageName, &apos;Not Contacted&apos;)),
+NOT(ISPICKVAL(StageName, &apos;Accepted&apos;)),
+
+NOT(ISPICKVAL(Business_Group__c, &apos;--None--&apos;)), 
+ISBLANK(SBQQ__AmendedContract__c),
+ISBLANK( SBQQ__RenewedContract__c),
+
+IF(((NOT(ISBLANK(AccountId)) &amp;&amp; Account.BusinessGroup__c &lt;&gt; TEXT(Business_Group__c)) ||
+(NOT(ISBLANK( Reseller__c )) &amp;&amp; Reseller__r.BusinessGroup__c &lt;&gt; TEXT(Business_Group__c))||
+(NOT(ISBLANK( Distributor__c )) &amp;&amp; Distributor__r.BusinessGroup__c &lt;&gt; TEXT(Business_Group__c)) ||
+(NOT(ISBLANK( Bill_To_Account__c )) &amp;&amp; Bill_To_Account__r.BusinessGroup__c &lt;&gt; TEXT(Business_Group__c)) ||
+(NOT(ISBLANK( Ship_To_Account__c )) &amp;&amp; Ship_To_Account__r.BusinessGroup__c &lt;&gt; TEXT(Business_Group__c))),
+TRUE, FALSE)
+
+)</errorConditionFormula>
+    <errorDisplayField>End_Customers_Under_an_MSP_Contract__c</errorDisplayField>
+    <errorMessage>The Business Group of the Opportunity doesn&apos;t match with it&apos;s associated any of the Accounts (Account/Reseller/Distributor/Bill To Account/Ship To Account)</errorMessage>
+</ValidationRule>

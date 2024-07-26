@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Formatted_Email_Addresses</fullName>
+    <active>true</active>
+    <description>Checks Requestor_Buyer_email__c, Bill_To_Email__c  (64 chars limit) has the correct format and no invalid after the suffix &apos;.&apos;</description>
+    <errorConditionFormula>AND(
+NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+OR(
+AND(
+LEN(Bill_To_Email__c) &gt; 0,
+NOT(REGEX(UPPER(Bill_To_Email__c),&quot;^[A-Z0-9._%+-/!#$%&amp;&apos;*=?^_`{|}~]+@[A-Z0-9.-]+\\.[A-Z]{2,}$&quot;))
+),
+LEN(Bill_To_Email__c) &gt; 64)
+
+)</errorConditionFormula>
+    <errorDisplayField>Employee_Count_Override__c</errorDisplayField>
+    <errorMessage>Please check that the Requestor Buyer Email, Bill To Email, &amp; Ship To Email have the correct format, character limit (64 chars), and that no invalid characters are entered after the suffix &apos;.&apos;</errorMessage>
+</ValidationRule>

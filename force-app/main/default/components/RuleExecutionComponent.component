@@ -1,0 +1,89 @@
+<apex:component controller="RuleExecutionComponentController" allowDML="true">
+    <style>
+        /*Style class used to center the content vertically*/       
+        .vertical-center {
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+          width:100%;
+        }
+
+        /* Style class used to center the content horizontally if the page is not launched via custom action*/
+        .horizontal-center {
+            margin: auto;
+            width:50%
+        }
+    </style>
+    <!-- COMPONENT ATTRIBUTES -->
+    <apex:attribute name="rules" assignTo="{!ruleIds}" type="Id[]" description="Rules to be evaluated"/>
+    <apex:attribute name="singleRuleExecution" assignTo="{!runRuleFromRecordPage}" type="Boolean" description="Determines if the rule is run from a record page"/>
+    <apex:attribute name="singleRuleId" assignTo="{!ruleId}" type="Id" description="Rule Id being requested to be executed"/>
+    <!-- /COMPONENT ATTRIBUTES -->
+    <apex:slds />
+    <!-- CONFIRMATION CONTENT -->
+    <div class="slds-scope">
+        <apex:form id="executionConfirmation" styleClass="vertical-center">
+            <!-- Center the div if the component is used in a page which is not launched via custom action -->
+            <div class="slds-box {!IF(runRuleFromRecordPage, '', 'horizontal-center')}" style="padding: 0px">
+                <!-- DIALOG HEADER -->
+                <div class="slds-modal__header slds-text-heading_medium">
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{!$Label.Opp_Owner_Rule_Execution_Dialog_Header}</h2>
+                </div>
+                <!-- /DIALOG HEADER -->
+                <!-- DIALOG BODY -->
+                <div class="slds-modal__content slds-m-top_xx-large slds-m-bottom_xx-large slds-m-left_small slds-m-right_small">
+                    <apex:outputPanel id="modalBody">
+                        <!-- This text is rendered when rules have been selected -->
+                        <apex:outputText value="{!$Label.Opp_Owner_Rule_Execution_Confirmation}" 
+                                         rendered="{!AND(ruleIds.size > 0, NOT(showOKButton))}"/>
+                        <!-- This text is rendered when rules have not been selected -->
+                        <apex:outputText value="{!$Label.Opp_Owner_Rule_No_Rules_Selected}" 
+                                         rendered="{!AND(ruleIds.size = 0, ISBLANK(ruleId),NOT(showOKButton))}"/>
+                        <!-- This text is rendered when user attempts to run an inactive -->
+                        <apex:outputText value="{!$Label.Opp_Owner_Rule_InActive_Rule}" 
+                                         rendered="{!AND(ruleIds.size = 0, NOT(ISBLANK(ruleId)))}"/>                                         
+                        <!-- This text is rendered after the batch job is submitted -->
+                        <apex:outputText value="{!message}" 
+                                         rendered="{!showOKButton}"/>
+                    </apex:outputPanel>
+                </div>
+                <!-- /DIALOG BODY -->
+                <!-- DIALOG FOOTER -->
+                <div  class="slds-modal__footer">
+                    <apex:outputPanel id="modalFooter">
+                        <apex:commandButton action="{!goBack}" 
+                                            value="{!IF(showOKButton, 'OK', 'Cancel')}" 
+                                            id="homeButton" 
+                                            styleClass="slds-button slds-button_neutral" />
+                        <apex:commandButton action="{!runOwnershipRules}" 
+                                            value="Execute"
+                                            id="submitButton" 
+                                            styleClass="slds-button slds-button_brand" 
+                                            rendered="{!AND(ruleIds.size > 0, NOT(showOKButton))}" 
+                                            reRender="modalBody, modalFooter" 
+                                            status="spinner"/>   
+                    </apex:outputPanel>
+                </div>           
+                <!-- /DIALOG FOOTER -->
+            </div>
+            <!-- /CONFIRMATION CONTENT -->
+            <!-- SPINNER -->
+            <apex:actionStatus id="spinner">
+            <apex:facet name="start">
+                <apex:outputPanel >
+                    <div class="slds-spinner_container">
+                    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                        <span class="slds-assistive-text">Executing Rules</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                    </div>
+                </apex:outputPanel>
+            </apex:facet>
+            </apex:actionStatus>
+            <!-- /SPINNER -->             
+        </apex:form> 
+    </div>
+</apex:component>

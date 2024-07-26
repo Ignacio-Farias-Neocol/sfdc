@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Sends an email alert to a case account team PSM about an MSP Case Not resolved or Closed after 7 days</description>
+        <name>Notify_PSM_about_MSP_Case_Not_resolved_or_Closed_after_7_days</name>
+        <label>Notify PSM about MSP Case Not resolved or Closed after 7 days</label>
+        <locationX>390</locationX>
+        <locationY>426</locationY>
+        <actionName>Case.Case_MSP_Notification_when_Not_resolved_or_Closed_after_7_days_to_PSM</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <stringValue>CaseId</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>Case.Case_MSP_Notification_when_Not_resolved_or_Closed_after_7_days_to_PSM</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Sends an email alert to a case account team RAD about an MSP Case Not resolved or Closed after 7 days</description>
+        <name>Notify_RAD_about_MSP_Case_Not_resolved_or_Closed_after_7_days</name>
+        <label>Notify RAD about MSP Case Not resolved or Closed after 7 days</label>
+        <locationX>618</locationX>
+        <locationY>411</locationY>
+        <actionName>Case.Case_MSP_Notification_when_Not_resolved_or_Closed_after_7_days_to_RAD</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Case.Case_MSP_Notification_when_Not_resolved_or_Closed_after_7_days_to_RAD</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <description>Validate whether the account team has a user with Partner Success Manager role</description>
+        <name>Does_PSM_exist</name>
+        <label>Does PSM exist?</label>
+        <locationX>382</locationX>
+        <locationY>218</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>PSM_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UserId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Notify_PSM_about_MSP_Case_Not_resolved_or_Closed_after_7_days</targetReference>
+            </connector>
+            <label>PSM Exists</label>
+        </rules>
+        <rules>
+            <name>PSM_does_not_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UserId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_RAD_Account_Team_Member</targetReference>
+            </connector>
+            <label>PSM does not Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Does_RAD_exist</name>
+        <label>Does RAD exist?</label>
+        <locationX>608</locationX>
+        <locationY>213</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>RDA_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UserId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Notify_RAD_about_MSP_Case_Not_resolved_or_Closed_after_7_days</targetReference>
+            </connector>
+            <label>RDA Exists</label>
+        </rules>
+        <rules>
+            <name>RDA_does_not_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UserId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>RDA does not Exist</label>
+        </rules>
+    </decisions>
+    <interviewLabel>PSM/RAD - MSP Case Notification - Escalated {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>PSM/RAD - MSP Case Notification - Not resolved after 7 days</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Gets the UserId for the Account Teem Member with role Partner Success Manager</description>
+        <name>Get_PSM_Account_Team_Member</name>
+        <label>Get PSM Account Team Member</label>
+        <locationX>390</locationX>
+        <locationY>50</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Does_PSM_exist</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>TeamMemberRole</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Partner Success Manager - MSP</stringValue>
+            </value>
+        </filters>
+        <object>AccountTeamMember</object>
+        <outputAssignments>
+            <assignToReference>UserId</assignToReference>
+            <field>UserId</field>
+        </outputAssignments>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
+    <recordLookups>
+        <description>Get Partner Success Manager account team member</description>
+        <name>Get_RAD_Account_Team_Member</name>
+        <label>Get RAD Account Team Member</label>
+        <locationX>615</locationX>
+        <locationY>48</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Does_RAD_exist</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>TeamMemberRole</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Regional Account Director</stringValue>
+            </value>
+        </filters>
+        <object>AccountTeamMember</object>
+        <outputAssignments>
+            <assignToReference>UserId</assignToReference>
+            <field>UserId</field>
+        </outputAssignments>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_PSM_Account_Team_Member</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Account Id for the case</description>
+        <name>AccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Case for the restore notification</description>
+        <name>CaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>User Id for the email recipient</description>
+        <name>UserId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

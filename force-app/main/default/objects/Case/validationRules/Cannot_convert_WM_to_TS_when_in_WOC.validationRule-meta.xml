@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_convert_WM_to_TS_when_in_WOC</fullName>
+    <active>true</active>
+    <description>Cannot convert Web mEssage to Tech Support case when Status on WM is Waiting for Customer Response</description>
+    <errorConditionFormula>RecordType.DeveloperName = &apos;Technical_Support&apos; &amp;&amp;  Web_Message_Attempt_1__c = true</errorConditionFormula>
+    <errorDisplayField>Account_Map_ID__c</errorDisplayField>
+    <errorMessage>Sorry - We can&apos;t convert the Web Message to a Technical Support Case when the status is &apos;Waiting for Customer Response&apos;. Please move the status to &apos;New&apos; before converting.</errorMessage>
+</ValidationRule>

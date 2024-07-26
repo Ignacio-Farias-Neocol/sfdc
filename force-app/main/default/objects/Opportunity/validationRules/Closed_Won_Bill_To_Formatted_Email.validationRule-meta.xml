@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Won_Bill_To_Formatted_Email</fullName>
+    <active>true</active>
+    <description>Check to see if the Bill To Account has the correct email format for  Bill_To_Email__c  fields (64 chars limit) has the correct format and no invalid after the suffix &apos;.&apos;</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(StageName, &apos;Closed Won&apos;),
+NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+OR(
+AND(
+LEN(Bill_To_Account__r.Bill_To_Email__c) &gt; 0,
+NOT(REGEX(UPPER(Bill_To_Account__r.Bill_To_Email__c),&quot;^[A-Z0-9._%+-/!#$%&amp;&apos;*=?^_`{|}~]+@[A-Z0-9.-]+\\.[A-Z]{2,}$&quot;))
+),
+LEN(Bill_To_Account__r.Bill_To_Email__c) &gt; 64
+)
+)</errorConditionFormula>
+    <errorMessage>Invalid email address format. Please check the fields &apos;Requestor Buyer email&apos;, &apos;Bill To Email&apos;, and &apos;Ship To Email&apos; under the Bill To Account. (64-chars limit and no invalid characters after the suffix &apos;.&apos;)</errorMessage>
+</ValidationRule>

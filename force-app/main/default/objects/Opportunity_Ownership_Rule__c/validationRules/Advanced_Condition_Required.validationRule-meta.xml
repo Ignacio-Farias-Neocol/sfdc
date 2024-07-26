@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Advanced_Condition_Required</fullName>
+    <active>true</active>
+    <description>Advanced condition should not be blank if Conditions Met is custom</description>
+    <errorConditionFormula>AND(ISPICKVAL( Conditions_Met__c, &apos;Custom&apos;), ISBLANK( Advanced_Condition__c ))</errorConditionFormula>
+    <errorDisplayField>Advanced_Condition__c</errorDisplayField>
+    <errorMessage>&apos;Advanced Condition&apos; is required if &apos;Conditions Met&apos; is Custom.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,77 @@
+<template>
+
+    <c-serial-confirmation-modal></c-serial-confirmation-modal>
+    <c-modification-request-modal
+        onrequestcreated={handlerequestcreated}    
+    ></c-modification-request-modal>
+  
+    <!-- ACTION BUTTONS -->
+      <lightning-card
+        title={cardTitle}
+        icon-name={cardTitleIcon}
+        style="display: block;"
+      >
+        
+      <!-- CARD BODY -->
+      
+        <div class="serial-card slds-scrollable_y">
+            <div class="slds-m-around_x-small">
+            <template if:false={showEmptyState}>
+                <lightning-layout multiple-rows="true">
+                <template for:each={serialListData} for:item="serial">
+                    <lightning-layout-item
+                    key={serial.id}
+                    class="slds-m-around_xx-small"
+                    size="12"
+                    >
+                    <!-- EXTERNAL VERSION -->
+                    <template if:true={external}>
+                        <c-serial-tile
+                        serial={serial}
+                        is-read-only={isReadOnly}
+                        onrenewserial={handleRenewSerial}
+                        onshowmodificationrequest={handleShowModificationRequest}
+                        onserialselection={serialSelectionHandler}
+                        account-type={accountType}
+                        data-id={serial.id}
+                    ></c-serial-tile>
+                    </template>
+                    <!-- /EXTERNAL VERSION -->
+    
+                    <!-- INTERNAL VERSION -->
+                    <template if:false={external}>
+                        <c-serial-tile-internal
+                        serial={serial}
+                        account-type={accountType}
+                        subs={serial.subs}
+                        entity-id={entityId}
+                    ></c-serial-tile-internal>
+                    </template>
+                    <!-- /INTERNAL VERSION -->                
+                    </lightning-layout-item>
+                </template>
+                </lightning-layout>        
+            </template>
+            <template if:true={showTotal}>
+                <lightning-card variant="Narrow">
+                <div slot="title"></div>
+                <div class="slds-box slds-box_xx-small ">
+                    <div class="slds-grid slds-grid_align-end slds-p-vertical_xx-small">
+                    <div class="slds-m-around_x-small slds-size_1-of-12 right-aligned">
+                        <div class="custom-box">TOTAL</div>
+                    </div>
+                    <div class="slds-m-around_x-small slds-size_1-of-12 right-aligned">
+                        <div class="custom-box"><lightning-formatted-number value={total} format-style="currency" currency-code={currencyCode} currency-display-as="code"></lightning-formatted-number></p></div>
+                    </div>
+                    </div>
+                </div>
+                </lightning-card>
+            </template>
+            <template if:true={showEmptyState}>
+                <c-empty-state-illustration message={label.noSubsToDisplay}></c-empty-state-illustration>
+            </template>
+            </div>
+        </div>
+      <!-- /CARD BODY -->      
+    </lightning-card>
+  </template>

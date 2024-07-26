@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Renewal_Reps_no_New_Business_Oppty</fullName>
+    <active>true</active>
+    <description>Renewal Reps cannot create New Business Opportunities (Aside from Amendments)</description>
+    <errorConditionFormula>AND(
+$Profile.Name = &apos;Apollo: Custom- Renewals Profile&apos;,
+ ISBLANK(SBQQ__AmendedContract__c),
+ ISPICKVAL(Type, &apos;New Business&apos;),
+NOT( $Permission.New_business_Oppty_permission_to_Customer_Success)
+)</errorConditionFormula>
+    <errorMessage>Sorry! Renewal Reps don&apos;t have permission to create New Business Opportunities.</errorMessage>
+</ValidationRule>

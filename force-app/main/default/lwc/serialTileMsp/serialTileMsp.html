@@ -1,0 +1,54 @@
+<!-- Custom component to be used for creating custom data type for the data table-->
+<template>
+  <div class="slds-m-top_small slds-m-right_small slds-m-left_small">
+    <lightning-card variant="Narrow">
+      <!-- CARD HEADER -->
+      <div slot="title">
+        <h3 style="white-space: normal;">
+          <!--STATUS_ICON-->
+          <!-- <lightning-icon
+            icon-name={localSerial.iconDetail.statusIcon}
+            variant={localSerial.iconDetail.statusIconVariant}
+            size="small"
+            class="slds-m-right_small"
+            alternative-text={localSerial.iconDetail.statusIconAltText}
+            title={localSerial.iconDetail.statusIconTitle}
+          ></lightning-icon> -->
+          <!--/STATUS_ICON-->
+          <!--NAME-->
+          {localSerial.serialNumber} ({localSerial.subscription.productCode})
+          <!--/NAME-->
+          <!--CAPACITY-->
+          <lightning-badge label={localSerial.capacity} class="slds-m-left_small"></lightning-badge>
+          <!--/CAPACITY-->
+        </h3>
+      </div>
+      <!-- /CARD HEADER-->
+
+      <!--SERIAL_FIELDS-->
+      <div class="slds-m-around_small">
+        <div class="slds-m-around_small">
+          <div class="slds-form-element slds-form-element_readonly">
+            <span class="slds-form-element__label">SMB Name</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static">{localSerial.smbName}</div>
+            </div>
+          </div>
+          <div class="slds-form-element slds-form-element_readonly">
+            <span class="slds-form-element__label">Product Name</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static">{localSerial.subscription.productName}</div>
+            </div>
+          </div>
+          <div class="slds-form-element slds-form-element_readonly">
+            <span class="slds-form-element__label">Echo Identifier</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static">{localSerial.subscription.echoIdentifier}</div>
+            </div>
+          </div>          
+        </div>
+      </div>
+      <!--/SERIAL_FIELDS-->
+    </lightning-card>
+  </div>
+</template>

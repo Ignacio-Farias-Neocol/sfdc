@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Limit_Size_Account_Name</fullName>
+    <active>true</active>
+    <description>Limits the size of Account.Name to 83 characters</description>
+    <errorConditionFormula>AND(
+NOT(OR($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY,$Permission.Bypass_Account_Name_Limit_Size)),
+LEN(Name) &gt; 83
+)</errorConditionFormula>
+    <errorDisplayField>Employee_Count_Override__c</errorDisplayField>
+    <errorMessage>Make sure the Name is limited to 83 chars</errorMessage>
+</ValidationRule>

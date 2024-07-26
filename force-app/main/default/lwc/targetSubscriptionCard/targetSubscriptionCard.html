@@ -1,0 +1,48 @@
+<template>
+  <lightning-card title={subData.subscriptionProductCode}>
+    <lightning-button label="Map Serials" variant="brand" slot="actions" onclick={mapSerialsToSubs}></lightning-button>
+    <div class="slds-m-around_x-small">
+      <div class="slds-form-element slds-form-element_readonly">
+        <span class="slds-form-element__label">Product Name</span>
+        <div class="slds-form-element__control">
+          <div class="slds-form-element__static">
+            {subData.subscriptionProductName}
+          </div>
+        </div>
+      </div>
+      <div class="slds-form-element slds-form-element_readonly">
+        <span class="slds-form-element__label">Echo Identifier</span>
+        <div class="slds-form-element__control">
+          <div class="slds-form-element__static">
+            {subData.subscriptionEchoId}
+          </div>
+        </div>
+      </div>
+      <!-- BUTTON TO SHOW HIDE SERIALS -->
+      <div class="slds-m-bottom_small">
+        <lightning-button
+        variant="base"
+        label="Mapped Serials"
+        title="Serials moved to this subscription"
+        icon-name={iconName}
+        onclick={showHideSerials}
+        disabled={disableButton}
+      ></lightning-button>
+      </div>
+      <!-- /BUTTON TO SHOW HIDE SERIALS -->
+      <!-- SERIALS MOVED TO THIS SUBSCRIPTION -->
+      <div class={tableVisibility}>
+        <lightning-datatable
+                key-field="id"
+                data={serialListData}
+                columns={columns}
+                onrowaction={handleRowAction}
+                column-widths-mode = "auto"
+                hide-checkbox-column 
+                class="slds-m-bottom_small">
+        </lightning-datatable>
+      </div>    
+      <!-- SERIALS MOVED TO THIS SUBSCRIPTION -->
+    </div>
+  </lightning-card>
+</template>

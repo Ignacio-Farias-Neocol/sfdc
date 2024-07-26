@@ -1,0 +1,9 @@
+.spinnerHolder{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+  .filter-content{
+    background-color: #f3f2f2;
+  }

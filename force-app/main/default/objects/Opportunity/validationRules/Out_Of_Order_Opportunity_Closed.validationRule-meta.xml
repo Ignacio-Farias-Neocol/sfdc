@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Out_Of_Order_Opportunity_Closed</fullName>
+    <active>false</active>
+    <description>Out Of Order Opportunity cannot be closed</description>
+    <errorConditionFormula>isOutOfDate__c &amp;&amp; ISPICKVAL(StageName,&apos;Closed Won&apos;)</errorConditionFormula>
+    <errorDisplayField>End_Customers_Under_an_MSP_Contract__c</errorDisplayField>
+    <errorMessage>This amendment is out of date.  Please re-create.</errorMessage>
+</ValidationRule>

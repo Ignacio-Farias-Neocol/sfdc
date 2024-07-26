@@ -1,0 +1,146 @@
+<apex:page showHeader="false" sidebar="false" cache="false" contentType="text/xml" controller="AgreementViewController" action="{!init}">
+
+    <block padding="5" color="grey">
+        <apex:outputText value="Existing Active Subscription(s)"/>
+    </block>
+    
+    <block>
+        <table table-layout="fixed" width="100%" border-style="solid">
+            <table-column column-width="5%"/>
+            <table-column column-width="37%"/>
+            <table-column column-width="10%"/>
+            <table-column column-width="13%"/>
+            <table-column column-width="10%"/>
+            <table-column column-width="10%"/>
+            <table-column column-width="15%"/>
+            <table-body>
+                <table-row border="1" border-style="solid" background-color="#696969"  color="white">
+                    <table-cell display-align="center" padding="5">
+                        <block text-align="left" font-family="Open Sans" font-size="10">
+                            <apex:outputText value="Qty"></apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell display-align="center" padding="5">
+                        <block text-align="left" font-family="Open Sans" font-size="10" >
+                            <apex:outputText value="Subscription Plan"></apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell display-align="center" padding="5">
+                        <block text-align="left" font-family="Open Sans" font-size="10" >
+                            <apex:outputText value="Serial"></apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell display-align="center" padding="5">
+                        <block text-align="left" font-family="Open Sans" font-size="10" >
+                            <apex:outputText value="Ship Date"></apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell display-align="center" padding="5">
+                        <block text-align="left" font-family="Open Sans" font-size="10" >
+                            <apex:outputText value="Monthly Unit Price"></apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell display-align="center" padding="5">
+                        <block text-align="left" font-family="Open Sans" font-size="10" >
+                            <apex:outputText value="Overage Price Per GB/Seat"></apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell display-align="center" padding="5">
+                        <block text-align="left" font-family="Open Sans" font-size="10" >
+                            <apex:outputText value="Monthly Cost"></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+
+                <apex:repeat var="sub" value="{!subsWrapper}">  
+                    <table-row>
+                        <table-cell display-align="center" padding="5" border="1">
+                            <block text-align="left" font-family="Open Sans" font-size="10">
+                                <apex:outputText value="{0, number, ###,###,###,##0}" >
+                                    <apex:param value="{!sub.quantity}"/>  
+                                </apex:outputText>
+                            </block>
+                        </table-cell>
+                        <table-cell display-align="center" padding="5" border="1">
+                            <block text-align="left" font-family="Open Sans" font-size="10">
+                                <apex:outputText value="{!sub.productName}"/>    
+                            </block>
+                        </table-cell>
+                        <table-cell display-align="center" padding="5" border="1">
+                            <block text-align="left" font-family="Open Sans" font-size="10">
+                                <apex:outputText value="{!sub.serialNo}"/>    
+                            </block>
+                        </table-cell>
+                        <table-cell display-align="center" padding="5" border="1">
+                            <block text-align="left" font-family="Open Sans" font-size="10">
+                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                    <apex:param value="{!sub.startDate}"/> 
+                                </apex:outputText> 
+                            </block>
+                        </table-cell>
+                        <table-cell display-align="center" padding="5" border="1">
+                            <block text-align="right" font-family="Open Sans" font-size="10">
+                                <apex:outputText value="{!sub.monthlyUnitPriceStr}"/>
+                            </block>
+                        </table-cell>
+                        <table-cell display-align="center" padding="5" border="1">
+                            <block text-align="right" font-family="Open Sans" font-size="10">
+                                <apex:outputText value="{!sub.overageRateStr}"/>
+                            </block>
+                        </table-cell>
+                        <table-cell display-align="center" padding="5" border="1">
+                            <block text-align="right" font-family="Open Sans" font-size="10">
+                                <apex:outputText value="{!sub.unitPriceStr}"/>
+                            </block>
+                        </table-cell>
+                    </table-row>
+                </apex:repeat>
+            </table-body>
+
+        </table>
+    </block>
+    <block>
+        <table table-layout="fixed" width="100%" border-style="solid" text-align="right">
+            <table-column column-width="80%"/>
+            <table-column column-width="20%"/>
+            <table-body>
+               <table-row>
+                   <table-cell display-align="center" padding="5" border="1">
+                        <block text-align="right" font-family="Open Sans" font-size="10" font-weight="bold">
+                             <apex:outputText value="Existing Monthly Cost Total"/>
+                        </block>
+                   </table-cell>
+                   <table-cell display-align="center" padding="5" border="1">
+                        <block text-align="right" font-family="Open Sans" font-size="10" font-weight="bold">
+                            <apex:outputText value="{!monthlyAcctSumStr}"/>
+                        </block>
+                   </table-cell>
+               </table-row>
+            </table-body>
+        </table>
+    </block>
+    <block>
+    </block>
+    <block>
+        <table table-layout="fixed" width="100%" border-style="solid" text-align="right" padding="5">
+            <table-column column-width="80%"/>
+            <table-column column-width="20%"/>
+            <table-body>
+               <table-row border="1" border-style="solid" background-color="#696969"  color="white">
+                   <table-cell display-align="center" padding="5" border="1">
+                        <block text-align="right" font-family="Open Sans" font-size="10" font-weight="bold">
+                             <apex:outputText value="New Estimated Monthly Cost"/>
+                        </block>
+                   </table-cell>
+                   <table-cell display-align="center" padding="5" border="1" background-color="white" color="black">
+                        <block text-align="right" font-family="Open Sans" font-size="10" font-weight="bold">
+                            <apex:outputText value="{!newMonthlyTotalStr}"/>
+                        </block>
+                   </table-cell>
+               </table-row>
+            </table-body>
+        </table>
+    
+    </block>
+
+</apex:page>

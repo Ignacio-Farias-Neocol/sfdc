@@ -1,0 +1,39 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" controller ="ManageSubcriptionsController" >
+    <aura:attribute name="recordId" type="String" default ="a1U3B000001Ea4MUAS" />
+    <aura:attribute name="reasons" type="List" />
+    <aura:attribute name="selectedValue" type="String" />
+    <aura:attribute name="subscriptions" type = "List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="errPresent" type="Boolean" default ="false"/>
+    <aura:attribute name="ErrorMessage" type="String"/>
+    <aura:if isTrue="{!v.errPresent}">
+        <div>
+            {!v.ErrorMessage}
+        </div>
+    </aura:if>
+    
+    <div>
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-scrollable"> 
+            <thead>
+                <tr class="slds-text-title_caps slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                    <th scope="col">
+                        <div class="slds-truncate"  style="width:110px" title="Product Code">Product Code</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate"  style="width:110px" title="Serial">Serial </div>
+                    </th> 
+                    <th scope="col">
+                        <div class="slds-truncate"  style="width:110px" title="Annotation Reason">Annotation Reason</div>
+                    </th> 
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.subscriptions}" var="subscription">
+                    <c.SubcriptionsChild selectedValue = "{! subscription.SBQQ__OptionType__c}" 
+                                         reasons = "{! v.reasons}"  subscription ="{! subscription}" />
+                </aura:iteration>
+            </tbody>
+        </table>
+        <button class="slds-button slds-button_brand" onclick="{!c.SubmitSubscriptions}">Submit</button>
+    </div>
+</aura:component>

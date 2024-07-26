@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Status_Compliance_Validation</fullName>
+    <active>true</active>
+    <description>if Contact status = Banned or Suspect, then only Compliance Role can move it out of those statuses. SFDC-5767.
+*FIX Made to the message for SFDC-13048, Scenario-1</description>
+    <errorConditionFormula>AND ( 
+OR ( 
+ISCHANGED(Contact_Status__c) &amp;&amp; ISPICKVAL( PRIORVALUE(Contact_Status__c) , &apos;Banned&apos; ), 
+ISCHANGED(Contact_Status__c) &amp;&amp; ISPICKVAL( PRIORVALUE(Contact_Status__c) , &apos;Suspect&apos; ),
+ISCHANGED(Contact_Status__c) &amp;&amp; ISPICKVAL( PRIORVALUE(Contact_Status__c) , &apos;Pending&apos; ) 
+), 
+AND ( 
+NOT ($UserRole.Name = &apos;Compliance&apos; ), 
+NOT ( $Profile.Name = &apos;System Administrator&apos;) ) ,
+NOT ( $Permission.Compliance_Access ),
+NOT (OR(
+($Profile.Name = &apos;Barracuda Partner Affiliate Admin&apos;), ($Profile.Name = &apos;Barracuda Partner Core Admin&apos;),
+($Profile.Name = &apos;Barracuda Partner Distributor Admin&apos;), ($Profile.Name = &apos;Barracuda Partner Hybrid Admin&apos;),
+($Profile.Name = &apos;Barracuda Partner MSP Admin&apos;)
+))
+
+)</errorConditionFormula>
+    <errorDisplayField>Contact_Status__c</errorDisplayField>
+    <errorMessage>Sorry - Only a Compliance User may update the Contact record when the status is &apos;Banned&apos;, &apos;Suspect&apos;, or &apos;Pending&apos;. Please reach out to Trade Compliance for assistance.</errorMessage>
+</ValidationRule>

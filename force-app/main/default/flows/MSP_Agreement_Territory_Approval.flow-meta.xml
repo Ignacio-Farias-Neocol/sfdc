@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Submit_For_Approval</name>
+        <label>Submit For Approval</label>
+        <locationX>282</locationX>
+        <locationY>50</locationY>
+        <actionName>submit</actionName>
+        <actionType>submit</actionType>
+        <connector>
+            <targetReference>MSP_Agreement_Approval</targetReference>
+        </connector>
+        <inputParameters>
+            <name>processDefinitionNameOrId</name>
+            <value>
+                <stringValue>MSP_Agreement_Territory</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>objectId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>submit</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <description>Called from Opportunity Detail View: MSP Agreement Territory Approval</description>
+    <interviewLabel>MSP Agreement Territory Approval {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>MSP Agreement Territory Approval</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <screens>
+        <name>MSP_Agreement_Approval</name>
+        <label>MSP Agreement Approval</label>
+        <locationX>477</locationX>
+        <locationY>50</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Confirm_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Opportunity submitted for approval.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>Submit_For_Approval</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+</Flow>

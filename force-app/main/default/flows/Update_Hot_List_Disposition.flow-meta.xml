@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <name>Check_Current_Disposition</name>
+        <label>Check Current Disposition</label>
+        <locationX>201</locationX>
+        <locationY>197</locationY>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>MQL</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Disposition</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Marketing Qualified Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Hot_List</targetReference>
+            </connector>
+            <label>MQL</label>
+        </rules>
+    </decisions>
+    <description>Called from PB: Activity Management - Create/Edit - updates Hot List Disposition from MQL -&gt; SAL</description>
+    <interviewLabel>Update Hot List Disposition {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Hot List Disposition</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Current_Hot_List_Status</name>
+        <label>Get Current Hot List Status</label>
+        <locationX>209</locationX>
+        <locationY>50</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Current_Disposition</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>What_Id</elementReference>
+            </value>
+        </filters>
+        <object>Hot_List__c</object>
+        <outputAssignments>
+            <assignToReference>Disposition</assignToReference>
+            <field>Disposition__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Hot_List</name>
+        <label>Update Hot List</label>
+        <locationX>425</locationX>
+        <locationY>197</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>What_Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Disposition__c</field>
+            <value>
+                <stringValue>Sales Accepted Lead</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Hot_List__c</object>
+    </recordUpdates>
+    <startElementReference>Get_Current_Hot_List_Status</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>Disposition</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>What_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

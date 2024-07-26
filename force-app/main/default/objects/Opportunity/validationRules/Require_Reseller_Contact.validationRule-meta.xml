@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Reseller_Contact</fullName>
+    <active>true</active>
+    <description>Require both Reseller &amp; Reseller Contact filled</description>
+    <errorConditionFormula>AND ( 
+ ISPICKVAL( Business_Group__c, &apos;Core&apos;),
+ 
+NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY ),
+OR(
+ISPICKVAL(StageName ,&apos;Quote Sent&apos;),
+ISPICKVAL(StageName ,&apos;Validation&apos;),
+ISPICKVAL(StageName ,&apos;Tech Evaluation&apos;),
+ISPICKVAL(StageName ,&apos;Negotiation&apos;),
+ISPICKVAL(StageName , &apos;Procurement / Approval Process&apos;),
+ISPICKVAL(StageName , &apos;Commit&apos;),
+ISPICKVAL(StageName , &apos;Closed Won&apos;),
+ISPICKVAL(StageName , &apos;Order in Process&apos;)),
+OR( 
+ISBLANK(Reseller_Contact__c) &amp;&amp; NOT(ISBLANK(Reseller__c)), 
+ISBLANK(Reseller__c) &amp;&amp; NOT(ISBLANK(Reseller_Contact__c)) 
+)
+)</errorConditionFormula>
+    <errorMessage>Please select both a &apos;Reseller&apos; and a &apos;Reseller Contact&apos;.</errorMessage>
+</ValidationRule>

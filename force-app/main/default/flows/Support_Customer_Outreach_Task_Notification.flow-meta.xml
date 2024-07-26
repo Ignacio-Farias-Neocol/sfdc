@@ -1,0 +1,1035 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>Outreach_Task_Notification</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Send Notifications</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>Task.Outreach_Task_Notification</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myAssignment_myRule_1_A2</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Task.Outreach_Task_Notification</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>customNotifTypeName</name>
+            <value>
+                <stringValue>Send_Bell_Notification_to_Case_Owner</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>recipientCategory</name>
+            <value>
+                <stringValue>owner</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>recipientType</name>
+            <value>
+                <stringValue>reference</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A2</name>
+        <label>Notify Task Owner</label>
+        <locationX>100</locationX>
+        <locationY>300</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>myDecision2</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <stringValue>000000000000000</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>customNotifTypeName</name>
+            <value>
+                <stringValue>Send_Bell_Notification_to_Case_Owner</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>{!myVariable_current.Subject}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <stringValue>Account Name: {!myVariable_current.Case_Account_Name__c}
+Contact Name: {!myVariable_current.Contact_Name__c}
+Product Family: {!myVariable_current.Product_Family__c}
+Case Account Region: {!myVariable_current.Case_Account_Region__c}
+Premium Serial: {!myVariable_current.Premium_Serial__c}
+Premium Account: {!myVariable_current.Premium_Account__c}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <stringValue>{!myVariable_current.Id}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>recipientIds</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>500.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>myCollection_myRule_1_A2recipientIds</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>customNotificationAction</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>PM_Exec_Alert_for_Support_Outreach</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_3_A1</name>
+        <label>Email to PM/Exec</label>
+        <locationX>300</locationX>
+        <locationY>200</locationY>
+        <actionName>Task.PM_Exec_Alert_for_Support_Outreach</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision5</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Task.PM_Exec_Alert_for_Support_Outreach</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>ActionCallType</name>
+            <value>
+                <stringValue>flow</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>Update Case Outbound or Inbound Call</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_6_A1</name>
+        <label>Update Agent Communication</label>
+        <locationX>600</locationX>
+        <locationY>200</locationY>
+        <actionName>Update_Case_Outbound_or_Inbound_Call</actionName>
+        <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>passCaseId</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>passCaseId</name>
+            <value>
+                <elementReference>myVariable_current.WhatId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>passTaskId</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>passTaskId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Update_Case_Outbound_or_Inbound_Call</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>myAssignment_myRule_1_A2</name>
+        <label>myAssignment_myRule_1_A2</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myCollection_myRule_1_A2recipientIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>myVariable_current.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myRule_1_A2</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>isChangedDecision4_myRule_3_Status</name>
+        <label>isChangedDecision4_myRule_3_Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_4_myRule_3_Status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.Status</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myDecision</targetReference>
+            </connector>
+            <label>isChangedRule_4_myRule_3_Status</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_pmetdec</targetReference>
+            </connector>
+            <label>Check for Outreach Task</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision2</name>
+        <label>myDecision2</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision5</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Support Outreach</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.PM_Execs_Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>isChangedRule_4_myRule_3_Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Task_Close_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Product Issues - Notify PM Team</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_3_A1</targetReference>
+            </connector>
+            <label>PS/Exec Email</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>2.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision5</name>
+        <label>myDecision5</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_6</name>
+            <conditionLogic>1  AND (2 OR 3 OR 4 OR 5)</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>ID</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideReferenceTo</name>
+                    <value>
+                        <stringValue>Account;AppLog__c;Asset;AssetRelationship;Campaign;Case;ChannelProgram;ChannelProgramLevel;CommSubscriptionConsent;Compliance_Log__c;ContactRequest;Contract;ContractLineItem;DelegatedAccount;Entitlement;Escalation__c;HelloSign__HelloSign_Signature_Request_Detail__c;HelloSign__HelloSign_Signature_Request__c;Hot_List__c;Image;ListEmail;LiveAgentSession;LiveChatTranscript;Location;MW_License_Information__c;MW_Service_Center__c;NFR_Pricing_Grid__c;NOC_Service_Information__c;Onboarding_Master__c;Onboarding_Product__c;Onboarding_Task__c;Opportunity;Order;Partner_Pricing_Grid_Lookup_Tables__c;Partner_Sucess__c;PartyConsent;ProcessException;Product2;Promotions__c;Quote;SBQQ__QuoteDocument__c;SBQQ__QuoteTerm__c;SBQQ__Quote__c;SBQQ__Subscription__c;SBQQ__WebQuote__c;ServiceContract;ServiceResource;Solution;Survey_Response__c;WorkOrder;WorkOrderLineItem;echosign_dev1__Agreement_Type__c;geopointe__GP_Device__c;mkto_si__Get_Method_Argus__c;rh2__PS_Export_Rollups__c;rh2__PS_Rollup_Dummy__c;zoom_app__Zoom_Event__c;zoom_app__Zoom_Webinar__c;zoom_app__Zoom__c</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>ID</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>ID</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.WhatId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>500</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Outbound Phone Call</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.CallType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.CallType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Inbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Inbound Phone Call</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_6_A1</targetReference>
+            </connector>
+            <label>Inbound/Outbound</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_1_pmetdec</name>
+        <label>Previously Met Decision</label>
+        <locationX>100</locationX>
+        <locationY>100</locationY>
+        <defaultConnector>
+            <targetReference>myRule_1_A1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1_pmetnullrule</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Previously Met - Null</label>
+        </rules>
+        <rules>
+            <name>myRule_1_pmetrule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1_pmetrule</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myDecision2</targetReference>
+            </connector>
+            <label>Previously Met - Prev</label>
+        </rules>
+    </decisions>
+    <description>SFDC-15504 + sfdc-14836 + SFDC- 15043</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+ISNEW(), [Task].RecordType.DeveloperName=&apos;Support_Task&apos;, ISPICKVAL([Task].Status,&quot;Not Started&quot;), ISPICKVAL([Task].Type,&quot;Support Outreach&quot;),
+LEFT([Task].WhatId,3)=&quot;500&quot;,
+OR(
+ISPICKVAL([Task].Product_Family__c,&quot;Barracuda Total Email Protection&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Email Security Gateway&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Email Security Gateway AWS&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Email Security Gateway Azure&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Email Security Gateway Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Email Security Service&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Essentials&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Forensics&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Phishline&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Sentinel&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Cloud Archiving Service&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Message Archiver&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Message Archiver AWS&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Message Archiver Azure&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Message Archiver Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;C2C-PST&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Cloud to Cloud&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Barracuda Backup/ Service&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Barracuda CloudSecurity Guardian&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Access&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Firewall F&quot;),
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Firewall F AWS&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Firewall F Azure&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Control Center&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Firewall Control Center&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Firewall Control Center AWS&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Firewall Control Center Azure&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Firewall Control Center GCP&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Firewall Control Center Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;NextGen Firewall&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Secure Connector&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;SSL-VPN&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;SSL-VPN Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Link Balancer&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;WAF-as-a-Service&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Web Application Firewall&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Web Application Firewall AWS&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Web Application Firewall Azure&quot;),  
+ISPICKVAL([Task].Product_Family__c,&quot;Web Application Firewall GCP&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Web Application Firewall Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Barracuda Reporting Server&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Cloud Security Guardian&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Content Shield Service&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Web Security Gateway&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Load Balancer ADC&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Firewall F GCP&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Firewall F Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen WAN&quot;)
+))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+ISNEW(), {!myVariable_current.RecordType.DeveloperName}=&apos;Support_Task&apos;, ISPICKVAL({!myVariable_current.Status},&quot;Not Started&quot;), ISPICKVAL({!myVariable_current.Type},&quot;Support Outreach&quot;),
+LEFT({!myVariable_current.WhatId},3)=&quot;500&quot;,
+OR(
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Barracuda Total Email Protection&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Email Security Gateway&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Email Security Gateway AWS&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Email Security Gateway Azure&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Email Security Gateway Vx&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Email Security Service&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Essentials&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Forensics&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Phishline&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Sentinel&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Cloud Archiving Service&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Message Archiver&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Message Archiver AWS&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Message Archiver Azure&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Message Archiver Vx&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;C2C-PST&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Cloud to Cloud&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Barracuda Backup/ Service&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Barracuda CloudSecurity Guardian&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;CloudGen Access&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;CloudGen Firewall F&quot;),
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;CloudGen Firewall F AWS&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;CloudGen Firewall F Azure&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Control Center&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Firewall Control Center&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Firewall Control Center AWS&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Firewall Control Center Azure&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Firewall Control Center GCP&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Firewall Control Center Vx&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;NextGen Firewall&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Secure Connector&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;SSL-VPN&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;SSL-VPN Vx&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Link Balancer&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;WAF-as-a-Service&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Web Application Firewall&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Web Application Firewall AWS&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Web Application Firewall Azure&quot;),  
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Web Application Firewall GCP&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Web Application Firewall Vx&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Barracuda Reporting Server&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Cloud Security Guardian&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Content Shield Service&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Web Security Gateway&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;Load Balancer ADC&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;CloudGen Firewall F GCP&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;CloudGen Firewall F Vx&quot;), 
+ISPICKVAL({!myVariable_current.Product_Family__c},&quot;CloudGen WAN&quot;)
+))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+ISNEW(), [Task].RecordType.DeveloperName=&apos;Support_Task&apos;, ISPICKVAL([Task].Status,&quot;Not Started&quot;), ISPICKVAL([Task].Type,&quot;Support Outreach&quot;),
+LEFT([Task].WhatId,3)=&quot;500&quot;,
+OR(
+ISPICKVAL([Task].Product_Family__c,&quot;Barracuda Total Email Protection&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Email Security Gateway&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Email Security Gateway AWS&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Email Security Gateway Azure&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Email Security Gateway Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Email Security Service&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Essentials&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Forensics&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Phishline&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Sentinel&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Cloud Archiving Service&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Message Archiver&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Message Archiver AWS&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Message Archiver Azure&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Message Archiver Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;C2C-PST&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Cloud to Cloud&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Barracuda Backup/ Service&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Barracuda CloudSecurity Guardian&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Access&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Firewall F&quot;),
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Firewall F AWS&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Firewall F Azure&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Control Center&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Firewall Control Center&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Firewall Control Center AWS&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Firewall Control Center Azure&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Firewall Control Center GCP&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Firewall Control Center Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;NextGen Firewall&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Secure Connector&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;SSL-VPN&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;SSL-VPN Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Link Balancer&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;WAF-as-a-Service&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Web Application Firewall&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Web Application Firewall AWS&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Web Application Firewall Azure&quot;),  
+ISPICKVAL([Task].Product_Family__c,&quot;Web Application Firewall GCP&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Web Application Firewall Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Barracuda Reporting Server&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Cloud Security Guardian&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Content Shield Service&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Web Security Gateway&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;Load Balancer ADC&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Firewall F GCP&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen Firewall F Vx&quot;), 
+ISPICKVAL([Task].Product_Family__c,&quot;CloudGen WAN&quot;)
+))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1_pmetrule</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+ISNEW(), {!myVariable_old.RecordType.DeveloperName}=&apos;Support_Task&apos;, ISPICKVAL({!myVariable_old.Status},&quot;Not Started&quot;), ISPICKVAL({!myVariable_old.Type},&quot;Support Outreach&quot;),
+LEFT({!myVariable_old.WhatId},3)=&quot;500&quot;,
+OR(
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Barracuda Total Email Protection&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Email Security Gateway&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Email Security Gateway AWS&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Email Security Gateway Azure&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Email Security Gateway Vx&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Email Security Service&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Essentials&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Forensics&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Phishline&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Sentinel&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Cloud Archiving Service&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Message Archiver&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Message Archiver AWS&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Message Archiver Azure&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Message Archiver Vx&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;C2C-PST&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Cloud to Cloud&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Barracuda Backup/ Service&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Barracuda CloudSecurity Guardian&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;CloudGen Access&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;CloudGen Firewall F&quot;),
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;CloudGen Firewall F AWS&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;CloudGen Firewall F Azure&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Control Center&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Firewall Control Center&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Firewall Control Center AWS&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Firewall Control Center Azure&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Firewall Control Center GCP&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Firewall Control Center Vx&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;NextGen Firewall&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Secure Connector&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;SSL-VPN&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;SSL-VPN Vx&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Link Balancer&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;WAF-as-a-Service&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Web Application Firewall&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Web Application Firewall AWS&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Web Application Firewall Azure&quot;),  
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Web Application Firewall GCP&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Web Application Firewall Vx&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Barracuda Reporting Server&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Cloud Security Guardian&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Content Shield Service&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Web Security Gateway&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;Load Balancer ADC&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;CloudGen Firewall F GCP&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;CloudGen Firewall F Vx&quot;), 
+ISPICKVAL({!myVariable_old.Product_Family__c},&quot;CloudGen WAN&quot;)
+))</expression>
+    </formulas>
+    <interviewLabel>Support_Customer_Outreach_Task_Notification-8_InterviewLabel</interviewLabel>
+    <label>Support Customer Outreach - Task Notification</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>Task</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <startElementReference>isChangedDecision4_myRule_3_Status</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>myCollection_myRule_1_A2recipientIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+</Flow>

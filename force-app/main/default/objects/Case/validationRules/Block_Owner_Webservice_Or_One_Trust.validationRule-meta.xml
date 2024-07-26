@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Owner_Webservice_Or_One_Trust</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(Owner:User.Full_Name__c = &quot;Web Service&quot;, Owner:User.Full_Name__c = &quot;One Trust User&quot;)</errorConditionFormula>
+    <errorMessage>Owner should not be Web Service or One Trust User.</errorMessage>
+</ValidationRule>

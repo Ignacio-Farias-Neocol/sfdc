@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mandate_Case_Reason_for_Vendor_Hold</fullName>
+    <active>true</active>
+    <description>This validation rule validates Case Reason  for a cases where status gets changed from In Progress to Vendor Hold</description>
+    <errorConditionFormula>AND(
+DateValue(CreatedDate) &gt; Date(2022, 08,02 ),
+RecordType.DeveloperName = &apos;Technical_Support&apos;,
+ISPICKVAL(PRIORVALUE(Status) , &apos;In Progress&apos;) ,
+ISPICKVAL(Status , &apos;Vendor Hold&apos;),
+OR(ISPICKVAL(Case_Reason__c, &apos;&apos;)
+)
+)</errorConditionFormula>
+    <errorMessage>Case Reason Required</errorMessage>
+</ValidationRule>

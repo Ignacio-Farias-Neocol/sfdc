@@ -1,0 +1,27 @@
+<!--
+ - Created by iyeung on 2019-07-18.
+ -->
+<aura:component description="CaseAlert"  implements="force:lightningQuickAction,force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+    
+    <div class="card">
+        <h1 class="header"> ALERT </h1>
+        <lightning:recordViewForm recordId="{!v.recordId}"
+                                  objectApiName="Case">
+            
+            <div class="slds-grid slds-wrap fields">
+                
+                <div class="slds-col slds-size_1-of-1">
+                        <lightning:outputField fieldName="Technical_Alert__c" class="fieldName" />
+                </div>
+                
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning:outputField fieldName="Contact_Center_Alert__c" class="fieldName" />
+                </div>
+                
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning:outputField fieldName="Customers_Provided_Business_Impact__c" class="fieldName" />
+                </div>
+            </div>
+        </lightning:recordViewForm>
+    </div>
+</aura:component>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CSM_Profile_Status_update_w_out_Comments</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND
+( $Profile.Name =&quot;Apollo: Custom - Customer Success Profile&quot;,
+RecordType.DeveloperName = &apos;CSM_Task&apos;, 
+ISBLANK(Hot_List_Id__c), 
+OR(
+TEXT(Status)=&apos;Canceled&apos;,
+TEXT(Status)=&apos;Completed&apos;),
+IsBlank(Description)
+)</errorConditionFormula>
+    <errorMessage>Please complete the &apos;Comments&apos; field.</errorMessage>
+</ValidationRule>

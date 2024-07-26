@@ -1,0 +1,11 @@
+.selected_serial{
+  border: 2px solid rgb(0, 136, 206);
+}
+
+.slds-truncate{
+  white-space: normal;
+}
+
+.footer_item{
+  text-align: right;
+}

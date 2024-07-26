@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Edit_Territory_Fields</fullName>
+    <active>false</active>
+    <errorConditionFormula>NOT( $Permission.Create_Edit_State_Country_Territory_Data ) &amp;&amp;
+OR(
+ISCHANGED( Territory__c ),
+ISCHANGED( Territory_ID__c ),
+ISCHANGED( Terr_Theater__c ),
+ISCHANGED( Terr_Sub_Theater__c ),
+ISCHANGED( Terr_Region__c ), 
+ISCHANGED( Territory__c ),
+ISCHANGED( Terr_Sub_Territory__c ),
+ISCHANGED( Terr_Location__c ),
+ISCHANGED( State_Code__c )
+)</errorConditionFormula>
+    <errorMessage>You do not have permission to edit Territory fields.</errorMessage>
+</ValidationRule>

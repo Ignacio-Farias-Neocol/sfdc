@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Non Americas</description>
+        <name>Order_Subscription_Certificate_Notification</name>
+        <label>Order Subscription Certificate Notification</label>
+        <locationX>1012</locationX>
+        <locationY>447</locationY>
+        <actionName>Order.Order_Subscription_Certificate_Notification_1</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Order.Order_Subscription_Certificate_Notification_1</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Americas</description>
+        <name>Order_Subscription_Certificate_Notification_1</name>
+        <label>Order Subscription Certificate Notification 1</label>
+        <locationX>455</locationX>
+        <locationY>441</locationY>
+        <actionName>Order.Order_Subscription_Certificate_Notification_1</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Order.Order_Subscription_Certificate_Notification_1</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>53.0</apiVersion>
+    <decisions>
+        <name>Check_Order_Theatre</name>
+        <label>Check Order Theatre</label>
+        <locationX>719</locationX>
+        <locationY>444</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Americas</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Account_Theater_Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>AMERICAS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Order_Subscription_Certificate_Notification_1</targetReference>
+            </connector>
+            <label>Americas</label>
+        </rules>
+        <rules>
+            <name>Non_Americas</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Account_Theater_Region__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>AMERICAS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Order_Subscription_Certificate_Notification</targetReference>
+            </connector>
+            <label>Non Americas</label>
+        </rules>
+    </decisions>
+    <description>Offset: 5 minutes</description>
+    <interviewLabel>Send Sub Certs Scheduled {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send Sub Certs Scheduled</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>600</locationX>
+        <locationY>48</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Send_Order_Certificate_Email__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Placed</stringValue>
+            </value>
+        </filters>
+        <object>Order</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <name>Sent_Sub_Cert_Email_With_Delay</name>
+            <connector>
+                <targetReference>Check_Order_Theatre</targetReference>
+            </connector>
+            <label>Sent Sub Cert Email With Delay</label>
+            <offsetNumber>5</offsetNumber>
+            <offsetUnit>Minutes</offsetUnit>
+            <timeSource>RecordTriggerEvent</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

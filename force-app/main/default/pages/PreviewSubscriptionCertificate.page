@@ -1,0 +1,3 @@
+<apex:page controller="PreviewSubscriptionCertificateController" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" sidebar="false" showHeader="false" renderAs="pdf" contentType="application/pdf">
+ <c:OrderSubCertComponent thisOrder="{!OrderRec}"/>
+</apex:page>

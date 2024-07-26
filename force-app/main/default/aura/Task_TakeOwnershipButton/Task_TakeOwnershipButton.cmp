@@ -1,0 +1,7 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" controller="Task_TakeOwnershipController"> 
+    <lightning:notificationsLibrary aura:id="notifLib"/>    
+    <lightning:button class="slds-button_neutral" onclick="{!c.doInit}" label="Take Ownership" /> 
+    <div aura:id="spinner" class="slds-hide">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+    </div>    
+</aura:component>

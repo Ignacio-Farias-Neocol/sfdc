@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>CheckLargeAssetAccount</name>
+        <label>CheckLargeAssetAccount</label>
+        <locationX>827</locationX>
+        <locationY>272</locationY>
+        <actionName>CheckLargeAssetAccountForHotList</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Is_Large_Asset_Account</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>hotListId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>CheckLargeAssetAccountForHotList</nameSegment>
+        <outputParameters>
+            <assignToReference>IsLargeAssetAccount</assignToReference>
+            <name>isLargeAssetAccount</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Navigate_to_Converted_Opp</name>
+        <label>Navigate to Converted Opp</label>
+        <locationX>597</locationX>
+        <locationY>2404</locationY>
+        <actionName>c:navigateToRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Converted_Opp_Id.Converted_Opportunity__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>c:navigateToRecord</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Takes the user to the lead</description>
+        <name>Navigate_to_the_Lead</name>
+        <label>Navigate to the Lead</label>
+        <locationX>1032</locationX>
+        <locationY>1669</locationY>
+        <actionName>c:navigateToRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Hot_List_Details.Lead__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>c:navigateToRecord</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>51.0</apiVersion>
+    <choices>
+        <description>No conversion. Close the wizard.</description>
+        <name>No_Conversion</name>
+        <choiceText>No, take me back to the Hot List</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <description>Convert without going through upsell process</description>
+        <name>Yes_Conversion</name>
+        <choiceText>Yes, convert this Hot List</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <decisions>
+        <description>Check if Account has eligible assets</description>
+        <name>Check_Eligible_Assets_Present</name>
+        <label>Check Eligible Assets Present</label>
+        <locationX>335</locationX>
+        <locationY>1413</locationY>
+        <defaultConnector>
+            <targetReference>Contact_Regular_Conversion_Confirmation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Asset Not Present</defaultConnectorLabel>
+        <rules>
+            <name>Eligible_Asset_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Eligible_Assets</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Conversion_Without_Upsell_Confirmation</targetReference>
+            </connector>
+            <label>Eligible Asset Present</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Account field is populated</description>
+        <name>Decision_Check_Account</name>
+        <label>Check Account</label>
+        <locationX>575</locationX>
+        <locationY>1160</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Account_Not_Populated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Account Not Present</defaultConnectorLabel>
+        <rules>
+            <name>Account_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Hot_List_Details.Account__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Hot_List_Details.Account__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Eligible_Assets</targetReference>
+            </connector>
+            <label>Account Present</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if this is a Contact or a Lead hot list</description>
+        <name>Decision_Check_Hot_List_Type</name>
+        <label>Check Hot List Type</label>
+        <locationX>807</locationX>
+        <locationY>1088</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Lead_Contact_Not_Populated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Neither Lead Not Contact</defaultConnectorLabel>
+        <rules>
+            <name>Contact_Hot_List</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Hot_List_Details.Contact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Hot_List_Details.Contact__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Decision_Check_Account</targetReference>
+            </connector>
+            <label>Contact Hot List</label>
+        </rules>
+        <rules>
+            <name>Lead_Hot_List</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Hot_List_Details.Lead__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Hot_List_Details.Lead__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lead_Regular_Conversion_Confirmation</targetReference>
+            </connector>
+            <label>Lead Hot List</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check user&apos;s response</description>
+        <name>Decision_Contact_Regular_Conversion_Confirmation_Response</name>
+        <label>Contact_Regular_Conversion Confirmation Response</label>
+        <locationX>497</locationX>
+        <locationY>1803</locationY>
+        <defaultConnectorLabel>Do Not Convert</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Regular_Contact_Convert</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Contact_Hot_List_Conversion_Decision</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Yes_Conversion</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Contact_Hot_List</targetReference>
+            </connector>
+            <label>Convert</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check user&apos;s response</description>
+        <name>Decision_Conversion_Confirmation_Response</name>
+        <label>Conversion Confirmation Response</label>
+        <locationX>171</locationX>
+        <locationY>1811</locationY>
+        <defaultConnectorLabel>Do Not Convert</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Convert</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Hot_List_Conversion_Decision</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Yes_Conversion</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Contact_Hot_List</targetReference>
+            </connector>
+            <label>Convert</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check user&apos;s response</description>
+        <name>Decision_Lead_Regular_Conversion_Confirmation_Response</name>
+        <label>Lead_Regular_Conversion Confirmation Response</label>
+        <locationX>1024</locationX>
+        <locationY>1318</locationY>
+        <defaultConnectorLabel>Do Not Convert</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Regular_Lead_Convert</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Lead_Hot_List_Conversion_Decision</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Yes_Conversion</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Lead_Primary_Hot_List</targetReference>
+            </connector>
+            <label>Convert</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Large_Asset_Account</name>
+        <label>Is Large Asset Account</label>
+        <locationX>827</locationX>
+        <locationY>477</locationY>
+        <defaultConnector>
+            <targetReference>Get_Hot_List_Details</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Large_Asset_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsLargeAssetAccount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Large_Asset_Fault_Screen</targetReference>
+            </connector>
+            <label>Large Asset Account</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Owner_Is_Queue</name>
+        <label>Owner Is Queue</label>
+        <locationX>799</locationX>
+        <locationY>875</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Check_Hot_List_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not a Queue</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Queue</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Hot_List_Details.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Hot_List_Details.Lead__r.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Owner_Is_Queue_Error_Screen</targetReference>
+            </connector>
+            <label>Yes- Queue</label>
+        </rules>
+        <rules>
+            <name>Owner_is_Marketo_Sync</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Hot_List_Details.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>005f200000A12WvAAJ</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Marketosync_is_the_owner_Error_Message</targetReference>
+            </connector>
+            <label>Owner is Marketo Sync</label>
+        </rules>
+        <rules>
+            <name>NOT_SAL</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Hot_List_Details.Disposition__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales Accepted Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NOT_SAL_Message</targetReference>
+            </connector>
+            <label>NOT SAL</label>
+        </rules>
+    </decisions>
+    <description>Allows users to convert a Hot List. 
+SFDC-14353</description>
+    <interviewLabel>Hot List Conversion Wizard {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Hot List Conversion Wizard</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Converted_Opp_Id</name>
+        <label>Get Converted Opp Id</label>
+        <locationX>596</locationX>
+        <locationY>2251</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Navigate_to_Converted_Opp</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Converted_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Hot_List__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get assets that meet the filter criteria</description>
+        <name>Get_Eligible_Assets</name>
+        <label>Get Eligible Assets</label>
+        <locationX>583</locationX>
+        <locationY>1334</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Eligible_Assets_Present</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Fault_Screen</targetReference>
+        </faultConnector>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Hot_List_Details.Account__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Business_Group__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Core</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ProductCode</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>BEO001a</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ProductCode</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>BEOi001a</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Asset</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get details of the hot list which launched this flow.</description>
+        <name>Get_Hot_List_Details</name>
+        <label>Get Hot List Details</label>
+        <locationX>816</locationX>
+        <locationY>759</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Owner_Is_Queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Hot_List__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update fields on Contact Hot List</description>
+        <name>Update_Contact_Hot_List</name>
+        <label>Update Contact Hot List</label>
+        <locationX>594</locationX>
+        <locationY>2072</locationY>
+        <connector>
+            <targetReference>Get_Converted_Opp_Id</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Fault_Screen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Disposition__c</field>
+            <value>
+                <stringValue>Converted</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Hot_List__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Lead&apos;s primary hot list</description>
+        <name>Update_Lead_Primary_Hot_List</name>
+        <label>Update Lead Primary Hot List</label>
+        <locationX>1031</locationX>
+        <locationY>1511</locationY>
+        <connector>
+            <targetReference>Navigate_to_the_Lead</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Fault_Screen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Hot_List_Details.Lead__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Primary_Hot_List__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Lead</object>
+    </recordUpdates>
+    <screens>
+        <description>Checks with user if they want to convert</description>
+        <name>Contact_Regular_Conversion_Confirmation</name>
+        <label>Contact Regular Conversion Confirmation</label>
+        <locationX>506</locationX>
+        <locationY>1626</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decision_Contact_Regular_Conversion_Confirmation_Response</targetReference>
+        </connector>
+        <fields>
+            <name>Contact_Conversion_Confirmation</name>
+            <fieldText>&lt;p&gt;Converting this Hot List will change the Disposition to &apos;Converted&apos;.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Contact_Hot_List_Conversion_Decision</name>
+            <choiceReferences>Yes_Conversion</choiceReferences>
+            <choiceReferences>No_Conversion</choiceReferences>
+            <dataType>Boolean</dataType>
+            <defaultSelectedChoiceReference>No_Conversion</defaultSelectedChoiceReference>
+            <fieldText>Do you want to proceed with the Hot List conversion?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Shows error message from get and update elements</description>
+        <name>Fault_Screen</name>
+        <label>Fault Screen</label>
+        <locationX>823</locationX>
+        <locationY>1701</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Fault_Error_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>THIS IS NOT A BUG: This account has exceeded the allotted number of asset records for a single account. Please create an Internal Ticket to help create your opportunity to prevent negative impacts downstream.</description>
+        <name>Large_Asset_Fault_Screen</name>
+        <label>Large Asset Fault Screen</label>
+        <locationX>1224</locationX>
+        <locationY>478</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>LargeAssetAccountError</name>
+            <fieldText>&lt;p&gt;THIS IS NOT A BUG: This account has exceeded the allotted number of asset records for a single account. Please create an Internal Ticket to help create your opportunity to prevent negative impacts downstream.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Checks with user if they want to convert</description>
+        <name>Lead_Regular_Conversion_Confirmation</name>
+        <label>Lead Regular Conversion Confirmation</label>
+        <locationX>1032</locationX>
+        <locationY>1162</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decision_Lead_Regular_Conversion_Confirmation_Response</targetReference>
+        </connector>
+        <fields>
+            <name>Contact_Conversion_Confirmation_0</name>
+            <fieldText>&lt;p&gt;Converting this Hot List will make this Hot List the Primary Hot List for the Lead. You will be navigated to the Lead for Lead Conversion. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Lead_Hot_List_Conversion_Decision</name>
+            <choiceReferences>Yes_Conversion</choiceReferences>
+            <choiceReferences>No_Conversion</choiceReferences>
+            <dataType>Boolean</dataType>
+            <defaultSelectedChoiceReference>No_Conversion</defaultSelectedChoiceReference>
+            <fieldText>Do you want to proceed with the Hot List conversion?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Marketosync_is_the_owner_Error_Message</name>
+        <label>Marketosync is the owner Error Message</label>
+        <locationX>1083</locationX>
+        <locationY>757</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Marketosyncistheowner</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 16px; color: rgb(166, 0, 0);&quot;&gt;This Hot List is owned by Marketo Sync. Please change the owner of the Hot List to a user before converting / upselling this Hot List.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>NOT_SAL_Message</name>
+        <label>NOT SAL Message</label>
+        <locationX>1026</locationX>
+        <locationY>1042</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NOTSAL</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 16px; color: rgb(166, 0, 0);&quot;&gt;This Hot List must be in the Sales Accepted Stage before Converting.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Owner_Is_Queue_Error_Screen</name>
+        <label>Owner Is Queue Error Screen</label>
+        <locationX>1044</locationX>
+        <locationY>901</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>OwnerIsQueueErrorMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(166, 0, 0); font-size: 16px; background-color: rgb(255, 255, 255);&quot;&gt;This Lead/Hot List is owned by a Queue. Please change the owner of the Lead/Hot List to a user before converting this Hot List.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen asking user to populate Account field.</description>
+        <name>Screen_Account_Not_Populated</name>
+        <label>Account not populated</label>
+        <locationX>320</locationX>
+        <locationY>1160</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Account_Blank_Error</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Please populate Account field before converting this Hot List.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Checks with user if they want to convert without upsell</description>
+        <name>Screen_Conversion_Without_Upsell_Confirmation</name>
+        <label>Conversion Without Upsell Confirmation</label>
+        <locationX>178</locationX>
+        <locationY>1597</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decision_Conversion_Confirmation_Response</targetReference>
+        </connector>
+        <fields>
+            <name>Conversion_Guidance</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;Is this an existing customer upsell? If yes please add the SN# to the hot list and click the upsell button.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Please note: If this is an upsell and it is accidentally converted as a standard new business opportunity we will not be able to correct it. You will need to reach out to Sales Support and get a new replacement opportunity created.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Hot_List_Conversion_Decision</name>
+            <choiceReferences>Yes_Conversion</choiceReferences>
+            <choiceReferences>No_Conversion</choiceReferences>
+            <dataType>Boolean</dataType>
+            <defaultSelectedChoiceReference>No_Conversion</defaultSelectedChoiceReference>
+            <fieldText>Do you want to proceed with the Hot List conversion?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen asking user to populate Lead or Contact field.</description>
+        <name>Screen_Lead_Contact_Not_Populated</name>
+        <label>Lead and Contact not populated</label>
+        <locationX>813</locationX>
+        <locationY>1329</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Account_Blank_Error_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Please populate Lead or Contact field before converting this Hot List.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>700</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>CheckLargeAssetAccount</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>IsLargeAssetAccount</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Record Id of the hot list launching this flow</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

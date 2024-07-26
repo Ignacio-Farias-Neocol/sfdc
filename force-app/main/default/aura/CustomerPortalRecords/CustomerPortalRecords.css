@@ -1,0 +1,31 @@
+.THIS .cls-header {
+	background-color: white;
+	border-radius: 5px;
+}
+
+.THIS .cls-header_h1 {
+	color: black;
+	font-size: large;    
+}
+
+.THIS table {
+	table-layout: fixed;
+}
+
+.THIS .cls-display-records {
+	width: 100px;
+	height: 32px !important;
+}
+
+.THIS .cust-height-align-cls{
+	padding-top: 24px;
+	text-align: end;
+}
+
+.THIS .cls-cust-width{
+	width:90%;
+}
+
+.THIS .cls-comment-filter{
+	float: right;
+}

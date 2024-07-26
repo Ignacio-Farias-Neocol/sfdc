@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_if_First_MSP_Order_has_Closed_Date</fullName>
+    <active>true</active>
+    <description>SFDC-13699, Added extra condition as a part of SFDC-18867</description>
+    <errorConditionFormula>AND(
+NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+OR(ISCHANGED( Status ) , ISCHANGED( EffectiveDate ) ),
+Id =  Account.MSP_First_Order__c,
+EffectiveDate !=  Opportunity.CloseDate,
+NOT(ISPICKVAL(Status, &quot;Draft&quot;)),
+Quote_Business_Group__c = &quot;Barracuda MSP&quot;
+)</errorConditionFormula>
+    <errorMessage>The Order Start Date needs to be synced with the Opportunity&apos;s Closed Date. Please check the &quot;Sync Order Start Date (MSP)&quot; on the Order to sync the dates.</errorMessage>
+</ValidationRule>

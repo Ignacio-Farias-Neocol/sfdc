@@ -1,0 +1,47 @@
+<aura:component implements="force:hasRecordId,force:lightningQuickActionWithoutHeader">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    
+    <div class="slds-modal__header">
+        <h2 class="slds-text-heading_medium slds-hyphenate">Convert to Opportunity</h2>
+    </div>
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <div aura:id="uploadCard" class="slds-card__header" style="position:relative">
+            <div class="slds-form--compound">
+                <aura:if isTrue="{!v.showSpinner}">
+                    <div aura:id="spinnerId" class="slds-spinner_container">
+                        <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                            <span class="slds-assistive-text">Loading</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                </aura:if>
+                <lightning:recordEditForm 
+                        onload="{!c.handleLoad}"
+                        onsubmit="{!c.handleSubmit}"
+                        onsuccess="{!c.handleSuccess}"
+                        recordId="{!v.recordId}" 
+                        objectApiName="Hot_List__c">
+                    <lightning:messages />
+                    <lightning:inputField fieldName="Disposition__c" value="Converted" disabled="true"/>
+                    <!--
+                    <lightning:inputField fieldName="Convert_to_Existing_Opportunity__c" onchange="{!c.handleChange}"/>
+                    <div aura:id="DivOps" class="slds-hide">  
+                        <lightning:inputField fieldName="Converted_Opportunity__c" />
+                    </div>
+					-->
+                    <div class="slds-modal__footer">
+                        <lightning:button class="slds-button_brand" onclick="{!c.handleCancel}" label="Cancel"/>
+                        <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save" />
+                    </div>
+                </lightning:recordEditForm>
+            </div>
+        </div>
+    </div>
+</aura:component>

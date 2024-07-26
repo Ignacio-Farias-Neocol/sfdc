@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Auto_Renewal_not_Allowed</fullName>
+    <active>true</active>
+    <description>Based on Theater and Account Type</description>
+    <errorConditionFormula>AND(
+	CONTAINS(TEXT( Auto_Renewal_Status_Core__c ), &quot;Included&quot;),
+	NOT(ISBLANK(Bill_To_Account__c )),
+	OR(
+		NOT(Bill_To_Account__r.Terr_Theater__c = &apos;AMERICAS&apos;),
+		OR(
+			CONTAINS(TEXT(Bill_To_Account__r.Type), &apos;MSP&apos;),
+			CONTAINS(TEXT(Bill_To_Account__r.Type), &apos;Sonian&apos;),
+			CONTAINS(TEXT(Bill_To_Account__r.Type), &apos;Distributor&apos;)
+		)
+	)
+)</errorConditionFormula>
+    <errorMessage>This Opportunity is NOT eligible for Auto Renewal. Please clear out the Auto Renewal Status (Core) field.</errorMessage>
+</ValidationRule>

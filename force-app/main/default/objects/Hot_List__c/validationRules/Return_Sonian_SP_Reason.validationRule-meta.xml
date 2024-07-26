@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Return_Sonian_SP_Reason</fullName>
+    <active>true</active>
+    <description>Return to Marketing with a &quot;Pass to Sonian Service Provider&quot; reason requires Reseller, Reseller Contact and Product Family to be populated</description>
+    <errorConditionFormula>AND(
+ NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY ), 
+ ISPICKVAL(Disposition__c, &apos;Return to Marketing&apos;),
+ ISPICKVAL(Return_to_Marketing_Reasons__c, &apos;Pass to Sonian Service Provider&apos;),
+ OR(
+   ISBLANK(Reseller__c),
+   ISBLANK(Reseller_Contact__c),
+    ISPICKVAL(Primary_Product_Family_2__c, &apos;&apos;)
+ )
+)</errorConditionFormula>
+    <errorMessage>To Return to Marketing with a &apos;Pass to Sonian Service Provider&apos; reason, you must select a Reseller, a Reseller Contact, and a Product Family.</errorMessage>
+</ValidationRule>

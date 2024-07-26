@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_User_Profile_Edit_access</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (
+OR(
+ISCHANGED(FirstName),
+ISCHANGED(MiddleName),
+ISCHANGED(LastName),
+ISCHANGED(Alias),
+ISCHANGED(Email)) ,
+NOT(
+OR(Profile.Name = &apos;System Administrator&apos;,
+Profile.Name = &apos;Apollo: API&apos;,
+Profile.Name = &apos;Apollo: Custom- Sales Operations&apos;,
+$Permission.User_Detail_Edit_Permission)
+)
+)</errorConditionFormula>
+    <errorMessage>Sorry, but you can&apos;t edit user details. Please open an internal ticket with Sales Ops.</errorMessage>
+</ValidationRule>

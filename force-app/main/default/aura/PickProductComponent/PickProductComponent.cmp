@@ -1,0 +1,33 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <!-- attribute creation -->
+    <aura:attribute name="showModal" type="boolean" />
+    <aura:attribute name="caseInfo" type="Object"/>
+    
+    <force:recordData recordId="{!v.recordId}"
+                      fields="Id,CaseNumber,Serial__c"
+                      targetFields="{!v.caseInfo}"/>
+    
+    <lightning:card class="slds-p-bottom--small">
+        <lightning:button class="slds-align--absolute-center slds-button slds-button_brand slds-button_destructive" variant="brand" label="Pick Product Required(click here)" onclick="{!c.openmodal}" />
+    </lightning:card>
+    <!-- content loading -->
+    <aura:if isTrue="{!v.showModal}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeModal}">
+                        <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:flow aura:id="flowData" onstatuschange="{!c.closeModalOnFinish}"/>
+                </div>
+                <footer class="slds-modal__footer">
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Stage_is_Closed</fullName>
+    <active>true</active>
+    <description>Opportunity cannot be save with the Stage as &apos;Closed&apos; - set as either &apos;Closed Won&apos; or &apos;Closed Lost&apos;</description>
+    <errorConditionFormula>TEXT(StageName) = &apos;Closed&apos;</errorConditionFormula>
+    <errorMessage>The Opportunity can&apos;t be saved with the Stage as &apos;Closed&apos;. Select either &apos;Closed Won&apos; or &apos;Closed Lost&apos;.</errorMessage>
+</ValidationRule>

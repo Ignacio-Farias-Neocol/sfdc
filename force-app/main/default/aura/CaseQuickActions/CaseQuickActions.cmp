@@ -1,0 +1,18 @@
+<aura:component controller="CaseCustomButtonActions" implements="force:lightningQuickAction,force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="buttonActions" type="map" />
+
+    <div aura:id="quickActionContainer" class="slds-hide">
+        <lightning:select aura:id="quickAction" name="quickAction" label="Message:" required="true">
+            <aura:iteration items="{!v.buttonActions}" var="buttonAction">
+                <option value="{!buttonAction.Id}">{!buttonAction.Label}</option>
+            </aura:iteration>
+        </lightning:select>
+        <br/>
+
+        <lightning:button variant="brand" label="Update" onclick="{! c.handleClick }" />
+    </div>
+
+
+</aura:component>

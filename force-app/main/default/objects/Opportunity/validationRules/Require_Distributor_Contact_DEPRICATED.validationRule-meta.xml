@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Distributor_Contact_DEPRICATED</fullName>
+    <active>false</active>
+    <description>Require both Distributor &amp; Distributor Contact filled</description>
+    <errorConditionFormula>AND ( 
+ ISPICKVAL( Business_Group__c, &apos;Core&apos;),
+ RecordType.DeveloperName = &quot;Renewal&quot;,
+NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY ),
+
+OR(
+ISPICKVAL(StageName ,&apos;Quote Sent&apos;),
+ISPICKVAL(StageName , &apos;Procurement / Approval Process&apos;),
+ISPICKVAL(StageName , &apos;Commit&apos;),  
+ISPICKVAL(StageName , &apos;Closed Won&apos;),
+ISPICKVAL(StageName , &apos;Order in Process&apos;)),
+
+OR( 
+ISBLANK(Distributor_Contact__c) &amp;&amp; NOT(ISBLANK(Distributor__c)) , 
+ISBLANK(Distributor__c) &amp;&amp; NOT(ISBLANK(Distributor_Contact__c)) 
+) 
+)</errorConditionFormula>
+    <errorMessage>Both Distributor and Distributor Contact must be filled.</errorMessage>
+</ValidationRule>

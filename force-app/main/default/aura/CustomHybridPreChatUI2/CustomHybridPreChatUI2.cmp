@@ -1,0 +1,82 @@
+<!-- As part of SFDC-11952 the Sales part of the chat is being commented out. -->
+<aura:component implements="lightningsnapin:prechatUI" description="Hybrid Prechat UI to Handle Sales and Support">
+    <!-- Handler for when this component is initialized. -->
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+    <!-- For Aura performance. -->
+    <aura:locator target="startButton" description="Prechat form submit button."/>
+    <!-- Contains methods for getting prechat fields, starting a chat, and validating fields. -->
+    <lightningsnapin:prechatAPI aura:id="prechatAPI"/>
+    <!-- Prechat field components to render. -->
+    <aura:attribute name="prechatFieldComponents" type="List" description="An array of objects representing the prechat fields specified in prechat setup."/>
+    <aura:attribute name="chatTypeField" type="List" description="An array for chat type field"/>
+    <aura:attribute name="firstNameComponent" type="List" description="An array for First Name field"/>
+    <aura:attribute name="lastNameComponent" type="List" description="An array for Last Name field"/>
+    <aura:attribute name="emailComponent" type="List" description="An array for Email field"/>
+    <aura:attribute name="companyComponent" type="List" description="An array for Email field"/>
+    <aura:attribute name="customPrechatFieldComponents" type="List" description="An array of objects representing the prechat fields specified in prechat setup."/>    
+    <aura:attribute name="customTypePrechatFieldComponents" type="List" description="An array of objects representing the prechat fields specified in prechat setup."/>        
+    <aura:attribute name="customSalesTypePrechatFieldComponents" type="List" description="An array of objects representing the prechat fields specified in prechat setup."/>        
+    <aura:attribute name="salesChatLink" type="String" description="Link to the LHN sales chat" default="https://www.barracuda.com?chatnow=yes"/> 
+    <aura:attribute name="sectionName" type="String" description="indicates which section is being displayed" default="initial"/>                              
+    
+    <!-- Initial Section -->
+    <aura:if isTrue="{!v.sectionName == 'initial'}">
+        <div class="sectiondiv">
+            <div class="fieldsList sectionText">
+                Are you a consumer or are you representing a business?
+                <br></br>
+                <br></br>
+                <span> Please select one of the following options: </span>
+            <ul class="slds-list_dotted" style="margin:16px; padding:10px;">
+                <li> 
+                    I am a <a onclick="{!c.handleConsumerClick}">Consumer</a> <a class="link-text" href="{!v.salesChatLink}"> </a> 
+                </li>
+                <li> 
+                    I am representing a <a onclick="{!c.handleBusinessClick}">Business</a> <a class="link-text" href="{!v.salesChatLink}"> </a> 
+                </li>
+            </ul>
+            </div>   
+        </div> 
+    </aura:if>
+    
+    <!-- Consumer Section -->
+    <aura:if isTrue="{!v.sectionName == 'consumer'}">
+        <div class="sectiondiv">
+            <div class="fieldsList sectionText" style="color:red;">
+              <i> <span> Barracuda only sells and provides services to businesses.</span> </i>
+              <p></p>
+              <i> <span> Thank you </span> </i> 
+            </div>                                           
+        </div> 
+    </aura:if>  
+  
+    <!-- Business Section -->
+    <aura:if isTrue="{!v.sectionName == 'business'}">
+        <div class="prechatUI">     
+            <div class="prechatContent">                                 
+                
+                <div>
+                    <ul class="fieldsList">
+                        <div class="header-text">
+                            {!$Label.c.Prechat_Header_Text} <a class="link-text" href="{!v.salesChatLink}"> </a>
+                        </div>                 
+                        <div class="prechatFieldContainer" aura:id="prechatField">
+                            {!v.prechatFieldComponents}
+                        </div>
+                        <div class="customFields" aura:id="customFields">
+                            <div class="customTypeFields" aura:id="supportSection">
+                                {!v.customTypePrechatFieldComponents}
+                            </div>
+                        </div>
+                        <div class="required-label">
+                            {!$Label.c.prechatRequiredLabel}
+                        </div>
+                    </ul>                  
+                    <div class="startButtonWrapper">
+                        <ui:button aura:id="startButton" disabled="false" class="startButton preChatStartButton" label="{!$Label.LiveAgentPrechat.StartChat}" press="{!c.handleStartButtonClick}"/>
+                    </div>
+                </div>                  
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

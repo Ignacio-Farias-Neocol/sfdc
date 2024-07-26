@@ -1,0 +1,3895 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Assign_Annual_Contract_Value_On_Update</name>
+        <label>Assign Annual Contract Value On Update</label>
+        <locationX>1188</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.ACV_Converted_Hoopla_Integration__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Annual_Contract_Value_Converted</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Opportunity_Priorvalue_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets fields for AR</description>
+        <name>Assignment_Set_AR_Dates</name>
+        <label>Set AR Dates</label>
+        <locationX>545</locationX>
+        <locationY>10091</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.First_Reminder_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_First_Reminder_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Order_Gen_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Order_Gen_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Second_Reminder_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Second_Reminder_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_PO_number_Blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign Earliest Subscription End Date</description>
+        <name>EarliestSubEndDate</name>
+        <label>EarliestSubEndDate</label>
+        <locationX>77</locationX>
+        <locationY>1127</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Earliest_Subscription_End_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AllSubsOfRenewedContract.SBQQ__SubscriptionEndDate__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Contract_Renewed_By</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Increment_Push_Counter</name>
+        <label>Increment Push Counter</label>
+        <locationX>935</locationX>
+        <locationY>1019</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Push_Counter__c</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Account_Disti_Reseller_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Path_1_Assign_Amendment_Shipping_Contact</name>
+        <label>Path 1 Assign Amendment Shipping Contact</label>
+        <locationX>468</locationX>
+        <locationY>10991</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Shipping_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__AmendedContract__r.SBQQ__Opportunity__r.Shipping_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Path_1_Assign_Shipping_Contact</name>
+        <label>Path 1 Assign Shipping Contact</label>
+        <locationX>204</locationX>
+        <locationY>10991</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Shipping_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__r.Shipping_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Path_2_Assign_Amendment_Shipping_Contact</name>
+        <label>Path 2 Assign Amendment Shipping Contact</label>
+        <locationX>1260</locationX>
+        <locationY>10883</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Shipping_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__AmendedContract__r.SBQQ__Opportunity__r.Shipping_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Path_2_Assign_Shipping_Contact</name>
+        <label>Path 2 Assign Shipping Contact</label>
+        <locationX>996</locationX>
+        <locationY>10883</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Shipping_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__r.Shipping_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>ReAssign_DateVar</name>
+        <label>ReAssign DateVar</label>
+        <locationX>820</locationX>
+        <locationY>5267</locationY>
+        <assignmentItems>
+            <assignToReference>DateVar</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Renewed_Contract_Subs_Loop.SBQQ__EndDate__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Renewed_Contract_Subs_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Remove_AR_Flags</name>
+        <label>Remove AR Flags</label>
+        <locationX>77</locationX>
+        <locationY>1643</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Auto_Renewal_Status_Core__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Auto_Renewal_Status_Reason_Core__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Payment_Terms</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the account based field values for the opportunity</description>
+        <name>Set_Account_Based_Fields</name>
+        <label>Set Account Based Fields</label>
+        <locationX>209</locationX>
+        <locationY>1427</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Bill_To_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Bill_To_Account</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Billing_Aggregator__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Billing_Aggregator</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Distributor_Partner_Number__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Distributor_Partner_Number</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Reg_Email_Notifications__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Deal_Reg_Email_Notifications</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Auto_Renewal_Status_Core__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Auto_Renewal_Status_Core</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Auto_Renewal_Status_Reason_Core__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Auto_Renewal_Status_Reason_Core</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller_account_owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Reseller_Account_Owner</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller_Account_Owner_Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Reseller_Account_owner_Email</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Amendment_and_New_Business</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set Existing Customer as Lead Source</description>
+        <name>Set_Amendment_Lead_Source</name>
+        <label>Set Amendment Lead Source</label>
+        <locationX>710</locationX>
+        <locationY>4127</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.LeadSource</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Amendment_LeadSource</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>New_Upsell_Amend_Oppty</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Amendment_Owner</name>
+        <label>Set Amendment Owner</label>
+        <locationX>578</locationX>
+        <locationY>3935</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Amendment_Opp_owner_UserId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Amendment_Lead_Source</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Bill_To_Account_Again</name>
+        <label>Set Bill To Account Again</label>
+        <locationX>732</locationX>
+        <locationY>7427</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Bill_To_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Bill_To_Account</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Opportunity_Closed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set Business Gourp from Asset HW Contract</description>
+        <name>Set_Business_Group</name>
+        <label>Set Business Group</label>
+        <locationX>578</locationX>
+        <locationY>6635</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CONSTANT_CORE</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Primary_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Asset_HW_Contract__r.Primary_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Quote_Pricebook_Id_check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set opportunity close date</description>
+        <name>Set_Close_Date</name>
+        <label>Set Close Date</label>
+        <locationX>666</locationX>
+        <locationY>7943</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CloseDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Close_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Initial_Opp_Closed_Datetime_And_By</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Close_Date_on_Auto_Renewals</name>
+        <label>Set Close Date on Auto Renewals</label>
+        <locationX>468</locationX>
+        <locationY>10775</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CloseDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Auto_Renewal_Close_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_for_Shipping_Contact</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Contract_Renewed_By</name>
+        <label>Set Contract Renewed By</label>
+        <locationX>209</locationX>
+        <locationY>1319</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Contract_Renewed_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__RenewedContract__r.Contract_Renewed_By__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Account_Based_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets Fields Based on Renewed Contract for Opportunity</description>
+        <name>Set_Fields_Based_on_Renewed_Contract</name>
+        <label>Set Fields Based on Renewed Contract</label>
+        <locationX>556</locationX>
+        <locationY>4727</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.LeadSource</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Renewal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Primary_Product_Family_2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Primary_Product_Family</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Model_Series__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Model_Series</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Expiration_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__RenewedContract__r.EndDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_New_Upsell_Renewal_Oppty</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fields_Based_on_Upsell_Amend_Contract</name>
+        <label>Set Fields Based on Upsell Amend Contract</label>
+        <locationX>578</locationX>
+        <locationY>4343</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Hot_List__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_HotList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Lead_Source_Detail__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_LeadSourceDetail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Primary_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_PrimaryContact</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Reg_Tracking_No__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_DelRegTrackingNo</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Reg_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_DealRegStatus</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Reg_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_DealRegType</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_Reseller</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_ResellerContact</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Distributor__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_Distributor</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Reg_Exp_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_DealRegExpDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Primary_Product_Family_2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_Primary_Product_Family</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Authority__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_HotList_Authority</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Budget__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_HotList_Budget</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Need__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_HotList_Need</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Timeline__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_HotList_Timeline</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Notes__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_HotList_Notes</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.LeadSource</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Amend_LeadSource</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Renewed_Contract_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fields_Based_on_Upsell_Renewed_Contract</name>
+        <label>Set Fields Based on Upsell Renewed Contract</label>
+        <locationX>116</locationX>
+        <locationY>4943</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Hot_List__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_HotList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Lead_Source_Detail__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_LeadSourceDetail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Primary_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_PrimaryContact</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Reg_Tracking_No__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_DelRegTrackingNo</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Reg_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_DealRegStatus</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Reg_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_DealRegType</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Reg_Exp_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_DealRegExpDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_Reseller</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_ResellerContact</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Distributor__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_Distributor</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Primary_Product_Family_2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_Primary_Product_Family</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Authority__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_HotList_Authority</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Budget__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_HotList_Budget</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Need__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_HotList_Need</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Timeline__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_HotList_Timeline</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Notes__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_HotList_Notes</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.LeadSource</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_SM_Renewal_LeadSource</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SE_Notes_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets this field to identify the first time an opportunity is closed</description>
+        <name>Set_Initial_Opp_Closed_Datetime_And_By</name>
+        <label>Set Initial Opp Closed Datetime And By</label>
+        <locationX>666</locationX>
+        <locationY>8051</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Initial_Opp_Closed_Datetime_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Initial_Opp_Closed_Datetime_By</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Reseller_Based_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets this field to capture information when a closed opportunity is reopened and closed again</description>
+        <name>Set_Lates_Opp_Closed_Datetime_And_By</name>
+        <label>Set Latest Opp Closed Datetime And By</label>
+        <locationX>50</locationX>
+        <locationY>7943</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Latest_Opp_Closed_Datetime_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Latest_Opp_Closed_Won_By</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Opportunity_Closed_Won_Closed_Lost_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set Lead Source from Asset HW Contract</description>
+        <name>Set_Lead_Source</name>
+        <label>Set Lead Source</label>
+        <locationX>578</locationX>
+        <locationY>6335</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.LeadSource</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Amendment_LeadSource</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Business_Group_is_Empty</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets MSP Agreement Territory Approval for Opportunity</description>
+        <name>Set_MSP_Agreement_Territory_Approva</name>
+        <label>Set MSP Agreement Territory Approva</label>
+        <locationX>732</locationX>
+        <locationY>2627</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.MSP_Agreement_Territory_Approval__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_MSP_Agreement_Territory_Approval</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Next_Step_is_Updated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Next_Step_Last_Modified_Date</name>
+        <label>Set Next Step Last Modified Date</label>
+        <locationX>732</locationX>
+        <locationY>2927</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Next_Step_Last_Modified_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NextStepLastModifiedDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_If_New_Business_Oppty</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set OEM Account Message</description>
+        <name>Set_OEM_Account_Message</name>
+        <label>Set OEM Account Message</label>
+        <locationX>864</locationX>
+        <locationY>7211</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Sonian_OEM_Account_Message__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Was_Bill_Account_Set</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Opportunity owner for Closed Amendment if the owner is CS</description>
+        <name>Set_Opp_Owner_for_Closed_Amendment</name>
+        <label>Set Opp Owner for Closed Amendment</label>
+        <locationX>534</locationX>
+        <locationY>8783</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Owner_Closed_Amendment_CS</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Opportunity_Record_Type</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets opportunity type to existing</description>
+        <name>Set_Opportunity_Type_To_Existing</name>
+        <label>Set Opportunity Type To Existing</label>
+        <locationX>94</locationX>
+        <locationY>9167</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Existing Business</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Opportunity_Locked_Renewal_RT_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set ordered field for the opportunity</description>
+        <name>Set_Ordered_Field</name>
+        <label>Set Ordered Field</label>
+        <locationX>534</locationX>
+        <locationY>8675</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__Ordered__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Ordered</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Opp_Owner_for_Closed_Amendment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set Owner based fields</description>
+        <name>Set_Owner_Based_Fields</name>
+        <label>Set Owner Based Fields</label>
+        <locationX>864</locationX>
+        <locationY>9659</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Owner_s_Manager__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Owner.ManagerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Role_Bucket__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Role_Bucket</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Set_AR_Reminder_Dates</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Owner_Role_Opp_Closed</name>
+        <label>Set Owner Role Opp Closed</label>
+        <locationX>358</locationX>
+        <locationY>7727</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Closed_by_Owner_Role__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Owner.UserRole.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Opportunity_reopened_and_closed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Payment Terms should be set after the Bill To Account is set.</description>
+        <name>Set_Payment_Terms</name>
+        <label>Set Payment Terms</label>
+        <locationX>77</locationX>
+        <locationY>1751</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Payment_Terms__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Payment_Terms</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Renewed_Contract_TCV</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_PO_Number</name>
+        <label>Set PO Number</label>
+        <locationX>413</locationX>
+        <locationY>10307</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.PurchaseOrderID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Purchase_Order_Number</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_If_Auto_Renewal_Oppty</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Previous_Contract_TCV</name>
+        <label>Set Previous Contract TCV</label>
+        <locationX>732</locationX>
+        <locationY>2219</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Previous_Contract_TCV__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PreviousContractTCV</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Ship_to_Address_Lookup_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the value of purchase order</description>
+        <name>Set_Purchase_Order</name>
+        <label>Set Purchase Order</label>
+        <locationX>275</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.PurchaseOrderID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_This_Renewal_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets Quote&apos;s pricebook Id</description>
+        <name>Set_Quote_PricebookId</name>
+        <label>Set Quote PricebookId</label>
+        <locationX>732</locationX>
+        <locationY>7019</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__QuotePricebookId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Quote_PricebookId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Pricebook2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Quote_PricebookId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_OEM_Account_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the record type</description>
+        <name>Set_Record_Type</name>
+        <label>Set Record Type</label>
+        <locationX>864</locationX>
+        <locationY>9551</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_RecordType</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Owner_Based_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Reseller_Account_owner</name>
+        <label>Set Reseller Account owner</label>
+        <locationX>1265</locationX>
+        <locationY>1319</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller_account_owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Reseller_Account_Owner</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller_Account_Owner_Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Reseller_Account_owner_Email</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Bill_To_Account_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set reseller based fields when opportunity is closed</description>
+        <name>Set_Reseller_Based_Fields</name>
+        <label>Set Reseller Based Fields</label>
+        <locationX>666</locationX>
+        <locationY>8159</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Focus_Partner_Checkbox__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Focus_Partner_Opp_Closed</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Nationwide_for_Channel_Comms_checkbox__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Nationwide_Channel_Comms_Opp_Closed</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Partner_Level__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Partner_Level_Opp_Closed</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller_Account_Owner_Opp_Closed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Reseller_Account_Owner_Opp_Closed</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Type_of_Amendment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the SE Notes field for Opportunity</description>
+        <name>Set_SE_Notes</name>
+        <label>Set SE Notes</label>
+        <locationX>732</locationX>
+        <locationY>5927</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Date_SE_Notes_Last_Updated__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Asset_HW_Contract_Present</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Service_Contact_Require_to_FALSE</name>
+        <label>Set Service Contact Require to FALSE</label>
+        <locationX>644</locationX>
+        <locationY>3443</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Is_Service_Contact_Require__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Amended_Contract_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Service_Contact_Require_to_TRUE</name>
+        <label>Set Service Contact Require to TRUE</label>
+        <locationX>380</locationX>
+        <locationY>3443</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Is_Service_Contact_Require__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Amended_Contract_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the Ship To Account for Opportunity</description>
+        <name>Set_Ship_To_Account</name>
+        <label>Set Ship To Account</label>
+        <locationX>732</locationX>
+        <locationY>2519</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Ship_To_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Ship_To_Account</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_MSP_Agreement_Territory_Approva</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Oppty_Close_Date</name>
+        <label>Update Oppty Close Date</label>
+        <locationX>732</locationX>
+        <locationY>5543</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CloseDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DateVar</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SE_Notes_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assignment used to set values for only new opportunities</description>
+        <name>Values_For_New_Opp_Only</name>
+        <label>Values For New Opp Only</label>
+        <locationX>407</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CurrencyIsoCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Opportunity_Currency</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Owner</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Business_Group</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Pricebook2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Opp_Quote_PricebookId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ACV_Converted_Hoopla_Integration__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Annual_Contract_Value_Converted</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Clear_Purchase_Order</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>Amendment_LeadSource</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Existing Customer</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Constant containing the text &apos;Core&apos;</description>
+        <name>CONSTANT_CORE</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Core</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CONSTANT_LOCKED_NEW_BUSINESS</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Locked_New_Business</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CONSTANT_LOCKED_RENEWAL</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Locked_Renewal</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CONSTANT_NEW_BUSINESS</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>New_Business</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CONSTANT_RENEWAL</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Renewal</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Checks whether one of the associated account fields has changed or not</description>
+        <name>Account_Disti_Reseller_Changed</name>
+        <label>Account/Disti/Reseller Changed</label>
+        <locationX>1067</locationX>
+        <locationY>1211</locationY>
+        <defaultConnector>
+            <targetReference>Set_Reseller_Account_owner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Account_Disti_Reseller_Changed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AccountId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Opportunity_PriorValue.AccountId</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Distributor__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Opportunity_PriorValue.Distributor__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Reseller__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Opportunity_PriorValue.Reseller__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Account_Based_Fields</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether amended contract has changed or not</description>
+        <name>Amended_Contract_Changed</name>
+        <label>Amended Contract Changed</label>
+        <locationX>864</locationX>
+        <locationY>3719</locationY>
+        <defaultConnector>
+            <targetReference>Renewed_Contract_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Amended_Contract_Changed</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Opportunity_PriorValue.SBQQ__AmendedContract__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Current_User_Profile</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annual_Contract_Value_Converted_On_Update</name>
+        <label>Annual Contract Value Converted On Update</label>
+        <locationX>1320</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Priorvalue_Exists</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Annual_Contract_Value_Converted_Is_Changed_and_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Annual_Contract_Value2__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Annual_Contract_Value2__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Annual_Contract_Value_On_Update</targetReference>
+            </connector>
+            <label>Annual Contract Value Converted Is Changed and Not Null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether amended contract has changed or not</description>
+        <name>Asset_HW_Contract_Present</name>
+        <label>Asset HW Contract Present</label>
+        <locationX>864</locationX>
+        <locationY>6119</locationY>
+        <defaultConnector>
+            <targetReference>Quote_Pricebook_Id_check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Asset_HW_Contract_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Asset_HW_Contract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Asset_HW_Contract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lead_Source_is_Empty</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether Bill To account is changed or not</description>
+        <name>Bill_To_Account_Changed</name>
+        <label>Bill To Account Changed</label>
+        <locationX>1265</locationX>
+        <locationY>1427</locationY>
+        <defaultConnector>
+            <targetReference>Check_Renewed_Contract_TCV</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Bill_To_Account_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Bill_To_Account__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Opportunity_PriorValue.Bill_To_Account__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Payment_Terms</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Business Group is Empty</description>
+        <name>Business_Group_is_Empty</name>
+        <label>Business Group is Empty</label>
+        <locationX>710</locationX>
+        <locationY>6527</locationY>
+        <defaultConnector>
+            <targetReference>Quote_Pricebook_Id_check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Populated</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Business_Group_Empty</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Business_Group</targetReference>
+            </connector>
+            <label>Empty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Amendment_and_New_Business</name>
+        <label>Check Amendment and New Business</label>
+        <locationX>209</locationX>
+        <locationY>1535</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_Payment_Terms</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do Not Prevent</defaultConnectorLabel>
+        <rules>
+            <name>Prevent_AR_Flag</name>
+            <conditionLogic>(1 AND 3 ) AND (2 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CONSTANT_NEW_BUSINESS</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Auto_Renewal_Status_Core__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Included</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Remove_AR_Flags</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Prevent AR Flag</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Current_User_Profile</name>
+        <label>Check Current User Profile</label>
+        <locationX>710</locationX>
+        <locationY>3827</locationY>
+        <defaultConnector>
+            <targetReference>Set_Amendment_Lead_Source</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_NOT_Admin_or_CS_user</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__r.SBQQ__AmendmentOwner__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__r.SBQQ__AmendmentOwner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__r.SBQQ__AmendmentOwner__r.Profile.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Apollo: Custom- Customer Services</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__r.SBQQ__AmendmentOwner__r.Profile.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>System Administrator</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__r.SBQQ__AmendmentOwner__r.Profile.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Apollo: Custom- Sales Operations</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Amendment_Owner</targetReference>
+            </connector>
+            <label>If NOT Admin or CS user</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_If_Auto_Renewal_Oppty</name>
+        <label>Check If Auto Renewal Oppty</label>
+        <locationX>864</locationX>
+        <locationY>10667</locationY>
+        <defaultConnector>
+            <targetReference>Check_non_Auto_Renewal_Decision_for_Shipping_Contact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Auto_Renewal_Oppty</name>
+            <conditionLogic>(2 AND 3 AND 4 AND 5 AND 6) AND (1 OR (1 AND 7))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Auto_Renewal_Status_Core__c</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>Included</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Lost</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Expiration_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CloseDate</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Auto_Renewal_Status_Core__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Close_Date_on_Auto_Renewals</targetReference>
+            </connector>
+            <label>Auto Renewal Oppty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_If_New_Business_Oppty</name>
+        <label>Check If New Business Oppty</label>
+        <locationX>864</locationX>
+        <locationY>3119</locationY>
+        <defaultConnector>
+            <targetReference>Amended_Contract_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_New_Business_Oppty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Product</targetReference>
+            </connector>
+            <label>Yes New Business Oppty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Next_Step_is_Updated</name>
+        <label>Check Next Step is Updated</label>
+        <locationX>864</locationX>
+        <locationY>2819</locationY>
+        <defaultConnector>
+            <targetReference>Check_If_New_Business_Oppty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Next_Step_Updated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NextStep</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Next_Step_Last_Modified_Date</targetReference>
+            </connector>
+            <label>Yes Next Step Updated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check for Renewal or Amendment Contracts, and get the appropriate Shipping Contact from the original Opps</description>
+        <name>Check_non_Auto_Renewal_Decision_for_Shipping_Contact</name>
+        <label>Check non-Auto Renewal Decision for Shipping Contact</label>
+        <locationX>1260</locationX>
+        <locationY>10775</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Path_2_Renewal_Opp</name>
+            <conditionLogic>(1 or 2) AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__RenewedContract__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Shipping_Contact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Path_2_Assign_Shipping_Contact</targetReference>
+            </connector>
+            <label>Path 2 Renewal Opp</label>
+        </rules>
+        <rules>
+            <name>Path_2_Amended_Opp</name>
+            <conditionLogic>(1 or 2) AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__AmendedContract__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__r.SBQQ__Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Shipping_Contact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Path_2_Assign_Amendment_Shipping_Contact</targetReference>
+            </connector>
+            <label>Path 2 Amended Opp</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Renewed_Contract_TCV</name>
+        <label>Check Renewed Contract</label>
+        <locationX>864</locationX>
+        <locationY>2111</locationY>
+        <defaultConnector>
+            <targetReference>Ship_to_Address_Lookup_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Renewed_Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Previous_Contract_TCV</targetReference>
+            </connector>
+            <label>Check Renewed Contract</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Sub_End_Date</name>
+        <label>Check Sub End Date</label>
+        <locationX>952</locationX>
+        <locationY>5159</locationY>
+        <defaultConnector>
+            <targetReference>Renewed_Contract_Subs_Loop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Less_than_Oppty_Close_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Renewed_Contract_Subs_Loop.SBQQ__EndDate__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>DateVar</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Renewed_Contract_Subs_Loop.AnnotationReason__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Renewed_Contract_Subs_Loop.SBQQ__TerminatedDate__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Renewed_Contract_Subs_Loop.SBQQ__RenewalQuantity__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ReAssign_DateVar</targetReference>
+            </connector>
+            <label>Is Less than Oppty Close Date</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>CheckforProfessionalServices</description>
+        <name>CheckforProfessionalServices</name>
+        <label>CheckforProfessionalServices</label>
+        <locationX>644</locationX>
+        <locationY>3335</locationY>
+        <defaultConnector>
+            <targetReference>Amended_Contract_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Professional_Services_Line_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProductFeatureProfessional</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Service_Contact_Require_to_TRUE</targetReference>
+            </connector>
+            <label>Professional Services Line Exist</label>
+        </rules>
+        <rules>
+            <name>No_Professional_Services_Line_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProductFeatureProfessional</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Service_Contact_Require_to_FALSE</targetReference>
+            </connector>
+            <label>No Professional Services Line Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Clear purchase order value if renewed contract or amended contract is present</description>
+        <name>Clear_Purchase_Order</name>
+        <label>Clear Purchase Order</label>
+        <locationX>407</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <targetReference>Is_This_Renewal_Opportunity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Don&apos;t Clear</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Clear_Purchase_Order</name>
+            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Purchase_Order</targetReference>
+            </connector>
+            <label>Clear Purchase Order</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Close_Date_Changes</name>
+        <label>Close Date Changes</label>
+        <locationX>1067</locationX>
+        <locationY>911</locationY>
+        <defaultConnector>
+            <targetReference>Account_Disti_Reseller_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CloseDate</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Opportunity_PriorValue.CloseDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CloseDate</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Opportunity_PriorValue.CloseDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Flow.CurrentDate</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>BufferCloseDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>isSameMonthCloseDate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Increment_Push_Counter</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Decide which type of opportunity is this</description>
+        <name>Decide_Opportunity_RecordType</name>
+        <label>Decide Opportunity RecordType</label>
+        <locationX>1370</locationX>
+        <locationY>7727</locationY>
+        <defaultConnector>
+            <targetReference>Set_Record_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_New_Business_Open_Opportunity</name>
+            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Apollo: Custom- Sales Profile</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Apollo: Custom- Customer Services</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_New_Business_RT</targetReference>
+            </connector>
+            <label>New Business</label>
+        </rules>
+        <rules>
+            <name>Yes_Renewal_Open_Opportunity_on_Create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Apollo: Custom- Renewals Profile</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Renewal_RT</targetReference>
+            </connector>
+            <label>Renewal on Create</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if AR custom metadata exists</description>
+        <name>Decision_AR_Custom_Metadata_Exists</name>
+        <label>AR Custom Metadata Exists?</label>
+        <locationX>699</locationX>
+        <locationY>9983</locationY>
+        <defaultConnector>
+            <targetReference>Check_If_Auto_Renewal_Oppty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Custom Metadata</defaultConnectorLabel>
+        <rules>
+            <name>Yes_AR_Custom_Metadata_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_AR_Settings</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Set_AR_Dates</targetReference>
+            </connector>
+            <label>AR Custom Metadata Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check for Renewal or Amendment Contracts, and get the appropriate Shipping Contact from the original Opps</description>
+        <name>Decision_for_Shipping_Contact</name>
+        <label>Decision for Shipping Contact</label>
+        <locationX>468</locationX>
+        <locationY>10883</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Renewal_Opp</name>
+            <conditionLogic>(1 or 2) AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__RenewedContract__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Shipping_Contact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Path_1_Assign_Shipping_Contact</targetReference>
+            </connector>
+            <label>Renewal Opp</label>
+        </rules>
+        <rules>
+            <name>Amended_Opp</name>
+            <conditionLogic>(1 or 2) AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__AmendedContract__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__r.SBQQ__Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Shipping_Contact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Path_1_Assign_Amendment_Shipping_Contact</targetReference>
+            </connector>
+            <label>Amended Opp</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether AR dates need to be set</description>
+        <name>Decision_Set_AR_Reminder_Dates</name>
+        <label>Set AR Reminder Dates</label>
+        <locationX>864</locationX>
+        <locationY>9767</locationY>
+        <defaultConnector>
+            <targetReference>Check_If_Auto_Renewal_Oppty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do Not Set Dates</defaultConnectorLabel>
+        <rules>
+            <name>Yes_AR_Set_Dates</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Auto_Renewal_Status_Core__c</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>Included</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CloseDate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_AR_Settings</targetReference>
+            </connector>
+            <label>Set AR Dates</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_New_Upsell_Renewal_Oppty</name>
+        <label>Is New Upsell Renewal Oppty</label>
+        <locationX>556</locationX>
+        <locationY>4835</locationY>
+        <defaultConnector>
+            <targetReference>SE_Notes_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_New_Upsell_Renewal_Oppty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Fields_Based_on_Upsell_Renewed_Contract</targetReference>
+            </connector>
+            <label>Yes New  Upsell Renewal Oppty</label>
+        </rules>
+        <rules>
+            <name>Is_New_Renewal_Oppty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Subs_from_Renewed_Contract</targetReference>
+            </connector>
+            <label>No- Only Renewal Oppty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_PO_number_Blank</name>
+        <label>Is PO number Blank</label>
+        <locationX>545</locationX>
+        <locationY>10199</locationY>
+        <defaultConnector>
+            <targetReference>Check_If_Auto_Renewal_Oppty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_PO_Blank</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.PurchaseOrderID__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.PurchaseOrderID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_PO_Number</targetReference>
+            </connector>
+            <label>Yes PO Blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_This_Renewal_Opportunity</name>
+        <label>Is This Renewal Opportunity</label>
+        <locationX>407</locationX>
+        <locationY>803</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_Account_Based_Fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Renewal_Oppty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IsThisCoreBG</targetReference>
+            </connector>
+            <label>Yes Renewal Oppty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>This will check if the Business Group is Core</description>
+        <name>IsThisCoreBG</name>
+        <label>IsThisCoreBG</label>
+        <locationX>209</locationX>
+        <locationY>911</locationY>
+        <defaultConnector>
+            <targetReference>Set_Contract_Renewed_By</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CoreBG</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AllSubsOfRenewedContract</targetReference>
+            </connector>
+            <label>CoreBG</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if lead source is empty</description>
+        <name>Lead_Source_is_Empty</name>
+        <label>Lead Source is Empty</label>
+        <locationX>710</locationX>
+        <locationY>6227</locationY>
+        <defaultConnector>
+            <targetReference>Business_Group_is_Empty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Populated</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Lead_Source_Empty</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.LeadSource</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LeadSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Lead_Source</targetReference>
+            </connector>
+            <label>Empty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Logic to be implemented if this is a new Opportunity</description>
+        <name>New_Opportunity_Record</name>
+        <label>New Opportunity Record</label>
+        <locationX>864</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_PriorValue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Existing</defaultConnectorLabel>
+        <rules>
+            <name>New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Values_For_New_Opp_Only</targetReference>
+            </connector>
+            <label>New record</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>New_Upsell_Amend_Oppty</name>
+        <label>New  Upsell Amend Oppty</label>
+        <locationX>710</locationX>
+        <locationY>4235</locationY>
+        <defaultConnector>
+            <targetReference>Renewed_Contract_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_New_Upsell_Amend_Oppty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Fields_Based_on_Upsell_Amend_Contract</targetReference>
+            </connector>
+            <label>Yes New  Upsell Amend Oppty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether amended contract has changed or not</description>
+        <name>Opportunity_Closed</name>
+        <label>Opportunity Closed</label>
+        <locationX>864</locationX>
+        <locationY>7619</locationY>
+        <defaultConnector>
+            <targetReference>Decide_Opportunity_RecordType</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Closed</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Opportunity_Closed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Owner_Role_Opp_Closed</targetReference>
+            </connector>
+            <label>Closed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether an Opportunity was closed won/Lost</description>
+        <name>Opportunity_Closed_Won_Closed_Lost</name>
+        <label>Opportunity Closed Won / Closed Lost</label>
+        <locationX>666</locationX>
+        <locationY>8567</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_Record_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Closed Lost</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Closed_Won</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Ordered_Field</targetReference>
+            </connector>
+            <label>Closed Won</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether an Opportunity was closed won/Lost</description>
+        <name>Opportunity_Closed_Won_Closed_Lost_0</name>
+        <label>Opportunity Closed Won / Closed Lost</label>
+        <locationX>50</locationX>
+        <locationY>8051</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_Record_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Closed Lost</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Closed_Won_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Record_Type</targetReference>
+            </connector>
+            <label>Closed Won</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the record containing previous value of Opportunity is present or not.</description>
+        <name>Opportunity_Priorvalue_Exists</name>
+        <label>Opportunity Priorvalue Exists?</label>
+        <locationX>1320</locationX>
+        <locationY>803</locationY>
+        <defaultConnectorLabel>Null</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Opportunity_Priorvalue_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_Date_Changes</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks current record type of the opportunity</description>
+        <name>Opportunity_Record_Type</name>
+        <label>Opportunity Record Type</label>
+        <locationX>358</locationX>
+        <locationY>9059</locationY>
+        <defaultConnectorLabel>None</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Renewal_Opportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CONSTANT_RENEWAL</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Opportunity_Type_To_Existing</targetReference>
+            </connector>
+            <label>Renewal</label>
+        </rules>
+        <rules>
+            <name>Yes_New_Business_Opportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CONSTANT_NEW_BUSINESS</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Locked_New_Business_RT_0</targetReference>
+            </connector>
+            <label>New Business</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Opportunity_reopened_and_closed</name>
+        <label>Opportunity reopened and closed</label>
+        <locationX>358</locationX>
+        <locationY>7835</locationY>
+        <defaultConnector>
+            <targetReference>Set_Close_Date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Opportunity_Reopened_Closed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Initial_Opp_Closed_Datetime_By__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Initial_Opp_Closed_Datetime_By__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Lates_Opp_Closed_Datetime_And_By</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Business Group is Empty</description>
+        <name>Quote_Pricebook_Id_check</name>
+        <label>Quote Pricebook Id check</label>
+        <locationX>864</locationX>
+        <locationY>6911</locationY>
+        <defaultConnector>
+            <targetReference>Set_OEM_Account_Message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do not set</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Set_Quote_Pricebook</name>
+            <conditionLogic>1 AND ((2 AND 3) OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Formula_Opp_Quote_PricebookId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Formula_Opp_Quote_PricebookId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Pricebook2Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Setup.CPQ_Ids__c.Standard_Pricebook_Id__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Quote_PricebookId</targetReference>
+            </connector>
+            <label>Set Quote Pricebook</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether renewed contract has changed or not</description>
+        <name>Renewed_Contract_Changed</name>
+        <label>Renewed Contract Changed</label>
+        <locationX>864</locationX>
+        <locationY>4619</locationY>
+        <defaultConnector>
+            <targetReference>SE_Notes_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Renewed_Contract_Changed</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Opportunity_PriorValue.SBQQ__RenewedContract__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Fields_Based_on_Renewed_Contract</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether amended contract has changed or not</description>
+        <name>SE_Notes_Changed</name>
+        <label>SE Notes Changed</label>
+        <locationX>864</locationX>
+        <locationY>5819</locationY>
+        <defaultConnector>
+            <targetReference>Asset_HW_Contract_Present</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_SE_Notes_Changed</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SE_Notes__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SE_Notes__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SE_Notes__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Opportunity_PriorValue.SE_Notes__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_SE_Notes</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether ship to address lookup has changed or not</description>
+        <name>Ship_to_Address_Lookup_Changed</name>
+        <label>Ship to Address Lookup Changed</label>
+        <locationX>864</locationX>
+        <locationY>2411</locationY>
+        <defaultConnector>
+            <targetReference>Check_Next_Step_is_Updated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Shipping_Address_Changed</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Shipping_Address__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Shipping_Address__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Shipping_Address__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Opportunity_PriorValue.Shipping_Address__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Ship_To_Account</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check which type of amendment opportunity is this</description>
+        <name>Type_of_Amendment</name>
+        <label>Type of Amendment</label>
+        <locationX>666</locationX>
+        <locationY>8267</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Closed_Won_Closed_Lost</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Amendment</defaultConnectorLabel>
+        <rules>
+            <name>Yes_New_Business_Amendment_Opportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Profile.Name</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Sales</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Locked_New_Business_RT</targetReference>
+            </connector>
+            <label>New Business</label>
+        </rules>
+        <rules>
+            <name>Yes_Renewal_Amendment_Opportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Renewals</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Locked_Renewal_RT</targetReference>
+            </connector>
+            <label>Renewal</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Was_Bill_Account_Set</name>
+        <label>Was Bill Account Set</label>
+        <locationX>864</locationX>
+        <locationY>7319</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Closed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_was_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Bill_To_Account__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Bill_To_Account_Again</targetReference>
+            </connector>
+            <label>Yes was Set</label>
+        </rules>
+    </decisions>
+    <description>Record triggered flow for Opportunity to update fields before save.
+// SFDC-12774 : Contract Renewed By
+// SFDC-15094: Pricing - Create Custom Pricebook
+//SFDC-16039: Rework logic on Oppty Close Date
+//SFDC-16061: Add new roles for role bucket formula
+// SFDC-17597 : PO#s entered in the portal should override automated Auto Renewal PO # Assignment
+//SFDC-16371 :  Service Contact Required On Oppty
+//SFDC-19759: Updating ACV Converted Hoopla Integration
+//SFDC-20202: Shipping Contacts Bill- to / Ship-to
+//SFDC-18936: Earliest Subscription End Date</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Annual_Contract_Value_Converted</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.SBCF_Annual_Contract_Value2__c} /CURRENCYRATE(TEXT({!$Record.CurrencyIsoCode}))</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>BufferCloseDate</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.CreatedDate} +1</expression>
+    </formulas>
+    <formulas>
+        <description>Provide auto renewal flag value for Account</description>
+        <name>Formula_Account_Auto_Renewal_Eligible_Core</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(CONTAINS(TEXT({!$Record.Account.Auto_Renewal_Status_Core__c}), &quot;Included&quot;), TRUE, FALSE)</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Amendment_Opp_owner_UserId</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.SBQQ__AmendedContract__r.SBQQ__AmendmentOwner__c}</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Auto_Renewal_Close_Date</name>
+        <dataType>Date</dataType>
+        <expression>({!$Record.Expiration_Date__c} - {!Get_AR_Settings.Create_Order__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for auto renewal eligible core field</description>
+        <name>Formula_Opp_Auto_Renewal_Eligible_Core</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(CONTAINS(TEXT({!$Record.Auto_Renewal_Status_Core__c}), &quot;Included&quot;), TRUE, FALSE)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides Auto Renewal Status Core value</description>
+        <name>Formula_Opp_Auto_Renewal_Status_Core</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!Formula_Account_Auto_Renewal_Eligible_Core},
+                {!$Record.SBQQ__Renewal__c},
+                NOT(ISPICKVAL({!$Record.Auto_Renewal_Status_Core__c},&quot;Excluded - Manually&quot;))),
+    &quot;Included - Automatically&quot;,
+    TEXT({!$Record.Auto_Renewal_Status_Core__c}))</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for the Auto renewal status reason core field</description>
+        <name>Formula_Opp_Auto_Renewal_Status_Reason_Core</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!Formula_Account_Auto_Renewal_Eligible_Core},
+                {!$Record.SBQQ__Renewal__c},
+                NOT(ISPICKVAL({!$Record.Auto_Renewal_Status_Core__c},&quot;Excluded - Manually&quot;))),
+    &quot;Included - based on Account Flag&quot;,
+    TEXT({!$Record.Auto_Renewal_Status_Reason_Core__c}))</expression>
+    </formulas>
+    <formulas>
+        <description>Provides Bill To Account value for an opportunity</description>
+        <name>Formula_Opp_Bill_To_Account</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.AccountId})) &amp;&amp; NOT(ISBLANK({!$Record.Account.Billing_Aggregator__c})),{!$Record.Account.Billing_Aggregator__c},
+   IF(NOT(ISBLANK({!$Record.Distributor__c})), 
+       {!$Record.Distributor__c},
+       IF(NOT(ISBLANK({!$Record.Reseller__c})), 
+           {!$Record.Reseller__c},
+	   {!$Record.AccountId}
+      )
+  )
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides billing aggregator value for Opportunity</description>
+        <name>Formula_Opp_Billing_Aggregator</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.Distributor__c})) &amp;&amp; NOT(ISBLANK({!$Record.Distributor__r.Billing_Aggregator__c})), {!$Record.Distributor__r.Billing_Aggregator__c},
+   IF(NOT(ISBLANK({!$Record.Reseller__c})) &amp;&amp; NOT(ISBLANK({!$Record.Reseller__r.Billing_Aggregator__c})), {!$Record.Reseller__r.Billing_Aggregator__c},
+      IF(NOT(ISBLANK({!$Record.AccountId})) &amp;&amp; NOT(ISBLANK({!$Record.Account.Billing_Aggregator__c})), {!$Record.Account.Billing_Aggregator__c},
+         NULL)
+   )
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides business group value for the opportunity</description>
+        <name>Formula_Opp_Business_Group</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.SBQQ__RenewedContract__c})), 
+    {!$Record.SBQQ__RenewedContract__r.Business_Group__c},
+     IF(NOT(ISBLANK({!$Record.SBQQ__AmendedContract__c})), 
+          {!$Record.SBQQ__AmendedContract__r.Business_Group__c}, 
+          IF(NOT(ISPICKVAL({!$Record.Owner.Business_Group__c}, &apos;&apos;)),
+               TEXT({!$Record.Owner.Business_Group__c}),
+                TEXT({!$Record.Business_Group__c}
+              )
+          )
+     )
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for Opportunity Close Date</description>
+        <name>Formula_Opp_Close_Date</name>
+        <dataType>Date</dataType>
+        <expression>If({!$Record.CloseDate} &gt; TODAY(),
+    TODAY(),
+    {!$Record.CloseDate})</expression>
+    </formulas>
+    <formulas>
+        <description>Provides deal registration email notifications value for opportunity</description>
+        <name>Formula_Opp_Deal_Reg_Email_Notifications</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Distributor__c}),
+     &quot;&quot;,
+     {!$Record.Distributor__r.Deal_Reg_Email_Notifications__c}
+   )</expression>
+    </formulas>
+    <formulas>
+        <description>Provides distributor partner number for the opportunity</description>
+        <name>Formula_Opp_Distributor_Partner_Number</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!$Record.Distributor__c}),
+     NULL,
+    {!$Record.Distributor__r.Partner_Number__c})</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Determines First Reminder Date</description>
+        <name>Formula_Opp_First_Reminder_Date</name>
+        <dataType>Date</dataType>
+        <expression>IF(AND({!$Record.SBQQ__RenewedContract__r.SBQQ__RenewalTerm__c}=1,{!$Record.IsClosed}),
+    {!$Record.CloseDate}  - {!Get_AR_Settings.Monthly_Reminder__c},
+     IF(AND({!$Record.SBQQ__RenewedContract__r.SBQQ__RenewalTerm__c} &gt; 1,NOT({!$Record.IsClosed})),
+          {!$Record.CloseDate}  - {!Get_AR_Settings.Lead_Days_For_First_Quote_Reminder__c},
+         {!$Record.First_Reminder_Date__c} ))</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for Focust partner opp closed field</description>
+        <name>Formula_Opp_Focus_Partner_Opp_Closed</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(ISBLANK({!$Record.Reseller__c}),
+    {!$Record.Focus_Partner_Checkbox__c},
+    {!$Record.Reseller__r.Focus_Partner__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Determines the first time the opportunity is closed and by whom</description>
+        <name>Formula_Opp_Initial_Opp_Closed_Datetime_By</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Initial_Opp_Closed_Datetime_By__c}),
+    $User.FirstName &amp; &quot; &quot; &amp; $User.LastName &amp; &quot; - &quot; &amp; TEXT(NOW()),
+    {!$Record.Initial_Opp_Closed_Datetime_By__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Captures information when a closed won opportunity is reopened and closed again.</description>
+        <name>Formula_Opp_Latest_Opp_Closed_Won_By</name>
+        <dataType>String</dataType>
+        <expression>{!$User.FirstName} &amp; &quot; &quot; &amp; {!$User.LastName} &amp; &quot; - &quot; &amp; TEXT(NOW())</expression>
+    </formulas>
+    <formulas>
+        <description>Provide value for Model Series field</description>
+        <name>Formula_Opp_Model_Series</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISBLANK(TEXT({!$Record.Model_Series__c})),
+               {!Formula_Opp_Auto_Renewal_Eligible_Core},
+               NOT(ISBLANK({!$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__c}))),
+     TEXT({!$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__r.Model_Series__c}),
+      TEXT({!$Record.Model_Series__c}))</expression>
+    </formulas>
+    <formulas>
+        <description>Provides MSP Agreement Territory Approval value</description>
+        <name>Formula_Opp_MSP_Agreement_Territory_Approval</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Ship_To_Account__c}),
+     &quot;&quot;,
+      IF(CONTAINS({!$Record.Ship_To_Account__r.Agreement_Territory_Text__c},
+                                    LEFT({!$Record.Shipping_Country_ISO_Code__c},2)),
+          &quot;Not Required&quot;,
+          &quot;Pending&quot;)
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for Nationwide Channel Comms (Opp Closed) field</description>
+        <name>Formula_Opp_Nationwide_Channel_Comms_Opp_Closed</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(ISBLANK({!$Record.Reseller__c}),
+    {!$Record.Nationwide_for_Channel_Comms_checkbox__c},
+    {!$Record.Reseller__r.Nationwide_Partner_for_Channel_Comms__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Provide OEM Account Message value</description>
+        <name>Formula_Opp_OEM_Account_Message</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISPICKVAL({!$Record.Account.Partner_Level__c},&quot;OEM&quot;), 
+               ISPICKVAL({!$Record.Business_Group__c},&quot;Sonian&quot;)),
+     &quot;&lt;b&gt;This is a Sonian OEM Account, please use the &apos;Opt Out of Auto Renewal&apos; checkbox to disable Auto-renewal for contracts on this Opportunity. (Admins Only)&lt;/b&gt;&quot;,
+     &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides opportunity currency value for opportunity</description>
+        <name>Formula_Opp_Opportunity_Currency</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.SBQQ__RenewedContract__c})),
+     Text({!$Record.SBQQ__RenewedContract__r.CurrencyIsoCode}) ,
+     IF(NOT(ISBLANK({!$Record.SBQQ__AmendedContract__c})),
+          Text({!$Record.SBQQ__AmendedContract__r.CurrencyIsoCode}) ,
+          Text({!$Record.Account.CurrencyIsoCode})
+        )
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Determine Opportunity Order Gen Date</description>
+        <name>Formula_Opp_Order_Gen_Date</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.Expiration_Date__c}- {!Get_AR_Settings.Create_Order__c}</expression>
+    </formulas>
+    <formulas>
+        <description>Sets ordered field based on other Opportunity fields</description>
+        <name>Formula_Opp_Ordered</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(AND(NOT(ISBLANK({!$Record.Primary_Contact__c})),
+              NOT(ISPICKVAL({!$Record.Type},&quot;De-book Re-book&quot;))),
+     TRUE,
+     FALSE)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides owner value for the opportunity</description>
+        <name>Formula_Opp_Owner</name>
+        <dataType>String</dataType>
+        <expression>IF(OR(AND(ISBLANK({!$Record.SBQQ__RenewedContract__c}), 
+               OR({!$Profile.Name = &apos;Apollo: Custom- Sales Operations&apos;},
+               {!$Profile.Name = &apos;Apollo: Custom- Customer Services&apos;},
+               {!$Profile.Name = &apos;System Administrator&apos;})),
+             OR(CONTAINS({!$UserRole.Name},&quot;OCM&quot;),
+                    CONTAINS({!$UserRole.Name},&quot;DMR&quot;)
+                  )
+           ),
+      {!$Record.Account.OwnerId},
+      {!$Record.OwnerId}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides opportunity owner if amendment opportunity is closed and current owner is Customer Services</description>
+        <name>Formula_Opp_Owner_Closed_Amendment_CS</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(NOT(ISBLANK({!$Record.SBQQ__PrimaryQuote__c})),
+               {!$Record.Owner.Profile.Name} = &quot;Apollo: Custom- Customer Services&quot;,
+                NOT(ISBLANK({!$Record.SBQQ__AmendedContract__c})),
+                ISPICKVAL({!$Record.Business_Group__c},&quot;Core&quot;)),
+     IF({!$Record.SBQQ__PrimaryQuote__r.Has_RMA_Replace__c},
+         {!$Record.Original_Opportunity__r.OwnerId},
+         {!$Record.OwnerId}),
+    {!$Record.OwnerId})</expression>
+    </formulas>
+    <formulas>
+        <description>Provide value for partner level opp closed field</description>
+        <name>Formula_Opp_Partner_Level_Opp_Closed</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Reseller__c}),
+    TEXT({!$Record.Partner_Level__c}),
+    TEXT({!$Record.Reseller__r.Partner_Level__c}))</expression>
+    </formulas>
+    <formulas>
+        <description>Provides payment terms value for opportunity</description>
+        <name>Formula_Opp_Payment_Terms</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!Formula_Opp_Bill_To_Account})), 
+   TEXT({!$Record.Bill_To_Account__r.Payment_Terms__c}),  
+   &quot;&quot; )</expression>
+    </formulas>
+    <formulas>
+        <description>Provides the price book Id value for the opportunity</description>
+        <name>Formula_Opp_Price_Book_Id</name>
+        <dataType>String</dataType>
+        <expression>{!$Setup.CPQ_Ids__c.CPQ_Price_Book__c}</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for primary product family field</description>
+        <name>Formula_Opp_Primary_Product_Family</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISBLANK(TEXT({!$Record.Primary_Product_Family_2__c})),
+              {!Formula_Opp_Auto_Renewal_Eligible_Core},
+               NOT(ISBLANK({!$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__c}))),
+     TEXT({!$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__r.Primary_Product_Family_2__c}),
+      TEXT({!$Record.Primary_Product_Family_2__c}))</expression>
+    </formulas>
+    <formulas>
+        <description>Determine purchase order number</description>
+        <name>Formula_Opp_Purchase_Order_Number</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.X18_digit_ID__c}),
+    {!$Record.PurchaseOrderID__c},
+   ( {!$Record.X18_digit_ID__c} + &apos;-&apos; + &apos;AutoRenewal&apos;))</expression>
+    </formulas>
+    <formulas>
+        <description>Sets the quote pricebook Id</description>
+        <name>Formula_Opp_Quote_PricebookId</name>
+        <dataType>String</dataType>
+        <expression>{!$Setup.CPQ_Ids__c.CPQ_Price_Book__c}</expression>
+    </formulas>
+    <formulas>
+        <description>Derive opportunity record type</description>
+        <name>Formula_Opp_RecordType</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Variable_RecordType_Id}),
+     {!$Record.RecordTypeId},
+     {!Variable_RecordType_Id})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Opp_Reseller_Account_Owner</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Reseller__c}),
+ {!$Record.Reseller_account_owner__c},
+{!$Record.Reseller__r.Owner.FirstName} &amp; &quot; &quot; &amp; {!$Record.Reseller__r.Owner.LastName})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Opp_Reseller_Account_owner_Email</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Reseller__c}),
+   {!$Record.Reseller_Account_Owner_Email__c},
+{!$Record.Reseller__r.Owner.Email})</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for the field Reseller Account Owner Opp Closed</description>
+        <name>Formula_Opp_Reseller_Account_Owner_Opp_Closed</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Reseller__c}),
+    {!$Record.Reseller_Account_Owner_Opp_Closed__c},
+    {!$Record.Reseller__r.Owner.FirstName} &amp; &quot; &quot; &amp; {!$Record.Reseller__r.Owner.LastName} )</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for Role Bucket field</description>
+        <name>Formula_Opp_Role_Bucket</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.Owner.UserRoleId})),
+     CASE({!$Record.Owner.UserRole.Name} ,  
+&quot;Director MSP Growth - AMERICAS&quot;, &quot;Growth-AMERICAS&quot;, 
+&quot;MSP - RAD - Growth - AMERICAS&quot;, &quot;Growth-AMERICAS&quot;,
+&quot;Director MSP - New Business - AMERICAS&quot;, &quot;New Business-AMERICAS&quot;,
+&quot;MSP - PDM - New Business - AMERICAS&quot;, &quot;New Business-AMERICAS&quot;,
+&quot;MSP - PSM - Growth - AMERICAS&quot;, &quot;PSM-AMERICAS&quot;,
+&quot;MSP - Sr Director, Partner Success&quot;, &quot;PSM-AMERICAS&quot;,
+&quot;Director of International - MSP&quot;, &quot;New Business-EMEA&quot;,
+&quot;Director MSP Growth - EMEA&quot;, &quot;GROWTH-EMEA&quot;,
+&quot;MSP - RAD - Growth - EMEA&quot;, &quot;GROWTH-EMEA&quot;,
+&quot;MSP - PSM - Growth - EMEA&quot;, &quot;PSM-EMEA&quot;,
+&quot;MSP - PDM - New Business - EMEA&quot;, &quot;New Business-EMEA&quot;,
+&quot;Director MSP New Business - EMEA&quot;, &quot;New Business-EMEA&quot;,
+&quot;Sales Manager MSP New Business - EMEA&quot;, &quot;New Business-EMEA&quot;,
+&quot;MSP - RAD - Growth - APAC&quot;, &quot;GROWTH-APAC&quot;,
+&quot;MSP - PDM - New Business - APAC&quot;, &quot;New Business-APAC&quot;,
+&quot;WW VP of Sales - Sonian&quot;, &quot;Sonian&quot;,
+&quot;Account Manager - Sonian&quot;, &quot;Sonian&quot;,
+&quot;BDR Manager, OpenView - Sonian&quot;, &quot;Sonian&quot;,
+&quot;Inside Sales - Sonian&quot;, &quot;Sonian&quot;,
+&quot;Sales Engineer - Sonian&quot;, &quot;Sonian&quot;,
+&quot;MSP - LDR - New Business - EMEA&quot;, &quot;New Business-EMEA&quot;,
+&quot;MSP - PDM - New Business - AMERICAS&quot;, &quot;New Business-AMERICAS&quot;,
+&quot;MSP - Direct&quot;, &quot;Skout Direct&quot;,
+&quot;Other&quot;),
+     &quot;Other&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Determines Second Reminder Date</description>
+        <name>Formula_Opp_Second_Reminder_Date</name>
+        <dataType>Date</dataType>
+        <expression>IF(AND({!$Record.SBQQ__RenewedContract__r.SBQQ__RenewalTerm__c} &gt; 1, NOT({!$Record.IsClosed})),
+    {!$Record.CloseDate}  - {!Get_AR_Settings.Lead_Days_Before_Second_Reminder__c},
+    {!$Record.Second_Reminder_Date__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Provides ship to account value for opportunity</description>
+        <name>Formula_Opp_Ship_To_Account</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Shipping_Address__c}),
+    &quot;&quot;,
+    {!$Record.Shipping_Address__r.Account__c}    
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_DealRegExpDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),  
+{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Deal_Reg_Exp_Date__c} ,{!$Record.Deal_Reg_Exp_Date__c} )</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_DealRegStatus</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})) ,  
+ TEXT({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Deal_Reg_Status__c}) , 
+ TEXT({!$Record.Deal_Reg_Status__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_DealRegType</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),  
+TEXT({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Deal_Reg_Type__c}), TEXT({!$Record.Deal_Reg_Type__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_DelRegTrackingNo</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),  
+{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Deal_Reg_Tracking_No__c}, {!$Record.Deal_Reg_Tracking_No__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_Distributor</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),
+
+IF(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Distributor__c}),
+{!$Record.SBQQ__AmendedContract__r.Distributor__c} ,{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Distributor__c}),
+
+{!$Record.Distributor__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_HotList</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}))
+ , {!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}, {!$Record.Hot_List__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_HotList_Authority</name>
+        <dataType>String</dataType>
+        <expression>IF( !OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),
+{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.A_Authority__c},
+{!$Record.Authority__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_HotList_Budget</name>
+        <dataType>String</dataType>
+        <expression>IF( !OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),
+{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.B_Budget__c},
+{!$Record.Budget__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_HotList_Need</name>
+        <dataType>String</dataType>
+        <expression>IF( !OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),
+{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.N_Need__c},
+{!$Record.Need__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_HotList_Notes</name>
+        <dataType>String</dataType>
+        <expression>IF( !OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),
+{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Other_Notes2__c},
+{!$Record.Notes__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_HotList_Timeline</name>
+        <dataType>String</dataType>
+        <expression>IF( !OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),
+{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.T_Timeline__c},
+{!$Record.Timeline__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_LeadSource</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})) ,  
+TEXT({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Lead_Source__c}),
+NULL)</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_LeadSourceDetail</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})) ,  
+{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.MQL_Detail__c},{!$Record.Lead_Source_Detail__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_OwnerId</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),
+
+IF(!BEGINS({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.OwnerId}  , &quot;00G&quot;),
+{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.OwnerId} ,
+ {!$Record.OwnerId}),
+ 
+ {!$Record.OwnerId})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_Primary_Product_Family</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})) , 
+TEXT({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Primary_Product_Family_2__c}),
+TEXT({!$Record.Primary_Product_Family_2__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_PrimaryContact</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})) ,  
+ {!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Contact__c}    , {!$Record.Primary_Contact__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_Reseller</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),
+
+IF(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Reseller__c}),
+{!$Record.SBQQ__AmendedContract__r.Reseller__c} ,{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Reseller__c}),
+
+{!$Record.Reseller__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Amend_ResellerContact</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__c})),
+
+IF(ISBLANK({!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Reseller_Contact__c}),
+{!$Record.SBQQ__AmendedContract__r.Reseller_Contact__c} ,{!$Record.SBQQ__AmendedContract__r.Most_Recent_Upsell_Hot_List__r.Reseller_Contact__c}),
+
+{!$Record.Reseller_Contact__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_DealRegExpDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),  
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Deal_Reg_Exp_Date__c} ,{!$Record.Deal_Reg_Exp_Date__c} )</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_DealRegStatus</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})) ,  
+ TEXT({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Deal_Reg_Status__c}) , 
+ TEXT({!$Record.Deal_Reg_Status__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_DealRegType</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),  
+TEXT({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Deal_Reg_Type__c}), TEXT({!$Record.Deal_Reg_Type__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_DelRegTrackingNo</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),  
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Deal_Reg_Tracking_No__c}, {!$Record.Deal_Reg_Tracking_No__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_Distributor</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),
+
+IF(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Distributor__c}),
+{!$Record.SBQQ__RenewedContract__r.Distributor__c} ,{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Distributor__c}),
+
+{!$Record.Distributor__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_HotList</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK(
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})) , 
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}, {!$Record.Hot_List__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_HotList_Authority</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.A_Authority__c},
+{!$Record.Authority__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_HotList_Budget</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.B_Budget__c},
+{!$Record.Budget__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_HotList_Need</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.N_Need__c},
+{!$Record.Need__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_HotList_Notes</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Other_Notes2__c},
+{!$Record.Notes__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_HotList_Timeline</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.T_Timeline__c},
+{!$Record.Timeline__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_LeadSource</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})) ,  
+TEXT({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Lead_Source__c}),NULL)</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_LeadSourceDetail</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})) ,  
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.MQL_Detail__c},{!$Record.Lead_Source_Detail__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_OwnerId</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),
+IF(!BEGINS({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.OwnerId}, &quot;00G&quot;),
+{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.OwnerId} ,
+ {!$Record.OwnerId}),
+ {!$Record.OwnerId})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_Primary_Product_Family</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})) , 
+TEXT({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Primary_Product_Family_2__c}),
+TEXT({!$Record.Primary_Product_Family_2__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_PrimaryContact</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})) ,  
+ {!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Contact__c}    , {!$Record.Primary_Contact__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_Reseller</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),
+
+IF(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Reseller__c}),
+{!$Record.SBQQ__RenewedContract__r.Reseller__c} ,{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Reseller__c}),
+
+{!$Record.Reseller__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_SM_Renewal_ResellerContact</name>
+        <dataType>String</dataType>
+        <expression>IF(!OR(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c}),
+ISNULL({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__c})),
+
+IF(ISBLANK({!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Reseller_Contact__c}),
+{!$Record.SBQQ__RenewedContract__r.Reseller_Contact__c} ,{!$Record.SBQQ__RenewedContract__r.Most_Recent_Upsell_Hot_List__r.Reseller_Contact__c}),
+
+{!$Record.Reseller_Contact__c})</expression>
+    </formulas>
+    <formulas>
+        <name>isSameMonthCloseDate</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+  MONTH( {!$Record.CloseDate} ) == MONTH( {!$Record__Prior.CloseDate} ),
+  YEAR( {!$Record.CloseDate} ) == YEAR( {!$Record__Prior.CloseDate} )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>NextStepLastModifiedDate</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <formulas>
+        <name>PreviousContractTCV</name>
+        <dataType>Currency</dataType>
+        <expression>IF((NOT(ISBLANK({!$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__c}))&amp;&amp;
+NOT(ISBLANK({!$Record.SBQQ__RenewedContract__r.Total_Contract_Value_Core__c}))),
+({!$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__r.Total_Contract_Value_new__c}+{!$Record.SBQQ__RenewedContract__r.Total_Contract_Value_Core__c}),
+IF((NOT(ISBLANK({!$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__c})) &amp;&amp;
+ISBLANK({!$Record.SBQQ__RenewedContract__r.Total_Contract_Value_Core__c})),
+{!$Record.SBQQ__RenewedContract__r.SBQQ__Opportunity__r.Total_Contract_Value_new__c},
+{!$Record.SBQQ__RenewedContract__r.Total_Contract_Value_Core__c}))</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Opportunity Before Save Operations {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Before Save Operations</label>
+    <loops>
+        <name>Renewed_Contract_Subs_Loop</name>
+        <label>Renewed Contract Subs Loop</label>
+        <locationX>732</locationX>
+        <locationY>5051</locationY>
+        <collectionReference>Get_Subs_from_Renewed_Contract</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Check_Sub_End_Date</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Oppty_Close_Date</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>All the Subscription of Renewed Contract where Renewal Quantity is Greater than or equal to 1</description>
+        <name>AllSubsOfRenewedContract</name>
+        <label>AllSubsOfRenewedContract</label>
+        <locationX>77</locationX>
+        <locationY>1019</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>EarliestSubEndDate</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SBQQ__Contract__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.SBQQ__RenewedContract__r.ContactID__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SBQQ__RenewalQuantity__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>SBQQ__Subscription__c</object>
+        <sortField>SBQQ__SubscriptionEndDate__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get Auto Renewal Settings</description>
+        <name>Get_AR_Settings</name>
+        <label>Get AR Settings</label>
+        <locationX>699</locationX>
+        <locationY>9875</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decision_AR_Custom_Metadata_Exists</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Current_Settings</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Auto_Renewal_Configuration__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Subs_from_Renewed_Contract</name>
+        <label>Get Subs from Renewed Contract</label>
+        <locationX>732</locationX>
+        <locationY>4943</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Renewed_Contract_Subs_Loop</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SBQQ__Contract__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.SBQQ__RenewedContract__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>SBQQ__Subscription__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Locked New Business Record Type</description>
+        <name>Opportunity_Locked_New_Business_RT</name>
+        <label>Opportunity_Locked_New_Business_RT</label>
+        <locationX>402</locationX>
+        <locationY>8375</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Opportunity_Closed_Won_Closed_Lost</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CONSTANT_LOCKED_NEW_BUSINESS</elementReference>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Variable_RecordType_Id</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Locked New Business Record Type</description>
+        <name>Opportunity_Locked_New_Business_RT_0</name>
+        <label>Opportunity_Locked_New_Business_RT</label>
+        <locationX>358</locationX>
+        <locationY>9167</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CONSTANT_LOCKED_NEW_BUSINESS</elementReference>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Variable_RecordType_Id</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Locked Renewal Record Type</description>
+        <name>Opportunity_Locked_Renewal_RT</name>
+        <label>Opportunity_Locked_Renewal_RT</label>
+        <locationX>666</locationX>
+        <locationY>8375</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Opportunity_Closed_Won_Closed_Lost</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CONSTANT_LOCKED_RENEWAL</elementReference>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Variable_RecordType_Id</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Locked Renewal Record Type</description>
+        <name>Opportunity_Locked_Renewal_RT_0</name>
+        <label>Opportunity_Locked_Renewal_RT</label>
+        <locationX>94</locationX>
+        <locationY>9275</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CONSTANT_LOCKED_RENEWAL</elementReference>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Variable_RecordType_Id</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>New Business Record Type</description>
+        <name>Opportunity_New_Business_RT</name>
+        <label>Opportunity_New_Business_RT</label>
+        <locationX>1106</locationX>
+        <locationY>7835</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CONSTANT_NEW_BUSINESS</elementReference>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Variable_RecordType_Id</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the Opportunity record to compare for changes</description>
+        <name>Opportunity_PriorValue</name>
+        <label>Opportunity PriorValue</label>
+        <locationX>1320</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Annual_Contract_Value_Converted_On_Update</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Opportunity_Product</name>
+        <label>Opportunity Product</label>
+        <locationX>644</locationX>
+        <locationY>3227</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CheckforProfessionalServices</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Product_Feature_Prof_Services__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OpportunityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <object>OpportunityLineItem</object>
+        <outputAssignments>
+            <assignToReference>ProductFeatureProfessional</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Renewal Record Type</description>
+        <name>Opportunity_Renewal_RT</name>
+        <label>Opportunity_Renewal_RT</label>
+        <locationX>1370</locationX>
+        <locationY>7835</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CONSTANT_RENEWAL</elementReference>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Variable_RecordType_Id</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <start>
+        <locationX>738</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>New_Opportunity_Record</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>DateVar</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.CloseDate</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>OpportunityBPSLineItemId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>ProductFeatureProfessional</description>
+        <name>ProductFeatureProfessional</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Reccord type id for the locked record</description>
+        <name>Variable_RecordType_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

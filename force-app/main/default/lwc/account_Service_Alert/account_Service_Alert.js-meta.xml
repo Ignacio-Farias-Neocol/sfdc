@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>57</apiVersion>
+	<isExposed>true</isExposed>
+	<masterLabel>Accoun Service Alert</masterLabel>
+	<description>Accoun Service Alert on Account Page Layout</description>
+	<targets>
+		<target>lightning__HomePage</target>
+		<target>lightning__RecordPage</target>
+	</targets>
+</LightningComponentBundle>

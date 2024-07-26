@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Edit_MSP_Agreement_Territory</fullName>
+    <active>true</active>
+    <description>Restrict editing MSP Agreement Territory to only Sales Ops and System Admins</description>
+    <errorConditionFormula>AND(  
+   NOT(ISBLANK(PRIORVALUE(Agreement_Territory__c))),
+   ISCHANGED(Agreement_Territory__c),
+   OR(
+       $Profile.Name = &apos;Apollo: Custom- Sales_China Profile&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Sales Profile&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Sales Engineers Profile&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Renewals Profile&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Customer Services&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Support Profile&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Support Knowledge Profile&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Read Only&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Marketing Profile&apos;
+   )
+)</errorConditionFormula>
+    <errorDisplayField>Agreement_Territory__c</errorDisplayField>
+    <errorMessage>Sorry - You don&apos;t have permission to change the Agreement Territory.</errorMessage>
+</ValidationRule>

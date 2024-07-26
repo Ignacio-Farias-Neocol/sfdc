@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Auto_Renewal_not_Allowed_For_All_RMA</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( All_Subs_RMA__c,
+CONTAINS(TEXT( Auto_Renewal_Status_Core__c ), &quot;Included&quot;)
+)</errorConditionFormula>
+    <errorMessage>This Contract is NOT eligible for Auto Renewal (Core) as ALL Sub RMA is true. Please clear out the Auto Renewal Status (Core) field.</errorMessage>
+</ValidationRule>

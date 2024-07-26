@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expected_when_Field</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Field_API_Name__c)),
+  ISBLANK(Expected__c)
+)</errorConditionFormula>
+    <errorDisplayField>Expected__c</errorDisplayField>
+    <errorMessage>Expected&apos; is required when a Field Api Name is used.</errorMessage>
+</ValidationRule>

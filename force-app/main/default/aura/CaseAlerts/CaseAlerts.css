@@ -1,0 +1,26 @@
+.THIS {
+   background-color: white;
+}
+
+.THIS .card {
+    margin: auto;
+}
+
+.THIS .header {
+    font-size : medium;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    padding-top : 10px;
+    margin-bottom: 7px;
+}
+
+.THIS .fields {
+    margin-left: 10px;
+}
+
+.THIS .fieldName > * {
+    color: black;
+    font-weight: bold;
+    font-size : small;
+}

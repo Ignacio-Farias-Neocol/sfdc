@@ -1,0 +1,115 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 08-26-2020
+  @last modified by  : Bhavesh Jha
+-->
+<aura:component controller="PortalRecordsCC" implements="lightning:backgroundUtilityItem,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable,lightning:hasPageReference" access="global" description="Partner Community Records Aura Component">
+    
+    <aura:attribute name="mainTopicFilter" type="String" default="All"/>
+    <aura:attribute name="bestCommentFilter" type="String" default="All"/>
+    <aura:attribute name="dateFilter" type="String" default=""/>	
+    
+    <aura:attribute name="portalRecords" type="PortalRecordsCC.PortalRecordsWrapper[]"/>
+    <aura:attribute name="PageNumber" type="integer" default="1"/>
+    <aura:attribute name="TotalPages" type="integer" default="0"/>
+    <aura:attribute name="TotalRecords" type="integer" default="0"/>
+    <aura:attribute name="RecordStart" type="integer" default="0"/>
+    <aura:attribute name="RecordEnd" type="integer" default="0"/>
+    
+    <aura:attribute name="isLoaded" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.initialization}"/>
+    
+    <div id="mainDiv">
+        
+        <div class="slds-grid slds-gutters slds-var-m-bottom_small">
+            <div class="slds-container_fluid slds-col slds-size_1-of-1">
+                <div class="slds-box slds-box_x-small cls-header">
+                    <p><h1 class="slds-container_fluid cls-header_h1">Partner Community Questions</h1></p>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters slds-var-m-bottom_small">
+            <div class="slds-col">
+                <lightning:select aura:id="dateFilter" class="cls-cust-width cls-date-filter" name="CreatedDate" label="Created Date" value="{!v.dateFilter}" onchange="{!c.filterRecords}">
+                    <option value="">ALL TIME</option>                
+                    <option value="TODAY">TODAY</option>
+                    <option value="YESTERDAY">YESTERDAY</option>
+                    <option value="THIS_WEEK">THIS WEEK</option>
+                    <option value="LAST_WEEK">LAST WEEK</option>
+                    <option value="THIS_MONTH">THIS MONTH</option>
+                    <option value="LAST_MONTH">LAST MONTH</option>
+                    <option value="LAST_N_MONTHS:2">LAST 2 MONTHS</option>
+                    <option value="LAST_N_MONTHS:3">LAST 3 MONTHS</option>
+                    <option value="THIS_YEAR">THIS YEAR</option>
+                    <option value="LAST_YEAR">LAST YEAR</option>
+                </lightning:select>
+                <lightning:select aura:id="mainTopicFilter" class="cls-cust-width cls-topic-filter" name="Topics" label="Topics" value="{!v.mainTopicFilter}" onchange="{!c.filterRecords}">
+                    <option value="">--None--</option>
+                    <option value="All">All</option>
+                    <option value="Email Protection">Email Protection</option>
+                    <option value="Network Security">Network Security</option>
+                    <option value="Application - Cloud Security">Application &amp; Cloud Security</option>
+                    <option value="Data Protection">Data Protection</option>
+                </lightning:select>
+                <!-- Rahul -->
+                
+
+                 <lightning:input aura:id="chkSubTopics" name="SubTopicFilter" type="checkbox" label="Sub Topics" onchange="{!c.filterRecords}" checked="false"/>
+                 <!-- Rahul -->
+            </div>
+            <div class="slds-col">
+                <div class="cust-height-align-cls">
+                    <label for="pageSize"> Display Records: </label>
+                    <ui:inputSelect class="slds-large-show_inline-block cls-display-records" aura:id="pageSize" label="" change="{!c.onSelectChange}">
+                        <ui:inputSelectOption text="10" label="10" value="true"/>
+                        <ui:inputSelectOption text="15" label="15"/>
+                        <ui:inputSelectOption text="20" label="20"/>
+                        <ui:inputSelectOption text="25" label="25"/>
+                        <ui:inputSelectOption text="50" label="50"/>
+                        <ui:inputSelectOption text="100" label="100"/>
+                    </ui:inputSelect>
+                    <br/>
+                </div>
+                <lightning:select aura:id="bestCommentFilter" class="cls-cust-width cls-comment-filter" name="Comment" label="Question Types" value="{!v.bestCommentFilter}" onchange="{!c.filterRecords}">
+                    <option value="">--None--</option>
+                    <option value="All">All</option>
+                    <option value="Yes">Questions With Best Answer</option>
+                    <option value="No">Questions Without Best Answer</option> 
+                    <option value="Unanswered">Unanswered Questions</option>
+                    <option value="Answered">All Answered Questions</option>
+                </lightning:select>
+            </div>
+        </div>
+        <div id="tableDiv" style="width: 100%;">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <tr class="slds-line-height_reset">
+                    <th style="width:20%" class="" scope="col">Id</th>
+                    <th style="width:20%" class="" scope="col">Topic Name</th>
+                    <th class="" scope="col">Title</th>
+                </tr>
+                <tbody>
+                    <aura:iteration items="{!v.portalRecords}" var="questions" indexVar="inx">
+                        <tr class="slds-hint-parent">
+                            <td  class="slds-truncate"><a onclick="{!c.navigateToQuestion}" data-index="{!inx}">{!questions.FeedItemId}</a></td>
+                            <td  class="slds-truncate">{!questions.TopicName}</td>
+                            <td class="slds-truncate">{!questions.Title}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>			
+            </table>
+        </div>
+        <br/>
+        <div class="slds-clearfix">
+            <div class="slds-page-header" role="banner">
+                <div class="slds-float_right">            
+                    <lightning:button disabled="{!v.PageNumber == 1}" variant="brand" aura:id="prevPage" label="Prev" onclick="{!c.handlePrev}" />            
+                    <lightning:button disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="brand" label="Next" onclick="{!c.handleNext}"/>
+                </div>
+                <p class="slds-page-header__title">{!v.RecordStart}-{!v.RecordEnd} of {!v.TotalRecords} | Page {!v.PageNumber} of {!v.TotalPages}</p>
+            </div>
+        </div>
+    </div>
+</aura:component>

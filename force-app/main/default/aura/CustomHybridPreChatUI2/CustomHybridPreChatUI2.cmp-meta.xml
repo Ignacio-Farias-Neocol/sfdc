@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>44.0</apiVersion>
+    <description>Custom prechat css. I made a copy just in case I mess things up, I do not want to change the original.</description>
+</AuraDefinitionBundle>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Escalation_Reason_required_on_escalation</fullName>
+    <active>true</active>
+    <description>Escalation to Dev Queues Only</description>
+    <errorConditionFormula>AND(
+ISCHANGED(OwnerId),
+OR(RecordType.DeveloperName = &apos;Technical_Support&apos;,
+RecordType.DeveloperName = &apos;Professional_Services&apos;),
+BEGINS(OwnerId, &apos;00G&apos;),
+NOT(ISPICKVAL(Status , &apos;Closed&apos;)),
+ISBLANK(Escalation_Reason__c),
+OR(
+ CONTAINS(RIGHT(Owner:Queue.DeveloperName , 3),&apos;DEV&apos;),
+ CONTAINS(RIGHT(Owner:Queue.DeveloperName , 3),&apos;Dev&apos;),
+ CONTAINS(Owner:Queue.DeveloperName,&apos;Phishline&apos;),
+ CONTAINS(Owner:Queue.DeveloperName,&apos;CloudGenWan&apos;)
+  ),
+NOT(CONTAINS(Owner:Queue.DeveloperName,&apos;EMEA_Escalations&apos;))
+)</errorConditionFormula>
+    <errorMessage>Please enter an &apos;Escalation Reason&apos; to escalate this TS/PS Case to a Dev Queue.</errorMessage>
+</ValidationRule>

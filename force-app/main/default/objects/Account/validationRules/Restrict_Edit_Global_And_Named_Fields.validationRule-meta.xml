@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Edit_Global_And_Named_Fields</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ NOT($Permission.Global_And_Named_Account_Edit_Access),
+ OR(ISCHANGED(Global_Account__c),
+ISCHANGED(Named_Account__c)))</errorConditionFormula>
+    <errorMessage>Sorry - You don&apos;t have permission to select &apos;Global Account&apos; or &apos;Named Account&apos;.</errorMessage>
+</ValidationRule>

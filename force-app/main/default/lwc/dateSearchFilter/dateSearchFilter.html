@@ -1,0 +1,40 @@
+<template>
+  <fieldset class="slds-form-element slds-form-element_compound">
+    <legend class="slds-form-element__legend slds-form-element__label">
+      <h2 class="header">{dateSearchLabel}</h2>
+    </legend>
+      <div class="slds-form-element__control">
+        <div class="slds-form-element__row">
+          <!-- DateFrom FIlter -->
+          <div class="slds-size_1-of-2">
+            <div class="slds-form-element">
+              <lightning-input
+                type="date"
+                name="dateFrom"
+                label={labels.dateFrom}
+                class="expDate"
+                value={dateFrom}
+                onchange={handleDateChange}
+                min={minFromDate}
+              ></lightning-input>
+            </div>
+          </div>
+          <!-- DateTo Filter -->
+          <div class="slds-size_1-of-2">
+            <div class="slds-form-element">
+              <lightning-input
+                type="date"
+                name="dateTo"
+                label={labels.dateTo}
+                class="expDate"
+                value={dateTo}
+                onchange={handleDateChange}
+                max={maxToDate}
+                min={minFromDate}
+              ></lightning-input>
+            </div>
+          </div>
+        </div>
+      </div>
+  </fieldset>
+</template>

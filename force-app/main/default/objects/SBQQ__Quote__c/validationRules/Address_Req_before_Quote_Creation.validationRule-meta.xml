@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Address_Req_before_Quote_Creation</fullName>
+    <active>true</active>
+    <description>BIlling and Shipping addresses must be filled before Quote can be created,</description>
+    <errorConditionFormula>AND( 
+    ISNEW(), 
+    NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+    OR(
+       ISBLANK( SBQQ__Opportunity2__r.Street__c ), 
+       ISBLANK( SBQQ__Opportunity2__r.City__c ),
+       ISBLANK( SBQQ__Opportunity2__r.Country__c ),
+
+       AND( CONTAINS( &apos;DZ,AR,AM,AU,AT,AZ,A2,BD,BY,BE,BA,BR,BN,BG,CA,IC,CN,HR,CY,CZ,DK,EN,EE,FO,FI,FR,GE,DE,GR,GL,GU,GG,HO,HU,IN,ID,IL,IT,JP,JE,KZ,KR,KO,KG,LV,LI,LT,LU,MK,MG,M3,MY,MH,MQ,YT,MX,MN,ME,NL,NZ,NB,NO,PK,PH,PL,PO,PT,PR,RE,RU,SA,SF,CS,SG,SK,SI,ZA,ES,LK,NT,SX,UV,VL,SE,CH,TW,TJ,TH,TU,TN,TR,TM,VI,UA,GB,US,UY,UZ,VA,VN,WL,YA&apos;,  SBQQ__Opportunity2__r.Country_ISO_Code__c), ISBLANK( SBQQ__Opportunity2__r.Zip_Postal_Code__c )),
+
+       ISBLANK( SBQQ__Opportunity2__r.Ship_To_Street__c ), 
+       ISBLANK( SBQQ__Opportunity2__r.Ship_To_City__c ), 
+       ISBLANK( SBQQ__Opportunity2__r.Ship_To_Country__c ),
+
+       AND( CONTAINS( &apos;DZ,AR,AM,AU,AT,AZ,A2,BD,BY,BE,BA,BR,BN,BG,CA,IC,CN,HR,CY,CZ,DK,EN,EE,FO,FI,FR,GE,DE,GR,GL,GU,GG,HO,HU,IN,ID,IL,IT,JP,JE,KZ,KR,KO,KG,LV,LI,LT,LU,MK,MG,M3,MY,MH,MQ,YT,MX,MN,ME,NL,NZ,NB,NO,PK,PH,PL,PO,PT,PR,RE,RU,SA,SF,CS,SG,SK,SI,ZA,ES,LK,NT,SX,UV,VL,SE,CH,TW,TJ,TH,TU,TN,TR,TM,VI,UA,GB,US,UY,UZ,VA,VN,WL,YA&apos;, SBQQ__Opportunity2__r.Shipping_Country_ISO_Code__c), ISBLANK( SBQQ__Opportunity2__r.Ship_To_Zip_Postal_Code__c )),
+
+       AND( CONTAINS(&apos;US,CA&apos;, SBQQ__Opportunity2__r.Country_ISO_Code__c), ISBLANK( SBQQ__Opportunity2__r.State__c )),
+       AND( CONTAINS(&apos;US,CA&apos;, SBQQ__Opportunity2__r.Shipping_Country_ISO_Code__c), ISBLANK( SBQQ__Opportunity2__r.Ship_To_State__c )),
+       ISBLANK( SBQQ__Opportunity2__r.Territory_ID__c )
+    ),
+    TEXT(SBQQ__Type__c)=&quot;Quote&quot; 
+)</errorConditionFormula>
+    <errorMessage>Opportunity must have complete address and territory information. Use the Bill/Ship To Address button to populate the address and ensure that the Opportunity&apos;s Account has complete territory information populated (Theater, Region, Territory, etc).</errorMessage>
+</ValidationRule>

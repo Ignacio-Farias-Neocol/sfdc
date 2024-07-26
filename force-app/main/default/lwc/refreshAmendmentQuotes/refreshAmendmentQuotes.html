@@ -1,0 +1,26 @@
+<template>
+    <lightning-spinner if:true={inprogress} class="slds-spinner_container slds-is-fixed" size="large" alternative-text="Loading..."></lightning-spinner>
+
+    <lightning-record-view-form record-id={quoteId} object-api-name="SBQQ__Quote__c">
+        <div class="slds-grid">
+            <div class="slds-col slds-size_1-of-2">
+                <lightning-output-field field-name="Name"></lightning-output-field>
+                <lightning-output-field field-name="SBQQ__StartDate__c"></lightning-output-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+                <lightning-output-field field-name="MSP_Net_Full_Amount__c"></lightning-output-field>
+                <lightning-output-field field-name="SBQQ__SubscriptionTerm__c"></lightning-output-field>
+            </div>
+        </div>
+    </lightning-record-view-form>
+
+    <lightning-card if:true={hasAmendmentOppties} title="A replica of the amendment quote will be added to the following opportunities" icon-name="standard:opportunity" >
+        <lightning-button variant="success" label="Start Replicating" onclick={cloneClick} slot="actions"></lightning-button>
+        <lightning-datatable key-field="id" data={gridData} columns={gridColumns} hide-checkbox-column="true">
+        </lightning-datatable>
+    </lightning-card>
+    
+    <h2 class="slds-text-heading_small slds-m-top_large" if:true={hasNoAmendmentOppties}>
+        No other amendment opportunities in the account.
+    </h2>
+</template>

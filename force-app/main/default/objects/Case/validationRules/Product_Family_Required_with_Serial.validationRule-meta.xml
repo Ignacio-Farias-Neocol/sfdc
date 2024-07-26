@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Family_Required_with_Serial</fullName>
+    <active>true</active>
+    <errorConditionFormula>( Serial__c = &apos;&apos;) &amp;&amp; ISPICKVAL(Product_Family_List__c, &apos;&apos;) &amp;&amp;
+(RecordType.DeveloperName = &apos;Technical_Support&apos;  ||  
+RecordType.DeveloperName = &apos;Professional_Services&apos;)</errorConditionFormula>
+    <errorMessage>Please select a Product family.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Internal_Case_Priority_Needs_Updating</fullName>
+    <active>false</active>
+    <description>Priority on Cases needs to be changed from P4 before moving out of New Status</description>
+    <errorConditionFormula>AND(RecordType.DeveloperName = &quot;Case_Internal_Ticket_Record_Type&quot;,
+NOT(ISPICKVAL(Status, &quot;New&quot;)),
+NOT(ISPICKVAL(Status, &quot;Backlog&quot;)),
+ISPICKVAL(Priority , &quot;None&quot;) 
+)</errorConditionFormula>
+    <errorDisplayField>Priority</errorDisplayField>
+    <errorMessage>Please specify the Priority before moving the Case out of &apos;New&apos; or &apos;Backlog&apos; status.</errorMessage>
+</ValidationRule>

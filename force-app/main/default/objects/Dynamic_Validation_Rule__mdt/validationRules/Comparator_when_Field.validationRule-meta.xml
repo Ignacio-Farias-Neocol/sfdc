@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comparator_when_Field</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Field_API_Name__c)),
+  ISPICKVAL(Comparator__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Comparator__c</errorDisplayField>
+    <errorMessage>Comparator is required when a Field Api Name is used.</errorMessage>
+</ValidationRule>

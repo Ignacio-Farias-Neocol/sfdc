@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RMA_Must_have_Serial_Number</fullName>
+    <active>true</active>
+    <description>RMA OrderItems must have a Serial Number for Core business group.</description>
+    <errorConditionFormula>AND( 
+ NOT(ISPICKVAL(Order.Status,&apos;Draft&apos;)), 
+ NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+ ISPICKVAL(Order.Opportunity.Business_Group__c,&apos;Core&apos;),
+ Is_RMA_Line__c = TRUE, 
+ ISBLANK(SBCF_Serial_Number__c)
+)</errorConditionFormula>
+    <errorDisplayField>SBCF_Serial_Number__c</errorDisplayField>
+    <errorMessage>Missing Serial Number. RMA Order Items must have a Serial Number for Core business group.</errorMessage>
+</ValidationRule>

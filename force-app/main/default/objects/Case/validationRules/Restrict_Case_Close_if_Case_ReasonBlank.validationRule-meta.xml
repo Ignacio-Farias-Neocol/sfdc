@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Case_Close_if_Case_ReasonBlank</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(DateValue(CreatedDate) &gt; Date(2022, 05,22 ),
+RecordType.DeveloperName = &apos;Technical_Support&apos;,
+ISCHANGED(Status),
+ISPICKVAL(PRIORVALUE(Status), &quot;In Progress&quot;),
+ISPICKVAL(Status, &quot;Closed&quot;),
+NOT(ISPICKVAL(Case_Reason__c, &quot;No Resolution Possible&quot;)
+)
+)</errorConditionFormula>
+    <errorMessage>Case reason &quot;No Resolution Possible&quot; must be selected to move case to Closed</errorMessage>
+</ValidationRule>

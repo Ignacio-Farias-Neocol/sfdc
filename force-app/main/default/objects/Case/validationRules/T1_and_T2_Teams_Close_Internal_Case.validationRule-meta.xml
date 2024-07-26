@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>T1_and_T2_Teams_Close_Internal_Case</fullName>
+    <active>true</active>
+    <description>SFDC-19820</description>
+    <errorConditionFormula>AND( RecordType.DeveloperName = &apos;Case_Internal_Ticket_Record_Type&apos;,
+ISCHANGED( Status ) ,
+DateValue(CreatedDate) &gt;= Date(2023,11,06 ),
+$Permission.Tier_1_and_2_Teams_only ,
+ISPICKVAL(Status , &apos;Closed&apos;) ,
+OR(ISPICKVAL(Issue_Category__c, &apos;&apos;) , ISPICKVAL(Issue_Sub_Category__c, &apos;&apos;) ) )</errorConditionFormula>
+    <errorMessage>Issue Category &amp; Issue Sub-Category are required to move the case to closed</errorMessage>
+</ValidationRule>

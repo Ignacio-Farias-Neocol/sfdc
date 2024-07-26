@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_use_Opt_out_of_AutoRenewal</fullName>
+    <active>true</active>
+    <description>Just for Sonian, users require the permission set &quot;Access_to_Opt_out_of_Sonian_Auto_renewal&quot; to set &quot;Opt out of Auto Renewal&quot; checkbox to True.</description>
+    <errorConditionFormula>AND(
+	Opt_Out_of_Auto_Renewal__c,
+	NOT($Permission.Access_to_Opt_out_of_Sonian_Auto_renewal )
+)</errorConditionFormula>
+    <errorMessage>Sorry - You do not have permission to Opt out of Sonian Auto-Renewal.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_inactive_or_not_with_company</fullName>
+    <active>false</active>
+    <description>On an opportunity a user should not be able to add a contact to any of the following fields if the Contact status (Contact_Status__c) of the contact being added is no longer with company, inactive, suspect, or banned.
+Primary Contact (Primary_Contact__c)</description>
+    <errorConditionFormula>(
+ISPICKVAL(Primary_Contact__r.Contact_Status__c, &quot;No Longer with Company&quot;) || ISPICKVAL(Primary_Contact__r.Contact_Status__c, &quot;Inactive&quot;)
+|| ISPICKVAL( Reseller_Contact__r.Contact_Status__c , &quot;No Longer with Company&quot;) || ISPICKVAL(Reseller_Contact__r.Contact_Status__c, &quot;Inactive&quot;)
+|| ISPICKVAL(  Distributor_Contact__r.Contact_Status__c  , &quot;No Longer with Company&quot;) || ISPICKVAL(Distributor_Contact__r.Contact_Status__c, &quot;Inactive&quot;)
+)
+ &amp;&amp; 
+(
+NOT(ISPICKVAL(StageName, &apos;Accepted&apos;)) &amp;&amp; NOT(ISPICKVAL(StageName, &apos;Not Contacted&apos;))
+)
+ &amp;&amp; 
+(
+  ISPICKVAL(Business_Group__c, &quot;Core&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>End_Customers_Under_an_MSP_Contract__c</errorDisplayField>
+    <errorMessage>The contact added does not have a valid status. Please make sure to add an Active Contact to the opportunity or update the status of the contact you are trying to add.</errorMessage>
+</ValidationRule>

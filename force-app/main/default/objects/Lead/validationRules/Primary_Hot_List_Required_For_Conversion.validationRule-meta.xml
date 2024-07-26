@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Hot_List_Required_For_Conversion</fullName>
+    <active>true</active>
+    <description>You cannot convert a Lead without a primary hot list</description>
+    <errorConditionFormula>AND (
+    ISCHANGED(IsConverted ),
+IsConverted = TRUE,
+   ISBLANK(Primary_Hot_List__c),
+   RecordType.DeveloperName = &apos;Post_MQL&apos;,
+   NOT($Permission.MSP_Marketing_Lead_Conversion_with_out_Hot_list),
+   NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+   OR(
+     $Profile.Name = &apos;Apollo: Custom- Sales_China Profile&apos;,
+     $Profile.Name = &apos;Apollo: Custom- Sales Profile&apos;,
+     $Profile.Name = &apos;Apollo: Custom- Sales Engineers Profile&apos;,
+     $Profile.Name = &apos;Apollo: Custom- Renewals Profile&apos;,
+     $Profile.Name = &apos;Apollo: Custom- Customer Services&apos;,
+     $Profile.Name = &apos;Apollo: Custom- Renewals_China&apos;,
+     $Profile.Name = &apos;Apollo: Custom- Sales Support Profile&apos;
+   ) 
+)</errorConditionFormula>
+    <errorMessage>You cannot convert a Lead without a Primary Hot List. Mark it primary from the Hot List.</errorMessage>
+</ValidationRule>

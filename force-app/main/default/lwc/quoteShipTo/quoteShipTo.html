@@ -1,0 +1,114 @@
+<template>
+    <template if:true = {isDataLoading}> 
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <div class="slds-grid slds-grid_vertical-align-start slds-grid_align-end slds-var-m-around_medium">
+        <div class="slds-col slds-size_1-of-3">
+            <p>Current Address: </p>
+            <template if:true = {showShipAdd}> 
+                <lightning-formatted-address
+                    street= {quoteRecord.SBQQ__ShippingStreet__c}
+                    city= {quoteRecord.SBQQ__ShippingCity__c}
+                    country= {quoteRecord.SBQQ__ShippingCountry__c}
+                    province= {quoteRecord.SBQQ__ShippingState__c}
+                    postal-code= {quoteRecord.SBQQ__ShippingPostalCode__c}
+                ></lightning-formatted-address>
+            </template>
+            <template if:false = {showShipAdd}>
+                <div class="slds-text-color_error">MISSING</div>
+            </template>
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+            <span>
+                <lightning-combobox
+                    name="shipToSource"
+                    label="Ship To Address Source:"
+                    value=""
+                    placeholder="Select Ship To Address Source"
+                    options={QuoteAddOptions}
+                    onchange={handleChangeShipTo}>
+                </lightning-combobox>
+            </span>
+        </div>
+    </div>
+    <lightning-accordion active-section-name="CurrentBillToAddr" class="slds-p-bottom_large">
+        <lightning-accordion-section name="CurrentBillToAddr" label="Available Addresses">
+            <div class="slds-grid slds-grid_vertical-align-end slds-grid_align-end slds-p-bottom_small">
+                <div class="slds-col slds-size_2-of-3"></div>
+                <div class="slds-col slds-size_1-of-3">
+                <span>
+                    <lightning-button label="Update Quote Ship To" title="Update Quote Ship To" onclick={handleUpdateShipTo}></lightning-button>
+                </span>
+                </div>
+            </div>
+        <template if:true = {AvaiShipAdd}> 
+            <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-p-horizontal_small slds-p-top_medium" role="grid">
+                <thead>
+                <tr class="slds-text-title_caps">
+                    <th class="slds-cell-shrink" scope="col">
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="Street">Street</div>
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="City">City</div>
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="StateProvince">State/Province</div>
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="Postal">Postal code</div>
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="Country">Country</div>
+                    </th>
+                    <th class="slds-cell-shrink" scope="col">
+                        <div class="slds-truncate" title="Country">Primary</div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <template for:each={ShipAddress} for:item="row">
+                    <tr key={row.Id} class="slds-hint-parent">
+                        <td data-label="" scope="row">
+                            <lightning-input name={row.Id}  data-id={row.Account__c} type="checkbox" onchange={onShipToCheckboxChange} ></lightning-input> 
+                        </td>
+                        <td data-label="Street">
+                            <div class="slds-truncate" title={row.Street__c}>{row.Street__c}</div>
+                        </td>
+                        <td data-label="City">
+                            <div class="slds-truncate" title={row.City__c}>{row.City__c}</div>
+                        </td>
+                        <td data-label="StateProvince">
+                            <template if:true = {row.State__c}> 
+                            <div class="slds-truncate" title={row.State__r.Name}>{row.State__r.Name}</div>
+                            </template>
+                        </td>
+                        <td data-label="Postal">
+                            <div class="slds-truncate" title={row.Zip_Postal_Code__c}>{row.Zip_Postal_Code__c}</div>
+                        </td>
+                        <td data-label="Country">
+                            <div class="slds-truncate" title={row.Country__r.Name}>{row.Country__r.Name}</div>
+                        </td>
+                        <td data-label="Country">
+                            <lightning-input  type="checkbox" checked={row.Primary__c} disabled="true" ></lightning-input> 
+                        </td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+        </template>
+        <template if:false = {AvaiShipAdd}> 
+            <div class="slds-text-color_error slds-p-top_large slds-p-bottom_large slds-grid_vertical-align-start slds-grid_align-start">No Address Found</div>
+        </template>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="Contact Details" label="Contact Details">
+            <c-shipping-contact
+                record-id={recordId}
+                ship-to-source={selectedShipToSource}
+                object-name="Quote"
+                onmodalclose={closeModal}
+            ></c-shipping-contact>
+        </lightning-accordion-section>
+    </lightning-accordion>
+</template>

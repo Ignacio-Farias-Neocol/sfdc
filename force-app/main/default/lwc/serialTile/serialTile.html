@@ -1,0 +1,47 @@
+<template>
+  <div class={boxCSSClass}>
+    <lightning-card variant="Narrow" title={cardTitle} icon-name="custom:custom13">
+      <template if:false={isReadOnly}>
+        <div slot="actions">
+        <lightning-button-group  class="slds-m-right_xx-small">
+          <template if:false={hideRenewSubscription}>
+            <lightning-button variant="neutral" 
+                              label={label.renewSubscriptionButtonLabel}
+                              title={renewalDisabledText}
+                              onclick={navigateToSubscriptionRenewal}
+                              disabled={renewalDisabled}
+                              >
+            </lightning-button>
+          </template>
+          <lightning-button variant="neutral" 
+                            label={label.requestModificationButtonLabel}
+                            title={label.requestModificationButtonLabel}
+                            onclick={showModificationRequestModal}
+                            disabled={modificationDisabled}
+                            >
+          </lightning-button>
+        </lightning-button-group>
+        <!--CERTIFICATE_BUTTON-->
+          <c-certificate-button btn-icon-name="utility:work_order_type" 
+                                btn-icon-alt-text={label.viewSubscriptionCertificate}
+                                btn-icon-title={label.viewSubscriptionCertificate}
+                                serial={serial}
+                                page-name={pageName}
+                                account-type={accountType}>
+          </c-certificate-button>
+        <!--/CERTIFICATE_BUTTON-->
+        </div>
+      </template>
+      <!--SUBSCRIPTION_LIST-->
+      <c-subscription-list
+        is-read-only={isReadOnly}
+        subscriptions={serial.subs}
+        serial={serial}
+        is-external="true"
+        account-type={accountType}>
+      </c-subscription-list>
+      <!--/SUBSCRIPTION_LIST-->
+      <!-- /CARD HEADER-->
+    </lightning-card>
+  </div>
+</template>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Lead_Out_Deal_Reg_Type</fullName>
+    <active>true</active>
+    <description>When Partner Level is Affiliate OR Inactive Deal Reg Type should not be Lead Out</description>
+    <errorConditionFormula>IF( NOT(ISBLANK(Reseller__c)) &amp;&amp; TEXT(Reseller__r.Partner_Level__c)&lt;&gt; NULL
+&amp;&amp;
+(ISPICKVAL(Reseller__r.Partner_Level__c, &quot;Affiliate&quot;)||
+ISPICKVAL(Reseller__r.Partner_Level__c, &quot;Inactive&quot;))
+&amp;&amp;
+((ISCHANGED(Deal_Reg_Type__c) || ISNEW())&amp;&amp; ISPICKVAL(Deal_Reg_Type__c, &quot;Lead Out&quot;)),
+TRUE,
+FALSE)</errorConditionFormula>
+    <errorMessage>Lead Out Deal Registration is reserved only for Authorized, Premier, Preferred, Premier National and National Partners. Additional margin should be given through a SPE if needed</errorMessage>
+</ValidationRule>

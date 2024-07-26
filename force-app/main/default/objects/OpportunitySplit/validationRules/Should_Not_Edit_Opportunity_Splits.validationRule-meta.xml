@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Should_Not_Edit_Opportunity_Splits</fullName>
+    <active>true</active>
+    <description>Only Sales &amp; Commission Users Can Create Opp Split Records</description>
+    <errorConditionFormula>AND( ISCHANGED(SplitPercentage),
+NOT(ISNEW()), 
+NOT($Permission.Edit_Opportunity_Splits))
+
+
+/*If the record is not new and the user is does not have the Edit Opportunity Split Permission Set*/ 
+/*NOT(ISNEW()) &amp;&amp;
+NOT($Permission.Edit_Opportunity_Splits)*/</errorConditionFormula>
+    <errorMessage>Sorry, you don&apos;t have permission to create/edit Opportunity Splits. Please contact your Admin to request access.</errorMessage>
+</ValidationRule>

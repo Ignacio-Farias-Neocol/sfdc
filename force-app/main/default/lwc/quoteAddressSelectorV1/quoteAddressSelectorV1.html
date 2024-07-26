@@ -1,0 +1,40 @@
+<template>
+    <div style="height: 550px;">
+        <template if:true = {showQuote}> 
+            <lightning-card title={QuoteRecord.Name} variant="Narrow" icon-name="standard:opportunity" footer="">
+                <div class="slds-grid slds-grid_vertical-align-end slds-var-m-around_medium">
+                    <template if:true = {showAccount}> 
+                        <div class="slds-col">Account: {QuoteRecord.SBQQ__Account__r.Name} </div> 
+                    </template>
+                    <template if:true = {showReseller}> 
+                        <div class="slds-col">Reseller: {QuoteRecord.SBCF_Reseller__r.Name} </div>
+                    </template>
+                    <template if:true = {showDist}> 
+                        <div class="slds-col">Distributor: {QuoteRecord.SBQQ__Distributor__r.Name}</div>
+                    </template>
+                </div>
+            </lightning-card>
+        </template>
+        <template if:true = {isDataLoading}> 
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <lightning-tabset active-tab-value="Ship To">
+            <lightning-tab label="Bill To">
+                <c-quote-bill-to
+                    showadd ={showBillAdd}
+                    qt ={QuoteRecord}
+                    address-options ={Addressoptions}
+                ></c-quote-bill-to>
+            </lightning-tab>
+            <lightning-tab label="Ship To" value="Ship To">
+                <c-quote-ship-to
+                    show-ship-add ={showShipAdd}
+                    quote-record ={QuoteRecord}
+                    address-options ={Addressoptions}
+                    record-id ={recordId}
+                ></c-quote-ship-to>
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+
+    </template>

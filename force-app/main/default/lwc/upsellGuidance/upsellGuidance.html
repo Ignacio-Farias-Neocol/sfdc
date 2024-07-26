@@ -1,0 +1,24 @@
+<template>
+    <lightning-card>
+        <h3 slot="title">
+            <lightning-icon icon-name={iconVar} size="small"></lightning-icon>
+            <b> {label.UG_Header}</b>
+        </h3>
+     
+        <!-- LWC Widget Verbiage -->
+        <p class="slds-p-horizontal_small">{label.UG_Amend}
+             <br>
+             <br>
+           {label.UG_Renew}
+        </p>
+    
+        <br>
+        <lightning-button variant="brand" label={label.UG_Btn_Label} title="Primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        <div class="spinner">
+            <template if:true={isLoading}>
+                 <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                 </lightning-spinner>
+            </template>
+        </div>
+    </lightning-card>
+</template>

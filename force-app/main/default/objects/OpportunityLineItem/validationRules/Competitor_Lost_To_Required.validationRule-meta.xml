@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Competitor_Lost_To_Required</fullName>
+    <active>true</active>
+    <description>If reason lost is Lost to competitor, then a competitor must be selected. User Story SFDC-1184.</description>
+    <errorConditionFormula>AND (
+     ISPICKVAL(ReasonLost__c, &apos;Lost to Competitor/ Kept Current Product&apos;),
+     ISBLANK(TEXT(ClosedLostCompetitor__c)) 
+    )</errorConditionFormula>
+    <errorMessage>Please enter a Closed Lost Competitor on each line that has been set to &apos;Lost to Competitor/Kept Current Product&apos;.</errorMessage>
+</ValidationRule>

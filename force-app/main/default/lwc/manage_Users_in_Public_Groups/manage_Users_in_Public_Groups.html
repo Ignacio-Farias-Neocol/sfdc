@@ -1,0 +1,51 @@
+<template>
+  <lightning-card title="Search Public Group Members">
+    <div class="slds-m-around_medium">
+      <lightning-input
+        label="Search Users in Public Groups"
+        value={searchTerm}
+        onchange={handleSearchTermChange}
+      ></lightning-input>
+      <lightning-combobox
+        label="Group"
+        required = true
+        value={selectedGroup}
+        options={groupOptions}
+        onchange={handleGroupChange}
+      ></lightning-combobox>
+      <br></br>
+      <lightning-button variant="brand-outline" disabled={isDisabled} label="Search" onclick={handleSearch}></lightning-button>
+    </div>
+    <div>
+      <template if:true={showDataTable}>
+        <table data-label="Users in Selected Public Group" class="slds-table slds-table_bordered slds-table_cell-buffer" style="height: 350px;
+        display: block;
+        overflow: scroll;">
+          <thead data-label="Users in Selected Public Group">
+            <tr>
+              <th scope="col" style="width:80%;">Name</th>
+              <th scope="col" style="width:20%;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={data} for:item="item" key={item.id}>
+              <tr key={item.Id}>
+                <td data-label="Name">
+                  <a href={item.Id}>{item.Name}</a>
+                </td>
+                <td data-label="Action">
+                  <template if:false={item.add}>
+                    <lightning-button label="Remove" data-id={item.Id} onclick={handleRemove}></lightning-button>
+                  </template>
+                  <template if:true={item.add}>
+                    <lightning-button label="Add" data-id={item.Id} onclick={handleAdd}></lightning-button> 
+                  </template>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </template>
+    </div>
+  </lightning-card>
+</template>

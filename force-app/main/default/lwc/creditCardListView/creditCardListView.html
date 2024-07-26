@@ -1,0 +1,48 @@
+<template>
+  <lightning-layout horizontal-align="space" class="slds-p-around_x-small">
+    <lightning-layout-item size="4"
+      class="slds-box_x-small slds-m-right_xx-small filter-content background-color">
+      <h2>{labels.billingAddress}</h2>
+      <div class="slds-border_bottom">
+        <p>
+          {address.street}
+        </p>
+        <p>
+          {address.city}, {address.state}, {address.zip}, {address.country}
+        </p>
+      </div>
+    </lightning-layout-item>
+    <lightning-layout-item size="8"
+      class="slds-box_x-small slds-m-right_xx-small filter-content background-color">
+      <lightning-card title={labels.creditCardsHeader} icon-name="custom:custom40">
+        <lightning-button label={labels.addCreditCard} slot="actions" onclick={addCreditCard}></lightning-button>
+        <lightning-datatable
+          key-field="id"
+          data={ccData}
+          columns={columns}
+          hide-checkbox-column="false"
+          resize-column-disabled="true">
+        </lightning-datatable>
+        <!-- <lightning-custom-datatable key-field="id" data={ccData} columns={columns} hide-checkbox-column="true"
+          wrap-text-max-lines="3">
+        </c-custom-datatable> -->
+      </lightning-card>
+    </lightning-layout-item>
+  </lightning-layout>
+  <c-credit-card-entry-l-w-c record-id={accountId}></c-credit-card-entry-l-w-c>
+  <!-- </lightning-card> -->
+  <!-- <lightning-card title="Billing Address"> -->
+  <!-- </lightning-card> -->
+  <!-- <c-custom-datatable
+    key-field="id"
+    data={ccData}
+    columns={columns}
+    hide-checkbox-column="true"
+    wrap-text-max-lines="3"
+  > -->
+  <!-- default-sort-direction={defaultSortDirection}
+  sorted-direction={sortDirection}
+  sorted-by={sortedBy}
+  onsort={onHandleSort} -->
+  <!-- </c-custom-datatable> -->
+</template>

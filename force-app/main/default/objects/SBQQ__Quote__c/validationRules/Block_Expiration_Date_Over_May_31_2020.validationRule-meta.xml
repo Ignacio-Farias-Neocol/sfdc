@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Expiration_Date_Over_May_31_2020</fullName>
+    <active>false</active>
+    <description>SFDC-14280 : User should not be able to update Expire ON (Expiration Date) greater then May 31 2020. 
+Note: This rule need to be deactivated on June 1</description>
+    <errorConditionFormula>(SBQQ__PricebookId__c = &apos;01sf2000000ZTyq&apos; || SBQQ__PricebookId__c = &apos;01sf2000000ZTyqAAG&apos; )&amp;&amp;
+ISCHANGED(SBQQ__ExpirationDate__c) &amp;&amp;
+(SBQQ__ExpirationDate__c &gt; Date(2021,05,31) ||
+ISNULL(SBQQ__ExpirationDate__c))</errorConditionFormula>
+    <errorMessage>The Expires On can not be Blank or greater then May 31 2020</errorMessage>
+</ValidationRule>

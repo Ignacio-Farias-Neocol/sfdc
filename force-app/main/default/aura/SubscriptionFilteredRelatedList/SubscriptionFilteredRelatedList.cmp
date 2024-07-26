@@ -1,0 +1,45 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global" controller="SubscriptionRelatedListController">
+    <aura:attribute name="sdata"    type="SBQQ__Subscription__c"/>
+    <aura:attribute name="scolumns" type="List"/>
+    <aura:attribute name="errors"   type="Object"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="isOnCommunityPage" type="Boolean" default="false"/>
+    <aura:attribute name="sortDirection" type="String" default="asc" />
+    <aura:attribute name="defaultSortDirection" type="String" default="asc" />
+    <aura:attribute name="sortedBy" type="String" />   
+    <aura:attribute name="isRelatedListPageDisplay" type="String" default="false"/>
+    
+    <lightning:navigation aura:id="navService"/>  
+    <lightning:workspaceAPI aura:id="workspace" />
+
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    
+    <lightning:card iconName="standard:custom">
+        <aura:set attribute="title"> 
+            <p>Subscriptions(Last 6 Months)</p>        	
+        </aura:set>
+        <!-- <p class="slds-p-horizontal_small slds-border_top">  -->
+        <lightning:datatable 
+            data="{! v.sdata }"
+            columns="{! v.scolumns }"
+            keyField="CaseNumber"
+            errors="{!v.errors}"
+            hideCheckboxColumn="true"
+            onrowaction="{! c.handleRowAction }"
+            defaultSortDirection="{!v.defaultSortDirection}"
+            sortedDirection="{!v.sortDirection}"
+            sortedBy="{!v.sortedBy}"
+            onsort="{!c.handleSort}"/>        
+        <!-- </p> -->
+        <aura:set attribute="footer"> 
+            <aura:if isTrue="{!!v.isOnCommunityPage}">
+                <aura:if isTrue="{!v.isRelatedListPageDisplay == 'false'}">
+                    <lightning:button variant="base"   
+                                      label="View All"   
+                                      title="View All Action"   
+                                      onclick="{! c.navigateToCaseRelatedList }" />
+                </aura:if>
+            </aura:if>             
+        </aura:set>
+    </lightning:card>
+</aura:component>

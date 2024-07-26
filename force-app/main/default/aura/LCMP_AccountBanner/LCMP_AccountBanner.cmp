@@ -1,0 +1,18 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    
+    <aura:attribute name="accountRecord" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      fields="Premium_Support__c"
+                      targetFields="{!v.accountRecord}"
+                      targetError="{!v.recordLoadError}"
+                      />
+    
+    <aura:if isTrue="{!v.accountRecord.Premium_Support__c}">
+        <div class="slds-box slds-theme_default">
+            <p class="slds-text-color_error slds-text-title_bold slds-text-align_center"> THE ACCOUNT HAS A PREMIUM SUBSCRIPTION </p>
+        </div>  
+    </aura:if>           	
+</aura:component>

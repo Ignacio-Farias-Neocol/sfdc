@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_User_Contact_is_not_editable</fullName>
+    <active>true</active>
+    <description>Lock the End User Contact if changed by any user and if it&apos;s value doesn&apos;t get matched with Parent Opportunity&apos;s primary Contact record.</description>
+    <errorConditionFormula>AND(
+ ISCHANGED(End_User_Contact__c),
+  End_User_Contact__c &lt;&gt; Opportunity.Primary_Contact__c
+)</errorConditionFormula>
+    <errorMessage>End User Contact should not be modified.</errorMessage>
+</ValidationRule>

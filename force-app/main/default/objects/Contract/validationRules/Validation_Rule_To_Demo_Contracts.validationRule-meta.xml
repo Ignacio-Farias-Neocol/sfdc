@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_Rule_To_Demo_Contracts</fullName>
+    <active>true</active>
+    <description>We would like a validation rule added to contracts for demo hardware. This will help prevent renewal reps from creating renewal opportunities and quotes and working and managing an opportunity that has no value.</description>
+    <errorConditionFormula>AND(
+OR(
+ISCHANGED( SBQQ__RenewalForecast__c),
+ISCHANGED( SBQQ__RenewalQuoted__c)
+),
+
+NOT(ISPICKVAL( SBQQ__Opportunity__r.SBQQ__PrimaryQuote__r.SBQQ__Type__c , &apos;Renewal&apos;)),
+NOT(ISPICKVAL( SBQQ__Opportunity__r.SBQQ__PrimaryQuote__r.SBQQ__Type__c , &apos;Amendment&apos;)),
+
+Demo_Opp__c == TRUE
+)</errorConditionFormula>
+    <errorMessage>This contract is for a demo unit. This contract is not eligible for renewal.</errorMessage>
+</ValidationRule>

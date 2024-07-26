@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Create_or_Edit_Country_Records</fullName>
+    <active>true</active>
+    <errorConditionFormula>NOT( $Permission.Create_Edit_State_Country_Territory_Data )</errorConditionFormula>
+    <errorMessage>You don&apos;t have permission to create or edit Country records.</errorMessage>
+</ValidationRule>

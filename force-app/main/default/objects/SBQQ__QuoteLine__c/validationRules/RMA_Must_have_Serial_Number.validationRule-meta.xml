@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RMA_Must_have_Serial_Number</fullName>
+    <active>false</active>
+    <description>Requires Serial Number</description>
+    <errorConditionFormula>AND(
+     TEXT(SBQQ__Quote__r.SBQQ__Type__c) == &quot;Amendment&quot;,
+      ISBLANK(Revised_Serial__c),
+      ISBLANK(SBCF_Serial_Number__c),
+      IsRMA__c) &amp;&amp;
+      Business_Group__c=&quot;Core&quot;</errorConditionFormula>
+    <errorMessage>Serial Number (or Revised Serial) is required for any RMA order lines.</errorMessage>
+</ValidationRule>

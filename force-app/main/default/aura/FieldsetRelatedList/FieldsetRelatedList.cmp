@@ -1,0 +1,55 @@
+<!--
+ - Created by rsieve on 6/13/18.
+ -->
+
+<aura:component description="FieldsetRelatedList" controller="FieldsetRelatedListCon" implements="force:hasRecordId,force:hasSObjectName,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes">
+
+    <!-- IY: make the related field (object) as the optional, add a second attribute altRelatedField so that the user can enter directly -->
+    <aura:attribute name="relatedField" type="string" default="" required="false" access="global" description="Related Field to display child records in TreeGrid"/>
+    <aura:attribute name="relatedFieldAlt" type="string" default="" required="false" access="global" description="Related Field to display child records in TreeGrid"/>
+    <aura:attribute name="fieldset" type="string" default="" required="true" access="global"/>
+    <aura:attribute name="groupBy" type="string" default="" required="false" access="global"/>
+    <aura:attribute name="keyField" type="string" default="Id"/>
+    <aura:attribute name="icon" type="string" default=""/>
+    <aura:attribute name="headerName" type="string" default=""/>
+    <aura:attribute name="gridColumns" type="List" />
+    <aura:attribute name="gridData" type="Object" />
+    <aura:attribute name="gridExpandedRows" type="Object" />
+    <aura:attribute name="hideCheckboxColumn" type="boolean" default="true"/>
+    <aura:attribute name="explicitRecordId" type="string" default="" access="global"/>
+    <aura:attribute name="displayFormat" type="string" default="tree" access="global"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <aura:if isTrue="{!v.gridData}">
+        <lightning:card title="{!v.headerName}" class="slds-card slds-card_boundary forceRelatedListCardDesktop" iconName="{!v.icon}" footer="">
+            <aura:if isTrue="{!v.displayFormat == 'tree'}">
+                <lightning:treeGrid
+                        columns="{! v.gridColumns }"
+                        data="{! v.gridData }"
+                        keyField="{!v.keyField}"
+                        hideCheckboxColumn="{!v.hideCheckboxColumn}"
+                        aura:id="mytree"
+                />
+            </aura:if>
+            <aura:if isTrue="{!v.displayFormat == 'table'}">
+                <lightning:datatable
+                columns="{! v.gridColumns }"
+                data="{! v.gridData }"
+                keyField="{!v.keyField}"
+                hideCheckboxColumn="{!v.hideCheckboxColumn}"
+                aura:id="mytable"
+        />
+        </aura:if> 
+        </lightning:card>
+
+
+    </aura:if>
+
+    <!--<ui:outputText value="{!v.relatedField}"/><br/>-->
+    <!--<ui:outputText value="{!v.fieldset}"/><br/>-->
+    <!--<ui:outputText value="{!v.recordId}"/><br/>-->
+    <!--<ui:outputText value="{!v.sObjectName}"/><br/>-->
+    <!--<ui:outputText value="{!v.keyField}"/>-->
+
+</aura:component>

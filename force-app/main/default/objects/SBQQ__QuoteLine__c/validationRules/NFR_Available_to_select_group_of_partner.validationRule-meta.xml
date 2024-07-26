@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NFR_Available_to_select_group_of_partner</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NotForResale__c ,
+
+NOT(OR(
+	 AND(
+	    SBQQ__Quote__r.Business_Group__c = &apos;Core&apos;,  
+	    OR(   CONTAINS(TEXT(SBQQ__Quote__r.SBQQ__Account__r.Type) ,&apos;Partner&apos;), 
+		  CONTAINS(TEXT(SBQQ__Quote__r.SBQQ__Account__r.Type) ,&apos;Distributor&apos;)
+	      ),
+	    OR( 
+		  (TEXT(SBQQ__Quote__r.SBQQ__Account__r.Partner_Level__c) = &apos;Premier&apos;),
+(TEXT(SBQQ__Quote__r.SBQQ__Account__r.Partner_Level__c) = &apos;Premier National&apos;), 
+		  (TEXT(SBQQ__Quote__r.SBQQ__Account__r.Partner_Level__c) = &apos;Preferred&apos;), 
+		  (TEXT(SBQQ__Quote__r.SBQQ__Account__r.Partner_Level__c) = &apos;Authorized&apos;), 
+ /* SFDC-10775: treat Disti only Quotes as Premier NFR */
+			  Account_Level__c = &apos;Premier&apos;
+	      )
+
+	    ),
+	  AND (SBQQ__Quote__r.Business_Group__c = &apos;MSP&apos;,
+	      CONTAINS(TEXT(SBQQ__Quote__r.SBQQ__Account__r.Type) ,&apos;Partner&apos;)
+	     )
+ )
+)
+)</errorConditionFormula>
+    <errorMessage>NFR&apos;s are only available to select groups of partners (MSP, Premier, Preferred, Authorized, and Registered).</errorMessage>
+</ValidationRule>

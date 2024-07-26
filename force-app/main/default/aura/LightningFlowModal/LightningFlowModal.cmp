@@ -1,0 +1,43 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global" >
+<aura:attribute type="boolean" name="ismodalClicked"/>
+    <aura:attribute type="boolean" name="isadminProfile" default="false"/>
+     <aura:attribute name="currentUserAccountId" type="String"/>
+     <aura:attribute name="currentUserAcctId" type="String"/>
+    <aura:attribute name="currentUser" type="Object"/>
+    <force:recordData recordId="{!$SObjectType.CurrentUser.Id}"
+                  fields="Name,Profile.Name"
+                  targetFields="{!v.currentUser}"/>
+  
+    
+    <aura:handler name="flowFinishedEvent" event="c:flowEvent" action="{!c.handleComponentEvent}"/>
+<aura:if isTrue="{!v.isadminProfile}">
+    <div style="margin-left: auto;margin-right: 30px;float:right;margin-bottom: 20px;">
+        <lightning:button variant="brand" label="CREATE CONTACT/ENABLE USER" onclick="{!c.openmodal }" />
+    </div>
+</aura:if>
+    <aura:if isTrue="{!v.ismodalClicked}">
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="Modalbox" class="slds-modal">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModal}">
+                    <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="header43" class="slds-text-heading--medium">Create Contact/Enable User</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <div>
+                    <c:ContactCreationCmp currentUserAcctId="{!v.currentUserAcctId }"/>
+                   
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+            </div>
+        </div>
+    </div>
+</aura:if>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+<div class="slds-backdrop " aura:id="Modalbackdrop"></div>
+    </aura:component>

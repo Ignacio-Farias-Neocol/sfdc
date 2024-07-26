@@ -1,0 +1,51 @@
+<template>
+  <c-modification-request-modal
+        onrequestcreated={handlerequestcreated}    
+    ></c-modification-request-modal>
+  <!-- <div class="slds-scoped-notification slds-media slds-media_center slds-m-top_small slds-scoped-notification_light" role="status">
+    <div class="slds-align_absolute-center">
+      <div class="slds-media__figure">
+        <span class="slds-icon_container slds-icon-utility-info" title="information">
+          <lightning-icon icon-name="utility:info" size="small" class="slds-media__figure"></lightning-icon>
+          <span class="slds-assistive-text">information</span>
+        </span>
+      </div>
+      <div class="slds-media__body">
+        <p>{labels.renewalCheckoutPricingConfirmation}
+        </p>
+      </div>
+    </div>
+  </div> -->
+  <lightning-card>
+    <div slot="title" class="slds-m-top_medium">
+      <lightning-icon icon-name="standard:quotes" size="small" class="slds-media__figure"></lightning-icon>
+      {labels.pricingConfirmation}
+    </div>
+    <div slot="actions" class="slds-m-top_medium">
+      <span>
+        <lightning-button label="REQUEST MODIFICATION" title="Non-primary action" onclick={handleShowModificationRequest} class="slds-m-left_x-small"></lightning-button>
+      </span>
+    </div>
+    <template if:true={isDataLoaded}>
+      <!-- <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_bottom-left" role="dialog">
+        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-float_right slds-popover__close" title="Close dialog">
+          
+          <span class="slds-assistive-text">Close dialog</span>
+        </button>
+        <div id="popover-body-id" class="slds-popover__body">
+          <p>{labels.renewalCheckoutPricingConfirmation}</p>
+        </div>
+        <footer class="slds-popover__footer">
+          <div class="slds-grid slds-grid_vertical-align-center">
+            <lightning-button label="REQUEST MODIFICATION" title="Non-primary action" onclick={handleShowModificationRequest} class="slds-m-left_x-small"></lightning-button>
+          </div>
+        </footer>
+      </section> -->
+      <c-serial-tile-list-external
+        serials={serials}
+        is-read-only={isReadOnly}
+        account-type="none"
+      ></c-serial-tile-list-external>
+    </template>
+  </lightning-card>
+</template>

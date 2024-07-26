@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Appliance_Line_Quantity_must_be_1</fullName>
+    <active>true</active>
+    <description>SFDC-7369</description>
+    <errorConditionFormula>AND(Count_Appliance_Parent_Quantity_gt1__c &gt; 0,
+NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+ISPICKVAL(StageName, &apos;Closed Won&apos;))</errorConditionFormula>
+    <errorMessage>You can&apos;t move the Opportunity to Closed Won if any product line item (Asset ONLY) is greater than 1.</errorMessage>
+</ValidationRule>

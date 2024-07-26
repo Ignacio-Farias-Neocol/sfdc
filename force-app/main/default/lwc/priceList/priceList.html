@@ -1,0 +1,59 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card  variant="Narrow">
+        <h3 slot="title" class="bold">
+            <lightning-icon icon-name="standard:pricebook" size="small" class="slds-m-right_small"></lightning-icon>
+            Price List
+        </h3>
+        <div class="slds-grid slds-grid_align-center">
+            <div class="slds-col slds-size_11-of-12">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                        <ul>
+                            <li><b>Terms and Conditions</b></li>
+                        </ul>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                        <ul>
+                            <li>By downloading the Barracuda Price List (“Price List”) You hereby agree to the following Terms and Conditions:</li>
+                        </ul>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                        <ul class="slds-list_dotted">
+                            <li>The Price List is confidential information of Barracuda Networks (“Barracuda”) and may not be disclosed to any third party without Barracuda's express written consent.</li>
+                            <li>You may only use the Price List for Your own internal business purposes.</li>
+                            <li>If the data contained in the Price List is uploaded into any of Your systems, it will remain the sole property and confidential information of Barracuda.</li>
+                            <li>Any employee or agent of Your company who has access to this price list must be bound by a written confidentiality agreement which requires them to keep third party information confidential.</li>
+                            <li>These Terms and Conditions are in addition to any terms and conditions set forth in any other agreements between You and Barracuda. In the event of a conflict between these Terms and Conditions and the terms of any other agreement in place between You and Barracuda, these Terms and Conditions will prevail.</li>
+                        </ul>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                        <ul>
+                            <li>All SaaS email services, including the education offerings, have a 25 user minimum for new orders. This user minimum does not apply to our Barracuda MSP division or Premium Support services. Premium Support, for our SaaS email solutions, is available for 1,000 users and greater.</li>
+                        </ul>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                        <lightning-input type="checkbox" label="I accept the Terms and Conditions" value={isTermsAndConditionAccepted} onchange={handleTermsandConditions}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                        <ul>
+                            <li>{label.lastUpdatedDate}</li>
+                        </ul>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                        <button class="slds-button slds-button_brand" onclick={onConfirm}>CONFIRM</button>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                        <div if:true={showDownload}>
+                            <button class="slds-button slds-button_brand" onclick={onDownload} >DOWNLOAD PRICE LIST</button>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </div>
+        
+            
+        
+    </lightning-card>
+</template>

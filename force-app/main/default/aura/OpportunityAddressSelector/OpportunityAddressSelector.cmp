@@ -1,0 +1,563 @@
+<!--
+ - Created by iyeung on 10/31/18.
+ -->
+ <aura:component controller="OpportunityAddressSelectorController" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global" >
+
+    <aura:attribute name="isDataLoading" description="indicator if loading is done" type="boolean" default="true" />
+
+    <aura:attribute name="recordId" description="opportunity record Id" type="Id" />
+    <aura:attribute name="opportunity" description="opportunity record " type="Object" />
+    <aura:attribute name="account" description="account associated with opportunity" type="Object" />
+    <aura:attribute name="distributor" description="distributor associated with opportunity" type="Object" />
+    <aura:attribute name="reseller" description="reseller associated with opportunity" type="Object" />
+    <aura:attribute name="selectedTabId" type="String" default="billToTab" />
+
+    <aura:attribute name="currentBillToAddress" description="current bill to address" type="Object" />
+    <aura:attribute name="billToOptions" description="list of bill to options; in label-value pair for combo box input" type="List" />
+    <aura:attribute name="billToAddresses" description="list of bill to address" type="List" default="" />
+    <aura:attribute name="billToAddressesAccount" description="list of bill to address" type="List" />
+    <aura:attribute name="billToAddressesReseller" description="list of bill to address" type="List" />
+    <aura:attribute name="billToAddressesDistributor" description="list of bill to address" type="List" />
+    <aura:attribute name="selectedBillToId" description="address id when bill to address record is selected" type="string" />
+    <aura:attribute name="updatePrimDisabled" description="Boolean to disbale update Primary address button" type="Boolean"  default="false"/>
+
+    <!-- new bill to address -->
+    <aura:attribute name="nBStreet" type="String" default=""/>
+    <aura:attribute name="nBCity" type="String" default=""/>
+    <aura:attribute name="nBProvince" type="String" default=""/>
+    <aura:attribute name="nBCountry" type="String" default=""/>
+    <aura:attribute name="nBPostalCode" type="String" default=""/>
+    <aura:attribute name="nBProvinceOptions" type="List" default="[]"/>
+    <aura:attribute name="nBCountryOptions" type="List" default="[]"/>
+    <aura:handler name="change" value="{! v.nBCountry }" action="{! c.nBUpdateProvinces }"/>
+
+    <aura:attribute name="currentShipToAddress" description="current bill to address" type="Object" />
+    <aura:attribute name="shipToOptions" description="list of ship to options; in label-value pair for combo box input" type="List" />
+    <aura:attribute name="shipToAddresses" description="list of ship to address" type="List" default=""/>
+    <aura:attribute name="shipToAddressesAccount" description="list of ship to address" type="List" />
+    <aura:attribute name="shipToAddressesDistributor" description="list of ship to address" type="List" />
+    <aura:attribute name="shipToAddressesReseller" description="list of ship to address" type="List" />
+    <aura:attribute name="selectedShipToId" description="ship to when ship to address record is selected" type="string" />
+    <aura:attribute name="selectedShipToSource" description="selected ship to option (account, distributor, reseller)" type="string" default="account" />
+
+    <aura:attribute name="billToContactDetails" type="List"/>
+    <aura:attribute name="shipToContactDetails" type="List"/>
+    <aura:attribute name="billShipEditable" type="Boolean"/>
+    
+    <!-- new Ship to address -->
+    <aura:attribute name="nSStreet" type="String" default=""/>
+    <aura:attribute name="nSCity" type="String" default=""/>
+    <aura:attribute name="nSProvince" type="String" default=""/>
+    <aura:attribute name="nSCountry" type="String" default=""/>
+    <aura:attribute name="nSPostalCode" type="String" default=""/>
+    <aura:attribute name="nSProvinceOptions" type="List" default="[]"/>
+    <aura:attribute name="nSCountryOptions" type="List" default="[]"/>
+    <aura:handler name="change" value="{! v.nSCountry }" action="{! c.nSUpdateProvinces }"/>
+
+
+    <!--Style-->
+    <aura:html tag="style">
+        .slds-modal__container{
+        height : auto;
+        width: 70%;
+        max-width: 70rem;
+        }
+        .modal-body{
+        height : 500px !important;
+        max-height: 550px !important;
+        }
+        .scrollerSize {
+        height: 350px;
+        }
+        .slds-tabs_default__link{
+        text-transform: capitalize;
+        font-size: 16px;
+        }
+    </aura:html>
+
+    <lightning:card variant="Narrow" title="{!v.opportunity.Name}" iconName="standard:opportunity" footer="">
+        <div class="slds-grid slds-grid_vertical-align-end">
+            <aura:if isTrue="{!not(empty(v.account))}">
+                <div class="slds-col">Account:  <ui:outputText value="{!v.account.Name}"/></div>
+            </aura:if>
+            <aura:if isTrue="{!not(empty(v.reseller))}">
+                <div class="slds-col">Reseller:  <ui:outputText value="{!v.reseller.Name}"/></div>
+            </aura:if>
+            <aura:if isTrue="{!not(empty(v.distributor))}">
+                <div class="slds-col">Distributor:  <ui:outputText value="{!v.distributor.Name}"/></div>
+            </aura:if>
+        </div>
+    </lightning:card>
+
+    <!-- for data loading indicator -->
+    <aura:if isTrue="{!v.isDataLoading}">
+        <div class="slds-spinner_container">
+            <lightning:spinner aura:id="spinner" variant="brand" size="medium" alternativeText="Loading Data"/>
+        </div>
+    </aura:if>
+
+    <lightning:tabset selectedTabId="{!v.selectedTabId}" >
+
+        <lightning:tab label="Bill To" id="billToTab">
+
+            <ui:scrollerWrapper class="scrollerSize">
+
+                <!-- content for bill to adddres selection -->
+                <div class="slds-grid slds-grid_vertical-align-start slds-grid_align-end">
+                    <div class="slds-col slds-size_1-of-3">
+                        <p>Current Address: </p>
+                        <aura:if isTrue="{!not(empty(v.opportunity.Billing_Address))}">
+                            <lightning:formattedAddress
+                                    street="{!v.opportunity.Street}"
+                                    city="{!v.opportunity.City}"
+                                    country="{!v.opportunity.Country}"
+                                    province="{!v.opportunity.State}"
+                                    postalCode="{!v.opportunity.Zip_Postal_Code}"
+                                    title="Current Bill To Address"
+                            />
+                        <aura:set attribute="else">
+                            <div class="slds-text-color_error">MISSING</div>
+                        </aura:set>
+
+                        </aura:if>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                    <span>
+                    <!-- option list: [{'label': 'Account name', 'value': 'account'}, ,  {'label': 'Reseller Name', 'value': 'Reseller'}, {'label': 'Distributor Name', 'value': 'distributor'}] -->
+                    <!-- SFDC-4242 make combo box read only -->
+                    <lightning:combobox readonly="true" aura:id="billToSourceId" name="billToSource" label="Bill To Address Source:" value="" placeholder="Select Bill To Address Source" options="{! v.billToOptions }" onchange="{! c.handleBillToOptionChange }"/>
+                    </span>
+                    </div>
+                </div>
+
+
+
+
+                <lightning:accordion aura:id="billToCurrentOrNew" activeSectionName="CurrentBillToAddr" class="slds-p-bottom_large">
+                    <lightning:accordionSection name="CurrentBillToAddr" label="Available Addresses">
+
+                        <div class="slds-grid slds-grid_vertical-align-end slds-grid_align-end slds-p-bottom_small">
+                            <div class="slds-col slds-size_2-of-3">
+
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                            <span>
+                            <lightning:button onclick="{! c.handleUpdateBillTo }" label="Update Opportunity Bill to"/>
+                            </span>
+                            </div>
+                        </div>
+
+
+                        <aura:if isTrue="{!not(empty(v.billToAddresses))}">
+
+
+                            <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-p-horizontal_small slds-p-top_medium" role="grid">
+                                <thead>
+                                <tr class="slds-text-title_caps">
+                                    <th class="slds-cell-shrink" scope="col">
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="Street">Street</div>
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="City">City</div>
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="StateProvince">State/Province</div>
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="Postal">Postal code</div>
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="Country">Country</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <aura:iteration items="{!v.billToAddresses}" var="row">
+                                    <tr class="slds-hint-parent">
+                                        <td data-label="" scope="row">
+                                            <ui:inputCheckbox aura:id="rowSelectionCheckboxIdBT" value="false" text="{!row.Id}" change="{!c.onBillToCheckboxChange}"/>
+                                        </td>
+                                        <td data-label="Street">
+                                            <div class="slds-truncate" title="{!row.Street__c}">{!row.Street__c}</div>
+                                        </td>
+                                        <td data-label="City">
+                                            <div class="slds-truncate" title="{!row.City__c}">{!row.City__c}</div>
+                                        </td>
+                                        <td data-label="StateProvince">
+                                            <div class="slds-truncate" title="{!row.State__r.Name}">{!row.State__r.Name}</div>
+                                        </td>
+                                        <td data-label="Postal">
+                                            <div class="slds-truncate" title="{!row.Zip_Postal_Code__c}">{!row.Zip_Postal_Code__c}</div>
+                                        </td>
+                                        <td data-label="Country">
+                                            <div class="slds-truncate" title="{!row.Country__r.Name}">{!row.Country__r.Name}</div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                                </tbody>
+                            </table>
+
+
+                        </aura:if>
+
+
+                        <aura:if isTrue="{! and(empty(v.billToAddresses), loadDone)}">
+                            <div class="slds-text-color_error slds-p-top_large slds-p-bottom_large slds-grid_vertical-align-start slds-grid_align-start">No Address Found</div>
+                        </aura:if>
+
+
+
+                    </lightning:accordionSection>
+
+
+                    <lightning:accordionSection name="Contact Details" label="Contact Details">
+                    	<aura:if isTrue="{!v.billShipEditable}">
+                        <div class="slds-grid slds-grid_vertical-align-end slds-grid_align-end slds-p-bottom_small">
+                            <div class="slds-col slds-size_2-of-3">
+
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                            <span>
+                            <lightning:button onclick="{!c.updateBillToDetails }" label="Update Primary Billing" disabled="{!v.updatePrimDisabled}"/>
+                            </span>
+                            </div>
+                        </div>
+                        </aura:if>
+                        
+                        <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-p-horizontal_small slds-p-top_medium" role="grid">
+                        	<thead>
+                                <tr class="slds-text-title_caps">
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="Bill To Email">Bill To Email</div>
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="Bill to Contact">Primary Billing Name</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.billToContactDetails}" var="contactRow">
+                                    <tr class="slds-hint-parent">
+                                        <aura:if isTrue="{!v.billShipEditable}">
+                                                <td data-label="" scope="row"> 
+                                                    <lightning:input name="input1" label="" value="{!contactRow.Bill_To_Email__c}" disabled="{!v.updatePrimDisabled}"/>
+                                                    <!--div class="slds-truncate" title="{!contactRow.Bill_To_Email__c}">{!contactRow.Bill_To_Email__c}</div-->
+                                                </td>
+                                                <td data-label="">
+                                                    <lightning:input name="input1" label="" value="{!contactRow.Bill_To_Contact__c}" disabled="{!v.updatePrimDisabled}"/>
+                                                    <!--div class="slds-truncate" title="{!contactRow.Bill_To_Contact__c}">{!contactRow.Bill_To_Contact__c}</div-->
+                                                </td>
+                                            <aura:set attribute="else">
+                                                <td data-label="" scope="row"> 
+                                                	<div class="slds-truncate" title="{!contactRow.Bill_To_Email__c}">{!contactRow.Bill_To_Email__c}</div>
+                                                </td>
+                                                <td data-label="">
+                                                    <div class="slds-truncate" title="{!contactRow.Bill_To_Contact__c}">{!contactRow.Bill_To_Contact__c}</div>
+                                                </td>
+                                            </aura:set>
+                                        </aura:if>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </lightning:accordionSection >
+                    
+                    <!--
+                    <lightning:accordionSection name="NewBillToAddr" label="New Address">
+
+
+                        <div class="slds-grid slds-grid_vertical-align-start">
+                            <div class="slds-col slds-size_2-of-3">
+                            <span>
+                                 <div style="max-width: 400px;">
+                                        <lightning:inputAddress
+                                                aura:id="newBillToAddress"
+                                                addressLabel="Address"
+                                                streetLabel="Street"
+                                                cityLabel="City"
+                                                countryLabel="Country"
+                                                provinceLabel="Province/State"
+                                                postalCodeLabel="PostalCode"
+                                                street="{! v.nBStreet }"
+                                                city="{! v.nBCity }"
+                                                province="{! v.nBProvince }"
+                                                country="{! v.nBCountry }"
+                                                postalCode="{! v.nBPostalCode }"
+                                                countryOptions="{! v.nBCountryOptions }"
+                                                provinceOptions="{! v.nBProvinceOptions }"
+                                        />
+                                    </div>
+                            </span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                            <span>
+                            <lightning:button onclick="{! c.handleNewBillTo }" label="Create Bill-To on Source Account and Opportunity"/>
+                            </span>
+                            </div>
+                        </div>
+
+                    </lightning:accordionSection>
+                    -->
+
+                    
+                </lightning:accordion>
+
+
+            </ui:scrollerWrapper>
+
+
+        </lightning:tab>
+        <lightning:tab label="Ship To" id="shipToTab">
+            <!-- content for ship to address selection -->
+
+            <ui:scrollerWrapper class="scrollerSize">
+
+                <div class="slds-grid slds-grid_vertical-align-start slds-grid_align-end">
+                    <div class="slds-col slds-size_1-of-3">
+                        <p>Current Address: </p>
+                        <aura:if isTrue="{!not(empty(v.opportunity.Shipping_Address))}">
+                            <lightning:formattedAddress
+                                    street="{!v.opportunity.Ship_To_Street}"
+                                    city="{!v.opportunity.Ship_To_City}"
+                                    country="{!v.opportunity.Ship_To_Country}"
+                                    province="{!v.opportunity.Ship_To_State}"
+                                    postalCode="{!v.opportunity.Ship_To_Zip_Postal_Code}"
+                                    title="Current Ship To Address"
+                            />
+                            <aura:set attribute="else">
+                                <div class="slds-text-color_error">MISSING</div>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                    <span>
+                            <!-- option list: [{'label': 'Account name', 'value': 'account'}, ,  {'label': 'Reseller Name', 'value': 'Reseller'}, {'label': 'Distributor Name', 'value': 'distributor'}] -->
+                            <lightning:combobox aura:id="shipToSourceId" name="shipToSource" label="Ship To Source" value="" placeholder="Select Ship To Address Source" options="{! v.shipToOptions }" onchange="{! c.handleShipToOptionChange }"/>
+                    </span>
+                    </div>
+                </div>
+
+
+                <lightning:accordion aura:id="shipToCurrentOrNew" activeSectionName="CurrentShipToAddr" class="slds-p-bottom_large">
+                    <lightning:accordionSection name="CurrentShipToAddr" label="Available Addresses">
+
+                        <div class="slds-grid slds-grid_vertical-align-end slds-grid_align-end slds-p-bottom_small">
+                            <div class="slds-col slds-size_2-of-3">
+
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                            <span>
+                            <lightning:button onclick="{! c.handleUpdateShipTo }" label="Update Opportunity Ship To"/>
+                            </span>
+                            </div>
+                        </div>
+
+                        <!-- select the address to be updated -->
+                        <aura:if isTrue="{!not(empty(v.shipToAddresses))}">
+
+
+                            <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-p-horizontal_small slds-p-top_medium" role="grid">
+                                <thead>
+                                <tr class="slds-text-title_caps">
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <!-- No title only action , for selection checkbox header -->
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="Street">Street</div>
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="City">City</div>
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="StateProvince">State/Province</div>
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="Postal">Postal code</div>
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="Country">Country</div>
+                                    </th>
+                                    <th class="slds-cell-shrink" scope="col">
+                                        <div class="slds-truncate" title="Primary">Primary</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Iterates the collection of records stored in the data attribute-->
+                                <aura:iteration items="{!v.shipToAddresses}" var="row">
+                                    <tr class="slds-hint-parent">
+                                        <td data-label="" scope="row">
+                                            <!-- checkbox selection invokes the onCheckboxChange controller method-->
+                                            <ui:inputCheckbox aura:id="rowSelectionCheckboxIdST" value="false" text="{!row.Id}" change="{!c.onShipToCheckboxChange}"/>
+                                        </td>
+                                        <td data-label="Street">
+                                            <div class="slds-truncate" title="{!row.Street__c}">{!row.Street__c}</div>
+                                        </td>
+                                        <td data-label="City">
+                                            <div class="slds-truncate" title="{!row.City__c}">{!row.City__c}</div>
+                                        </td>
+                                        <td data-label="StateProvince">
+                                            <div class="slds-truncate" title="{!row.State__r.Name}">{!row.State__r.Name}</div>
+                                        </td>
+                                        <td data-label="Postal">
+                                            <div class="slds-truncate" title="{!row.Zip_Postal_Code__c}">{!row.Zip_Postal_Code__c}</div>
+                                        </td>
+                                        <td data-label="Country">
+                                            <div class="slds-truncate" title="{!row.Country__r.Name}">{!row.Country__r.Name}</div>
+                                        </td>
+                                        <td data-label="Primary">
+                                            <div class="slds-truncate" title="{!row.Primary__c}">
+                                                <lightning:input aura:id="checkbox" type="checkbox" checked="{!row.Primary__c}" disabled="true"/>
+                                            	<!--ui:inputCheckbox aura:id="checkbox" value="{!row.Primary__c}" disabled="true"/-->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                                </tbody>
+                            </table>
+
+
+                            <!--
+                            <dl class="slds-list_horizontal slds-wrap slds-p-top_small slds-p-bottom_small">
+                                <aura:iteration items="{!v.shipToAddresses}" var="sAddr">
+                                    <dt class="slds-item_label slds-text-color_weak slds-p-top_small " title="Select Address">
+                                        <ui:inputRadio name="shipToSelect" label="" text="{!sAddr.Id}" value="false" change="{!c.onShipToRadio}" />
+                                    </dt>
+                                    <dd class="slds-item_detail slds-p-top_small " title="Address">
+                                        <lightning:formattedAddress
+                                                street="{!sAddr.Street__c}"
+                                                city="{!sAddr.City__c}"
+                                                country="{!sAddr.Country__r.Name}"
+                                                province="{!sAddr.State__r.Name}"
+                                                postalCode="{!sAddr.Zip_Postal_Code__c}"
+                                        />
+                                    </dd>
+                                </aura:iteration>
+                            </dl>
+                            -->
+
+
+                        </aura:if>
+
+                        <aura:if isTrue="{! and(empty(v.shipToAddresses), not(isDataLoading))}">
+                            <div class="slds-text-color_error slds-p-top_large slds-p-bottom_large slds-grid_vertical-align-start slds-grid_align-start">No Address Found</div>
+                        </aura:if>
+
+
+
+
+                    </lightning:accordionSection>
+
+
+                    <lightning:accordionSection name="NewShipAddr" label="New Address">
+
+
+                        <div class="slds-grid slds-grid_vertical-align-start">
+                            <div class="slds-col slds-size_2-of-3">
+                            <span>
+                                 <div style="max-width: 400px;">
+                                        <lightning:inputAddress
+                                                aura:id="newBillToAddress"
+                                                addressLabel="Address"
+                                                streetLabel="Street"
+                                                cityLabel="City"
+                                                countryLabel="Country"
+                                                provinceLabel="Province/State"
+                                                postalCodeLabel="PostalCode"
+                                                street="{! v.nSStreet }"
+                                                city="{! v.nSCity }"
+                                                province="{! v.nSProvince }"
+                                                country="{! v.nSCountry }"
+                                                postalCode="{! v.nSPostalCode }"
+                                                countryOptions="{! v.nSCountryOptions }"
+                                                provinceOptions="{! v.nSProvinceOptions }"
+                                        />
+                                    </div>
+                            </span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                            <span>
+                            <lightning:button onclick="{! c.handleNewShipTo }" label="Create Ship-To on Source Account and Opportunity"/>
+                            </span>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </lightning:accordionSection>
+                    
+                    <lightning:accordionSection name="Contact Details" label="Contact Details">
+                        <c:shippingContact
+                            recordId="{!v.recordId}"
+                            shipToSource="{!v.selectedShipToSource}"
+                            objectName="Opportunity"
+                            onmodalclose="{!c.closeModal}"
+                        ></c:shippingContact>
+                        <!-- <aura:if isTrue="{!v.billShipEditable}">
+                            <div class="slds-grid slds-grid_vertical-align-end slds-grid_align-end slds-p-bottom_small">
+                                <div class="slds-col slds-size_2-of-3">
+    
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                <span>
+                                <lightning:button onclick="{!c.updateShipToDetails }" label="Update Ship To"/>
+                                </span>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                    	<table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-p-horizontal_small slds-p-top_medium" role="grid">
+                            <thead>
+                                <tr class="slds-text-title_caps">
+                                        <th class="slds-cell-shrink" scope="col">
+                                            <div class="slds-truncate" title="Ship To Email">Ship To Email</div>
+                                        </th>
+                                        <th class="slds-cell-shrink" scope="col">
+                                            <div class="slds-truncate" title="Ship to Contact">Ship to Contact</div>
+                                        </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.shipToContactDetails}" var="contactRowShip"> 
+                                    <tr class="slds-hint-parent">
+                                        <aura:if isTrue="{!v.billShipEditable}">
+                                        <td data-label="" scope="row">
+                                            <lightning:input name="input1" type="email" label="" value="{!contactRowShip.Ship_To_Email__c}"/>
+                                        </td>
+                                        <td data-label="Street">
+                                            <lightning:input name="input1" label="" value="{!contactRowShip.Ship_To_Contact__c}"/>
+                                        </td>
+                                            <aura:set attribute="else">
+                                            <th class="slds-cell-shrink" scope="col">
+                                                <div class="slds-truncate" title="{!contactRowShip.Ship_To_Email__c}">{!contactRowShip.Ship_To_Email__c}</div>
+                                            </th>
+                                            <th class="slds-cell-shrink" scope="col">
+                                                <div class="slds-truncate" title="{!contactRowShip.Ship_To_Contact__c}">{!contactRowShip.Ship_To_Contact__c}</div>
+                                            </th>
+                                        </aura:set>
+                                        </aura:if>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table> -->
+                    </lightning:accordionSection >
+                    
+                </lightning:accordion>
+
+
+            </ui:scrollerWrapper>
+
+            
+        </lightning:tab>
+    </lightning:tabset>
+
+
+    <!-- do init last -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+</aura:component>

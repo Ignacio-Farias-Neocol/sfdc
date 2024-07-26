@@ -1,0 +1,14 @@
+.THIS {
+    background-color : transparent;
+}
+
+.THIS .card {
+    margin: auto;
+}
+
+.THIS .header {
+    font-size : medium;
+    text-align: center;
+    color: red;
+    padding-top : 20px;
+}

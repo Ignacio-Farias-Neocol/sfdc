@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>The_prior_contract_has_expired</fullName>
+    <active>true</active>
+    <description>SFDC-15482</description>
+    <errorConditionFormula>AND(
+   OR(ISPICKVAL(StageName, &apos;Closed Won&apos;),ISPICKVAL(StageName, &apos;Order in Process&apos;)),
+   SBQQ__PrimaryQuote__r.is_Crossgrade__c,
+   SBQQ__RenewedContract__r.SBQQ__ExpirationDate__c &lt;  TODAY(),
+   NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY )
+   )</errorConditionFormula>
+    <errorMessage>The prior Contract has EXPIRED. Please recalculate your Quote to ensure you are not giving credit for the Prior Contract Term.</errorMessage>
+</ValidationRule>

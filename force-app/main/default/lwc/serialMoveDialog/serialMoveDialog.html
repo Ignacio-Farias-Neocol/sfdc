@@ -1,0 +1,113 @@
+<template>
+  <div class={mappingScreenClass}>
+    <lightning-layout horizontal-align="space" multiple-rows="false"> 
+      <!-- SERIALS -->
+      <lightning-layout-item size="6">
+        <div class="slds-m-around_small">
+          <p><b>SMB Username: </b> {smbUsername}</p>
+        </div>
+        <div>
+          <lightning-card title="SMB Serials"> 
+            <div class="slds-m-around_x-small slds-box slds-box_small">
+              <c-custom-datatable
+                key-field="id"
+                data={serialListData}
+                columns={columns}
+                resize-column-disabled
+              >
+              </c-custom-datatable>
+            </div>
+          </lightning-card>
+        </div>
+      </lightning-layout-item>
+      <!-- /SERIALS -->
+      <!-- TARGET SUBS -->
+      <lightning-layout-item size="6">
+        <div class="slds-m-around_small">
+          <p><b>Target Partner Username: </b> {partnerUsername}</p>
+        </div>
+        <div>
+          <lightning-card title="Target Subscriptions">
+            <div class="slds-box slds-box_small custom-box">
+              <lightning-layout multiple-rows="true">
+                <template for:each={subscriptionListData} for:item="sub">
+                  <lightning-layout-item key={sub.subscriptionId} size="12">
+                    <c-target-subscription-card
+                      sub={sub}
+                      serials={sub.serials}
+                      onmapserials={handleMapSerials}
+                      onunmapserial={handleUnmapSerial}
+                    ></c-target-subscription-card>
+                  </lightning-layout-item>
+                </template>
+              </lightning-layout>
+            </div>
+          </lightning-card>
+        </div>
+      </lightning-layout-item>
+      <!-- /TARGET SUBS -->
+    </lightning-layout>
+  </div>
+  <div class={confirmationScreenClass}>
+    <lightning-radio-group
+      name="radioGroup"
+      options={radiobuttonOptions}
+      value={selectedValue}
+      type="radio"
+      required
+      onchange={handleRadioButtonSelection}
+      label="Do you want to proceed with the move? Once the request is submitted it cannot be rolled back."
+      class="slds-m-bottom_small"
+    ></lightning-radio-group>
+  </div>
+
+  <div class="slds-modal__footer">
+    <div>
+      <template if:true={showMappingFooter}>
+        <!-- Previous -->
+        <lightning-button
+          label="Previous"
+          title="Go to previous screen"
+          onclick={handlePreviousForMapping}
+        ></lightning-button>
+
+        <!-- Next : takes you to the confirmation screen -->
+        <lightning-button
+          variant="brand"
+          label="Next"
+          title="Go To Confirmation Screen"
+          onclick={handleSubmit}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+      </template>
+      <template if:false={showMappingFooter}>
+        <!-- Previous -->
+        <lightning-button
+          label="Previous"
+          title="Go to mapping screen"
+          onclick={handlePreviousForConfirmation}
+          disabled={buttonDisabled}
+        ></lightning-button>
+
+        <!-- Next : takes you to the confirmation screen -->
+        <lightning-button
+          variant="brand"
+          label="Next"
+          title="Go To Confirmation Screen"
+          onclick={handleConfirmation}
+          class="slds-m-left_x-small"
+          disabled={buttonDisabled}
+        ></lightning-button>
+      </template>
+    </div>
+  </div>
+  <template if:true={showSpinner}>
+    <div>
+      <lightning-spinner
+        alternative-text="Loading"
+        size="medium"
+        variant="brand"
+      ></lightning-spinner>
+    </div>
+  </template>
+</template>

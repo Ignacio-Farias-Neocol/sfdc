@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Close_Won_Credit_Card</fullName>
+    <active>true</active>
+    <description>If payment terms is credit card then the opportunity needs to have a credit card to close won (for Core &amp; Sonian)</description>
+    <errorConditionFormula>AND(
+   NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+   NOT(ISPICKVAL(Business_Group__c, &apos;MSP&apos;)), 
+   ISPICKVAL(StageName, &apos;Closed Won&apos;), 
+   ISPICKVAL(Payment_Terms__c, &apos;Credit Card&apos;), 
+   ISBLANK(Bill_To_Credit_Card__c)
+)</errorConditionFormula>
+    <errorMessage>Oops! Missing credit card. You must enter a credit card to move the Opportunity to Closed Won if &apos;Payment Terms&apos; selected is Credit Card.</errorMessage>
+</ValidationRule>

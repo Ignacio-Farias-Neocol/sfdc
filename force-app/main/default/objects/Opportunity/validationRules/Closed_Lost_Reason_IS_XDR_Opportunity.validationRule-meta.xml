@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Lost_Reason_IS_XDR_Opportunity</fullName>
+    <active>true</active>
+    <description>If the Closed Lost Reason is MSP XDR Opportunity this validation triggers</description>
+    <errorConditionFormula>AND(
+NOT(
+OR(
+$Profile.Name = &apos;System Administrator&apos;,
+$Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY )),
+TEXT(StageName) = &quot;Closed Lost&quot;,
+ISPICKVAL($User.Business_Group__c, &apos;Core&apos;),
+TEXT(Closed_Lost_Reason__c) = &quot;MSP XDR Opportunity&quot;,
+ISBLANK(Duplicate_Opportunity__c))</errorConditionFormula>
+    <errorMessage>Please complete the Duplicate Opportunity field with the &apos;XDR Opportunity&apos; link which replaces your Opportunity.</errorMessage>
+</ValidationRule>

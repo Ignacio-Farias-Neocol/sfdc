@@ -1,0 +1,26 @@
+<aura:component implements="force:hasRecordId,force:lightningQuickActionWithoutHeader"
+      controller="AccountInfoController">
+
+    <!-- This attribute saves the record ID -->
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="payload" type="Object[]" access="global"/>
+    
+    <!-- This is a placeholder for the object that we’ll get the data from.
+          First we get it from the server, then we read it from the controller. -->
+    <aura:attribute name="account" type="Account" />
+
+    <!-- User Interface -->
+    <div class="slds-modal__header">
+        <h2 class="slds-text-heading_medium slds-hyphenate">Send Partner Account to BOS?</h2>
+    </div>
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <p>You are about to send account information to BOS.</p>
+        <br/>
+        <p>Are you sure you want to continue?</p>
+    </div>
+    <div class="slds-modal__footer">
+        <lightning:button class="slds-button_neutral" onclick="{!c.sendAccount}" label="Confirm" />
+        <lightning:button class="slds-button_brand" onclick="{!c.cancel}" label="Cancel"/>
+    </div>
+
+</aura:component>

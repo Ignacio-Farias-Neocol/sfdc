@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Product_Family_is_Required</fullName>
+    <active>false</active>
+    <description>Most Recent Product of Interest (Primary_Product_Family_2__c) is required field if the stage name gets changed. This validation should fire only on update.</description>
+    <errorConditionFormula>AND(
+NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+ISPICKVAL(Business_Group__c,&apos;Core&apos;),
+ISPICKVAL( Primary_Product_Family_2__c , &apos;&apos;),
+ISCHANGED( StageName )
+)</errorConditionFormula>
+    <errorMessage>Most Recent Product of Interest cannot be blank.</errorMessage>
+</ValidationRule>

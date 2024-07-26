@@ -1,0 +1,52 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global" controller="CPQ_ActiveSubscriptionList_Controller" >
+    <aura:attribute name="recordId" type="String" access="public" />
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="record" type="Account" access="public" />
+    
+    <aura:attribute name="gridColumns" type="List" access="private" />
+    <aura:attribute name="gridData" type="Object" access="private" />
+    <aura:attribute name="sortDirection" type="String" default="asc" />
+    <aura:attribute name="defaultSortDirection" type="String" default="asc" />
+    <aura:attribute name="sortedBy" type="String" />        
+    <aura:attribute name="inprogress" type="Boolean" access="private"/>
+    
+    <aura:if isTrue="{!v.inprogress == true}">
+        <lightning:spinner variant="brand" size="large"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.pageReference != undefined}">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <lightning:breadcrumbs>
+                    <lightning:breadcrumb label="Account" href="/001"/>
+                    <lightning:breadcrumb label="{!v.record.Name}" href="{!'/' + v.pageReference.state.c__recordId}"/>
+                </lightning:breadcrumbs>
+            </div>
+        </div>
+    </aura:if>
+    
+    <lightning:card title="{!'Active Subscriptions (' + v.gridData.length + ')'}" iconName="standard:custom" class="slds-card_boundary">
+        <aura:if isTrue="{!v.gridData.length > 0}">
+            <lightning:datatable keyField="id" 
+                                 data="{! v.gridData }" 
+                                 columns="{! v.gridColumns }" 
+                                 hideCheckboxColumn="true"
+                                 defaultSortDirection="{!v.defaultSortDirection}"
+                                 sortedDirection="{!v.sortDirection}"
+                                 sortedBy="{!v.sortedBy}"
+                                 onsort="{!c.handleSort}"                                 
+                                 />
+        </aura:if>
+        
+        <aura:set attribute="footer">
+            <aura:if isTrue="{!and(v.gridData.length > 0, v.pageReference == undefined)}">
+                <a class="slds-card__footer-action" onclick="{!c.openFullList}">View All
+                    <span class="slds-assistive-text">Active Subscriptions</span>
+                </a>
+            </aura:if>
+        </aura:set>
+    </lightning:card>    
+</aura:component>

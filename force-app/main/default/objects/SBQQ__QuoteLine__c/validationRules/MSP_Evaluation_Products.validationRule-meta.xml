@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MSP_Evaluation_Products</fullName>
+    <active>true</active>
+    <description>Ensure these Products are valid for Order Line Type == Evaluation</description>
+    <errorConditionFormula>AND( ISPICKVAL(SBCF_Order_Line_Type__c, &apos;Evaluation&apos;),
+     ISPICKVAL(SBQQ__Quote__r.SBQQ__Type__c, &apos;Quote&apos;), 
+  AND( 
+      SBQQ__ProductCode__c != &apos;BEOCPC001a&apos;,
+      SBQQ__ProductCode__c != &apos;BEOCPCI001a&apos;,
+      SBQQ__ProductCode__c != &apos;BEOES001a&apos;,
+      SBQQ__ProductCode__c != &apos;BEOESC001a&apos;,
+      SBQQ__ProductCode__c != &apos;BEOESCI001a&apos;,
+      SBQQ__ProductCode__c != &apos;BCSiS100sa&apos;,
+      SBQQ__ProductCode__c != &apos;BCSS100sa&apos;
+	 )
+)</errorConditionFormula>
+    <errorMessage>That product is not valid for MSP Evaluation. Please revert the Order Line Type.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,94 @@
+<template>
+  <template if:true={spinnerVisibility}>
+    <div class="spinnerHolder">
+        <c-custom-spinner></c-custom-spinner>
+    </div>
+  </template>
+  <lightning-card title={labels.filtersHeader} icon-name="standard:calibration">
+    <!-- RESET Filters -->
+    <lightning-button-group slot="actions">
+      <lightning-button
+          variant="brand"
+          label={labels.applyFilters}
+          onclick={getOrders}
+      ></lightning-button>
+      <lightning-button
+          label={labels.resetButtonFilter}
+          onclick={resetFilters}
+      ></lightning-button>
+    </lightning-button-group>
+    <!-- Filters -->
+    <lightning-layout horizontal-align="space" class="slds-p-around_x-small">
+      <lightning-layout-item
+        size="6"
+        class="slds-box slds-box_x-small slds-m-right_xx-small filter-content background-color"
+      >
+        <fieldset class="slds-form-element slds-form-element_compound">
+          <div class="slds-form-element__control">
+            <c-text-search-filter
+              show-text-search={showSerialNumberSearch}
+              show-end-user-search={showEndUserSearch}
+              show-reseller-search={showResellerSearch}
+              search-text-label={serialNumberSearchLabel}
+              ontextsearchchange={ontextsearchchange}
+            ></c-text-search-filter>
+          </div>
+        </fieldset>
+      </lightning-layout-item>
+      <lightning-layout-item
+      size="6"
+      class="slds-box slds-box_x-small slds-m-right_xx-small filter-content background-color"
+      >
+        <div class="slds-form-element__control">
+          <c-date-search-filter
+            from-date-default={fromDateDefault}
+            to-date-default={toDateDefault}
+            min-from-date={minFromDate}
+            max-to-date={maxToDate}
+            date-search-label={labels.orderDateLabel}
+            ondatefilterchange={ondatefilterchange}
+          ></c-date-search-filter>
+        </div>
+      </lightning-layout-item>
+    </lightning-layout>
+  </lightning-card>
+  <template if:false={showEmptyState}>
+    <div class="slds-align_absolute-center slds-m-vertical_x-small">
+      <lightning-button icon-name="utility:jump_to_left" label="FIRST" class='slds-m-right_small slds-p-left_small' disabled={paginationDetails.previousDisabled} onclick={handleFirst}></lightning-button>
+      <lightning-button icon-name="utility:left" label="PREVIOUS" class='slds-m-right_small' disabled={paginationDetails.previousDisabled} onclick={handlePrevious}></lightning-button>
+      <lightning-combobox
+          name="progress"
+          label="Page"
+          class='slds-m-right_small PageSelectors'
+          value={pageNumber}
+          options={pageOptions}
+          dropdown-alignment='bottom-right'
+          onchange={handlePageChange}
+          variant='label-hidden'>
+      </lightning-combobox>            
+      <lightning-button icon-name="utility:right" label="NEXT" icon-position="right" class='slds-m-right_small' disabled={paginationDetails.nextDisabled} onclick={handleNext}></lightning-button>
+      <lightning-button icon-name="utility:jump_to_right" label="LAST" icon-position="right" class='slds-p-right_small slds-m-right_small' disabled={paginationDetails.nextDisabled} onclick={handleLast}></lightning-button>
+    </div>
+    <lightning-card title={cardTitle} icon-name="standard:orders">
+      <div class="slds-p-around_large">
+        <c-custom-datatable
+          key-field="id"
+          data={ordersToDisplay}
+          columns={columns}
+          hide-checkbox-column="true"
+          wrap-text-max-lines="3"
+          default-sort-direction={defaultSortDirection}
+          sorted-direction={sortDirection}
+          sorted-by={sortedBy}
+          onsort={onHandleSort}
+          onrowaction={callRowAction}>
+        </c-custom-datatable>
+      </div>
+    </lightning-card>
+  </template>
+  <template if:true={showEmptyState}>
+    <lightning-layout-item size="12">
+        <c-empty-state-illustration message={labels.noOrdersToDisplay}></c-empty-state-illustration>
+    </lightning-layout-item>
+  </template>
+</template>

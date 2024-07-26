@@ -1,0 +1,40 @@
+<aura:component implements="lightning:backgroundUtilityItem,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable,lightning:hasPageReference" access="global" description="Global Account Banner">    
+    
+    <aura:attribute name="recordId" type="Id"/>
+	<aura:attribute name="record" type="object" description="Stores the object"/> 
+    <aura:attribute name="simpleRecord" type="object" description="stores the object fields with data"/>
+    <aura:attribute name="errorObj" type="object" description="stores the error"/>
+	<aura:attribute name="namedBannerMsg" type="String" default="This is a Named Account - Please Contact the Account Owner"/>
+	<aura:attribute name="globalBannerMsg" type="String" default="This is a Global Account - Please Contact the Account Owner"/>
+    <aura:attribute name="allBannerMsg" type="String" default="This is a Named/Global Account - Please Contact the Account Owner"/>
+	<aura:attribute name="showNamedBanner" type="Boolean" default="false"/>
+	<aura:attribute name="showGlobalBanner" type="Boolean" default="false"/>
+    <aura:attribute name="showAllBanner" type="Boolean" default="false"/>
+    
+    <force:recordData aura:id="globalAccount"
+                      recordId="{!v.recordId}"                      
+                      fields="Id,Name,Named_Account__c,Global_Account__c,Global_Network__c"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.errorObj}"
+                      recordUpdated="{!c.handleRecordChange}"/>
+					  
+	<div>
+        <aura:if isTrue="{!v.showAllBanner}">
+			<center>
+				<h2 class="clsBanner">{!v.allBannerMsg}</h2>
+			</center>
+		</aura:if>
+		<aura:if isTrue="{!v.showNamedBanner}">
+			<center>
+				<h2 class="clsBanner">{!v.namedBannerMsg}</h2>
+			</center>
+		</aura:if>
+		<aura:if isTrue="{!v.showGlobalBanner}">
+			<center>
+				<h2 class="clsBanner">{!v.globalBannerMsg}</h2>
+			</center>
+		</aura:if>
+	</div>
+					  
+</aura:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Initial_Seed_Stage_Complete_Rule</fullName>
+    <active>true</active>
+    <description>Cannot move the Case Stage for Initial Seed to Complete without Tracking Number</description>
+    <errorConditionFormula>RecordType.DeveloperName = &apos;Technical_Support&apos; &amp;&amp;
+ ISPICKVAL( Status, &apos;In Progress&apos;) &amp;&amp; 
+ ISPICKVAL( Stage__c,&apos;Complete&apos; ) &amp;&amp;
+ ISBLANK( Tracking_ID__c )</errorConditionFormula>
+    <errorDisplayField>Tracking_ID__c</errorDisplayField>
+    <errorMessage>Please add a Tracking Number before marking &apos;Initial Seed Stage&apos; as Complete.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,58 @@
+<apex:page standardController="SBQQ__Quote__c" Title="Quote Approval">
+    <apex:includeLightning />
+    
+    <div id="mainDiv" style="min-height:1000px" />
+    
+    <script>
+    var myUserContext = "{!$User.UITheme}";
+    
+    $Lightning.use("c:CPQ_ApproveQuoteApp", function() {
+        $Lightning.createComponent(
+            "c:CPQ_ApproveQuote",
+            
+            {
+                "recordId" : "{!SBQQ__Quote__c.ID}"
+            },
+            
+            "mainDiv",
+            
+            function(cmp) {
+                $A.eventService.addHandler({
+                    event: 'force:navigateToSObject',
+                    handler: function(event) {
+                        var eventparm = event.getParams();
+                        var aId = eventparm.recordId;
+                        
+                        if (myUserContext == 'Theme4t' || myUserContext == 'Theme4d') {
+                            sforce.one.navigateToSObject(aId);
+                        } else if (myUserContext == 'Theme3') {
+                            //window.parent.location = "/"+aId;
+                            window.parent.location.replace("/"+aId);
+                            //window.location.href = "/"+aId;
+                        } else {
+                            console.log("Unsupported theme");
+                        }
+                    }
+                });
+                $A.eventService.addHandler({
+                    event: 'force:navigateToURL',
+                    handler: function(event) {
+                        var eventparm = event.getParams();
+                        var url = eventparm.url;
+                        var isredirect = eventparm.isredirect;
+                        
+                        if (myUserContext == 'Theme4t' || myUserContext == 'Theme4d') {
+                            sforce.one.navigateToURL(url, isredirect);
+                        } else if (myUserContext == 'Theme3') {
+                            window.location.replace(url);
+                            //window.location.href = url;
+                        } else {
+                            console.log("Unsupported theme");
+                        }
+                    }
+                });
+            }
+        );
+    });
+    </script>
+</apex:page>

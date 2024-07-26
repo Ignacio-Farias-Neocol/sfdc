@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_RenewaCheck_AllSubsRMA_Contract</fullName>
+    <active>true</active>
+    <description>This validation will restrict user from checking the checkboxes, &apos;Renewal Forecast&apos; and &apos;Renewal Quoted&apos; for Contracts with All_Subs_RMA = true</description>
+    <errorConditionFormula>AND( All_Subs_RMA__c  = TRUE,
+OR(ISCHANGED(SBQQ__RenewalQuoted__c),
+ISCHANGED(SBQQ__RenewalForecast__c)))</errorConditionFormula>
+    <errorMessage>All Subscriptions have been returned on this contract. This contract is not eligible for Renewal or Amendment.</errorMessage>
+</ValidationRule>

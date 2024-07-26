@@ -1,0 +1,51 @@
+<!--
+  @author            : Ramya Munukuntla
+  @last modified on  : 2023-07-21
+  @last modified by  : Ramya Munukuntla
+  @description       : Base component keeps the layout consistent across the features
+-->
+
+<template>
+	<!-- <lightning-card> -->
+		<!-- <div class="slds-box">    -->
+    <div class="slds-is-relative">
+      <div class="spinner">
+        <template if:true={showSpinner}>
+             <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+             </lightning-spinner>
+        </template>
+    </div>
+		<template if:true={showContainer}>
+			<lightning-layout multiple-rows="true" class="slds-theme_default">
+				<!-- <lightning-layout-item padding="around-small" size="12">
+                    <div class="slds-page-header">
+                     <div class="slds-grid">
+                       <div class="slds-col slds-has-flexi-truncate">
+                         <p class="slds-page-header__name-meta slds-line-height_reset">{superTitleString}</p>
+                          <h1>
+	                        <span class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate"  title={title}>{titleString}</span>
+	                          </h1>
+                               </div>
+                                </div>
+                                 </div>
+                                   </lightning-layout-item> -->
+        <lightning-layout-item padding="around-small" size="12">
+            <lightning-layout>
+              <lightning-layout-item padding="around-small" size="4">
+                <slot name="searchForm"></slot>
+              </lightning-layout-item>
+              <lightning-layout-item padding="around-small" size="8">
+                <slot name="content"></slot>
+              </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+<!-- <lightning-layout-item flexibility="auto" padding="around-small" size="12"></lightning-layout-item> -->
+      </lightning-layout>
+<!-- <footer role="contentinfo"  class="slds-p-around_large">
+  <div class="slds-grid slds-grid_align-spread"></div>
+</footer> -->
+    </template>
+  </div>
+		<!-- </div> -->
+	<!-- </lightning-card> -->
+</template>

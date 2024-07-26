@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Change_Record_Type_to_TS_and_PS</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(  PRIORVALUE(Record_Type_Id__c) = &apos;0125x00000119MjAAI&apos;,  
+OR(Record_Type_Id__c  = &apos;012f2000001261YAAQ&apos;, Record_Type_Id__c  = &apos;0125x000000AP94AAG&apos; ))</errorConditionFormula>
+    <errorMessage>Please Convert the Community Help Ticket to a Web Message for the Support Team to Pick Up the request.</errorMessage>
+</ValidationRule>

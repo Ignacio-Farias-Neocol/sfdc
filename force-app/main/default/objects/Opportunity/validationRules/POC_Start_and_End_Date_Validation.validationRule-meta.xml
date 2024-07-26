@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>POC_Start_and_End_Date_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>If(AND(NOT(ISNEW()),
+NOT(ISBLANK(POC_End_Date__c)), NOT(ISBLANK(POC_Start_Date__c)),
+(POC_End_Date__c &lt; POC_Start_Date__c)),
+TRUE,
+FALSE)</errorConditionFormula>
+    <errorMessage>Unless you can warp time, the POC End Date can&apos;t come before the POC Start Date.</errorMessage>
+</ValidationRule>

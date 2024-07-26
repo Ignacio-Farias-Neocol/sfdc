@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Credit_Card_to_Activate</fullName>
+    <active>true</active>
+    <description>Requires selection of a Credit Card if Payment Terms are set to CC and Status is set to Activated</description>
+    <errorConditionFormula>AND(
+       TEXT(Status)=&quot;Activated&quot;,
+       TEXT(SBQQ__PaymentTerm__c)=&quot;Credit Card&quot;,
+       ISBLANK(Opportunity.Bill_To_Credit_Card__c)
+       )</errorConditionFormula>
+    <errorMessage>Please select a Credit Card before placing the Order.</errorMessage>
+</ValidationRule>

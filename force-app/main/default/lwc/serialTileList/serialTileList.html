@@ -1,0 +1,68 @@
+<template>
+  <lightning-card
+    title={cardTitle}
+    icon-name="custom:custom46"
+    style="display: block;"
+  >
+  <!-- ACTION BUTTONS -->
+  <template if:false={showEmptyState}>
+    <lightning-button-menu alternative-text="Show menu" slot="actions" onselect={handleMenuSelect}>
+      <template if:true={showStatusAscending}>
+        <lightning-menu-item value="statusASC" label="Sort by Status" icon-name="utility:arrowup"></lightning-menu-item>
+      </template>
+      <template if:false={showStatusAscending}>
+        <lightning-menu-item value="statusDESC" label="Sort by Status" icon-name="utility:arrowdown"></lightning-menu-item>
+      </template>    
+      <template if:true={showExpDateAscending}>
+        <lightning-menu-item value="expDateASC" label="Sort by Expiration Date" icon-name="utility:arrowup"></lightning-menu-item>
+      </template>
+      <template if:false={showExpDateAscending}>
+        <lightning-menu-item value="expDateDESC" label="Sort by Expiration Date" icon-name="utility:arrowdown"></lightning-menu-item>
+      </template>      
+    </lightning-button-menu>
+  </template>
+  <!-- /ACTION BUTTONS -->
+  
+    <!-- CARD BODY -->
+    <div class="serial-card slds-scrollable_y">
+      <div class="slds-m-around_x-small">
+        <template if:false={showEmptyState}>
+          <lightning-layout multiple-rows="true">
+            <template for:each={serialListData} for:item="serial">
+              <lightning-layout-item
+                key={serial.id}
+                class="slds-m-around_xx-small"
+                size="12"
+              >
+                <!-- EXTERNAL VERSION -->
+                <template if:true={external}>
+                  <c-serial-tile
+                  serial={serial}
+                  onserialselection={serialSelectionHandler}
+                  account-type={accountType}
+                ></c-serial-tile>
+                </template>
+                <!-- /EXTERNAL VERSION -->
+
+                <!-- INTERNAL VERSION -->
+                <template if:false={external}>
+                  <c-serial-tile-internal
+                  serial={serial}
+                  account-type={accountType}
+                  subs={serial.subs}
+                  entity-id={entityId}
+                ></c-serial-tile-internal>
+                </template>
+                <!-- /INTERNAL VERSION -->                
+              </lightning-layout-item>
+            </template>
+          </lightning-layout>        
+        </template>
+        <template if:true={showEmptyState}>
+          <c-empty-state-illustration message="No Serials to display"></c-empty-state-illustration>
+        </template>
+      </div>
+    </div>
+    <!-- /CARD BODY -->      
+  </lightning-card>
+</template>

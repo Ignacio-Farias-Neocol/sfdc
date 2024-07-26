@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Backlog_Reason_is_Required</fullName>
+    <active>true</active>
+    <description>Backlog Reason &amp; Date added to Backlog should be required when the status is set to Backlog</description>
+    <errorConditionFormula>AND(
+RecordType.DeveloperName = &quot;Enhancements&quot;,
+ISPICKVAL(Status, &apos;Backlog&apos;),
+OR(
+ISBLANK(Backlog_Reason__c),
+ISBLANK(Date_Added_to_Backlog__c)))</errorConditionFormula>
+    <errorDisplayField>Backlog_Reason__c</errorDisplayField>
+    <errorMessage>Please enter a &apos;Backlog Reason&apos; and a &apos;Date Added to Backlog&apos;.</errorMessage>
+</ValidationRule>

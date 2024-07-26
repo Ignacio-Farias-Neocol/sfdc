@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hot_List_source_and_Reason_not_editable</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT(ISNEW()),
+OR(
+$Profile.Name = &apos;Apollo: Custom- Marketing Profile&apos;,
+$Profile.Name = &apos;Apollo: Custom- Renewals Profile&apos;,
+$Profile.Name = &apos;Apollo: Custom- Sales Profile&apos;,
+$Profile.Name = &apos;Apollo: Custom- Sales_China Profile&apos;,
+$Profile.Name = &apos;Apollo: Custom- Customer Services&apos;),
+
+NOT( OR($Permission.Lead_Source_Edit_Access ,
+$Profile.Name = &apos;Apollo: Marketo Sync User 2&apos;,
+$Profile.Name = &apos;System Administrator&apos;)),
+
+OR(
+NOT(ISBLANK(TEXT(PRIORVALUE( Lead_Source__c )))) &amp;&amp; ISCHANGED(Lead_Source__c ) ,
+NOT(ISBLANK(PRIORVALUE( MQL_Reason__c ))) &amp;&amp; ISCHANGED(MQL_Reason__c)
+)
+)</errorConditionFormula>
+    <errorMessage>Sorry - You don&apos;t have permission to  update the Hot List Source or Hot List Reason.</errorMessage>
+</ValidationRule>

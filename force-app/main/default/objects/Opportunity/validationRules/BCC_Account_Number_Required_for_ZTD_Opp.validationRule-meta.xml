@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BCC_Account_Number_Required_for_ZTD_Opp</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND(
+    NOT(ISPICKVAL(PRIORVALUE(StageName), &quot;Closed Won&quot;)), 
+    ISPICKVAL(StageName, &quot;Closed Won&quot;),  
+    CONTAINS(RecordType.Name, &quot;New Business&quot;),  
+    SBQQ__PrimaryQuote__r.CountOfZTDProducts__c&gt;0,
+    ISBLANK(Account.BCC_AuthDB_Account_ID__c ) 
+)</errorConditionFormula>
+    <errorMessage>THIS IS NOT A BUG: This opportunity is flagged for Zero Touch Deployment. Please fill out the BCC Account Number before moving to Closed Won.</errorMessage>
+</ValidationRule>

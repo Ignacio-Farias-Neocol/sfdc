@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Return_Unqualified_Reason</fullName>
+    <active>true</active>
+    <description>Return_Unqualified_Reason required when dispositioned to Return to Marketing OR Unqualified</description>
+    <errorConditionFormula>AND(
+ NOT($Profile.Name = &apos;System Administrator&apos;),
+ OR(
+  AND(
+    ISPICKVAL(Disposition__c, &apos;Return to Marketing&apos;),
+    ISPICKVAL(Return_to_Marketing_Reasons__c, &apos;&apos;)
+  ),
+  AND(
+    ISPICKVAL(Disposition__c, &apos;Unqualified&apos;),
+    ISPICKVAL(Unqualified_Reasons__c, &apos;&apos;)
+  )
+ )
+)</errorConditionFormula>
+    <errorMessage>Please select a reason to move to &apos;Return to Marketing&apos; or &apos;Unqualified&apos;.</errorMessage>
+</ValidationRule>

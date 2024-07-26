@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_status_suspect_or_banned</fullName>
+    <active>false</active>
+    <description>On an opportunity a user should not be able to add a contact to any of the following fields if the Contact status (Contact_Status__c) of the contact being added is no longer with company, inactive, suspect, or banned.
+Primary Contact (Primary_Contact__c)</description>
+    <errorConditionFormula>(
+ISPICKVAL(Primary_Contact__r.Contact_Status__c, &quot;Suspect&quot;) || ISPICKVAL(Primary_Contact__r.Contact_Status__c, &quot;Banned&quot;)
+|| ISPICKVAL( Reseller_Contact__r.Contact_Status__c , &quot;Suspect&quot;) || ISPICKVAL(Reseller_Contact__r.Contact_Status__c, &quot;Banned&quot;)
+|| ISPICKVAL(  Distributor_Contact__r.Contact_Status__c  , &quot;Suspect&quot;) || ISPICKVAL(Distributor_Contact__r.Contact_Status__c, &quot;Banned&quot;)
+)
+&amp;&amp; 
+(
+NOT(ISPICKVAL(StageName, &apos;Accepted&apos;)) &amp;&amp; NOT(ISPICKVAL(StageName, &apos;Not Contacted&apos;))
+)
+ &amp;&amp; 
+(
+  ISPICKVAL(Business_Group__c, &quot;Core&quot;)
+)</errorConditionFormula>
+    <errorMessage>Please contact Trade Compliance to confirm the contact status and then add them to the opportunity if valid, otherwise please add an active contact from the account.</errorMessage>
+</ValidationRule>

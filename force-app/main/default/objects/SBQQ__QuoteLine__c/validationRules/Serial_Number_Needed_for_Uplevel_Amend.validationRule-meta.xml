@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Serial_Number_Needed_for_Uplevel_Amend</fullName>
+    <active>true</active>
+    <description>Validation rule that requires serial in an Amendment quote for an existing line that is a capacity based product (capacity quantity is populated) that has an effective quantity that does not equal 0.</description>
+    <errorConditionFormula>ISPICKVAL(SBQQ__Quote__r.SBQQ__Type__c, &quot;Amendment&quot;) &amp;&amp;
+NOT(SBCF_Capacity_Quantity__c=NULL) &amp;&amp;
+NOT(SBQQ__EffectiveQuantity__c=0) &amp;&amp;
+Business_Group__c=&quot;Core&quot;</errorConditionFormula>
+    <errorMessage>Missing Serial Number. Please complete the Serial Number field.</errorMessage>
+</ValidationRule>

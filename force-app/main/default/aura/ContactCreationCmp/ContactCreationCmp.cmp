@@ -1,0 +1,6 @@
+<aura:component  access="global" >
+<aura:registerEvent name="flowFinishedEvent" type="c:flowEvent"/>
+<aura:attribute name="currentUserAcctId" type="String"/>
+<aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+<lightning:flow aura:id="flowData" onstatuschange="{!c.closeModalOnFinish}"/>
+</aura:component>

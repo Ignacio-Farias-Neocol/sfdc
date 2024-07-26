@@ -1,0 +1,192 @@
+<apex:page standardController="SBQQ__Quote__c" 
+ extensions="CancelBucketLineItemsController" 
+ showHeader="false" 
+ standardStylesheets="false"
+ sidebar="false" 
+ applyHtmlTag="false" 
+ applyBodyTag="false" 
+ docType="html-5.0">
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+
+<head>
+<apex:slds />
+<script>
+function updateAllQLCheckBox() {
+var checkBox = document.getElementById("headerCheckbox");
+var qlCheckBoxes = document.getElementsByClassName("qlCheckBox");
+for (var i = 0; i < qlCheckBoxes.length; i++) {
+qlCheckBoxes[i].checked = checkBox.checked;
+}
+}
+</script>
+</head>
+
+<body style="margin:0px">
+<div class="slds-scope">
+<apex:form id="cancelform">
+<div class="slds-page-header slds-is-fixed" style="top:0px; z-index:10; width:100%">
+<div class="slds-page-header__row">
+  <div class="slds-page-header__col-title">
+    <div class="slds-media">
+      <div class="slds-media__figure">
+        <span class="slds-icon_container slds-icon-custom-custom93">
+          <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+            <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/custom-sprite/svg/symbols.svg#custom93')}"></use>
+          </svg>
+        </span>
+      </div>
+      <div class="slds-media__body">
+        <div class="slds-page-header__name">
+          <div class="slds-page-header__name-title">
+            <h1>
+              <span>{!SBQQ__Quote__c.Name}</span>
+              <span class="slds-page-header__title slds-truncate" title="Cancel Bucket Lines">{!$Label.Cancel_Bucket_Helptext}</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <apex:commandButton action="{!cancelBucketLineItems}" 
+                      value="{!$Label.Cancel_Bucket_Button_Label}"
+                      id="submitButton" 
+                      styleClass="slds-button slds-button_neutral" 
+                      rendered="{!AND(QuoteLineIds!=null,QuoteLineIds.size>0)}"
+                      status="spinner"
+                      reRender="cancelform"
+  />          
+  <apex:commandButton action="{!goToQLE}" 
+                      value="{!$Label.Cancel_Bucket_ButtonText}" 
+                      id="cancelButton" 
+                      styleClass="slds-button slds-button_neutral" />
+
+</div>
+</div>
+
+<div style="margin-top:6rem;">
+<apex:outputPanel rendered="{!NOT(ISBLANK(message))}">
+  <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+    <span class="slds-assistive-text">error</span>
+    <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Error">
+      <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#error')}"></use>
+      </svg>
+    </span>
+    <h2>{!message}</h2>
+  </div>
+</apex:outputPanel>
+</div>
+
+<apex:outputPanel rendered="{!AND(QuoteLineIds!=null,QuoteLineIds.size>0)}">
+<article class="slds-card slds-m-top_x-small">
+  <div class="slds-box slds-box_small">
+    <span class="slds-assistive-text">{!$Label.Cancel_Bucket_Help_Text}</span>
+    <span class="slds-icon_container slds-icon-utility-info slds-m-right_x-small" title="HelpText">
+      <svg class="slds-icon slds-icon_x-small slds-icon-text-default" style="vertical-align:bottom" aria-hidden="true">
+        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#info')}"></use>
+      </svg>
+    </span>
+    <span>{!$Label.Cancel_Bucket_Help_Text}</span>
+  </div>
+</article>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(QuoteLineIds!=null,QuoteLineIds.size>0)}">
+<div class="slds-m-top_x-small" >
+  <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_edit slds-table_fixed-layout slds-table_resizable-cols slds-tree slds-table_tree "
+    role="treegrid">
+
+    <thead>
+      <tr class="slds-line-height_reset">
+    
+        <th class="slds-text-align_right" scope="col" style="width:3.25rem">
+          <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
+          <div class="slds-th__action slds-th__action_form">
+            <div class="slds-checkbox">
+              <input type="checkbox" 
+                     name="headerCheckbox" 
+                     id="headerCheckbox" 
+                     value="headerCheckbox" 
+                     tabindex="-1" 
+                     aria-labelledby="check-select-all-label column-group-header"
+                     onclick="updateAllQLCheckBox()" />
+              <label class="slds-checkbox__label" for="headerCheckbox" id="check-select-all-label">
+                <span class="slds-checkbox_faux"></span>
+                <span class="slds-form-element__label slds-assistive-text">Select All</span>
+              </label>
+            </div>
+          </div>
+        </th>
+       
+        <apex:repeat value="{!fsmList}" var="f">
+          <th aria-label="{!f.label}" aria-sort="none" class="slds-has-button-menu slds-is-resizable slds-is-sortable" scope="col">
+            <span class="slds-truncate" title="{!f.label}">{!f.label}</span>
+          </th>
+        </apex:repeat>
+    
+      </tr>
+    </thead> 
+    <tbody>
+     
+      <apex:repeat value="{!QuoteLineIds}" var="ql">    
+        <apex:variable var="qlRecord" value="{!CancelBucketQL[ql.Id]}" /> 
+        <apex:variable var="isBundle" value="{!qlRecord.SBQQ__Bundle__c}" />
+        <tr aria-expanded="true" aria-level="{!IF(isBundle, 1, 2)}" aria-posinset="2" aria-selected="false" aria-setsize="4" class="slds-hint-parent">
+          <td class="slds-text-align_right" role="gridcell" style="width:3.25rem">
+            <label class="slds-checkbox {!IF(isBundle, '', 'slds-hide')}">
+              <apex:inputCheckbox styleclass="slds-input {!IF(isBundle, 'qlCheckBox', '')}" value="{!ql.checkBox}" />
+              <span class="slds-checkbox_faux"></span>
+              <span class="slds-form-element__label slds-assistive-text">Select Quote Line</span>
+            </label>
+          </td>    
+          <apex:repeat value="{!fsmList}" var="fsm">        
+            <th class="slds-tree__item {!IF(fsm.fieldPath ='SBQQ__ProductName__c','','slds-hide')}" 
+                data-label="Product Name" 
+                scope="row" 
+                style="word-wrap:break-word;white-space:normal">
+              <span class="slds-icon_container slds-icon-utility-chevrondown slds-current-color {!IF(isBundle,'','slds-is-disabled')}"
+                title="Bundle Parent">
+                <svg class="slds-icon slds-icon-text-default slds-icon_x-small" aria-hidden="true" style="position: relative; top:5px; padding-right:2px">
+                  <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#chevrondown')}"></use>
+                </svg>
+                <span class="slds-assistive-text">Bundle Parent</span>
+              </span>
+              <span  title="">
+                {!qlRecord.SBQQ__ProductName__c}
+              </span>
+            </th>       
+            <td class="{!IF(fsm.fieldPath ='SBQQ__ProductName__c','slds-hide','')}" 
+                data-label="{!fsm.label}" 
+                role="gridcell" 
+                style="word-wrap:break-word;white-space:normal">
+              <div title="{!qlRecord[fsm.fieldPath]}">
+                <apex:outputField value="{!qlRecord[fsm.fieldPath]}" />
+              </div>
+            </td>
+          </apex:repeat>
+        </tr>
+      </apex:repeat>
+    </tbody>
+  </table>
+</div>
+</apex:outputPanel>
+<apex:actionStatus id="spinner">
+<apex:facet name="start">
+  <apex:outputPanel >
+      <div class="slds-spinner_container">
+        <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+          <span class="slds-assistive-text">Loading</span>
+          <div class="slds-spinner__dot-a"></div>
+          <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>
+  </apex:outputPanel>
+</apex:facet>
+</apex:actionStatus>
+</apex:form>
+</div>
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>geopointe__Data_Layer_Detail_Check</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+	LOWER(TEXT(geopointe__Type__c)) = &apos;datalayer&apos;,
+	ISBLANK(geopointe__Detail__c)
+)</errorConditionFormula>
+    <errorDisplayField>geopointe__Detail__c</errorDisplayField>
+    <errorMessage>Detail__c field is required for data layers.</errorMessage>
+</ValidationRule>

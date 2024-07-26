@@ -1,0 +1,3 @@
+<design:component label="Filtered Related List">
+    <design:attribute name="isOnCommunityPage" label="is Community Page" description="check to true if the component is placed on Community page" />
+</design:component>

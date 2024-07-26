@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Won_Profile_MSP</fullName>
+    <active>true</active>
+    <description>Only profiles:Apollo: Custom- Customer Services, System Administrator can Close Won the opportunity. For MSP type opportunities.</description>
+    <errorConditionFormula>AND(
+
+ISPICKVAL(StageName, &apos;Closed Won&apos;),
+ISPICKVAL(Business_Group__c, &apos;MSP&apos;),
+OR(
+ISCHANGED(StageName),
+ISCHANGED(Business_Group__c)
+),
+NOT(
+OR(
+$Profile.Name = &apos;Apollo: Custom- Customer Services&apos;,
+$Profile.Name = &apos;System Administrator&apos;,
+$Permission.Closed_Won_Opps
+)
+)
+)</errorConditionFormula>
+    <errorMessage>Only Finance and System Administrator can set the stage to Closed Won.</errorMessage>
+</ValidationRule>

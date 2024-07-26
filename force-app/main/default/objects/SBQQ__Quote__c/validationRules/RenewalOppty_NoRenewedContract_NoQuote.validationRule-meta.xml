@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RenewalOppty_NoRenewedContract_NoQuote</fullName>
+    <active>true</active>
+    <description>Disallows users from creating a quote against Renewed Optty with missing &quot;Renewed contract&quot; field.</description>
+    <errorConditionFormula>SBQQ__Opportunity2__r.RecordTypeId =&apos;012f2000001261k&apos; &amp;&amp; 
+ISBLANK(SBQQ__Opportunity2__r.SBQQ__RenewedContract__c) &amp;&amp; 
+ISBLANK(SBQQ__Opportunity2__r.SBQQ__AmendedContract__c)</errorConditionFormula>
+    <errorMessage>Please be sure your Opportunity is associated with the correct &apos;Renewed Contract&apos; to begin the sales cycle.</errorMessage>
+</ValidationRule>

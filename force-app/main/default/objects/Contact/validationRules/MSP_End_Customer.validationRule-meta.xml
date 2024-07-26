@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MSP_End_Customer</fullName>
+    <active>true</active>
+    <description>If marked as an MSP End Customer, the End Customer Company name must also be filled out</description>
+    <errorConditionFormula>AND(
+MSP_End_Customer__c, ISBLANK(MSP_End_Customer_Company__c)
+ )</errorConditionFormula>
+    <errorMessage>If the Contact is an MSP End Customer, the End Customer Company must be populated</errorMessage>
+</ValidationRule>

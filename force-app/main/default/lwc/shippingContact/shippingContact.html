@@ -1,0 +1,140 @@
+<template>
+  <div class="spinner">
+    <template if:true={showSpinner}>
+      <lightning-spinner
+        alternative-text="Loading"
+        variant="brand"
+        size="large">
+      </lightning-spinner>
+    </template>
+  </div>
+
+  <div if:true={showObj.table}>
+    <lightning-card title="Related Contacts">
+      <div slot="actions">
+        <lightning-input
+          type="toggle"
+          name="RelatedContactsAccount"
+          label="Use Ship To Source Account"
+          message-toggle-inactive={accountLabel}
+          message-toggle-active={relatedContactsSourceString}
+          checked={relatedContactsSourceChecked}
+          disabled={relatedContactsSourceDisabled}
+          onchange={handleRelatedContactsAccount}></lightning-input>
+      </div>
+      <div if:true={contactResults}>
+        <lightning-datatable
+          key-field="Id"
+          data={contactResults}
+          columns={CONTACT_COLUMNS}
+          max-row-selection="1"
+          selected-rows={selectedContactId}
+          onrowselection={selectExistingContact}
+          default-sort-direction={defaultSortDirection}
+          sorted-by={sortedBy}
+          sorted-direction={sortDirection}
+          onsort={onHandleSort}>
+        </lightning-datatable>
+      </div>
+    </lightning-card>
+    <div if:false={contactResults}>No related Contacts found.</div>
+
+    <lightning-button
+      variant="brand"
+      label="Update Shipping Contact"
+      onclick={handleFinish}
+      class="slds-m-left_x-small"
+      disabled={updatedisabled}></lightning-button>
+    <lightning-button
+      label="Create New Contact"
+      onclick={setShowForm}
+      class="slds-m-left_x-small"></lightning-button>
+  </div>
+
+  <div if:true={showObj.iship}>
+    <lightning-record-edit-form
+      object-api-name="Contact"
+      record-id={shippingContact}>
+      <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+          <a href={contactLink} target="_blank"
+            ><lightning-output-field
+              field-name="Name"
+              type="URL"></lightning-output-field
+          ></a>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+          <lightning-output-field field-name="Email"></lightning-output-field>
+        </div>
+      </div>
+    </lightning-record-edit-form>
+    <lightning-button
+      label="Update Shipping Contact"
+      onclick={setShowTable}
+      class="slds-m-left_x-small"></lightning-button>
+  </div>
+
+  <div if:true={showObj.form}>
+    <lightning-record-edit-form object-api-name="Contact">
+      <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+          <div class="slds-form-element__control">
+            <lightning-input-field field-name="FirstName" required>
+            </lightning-input-field>
+          </div>
+        </div>
+
+        <div class="slds-col">
+          <div class="slds-form-element__control">
+            <lightning-input-field field-name="LastName" required>
+            </lightning-input-field>
+          </div>
+        </div>
+
+        <div class="slds-col">
+          <div class="slds-form-element__control">
+            <lightning-input-field
+              field-name="Email"
+              required></lightning-input-field>
+          </div>
+        </div>
+      </div>
+
+      <!-- second row  -->
+
+      <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+          <div class="slds-p-bottom_small">
+            <div if:true={showMSP}>
+              <lightning-input-field
+                field-name="MSP_End_Customer__c"
+                onchange={handleOnChange}>
+              </lightning-input-field>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col">
+          <div class="slds-p-bottom_small">
+            <div if:true={showCompany}>
+              <lightning-input-field
+                field-name="MSP_End_Customer_Company__c"
+                required={showCompany}>
+              </lightning-input-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- second row -->
+    </lightning-record-edit-form>
+    <lightning-button
+      label="Save"
+      onclick={handleSave}
+      class="slds-m-left_x-small"></lightning-button>
+
+    <lightning-button
+      label="Cancel"
+      onclick={handleCancel}
+      class="slds-m-left_x-small"></lightning-button>
+  </div>
+</template>

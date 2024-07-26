@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Echo_Unique_Indentifier_Value</fullName>
+    <active>true</active>
+    <description>Echo Unique Identifier Should be only Alphanumeric and &quot;-&quot; Symbol is allowed.
+as part of SFDC-13522 this validation rule implemented</description>
+    <errorConditionFormula>AND(
+LEN(ECHO_Unique_Identifier_Value__c)&gt;0,
+
+NOT(REGEX(ECHO_Unique_Identifier_Value__c, &quot;[a-zA-Z0-9 &amp;()._-]+&quot;))
+)</errorConditionFormula>
+    <errorMessage>The ECHO Unique Identifier can only contain alphanumeric characters and/or these special characters:  _ &amp;  (  )  -</errorMessage>
+</ValidationRule>

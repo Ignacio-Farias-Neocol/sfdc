@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>54.0</apiVersion>
+	<isExposed>true</isExposed>
+	<targets>
+		<target>lightning__FlowScreen</target>
+	</targets>
+	<targetConfigs>
+		<targetConfig	targets="lightning__FlowScreen">
+			<property name="selectedCreditCard" type="String" role="inputOnly"></property>
+			<property name="poNumber" type="String" role="inputOnly"></property>
+			<property name="ccDigits" type="String" role="inputOnly"></property>
+			<property name="shippingAccountName" type="String" role="inputOnly"></property>
+			<property name="shippingStreet" type="String" role="inputOnly"></property>
+			<property name="shippingState" type="String" role="inputOnly"></property>
+			<property name="shippingCity" type="String" role="inputOnly"></property>
+			<property name="shippingZipCode" type="String" role="inputOnly"></property>
+			<property name="shippingCountry" type="String" role="inputOnly"></property>
+			<property name="billingStreet" type="String" role="inputOnly"></property>
+			<property name="billingAccountName" type="String" role="inputOnly"></property>
+			<property name="billingAccountEmail" type="String" role="inputOnly"></property>
+			<property name="billingState" type="String" role="inputOnly"></property>
+			<property name="billingCity" type="String" role="inputOnly"></property>
+			<property name="billingZipCode" type="String" role="inputOnly"></property>
+			<property name="billingCountry" type="String" role="inputOnly"></property>
+		</targetConfig>
+	</targetConfigs>
+</LightningComponentBundle>

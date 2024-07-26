@@ -1,0 +1,47 @@
+<template>
+    <template if:true={finalShowPopup}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-modal_medium slds-fade-in-open">
+            <div class="slds-modal__container">
+               
+                <div class="slds-modal__content" id="modal-content-id-1">
+                    <div class="slds-grid slds-wrap main-container" style={bgImageStyle}>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                            <div class="title">
+                                Your account is missing a <br/>Security Notice Contact
+                            </div>
+                            <div class="notice-content">
+                                What is a Security Notice Contact?  
+                            </div>
+                            <div class="notice-content">
+                                A Security Notice Contact receives notifications about security updates from Barracuda. For best practice, we recommend you designate at least 2 contacts. 
+                            </div>
+                            <div class="notice-content-steps-heading">
+                                To designate a Security Notice Contact: 
+                            </div>
+                            <div class="notice-content-steps">
+                                1. From the profile menu, select Account Details. 
+                            </div>
+                            <div class="notice-content-steps">
+                                2. Select the contact and choose Edit. 
+                            </div>
+                            <div class="notice-content-steps">
+                                3. Check the box for Security Notice Contact. 
+                            </div>
+                            <div class="notice-content-steps">
+                                4. Click Save. 
+                            </div>
+                            <div class="notice-content-second">
+                                Need more time? Click Dismiss to continue.
+                            </div>
+                            <div class="button-container">
+                                <button class="slds-button slds-button_brand" style="background:#1DB1FF;width:200px;height:50px;" onclick={handleDismiss}>DISMISS</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

@@ -1,0 +1,76 @@
+<template>
+  <template if:true={spinnerVisibility}>
+    <div class="spinnerHolder">
+      <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+  </div>
+  </template>
+  <template if:false={spinnerVisibility}>
+    <template if:false={showEmptyState}>
+      <lightning-layout multiple-rows="true">
+        <!-- FILTER SECTION -->
+        <lightning-layout-item size="12" class="slds-m-bottom_small">
+          <c-serial-sub-filter
+            account-type={accounttype}
+            onfilterchange={handleFilterChange}
+          ></c-serial-sub-filter>
+        </lightning-layout-item>
+        <!-- /FILTER SECTION -->
+        
+        <!-- EXTERNAL VERSION -->
+        <template if:true={external}>
+          <!-- SERIAL/SUBSCRIPTIONS SECTION -->
+          <lightning-layout-item size="12">
+            <lightning-layout>
+              <!-- SERIAL LIST -->
+              <lightning-layout-item size="4">
+                <c-serial-tile-list
+                  onpublishserial={getRelatedSubs}
+                  serials={serials}
+                  account-type={accounttype}
+                ></c-serial-tile-list>
+              </lightning-layout-item>
+              <!-- /SERIAL LIST -->
+  
+              <!-- SUBSCRIPTIONS -->
+              <lightning-layout-item size="8">
+                <template if:true={selectedSerial}>
+                  <div class="slds-m-left_small sticky-div">
+                    <c-subscription-list
+                      subscriptions={subscriptions}
+                      serial={selectedSerial}
+                      account-type={accounttype}
+                    ></c-subscription-list>
+                  </div>
+                </template>
+              </lightning-layout-item>
+              <!-- /SUBSCRIPTIONS -->
+            </lightning-layout>
+          </lightning-layout-item>
+          <!-- /SERIAL/SUBSCRIPTIONS SECTION -->
+        </template>
+        <!-- /EXTERNAL VERSION -->
+  
+        <!-- INTERNAL VERSION -->
+        <template if:false={external}>
+          <!-- SERIAL LIST -->
+          <lightning-layout-item size="12">
+            <c-serial-tile-list
+              onpublishserial={getRelatedSubs}
+              serials={serials}
+              account-type={accounttype}
+              serial-sub-map={serialSubs.serialSubMap}
+              entity-id={entityId}
+            ></c-serial-tile-list>
+            <!-- /SERIAL LIST -->
+          </lightning-layout-item>
+        </template>
+        <!-- /INTERNAL VERSION -->
+      </lightning-layout>
+    </template>
+    <template if:true={showEmptyState}>
+      <c-empty-state-illustration
+        message="No Serials To Display"
+      ></c-empty-state-illustration>
+    </template>
+  </template>
+</template>

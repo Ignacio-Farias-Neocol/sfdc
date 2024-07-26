@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Duplicate_Closed_Lost_Reason_Oppty</fullName>
+    <active>true</active>
+    <description>If user is marking an opportunity closed lost as a duplicate they should be able to show the opportunity that is the duplicate</description>
+    <errorConditionFormula>AND(ISPICKVAL(Closed_Lost_Reason__c, &quot;Duplicate&quot;),
+ ISBLANK(  Duplicate_Opportunity__c ) )</errorConditionFormula>
+    <errorDisplayField>Duplicate_Opportunity__c</errorDisplayField>
+    <errorMessage>Duplicate Opportunity is required when selecting Duplicate as a Closed Lost reason</errorMessage>
+</ValidationRule>

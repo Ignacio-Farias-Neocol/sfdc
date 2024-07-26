@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="CPQ_Opportunity_DetailPageExt_Controller" >
+    <aura:attribute name="recordId" type="String" access="public"/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+</aura:component>

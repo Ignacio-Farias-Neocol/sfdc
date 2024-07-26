@@ -1,0 +1,29 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="ComplianceDPLCheckController">
+	<!--public attribute-->
+    <aura:attribute name="recordId" type="String" access="public" />
+    <aura:attribute name="fieldSetName" type="String" access="public" />
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+	
+	<!--private attribute-->    
+    <aura:attribute name="columns" type="List" access="private"/>
+    <aura:attribute name="data" type="Object" access="private"/>
+    
+    <aura:attribute name="isFieldSetDefined" type="boolean" access="private"/>
+    <lightning:card>
+        <aura:if isTrue="{!v.isFieldSetDefined}">
+            <lightning:datatable
+                    keyField="id"
+                    data="{! v.data }"
+                    columns="{! v.columns }"
+                    hideCheckboxColumn="true"/>
+        </aura:if>
+        <aura:if isTrue="{!!v.isFieldSetDefined}">v
+            <lightning:card title="Enter Fild Set name first">
+                <p class="slds-p-horizontal_small">
+                    Please Enter Field Set Name at Setup first to retrive information.
+                </p>
+            </lightning:card>
+        </aura:if>
+   </lightning:card>
+</aura:component>

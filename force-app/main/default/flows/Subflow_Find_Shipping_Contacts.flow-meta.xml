@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <assignments>
+        <description>Assign Opportunity Shipping Contact to newly created Contact</description>
+        <name>Assign_Opp_Value_New_Contact</name>
+        <label>Assign Opp Value - New Contact</label>
+        <locationX>314</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>varOppToUpdate.Shipping_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Create_new_Shipping_Contact</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Opportunity_Shipping_Contact</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign the Opportunity Shipping Contact from a matching Contact located by Email address</description>
+        <name>Assign_Opp_Values_Contact</name>
+        <label>Assign Opp Values - Contact</label>
+        <locationX>50</locationX>
+        <locationY>1082</locationY>
+        <assignmentItems>
+            <assignToReference>varOppToUpdate.Shipping_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>get_Contact_with_Ship_to_Email.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Opportunity_Shipping_Contact</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Capture error for troubleshooting</description>
+        <name>Capture_Error_Message</name>
+        <label>Capture Error Message</label>
+        <locationX>578</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>varErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Contract_Amendment</name>
+        <label>Set Contract Amendment</label>
+        <locationX>644</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>varContract.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>get_triggering_Opportunity.SBQQ__AmendedContract__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>get_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Contract_Renewal</name>
+        <label>Set Contract Renewal</label>
+        <locationX>380</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>varContract.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>get_triggering_Opportunity.SBQQ__RenewedContract__r.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>get_Account</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Contact_found</name>
+        <label>Contact Found</label>
+        <locationX>182</locationX>
+        <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>Create_new_Shipping_Contact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Did not find a contact</defaultConnectorLabel>
+        <rules>
+            <name>Found_a_contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_Contact_with_Ship_to_Email.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Opp_Values_Contact</targetReference>
+            </connector>
+            <label>Found a contact</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Decision element checks to see if the Opportunity has a Renewal or Amendment</description>
+        <name>Renewal_or_Amendment</name>
+        <label>Renewal or Amendment</label>
+        <locationX>644</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>get_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Renewal or Amendment</defaultConnectorLabel>
+        <rules>
+            <name>Renewal_Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_triggering_Opportunity.SBQQ__RenewedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Contract_Renewal</targetReference>
+            </connector>
+            <label>Renewal Contract</label>
+        </rules>
+        <rules>
+            <name>Amendment_Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_triggering_Opportunity.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Contract_Amendment</targetReference>
+            </connector>
+            <label>Amendment Contract</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Decision element tells if the Shipping Contact can be pulled from the original opportunity</description>
+        <name>Shipping_Contact</name>
+        <label>Shipping Contact</label>
+        <locationX>644</locationX>
+        <locationY>758</locationY>
+        <defaultConnectorLabel>No Ship to Email on Acct</defaultConnectorLabel>
+        <rules>
+            <name>Acct_HAS_Ship_to_Email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_Account.Ship_To_Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>get_Contact_with_Ship_to_Email</targetReference>
+            </connector>
+            <label>Acct HAS Ship to Email</label>
+        </rules>
+    </decisions>
+    <description>Launched from Scheduled Flow
+Last Update: Error Capture SH 11/2/2023</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formulaFirstName</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!get_Account.Ship_To_Contact__c}, FIND( &quot; &quot;,{!get_Account.Ship_To_Contact__c}) -1 )</expression>
+    </formulas>
+    <formulas>
+        <name>formulaLastName</name>
+        <dataType>String</dataType>
+        <expression>RIGHT({!get_Account.Ship_To_Contact__c}, LEN({!get_Account.Ship_To_Contact__c}) - FIND(&quot; &quot;,{!get_Account.Ship_To_Contact__c}))</expression>
+    </formulas>
+    <interviewLabel>Subflow - Find Shipping Contacts {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Subflow - Find Shipping Contacts</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create a shipping contact</description>
+        <name>Create_new_Shipping_Contact</name>
+        <label>Create new Shipping Contact</label>
+        <locationX>314</locationX>
+        <locationY>1082</locationY>
+        <connector>
+            <targetReference>Assign_Opp_Value_New_Contact</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Capture_Error_Message</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>get_Account.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contact_Status__c</field>
+            <value>
+                <stringValue>Pending</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contact_Type__c</field>
+            <value>
+                <stringValue>Shipping</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email</field>
+            <value>
+                <elementReference>get_Account.Ship_To_Email__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FirstName</field>
+            <value>
+                <elementReference>formulaFirstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LastName</field>
+            <value>
+                <elementReference>formulaLastName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LeadSource</field>
+            <value>
+                <stringValue>Unknown</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MailingCountry</field>
+            <value>
+                <elementReference>get_Account.BillingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+    </recordCreates>
+    <recordLookups>
+        <description>Get Account related to Opportunity.</description>
+        <name>get_Account</name>
+        <label>get Account</label>
+        <locationX>644</locationX>
+        <locationY>542</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>get_Contract</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>get_triggering_Opportunity.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get Contact Record that matches Account Ship to Email address</description>
+        <name>get_Contact_with_Ship_to_Email</name>
+        <label>get Contact with Ship to Email</label>
+        <locationX>182</locationX>
+        <locationY>866</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Contact_found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Email</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>get_Account.Ship_To_Email__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the Contract related to Renewal Opp</description>
+        <name>get_Contract</name>
+        <label>get Contract</label>
+        <locationX>644</locationX>
+        <locationY>650</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Shipping_Contact</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varContract.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contract</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get Opportunity that launched this Subflow</description>
+        <name>get_triggering_Opportunity</name>
+        <label>get triggering Opportunity</label>
+        <locationX>644</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Renewal_or_Amendment</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update the Opportunity sent into this flow with the Shipping Contact from the Original Contract</description>
+        <name>Update_Opportunity_Shipping_Contact</name>
+        <label>Update Opportunity Shipping Contact</label>
+        <locationX>182</locationX>
+        <locationY>1514</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Capture_Error_Message</targetReference>
+        </faultConnector>
+        <inputReference>varOppToUpdate</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>518</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>get_triggering_Opportunity</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>textFlowError</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>The Find Shipping Contacts Subflow failed with the following error: {!$Flow.FaultMessage}
+This occurred on the Create Contact element. The contact the system was attempting to create had the following email: 
+{!get_Account.Ship_To_Email__c}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>textSubject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>The Subflow for Creating a Shipping Contact Failed</text>
+    </textTemplates>
+    <variables>
+        <description>Incoming Opportunity ID for subflow</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varContract</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Contract</objectType>
+    </variables>
+    <variables>
+        <name>varErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varOppToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+</Flow>

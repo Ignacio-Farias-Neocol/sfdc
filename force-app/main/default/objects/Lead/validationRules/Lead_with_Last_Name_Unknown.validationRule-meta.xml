@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_with_Last_Name_Unknown</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+IsConverted = TRUE,
+OR(
+CONTAINS( LastName , &apos;Unknown&apos;),
+CONTAINS( LastName , &apos;unknown&apos;)
+)
+)</errorConditionFormula>
+    <errorMessage>Sorry - You can&apos;t convert a Lead when the Last Name is &apos;Unknown&apos;.</errorMessage>
+</ValidationRule>

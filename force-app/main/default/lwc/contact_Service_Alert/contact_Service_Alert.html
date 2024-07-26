@@ -1,0 +1,40 @@
+<template>
+    <div class="card" if:true={isRender}>
+         <h1 class="header"> ALERT </h1>
+         <lightning-record-view-form record-id={recordId} object-api-name="Contact">
+             <div class="slds-grid slds-wrap fields">
+                  <div class="slds-col slds-size_1-of-1">
+                     <lightning-output-field field-name="ContactId" class="fieldName"></lightning-output-field>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1">
+ 
+                         <label  class="slds-form-element__label techincalLabel">Technical alert</label>
+                          <lightning-helptext content="Information for support agents regarding product and/or account."></lightning-helptext>
+                         <br>
+                     
+                 <lightning-formatted-text class="technicalAlrt" value={technicalAlert}></lightning-formatted-text>
+ 
+                     
+                 </div>
+                 <div class="slds-col slds-size_1-of-1">
+                       <label  class="slds-form-element__label techincalLabel">Contact Center Alert</label>
+                       <lightning-helptext content="Information for Contact Center agents regarding account and case handling request"></lightning-helptext>
+                       <br>
+                     
+                 <lightning-formatted-text class="technicalAlrt" value={contactCenterAlert}></lightning-formatted-text>
+                 
+                      
+                 </div>								
+                 <div class="slds-col slds-size_1-of-1">
+                     <label  class="slds-form-element__label techincalLabel">Contact Alert</label>
+                       <lightning-helptext content="Information for support team regarding Contact request"></lightning-helptext>
+                       <br>
+                     
+                 <lightning-formatted-text class="technicalAlrt" value={contactAlert}></lightning-formatted-text>
+                 </div>
+             
+             </div>
+         </lightning-record-view-form>
+     </div>
+ 
+ </template>

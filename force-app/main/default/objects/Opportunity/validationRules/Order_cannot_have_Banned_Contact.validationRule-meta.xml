@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order_cannot_have_Banned_Contact</fullName>
+    <active>true</active>
+    <description>Order cannot be placed if there is a banned contact</description>
+    <errorConditionFormula>Is_Out_Of_Compliance__c &amp;&amp;  SBQQ__Ordered__c</errorConditionFormula>
+    <errorMessage>You can&apos;t place this Order because there is a &apos;Banned&apos; or &apos;Suspect&apos; Contact/Account on the Opportunity.</errorMessage>
+</ValidationRule>

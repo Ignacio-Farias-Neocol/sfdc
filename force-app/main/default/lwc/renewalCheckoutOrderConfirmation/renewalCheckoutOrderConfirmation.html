@@ -1,0 +1,92 @@
+<template>
+  <div class="slds-scoped-notification slds-media slds-media_center slds-m-top_small slds-scoped-notification_light" role="status">
+    <div class="slds-align_absolute-center">
+      <div class="slds-media__figure">
+        <span class="slds-icon_container slds-icon-utility-info" title="information">
+          <lightning-icon icon-name="utility:info" size="small" class="slds-media__figure"></lightning-icon>
+          <span class="slds-assistive-text">information</span>
+        </span>
+      </div>
+      <div class="slds-media__body">
+        <p>{labels.orderConfirmationInfoText}
+        </p>
+      </div>
+    </div>
+  </div>
+  <lightning-card>
+    <div slot="title" class="slds-m-top_medium">
+      <lightning-icon icon-name="standard:task2" size="small" class="slds-media__figure"></lightning-icon>
+      Order Has Been Placed
+    </div>
+    <!-- <div>
+      Quote #{quote.Name} Has Been Placed.
+    </div> -->
+    <template if:true={isDataLoaded}>
+      <c-serial-tile-list-external
+        serials={serials}
+        is-read-only={isReadOnly}
+        account-type="none"
+        serial-sub-map={serialSubs.serialSubMap}
+      ></c-serial-tile-list-external>
+    </template>
+
+    <div class="slds-grid slds-gutters slds-m-around_medium">
+      <div class="slds-m-around_xx-small slds-size_1-of-2">
+        <lightning-tile label={labels.shippingAddress}>
+          <p>
+            {shippingAccountName}
+          </p>
+          <p>
+            {shippingStreet}
+          </p>
+          <p>
+            {shippingCity}, {shippingState}, {shippingZipCode}, {shippingCountry}
+          </p>
+        </lightning-tile>
+        <lightning-tile label={labels.billingAddress}>
+          <p>
+            {billingAccountName}
+          </p>
+          <p>
+            {billingStreet}
+          </p>
+          <p>
+            {billingCity}, {billingState}, {billingZipCode}, {billingCountry}
+          </p>
+          <p>
+            Email: {billingAccountEmail}
+          </p>
+          <p>
+            {labels.emailConfirmation}
+          </p>
+        </lightning-tile>
+      </div>
+      <div class="slds-m-around_xx-small slds-size_1-of-2">
+        <template if:true={poNumber}>
+          <lightning-tile label={labels.paymentInformation}>
+            <dl class="slds-dl_horizontal">
+              <dt class="slds-dl_horizontal__label">
+                <p class="slds-truncate">{labels.poNumber}:</p>
+              </dt>
+              <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                <p class="slds-truncate">{poNumber}</p>
+              </dd>
+            </dl>
+          </lightning-tile>
+        </template>
+        <template if:true={selectedCreditCard}>
+          <lightning-tile label={labels.paymentInformation}>
+            <dl class="slds-dl_horizontal">
+              <dt class="slds-dl_horizontal__label">
+                <p class="slds-truncate">{labels.creditCard}:</p>
+              </dt>
+              <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                <p class="slds-truncate">XXXX XXXX XXXX {ccDigits}</p>
+              </dd>
+            </dl>
+          </lightning-tile>
+        </template>
+      </div>
+    </div>
+  </lightning-card>
+</template>

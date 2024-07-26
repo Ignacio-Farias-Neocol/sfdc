@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Won_Contact_Names</fullName>
+    <active>true</active>
+    <description>Check to see if the Primary Contact / Reseller Contact / Distributor Contact has both First &amp; Last Name</description>
+    <errorConditionFormula>AND( 
+  ISPICKVAL(StageName, &apos;Closed Won&apos;), 
+  NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+  OR(
+     ISBLANK(Primary_Contact__r.FirstName),
+     ISBLANK(Primary_Contact__r.LastName),
+     AND(NOT(ISBLANK(Distributor_Contact__c)),
+         OR(ISBLANK(Distributor_Contact__r.FirstName),ISBLANK(Distributor_Contact__r.LastName))
+     ),
+     AND(NOT(ISBLANK(Reseller_Contact__c)),
+         OR(ISBLANK(Reseller_Contact__r.FirstName),ISBLANK(Reseller_Contact__r.LastName))
+     )
+  )
+)</errorConditionFormula>
+    <errorMessage>Please be sure the Primary / Distributor / Reseller Contact(s) have both First and Last Names.</errorMessage>
+</ValidationRule>

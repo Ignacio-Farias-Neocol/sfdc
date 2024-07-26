@@ -1,0 +1,172 @@
+<apex:page controller="MergeOpportunityController" showHeader="true" tabStyle="Opportunity" action="{!initChildObjectsMergePattern}">
+    <style type="text/css">
+        .merge-entity {
+            border: 1px solid #bfcfd4;
+            width: 100%;
+        }
+        .merge-entity tr.header-row th {
+            font-size: .9em;
+        }
+        .merge-entity tr th, 
+        .merge-entity tr td {
+            padding: 2px 6px;
+            vertical-align: top;
+            border-bottom: 1px solid #bbb;
+        }
+        .merge-entity td {
+            white-space: normal;
+        }
+        .merge-entity th {
+            background-color: #f2f3f3;
+            text-align: right;            
+        }
+        .merge-entity tr.header-row th {            
+            text-align: left;            
+        }
+        .merge-entity tr th:first-child {            
+            border-right: 1px solid #bfcdf4;
+        }
+        .merge-entity .required-input th {
+            background-color: #e1a21a;
+            color: #FFFFFF;
+        }
+        .merge-entity tr td input[type="radio"] {
+            margin: 0 4px 0 0;
+        }
+        .merge-entity tr.empty {
+            display: none;
+        }
+        .merge-entity tr.identical {
+            display: none;
+        }
+        div.btn-widget {
+            padding: 5px;
+            text-align: right;
+        }
+    </style>
+    <apex:sectionHeader title="Merge Opportunities" />
+    
+    <apex:form >
+        <apex:inputHidden value="{!SelectedMaster}" id="masterHidden" />
+        <apex:inputHidden value="{!SelectedFieldsValue}" id="fieldsHidden" />
+        <apex:pageBlock mode="maindetail">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Previous" action="{!previous}" />
+                <apex:commandButton value="Merge" action="{!mergeDuplicates}" styleClass="merge-btn" />
+                <apex:commandButton value="Cancel" action="{!cancel}" />
+            </apex:pageBlockButtons>
+            <!--<p style="padding: 15px 5px">
+                Select the values that you want to retain in the merged record. Highlighted rows indicate fields that contain conflicting data. The Master Record selected will retain read-only and hidden field values. Note: All related records will be associated with the new merged record.
+            </p>-->
+            <div class="btn-widget">
+                <input type="button" value="Show Empty" id="emptyControl" class="btn" />
+                <input type="button" value="Show Equal" id="equalControl" class="btn" />
+            </div>
+            <apex:pageMessages />
+            <table class="merge-entity" border="0" cellpadding="0" cellspacing="0">
+                <tr class="header-row">
+                    <th></th>
+                    <apex:repeat value="{!DuplicateOpps}" var="opp">
+                        <th>{!opp.Name} <a href="#" class="select-all">[Select All]</a></th>
+                    </apex:repeat>
+                </tr>
+                <tr class="required-input">
+                    <th>Master Record</th>
+                    <apex:variable value="{!0}" var="index" />
+                    <apex:repeat value="{!DuplicateOpps}" var="opp">
+                        <td>
+                            <input type="radio" name="masterrecord" value="{!index}" class="master-radio radio-{!index}" />
+                        </td>
+                        <apex:variable value="{!index+1}" var="index" />
+                    </apex:repeat>                    
+                </tr>
+                <apex:repeat value="{!Fields}" var="field">
+                    <tr class="{!ComparisonMap[field].ClassName}">
+                        <th>{!ComparisonMap[field].FieldLabel}</th>
+                        <apex:variable value="{!0}" var="index" />
+                        <apex:repeat value="{!DuplicateOpps}" var="opp">
+                            <td>
+                                <apex:outputPanel layout="none" rendered="{!AND(NOT(ComparisonMap[field].IsIdentical), NOT(ComparisonMap[field].IsEmpty))}">
+                                    <input type="radio" name="{!field}" value="{!index}" class="field-radio radio-{!index}" />
+                                </apex:outputPanel>
+                                <apex:outputField value="{!opp[field]}" />
+                            </td>
+                            <apex:variable value="{!index+1}" var="index" />
+                        </apex:repeat>
+                    </tr>
+                </apex:repeat>
+
+                <apex:repeat value="{!mergePatterns}" var="pattern">
+                    <apex:outputPanel layout="none" rendered="{!pattern.IsVisible__c}">
+                        <tr>
+                            <th>{!pattern.ObjectName__c}({!pattern.FieldName__c})</th>
+                            <apex:repeat value="{!DuplicateOpps}" var="opp">
+                                <td>
+                                    <input type="radio" name="{!pattern.ObjectName__c}&{!pattern.FieldName__c}" value="{!opp.Id}" />
+                                    <apex:outputText value="{!IF(pattern.MergePattern__c == 'Merge', 'Merge(Combine)', 'Choose(Keep/Discard)')}" />
+                                </td>                                
+                            </apex:repeat>
+                        </tr>
+                    </apex:outputPanel>
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+    </apex:form>
+
+    <script type="text/javascript" src="{!URLFOR($Resource.BARLib, '/BARLib/js/jquery-1.12.3.min.js')}" />
+    <script type="text/javascript">
+        (function($) {
+            $(function() {
+                // Set the first opportunity as master by default
+                $('.radio-0').prop('checked', true); 
+
+                // [Select All]
+                $('.select-all').click(function(event) {
+                    var index = $('.select-all').index(this);
+                    $('.radio-' + index).prop('checked', true);
+                    event.preventDefault();                    
+                });
+
+                // Control the visibility of empty fields.
+                $('#emptyControl').click(function() {
+                    if(this.value == 'Show Empty') {
+                        $('.empty').show();
+                        this.value = 'Hide Empty';
+                    }
+                    else {
+                        $('.empty').hide();
+                        this.value = 'Show Empty';
+                    }
+                });
+                // Control the visibility of identical fields.
+                $('#equalControl').click(function() {
+                    if(this.value == 'Show Equal') {
+                        $('.identical').show();
+                        this.value = 'Hide Equal';
+                    }
+                    else {
+                        $('.identical').hide();
+                        this.value = 'Show Equal';
+                    }
+                });
+
+                // Merge Duplicates
+                $('.merge-btn').click(function() {
+                    // index of master opportunity
+                    $('[id$=masterHidden]').val($('.master-radio:checked').val());
+
+                    // index of each updated field
+                    var fieldsDetail = '';
+                    $('.field-radio:checked').each(function() {
+                        fieldsDetail += this.name + ',' + this.value + '&';
+                    });
+                    if(fieldsDetail.length > 0) {
+                        fieldsDetail = fieldsDetail.substring(0, fieldsDetail.length-1);
+                        $('[id$=fieldsHidden]').val(fieldsDetail);
+                    }
+                    //return false;
+                });
+            });
+        })(jQuery);
+    </script>
+</apex:page>

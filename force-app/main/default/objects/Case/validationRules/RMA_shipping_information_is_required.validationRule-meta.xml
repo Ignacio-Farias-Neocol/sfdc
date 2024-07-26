@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RMA_shipping_information_is_required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISBLANK(RMA_Shipping_Information__c),
+ Owner:Queue.DeveloperName == &quot;TAC_Customer_Services&quot;,
+ OR(ISPICKVAL(RMA_Type__c,&quot;Hardware&quot;),
+   ISPICKVAL(RMA_Type__c,&quot;HWR&quot;),
+   ISPICKVAL(RMA_Type__c,&quot;Replacement&quot;),
+   ISPICKVAL(RMA_Type__c,&quot;Shipping&quot;))
+)</errorConditionFormula>
+    <errorMessage>RMA shipping information is required to move the Case to TAC Customer Service for the RMA type.</errorMessage>
+</ValidationRule>

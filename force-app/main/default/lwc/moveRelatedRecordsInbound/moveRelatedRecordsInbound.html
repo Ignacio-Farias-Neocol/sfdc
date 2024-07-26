@@ -1,0 +1,52 @@
+<!-- sldsValidatorIgnore -->
+<template>
+
+    <!-- <lightning-quick-action-panel header="Move Related Records (Inbound)">
+
+        <lightning-record-edit-form record-id={recordId}
+
+                                    object-api-name={objectApiName}
+
+                                    onsuccess={handleSuccess}>
+
+            <lightning-output-field field-name="Enter Source Contract Number"></lightning-output-field>
+
+            <lightning-button variant="brand" class="slds-m-left_x-small" label="next" type="submit"></lightning-button>
+
+        </lightning-record-edit-form>
+
+    </lightning-quick-action-panel> -->
+
+   <lightning-quick-action-panel header="Move Related Records (Inbound)">
+
+    <div onkeyup={handleKeyUp} >
+        <lightning-input required
+            name="enter-search"
+            label="Enter Source Contract Number and hit the 'enter' key to search"
+            type="search"
+            
+        ></lightning-input>
+    </div>
+    <p if:true={queryTerm}>
+        Searched for {queryTerm}!
+    </p>
+
+    <div  >
+        <template if:true={loaded}>
+            <!-- <div class= "slds-text-color_error" style="overflow-wrap: break-word" >
+            <p class="slds-hyphenate"> {message} </p>
+            </div> -->
+
+            <div style="white-space:pre-wrap;">
+                 <p>{message}</p>   
+               
+                </div>
+
+        </template>
+        <template if:false={loaded}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+    </div>
+
+</lightning-quick-action-panel>
+</template>

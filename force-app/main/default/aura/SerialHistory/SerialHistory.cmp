@@ -1,0 +1,86 @@
+<!--
+ - Created by iyeung on 2019-08-07.
+ -->
+
+
+<aura:component controller="SerialHistoryController" implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global" description="SerialHistory" >
+
+    <aura:attribute name="recordId" description="opportunity record Id" type="Id" />
+    <aura:attribute name="serialHistory" description="List of serial history to be displayed" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+
+
+
+
+
+    <div class="c-container">
+
+
+        <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-p-horizontal_small slds-p-top_medium" role="grid">
+            <thead>
+            <tr class="slds-text-title_caps">
+
+                <th class="slds-cell-shrink" scope="col">
+                    <div class="slds-truncate" title="Serial Number">Serial Number</div>
+                </th>
+                <th class="slds-cell-shrink" scope="col">
+                    <div class="slds-truncate" title="Activation Status">Activation Status</div>
+                </th>
+                <th class="slds-cell-shrink" scope="col">
+                    <div class="slds-truncate" title="Activation Date">Activation Date</div>
+                </th>
+                <th class="slds-cell-shrink" scope="col">
+                    <div class="slds-truncate" title="Last Serial">Last Serial</div>
+                </th>
+                <th class="slds-cell-shrink" scope="col">
+                    <div class="slds-truncate" title="RMA Number">RMA Number</div>
+                </th>
+                <th class="slds-cell-shrink" scope="col">
+                    <div class="slds-truncate" title="BOS RMA Type">BOS RMA Type</div>
+                </th>
+                <th class="slds-cell-shrink" scope="col">
+                    <div class="slds-truncate" title="RMA Date">RMA Date</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <aura:iteration items="{!v.serialHistory}" var="row">
+                <tr class="slds-hint-parent">
+                    <td data-label="SerialNumber">
+                        <div class="slds-truncate" title="{!row.serialNumber}">
+                            <a href="{!'/one/one.app?#/sObject/'+ row.serialId + '/view'}" target="_parent">{!row.serialNumber}</a>
+                            </div>
+                    </td>
+                    <td data-label="ActivationStatus">
+                        <div class="slds-truncate" title="{!row.serialActivationStatus}">{!row.serialActivationStatus}</div>
+                    </td>
+                    <td data-label="ActivationDate">
+                        <div class="slds-truncate" title="{!row.serialActivationDate}">{!row.serialActivationDate}</div>
+                    </td>
+                    <td data-label="LastSerialNumber">
+                        <div class="slds-truncate" title="{!row.latestSerialNumber}">{!row.latestSerialNumber}</div>
+                    </td>
+                    <td data-label="RMANumber">
+                        <div class="slds-truncate" title="{!row.rmaNumber}">
+                            <a href="{!'/one/one.app?#/sObject/'+ row.orderId + '/view'}" target="_parent">{!row.rmaNumber}</a>
+
+                        </div>
+                    </td>
+                    <td data-label="BOSRMAType">
+                        <div class="slds-truncate" title="{!row.BOSrmaType}">{!row.BOSrmaType}</div>
+                    </td>
+                    <td data-label="RMADate">
+                        <div class="slds-truncate" title="{!row.rmaDate}">{!row.rmaDate}</div>
+                    </td>
+                </tr>
+            </aura:iteration>
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+
+</aura:component>

@@ -1,0 +1,20 @@
+/* Center the content of the confirmation page */
+.centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Takes the full viewport height */
+}
+
+/* Remove borders, backgrounds, etc. */
+.no-border {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.searchStyle{
+    width:100%;
+    display: grid;
+}

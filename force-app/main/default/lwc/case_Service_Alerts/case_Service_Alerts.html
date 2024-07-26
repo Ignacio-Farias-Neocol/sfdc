@@ -1,0 +1,23 @@
+<template>
+    <div class="card" if:true={isRender}>
+        <div class="card">
+            <h1 class="header"> ALERT </h1>
+            <lightning-record-view-form record-id={recordId} object-api-name="Case">
+                <div class="slds-grid slds-wrap fields">
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-output-field field-name="Technical_Alert__c" class="fieldName"></lightning-output-field>
+                    </div>
+                        <div class="slds-col slds-size_1-of-1">
+                        <lightning-output-field field-name="Contact_Center_Alert__c" class="fieldName"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-output-field field-name="Contact_Alert_1__c" class="fieldName"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-output-field field-name="Customers_Provided_Business_Impact__c" class="fieldName"></lightning-output-field>
+                    </div>
+                </div>
+            </lightning-record-view-form>
+        </div>
+    </div>
+</template>

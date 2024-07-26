@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Should_not_edit_Oppty_team_at_Closed_Won</fullName>
+    <active>true</active>
+    <description>Opportunity team is not editable to users once the oppty marked as closed won except for Sys admin and  Sales Ops.</description>
+    <errorConditionFormula>AND(ISNEW(),  
+ISPICKVAL(Opportunity.StageName, &quot;Closed Won&quot;),
+OR($Profile.Name = &quot;Apollo: Custom- Sales Profile&quot;,
+$Profile.Name = &quot;Apollo: Custom- Sales_China Profile&quot;,
+$Profile.Name = &quot;Apollo: Custom- Customer Services&quot;,
+$Profile.Name = &quot;Apollo: Custom- Renewals Profile&quot;,
+$Profile.Name = &quot;Apollo: Custom- Sales Engineers Profile&quot;)
+)</errorConditionFormula>
+    <errorMessage>Sorry, you can&apos;t add an Opportunity Team member once Opportunity is Closed Won.</errorMessage>
+</ValidationRule>

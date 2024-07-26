@@ -1,0 +1,14 @@
+.spinner-text-div {
+    transform: translate(0%, 0%) rotate(0deg);
+    left: 35%;
+    height: 150px;
+    width: 30%;
+    top: 300px;
+}
+.spinner-text {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin: auto;
+}

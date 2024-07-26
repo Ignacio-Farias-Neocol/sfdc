@@ -1,0 +1,146 @@
+<template>
+    <lightning-card title="Filters" icon-name="standard:calibration">
+      <!-- RESET Filters -->
+      <lightning-button-group slot="actions">
+        <lightning-button
+            variant="brand"
+            label={label.applyFilters}
+            onclick={applyFilters}
+        ></lightning-button>
+        <lightning-button
+            label={label.resetButtonFilter}
+            onclick={resetFilters}
+        ></lightning-button>
+      </lightning-button-group>
+      <!-- RESET Filters -->
+      <lightning-layout horizontal-align="space" class="slds-p-around_x-small">
+        <!-- Search Key-->
+        <lightning-layout-item
+          size={layoutItemSize}
+          class="slds-box slds-box_x-small slds-m-right_xx-small filter-content"
+        >
+          <fieldset class="slds-form-element slds-form-element_compound">
+            <legend class="slds-form-element__legend slds-form-element__label">
+              <h2 class="header">{label.searchHeader}</h2>
+            </legend>
+            
+            <div class="slds-form-element__control">
+            <lightning-input
+                type="search"
+                onchange={handleSerialKeyChange}
+                class="slds-m-bottom_small"
+                label={label.searchSerialLabel}
+                value={searchSerialString}
+                field-level-help={label.searchSerialHelpText}
+            ></lightning-input>
+            </div>
+            <template if:true={showEndUserSearch}>
+                <div class="slds-form-element__control">
+                    <lightning-input
+                    type="search"
+                    onchange={handleEndUserKeyChange}
+                    class="slds-m-bottom_small"
+                    label={label.searchEndUserLabel}
+                    value={searchEndUserString}
+                    field-level-help={label.searchEndUserHelpText}
+                    ></lightning-input>
+                </div>
+            </template>
+            <template if:true={showPartnerSearch}>
+              <div class="slds-form-element__control">
+                  <lightning-input
+                  type="search"
+                  onchange={handlePartnerKeyChange}
+                  class="slds-m-bottom_small"
+                  label={label.searchPartnerLabel}
+                  value={searchPartnerString}
+                  field-level-help={label.searchPartnerHelpText}
+                  ></lightning-input>
+              </div>
+          </template>
+          </fieldset>
+        </lightning-layout-item>
+        <!-- /Search Key-->
+        <!-- Date Range -->
+        <lightning-layout-item
+          size={layoutItemSize}
+          class="slds-box slds-box_x-small filter-content"
+        >
+          <fieldset class="slds-form-element slds-form-element_compound">
+            <legend class="slds-form-element__legend slds-form-element__label">
+              <h2 class="header">{label.serialExpDateHeader}</h2>
+            </legend>
+            <div class="slds-form-element__control">
+                <div class="slds-form-element__row">
+                    <div class="slds-size_1-of-2">
+                    <div class="slds-form-element">
+                        <lightning-input
+                        type="date"
+                        name="dateFrom"
+                        label={label.dateFrom}
+                        class="expDate"
+                        value={dateFrom}
+                        onchange={handleDateChange}
+                        min={startDateMinDate}
+                        ></lightning-input>
+                    </div>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                    <div class="slds-form-element">
+                        <lightning-input
+                        type="date"
+                        name="dateTo"
+                        label={label.dateTo}
+                        class="expDate"
+                        value={dateTo}
+                        onchange={handleDateChange}
+                        min={startDateMinDate}
+                        ></lightning-input>
+                    </div>
+                    </div>
+                </div>
+            </div>
+          </fieldset>
+        </lightning-layout-item>
+        <!-- /Date Range -->
+        <!-- Status -->
+        <lightning-layout-item
+          size="4"
+          class="slds-box slds-box_x-small slds-m-left_xx-small filter-content"
+        >
+          <fieldset class="slds-form-element slds-form-element_stacked">
+            <legend class="slds-form-element__legend slds-form-element__label">
+              <h2 class="header">{label.serialStatusHeader}</h2>
+            </legend>
+            <div class="slds-form-element__control">
+              <lightning-input
+                type="checkbox"
+                label={label.serialStatusActive}
+                name="cbActive"
+                checked
+                class="statusCB"
+                onchange={handleStatusFilterChange}
+              ></lightning-input>
+              <lightning-input
+                type="checkbox"
+                label={label.serialStatusUpcomingRenewal}
+                name="cbRenew"
+                checked
+                class="statusCB"
+                onchange={handleStatusFilterChange}
+              ></lightning-input>
+              <lightning-input
+                type="checkbox"
+                label={label.serialStatusExpiredReplacedReturned}
+                name="cbInactive"
+                checked
+                class="statusCB"
+                onchange={handleStatusFilterChange}
+              ></lightning-input>
+            </div>
+          </fieldset>
+        </lightning-layout-item>
+        <!-- /Status -->
+      </lightning-layout>
+    </lightning-card>
+  </template>

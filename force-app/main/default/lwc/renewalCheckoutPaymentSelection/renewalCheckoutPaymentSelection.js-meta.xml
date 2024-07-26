@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+      <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+       <targetConfig targets="lightning__FlowScreen">
+            <property name="selectedCreditCard" label="Selected Credit Card" type="String" role="outputOnly" description="Id of the selected credit card"/>
+            <property name="poNumber" label="PO Number" type="String" role="outputOnly" description="PO Number entered"/>
+            <property name="autoRenew" default="false" label="Auto Renew" type="Boolean" description="Set up order for auto-renewal"/>
+       </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

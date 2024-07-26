@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Change_Opportunity_Owner_on_Closed_Won</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED( OwnerId ),
+ISPICKVAL(StageName, &apos;Closed Won&apos;),
+ISPICKVAL(Business_Group__c, &apos;Core&apos;),
+NOT (
+OR (
+$Profile.Name = &apos;Apollo: Custom- Sales Operations&apos;,
+$Profile.Name = &apos;Apollo: Custom- Customer Services&apos;,
+$Profile.Name = &apos;Apollo: Custom- Revenue Operations&apos;,
+$Profile.Name = &apos;System Administrator&apos;,
+$Permission.Closed_Won_Opps
+)
+)
+)</errorConditionFormula>
+    <errorMessage>You cannot change Owner on Closed Won Opportunities</errorMessage>
+</ValidationRule>

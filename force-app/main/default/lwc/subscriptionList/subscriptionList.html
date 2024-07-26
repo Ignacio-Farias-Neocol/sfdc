@@ -1,0 +1,45 @@
+<template>
+    <lightning-card>
+      <template if:false={isExternal}>
+        <div slot="title">
+          <div class="slds-media slds-media_center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+                <lightning-icon size="small" icon-name="custom:custom13"></lightning-icon>
+            </div>
+            <div class="slds-media__body">
+                <h2 aria-level="2" class="slds-card__header-title"><span
+                        class="slds-text-heading_small slds-truncate">{cardTitle}</span></h2>
+            </div>
+        </div>
+        </div>
+      </template>
+      <template if:true={spinnerVisibility}>
+        <div class="spinnerHolder">
+          <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+      </div>
+      </template>     
+      <div class={boxCSSClass}>
+      <template if:false={spinnerVisibility}>
+          <template if:true={subListData}>
+            <c-custom-datatable
+              key-field="id"
+              data={subListData}
+              columns={columns}
+              hide-checkbox-column="true"
+              wrap-text-max-lines="3"
+              default-sort-direction={defaultSortDirection}
+              sorted-direction={sortDirection}
+              sorted-by={sortedBy}
+              onsort={onHandleSort}
+            >
+            </c-custom-datatable>
+          </template>
+          <template if:false={subListData}>
+            <c-empty-state-illustration
+              message={label.noSubsToDisplay}
+            ></c-empty-state-illustration>
+          </template>
+      </template> 
+    </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Assign_Order_Fulfillment_date</name>
+        <label>Assign Order Fulfillment date</label>
+        <locationX>663</locationX>
+        <locationY>654</locationY>
+        <assignmentItems>
+            <assignToReference>Contract_OrderFulfillmentDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Order_Fulfillment_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Order_fulfillment_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Prepares the contract object to be updated</description>
+        <name>Prepare_Object_to_be_updated</name>
+        <label>Prepare Object to be updated</label>
+        <locationX>322</locationX>
+        <locationY>370</locationY>
+        <assignmentItems>
+            <assignToReference>Object_Contract_To_Be_Updated.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Activate_Contract</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Activate the contract and set fields that are dependent on Active contract</description>
+        <name>Update_Fields_Based_on_Active_Contract</name>
+        <label>Update Fields Based on Active Contract</label>
+        <locationX>526</locationX>
+        <locationY>387</locationY>
+        <assignmentItems>
+            <assignToReference>Object_Contract_To_Be_Updated.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Activated</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Object_Contract_To_Be_Updated.SBQQ__RenewalOpportunityStage__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Contacted</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Contract_Record</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Auto_Renewals_Contract_Update_Oppty</name>
+        <label>Auto-Renewals Contract Update Oppty</label>
+        <locationX>523</locationX>
+        <locationY>838</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>1 AND (5 OR 6 OR 7 OR 8) AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewalOpportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewalOpportunity__r.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not Contacted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewalOpportunity__r.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contact Attempted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Has_SaaS_Products__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RMA_Detected__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Auto_Renewal_Status_Core__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Auto_Renewal_Status_Reason_Core__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Renewal_Opportunity</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Order_Fulfillment</name>
+        <label>Check Order Fulfillment</label>
+        <locationX>518</locationX>
+        <locationY>657</locationY>
+        <defaultConnector>
+            <targetReference>Auto_Renewals_Contract_Update_Oppty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Updated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Order_Fulfillment_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Order_Fulfillment_Date__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Order_Fulfillment_date</targetReference>
+            </connector>
+            <label>Yes Updated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Activates the contract immediately if it is in draft status.</description>
+        <name>Decision_Activate_Contract</name>
+        <label>Activate Contract</label>
+        <locationX>314</locationX>
+        <locationY>532</locationY>
+        <defaultConnector>
+            <targetReference>Check_Order_Fulfillment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do Not Activate</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Activate_Contract</name>
+            <conditionLogic>(1 AND 6)  AND (2 OR 3) AND 4 AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Activated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Unique_Contract_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Unique_Contract_ID__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AccountId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>001f2000021CChGAAW</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AccountId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>001f200001zWFO8AAO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>InActive</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Fields_Based_on_Active_Contract</targetReference>
+            </connector>
+            <label>Activate</label>
+        </rules>
+        <rules>
+            <name>Recent_Addon_Order_and_PO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__r.SBCF_Order_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__r.Opportunity.Name</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Amendment</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Recent_Addon_Order_and_Corresponding_PO</targetReference>
+            </connector>
+            <label>Recent Addon Order and PO</label>
+        </rules>
+    </decisions>
+    <description>Executes logic after a Contract is created</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>AutoRenewalStatuscore</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.Has_SaaS_Products__c},
+IF(ISPICKVAL({!$Record.SBQQ__RenewalOpportunity__r.Auto_Renewal_Status_Core__c}, &quot;Excluded - Manually&quot;),
+		TEXT({!$Record.Auto_Renewal_Status_Core__c}),
+		&quot;Included - Automatically&quot;),
+IF({!$Record.RMA_Detected__c}, &apos;&apos;, 
+IF(ISPICKVAL({!$Record.SBQQ__RenewalOpportunity__r.Auto_Renewal_Status_Core__c}, &quot;Excluded - Manually&quot;),
+		   TEXT({!$Record.SBQQ__RenewalOpportunity__r.Auto_Renewal_Status_Core__c}),
+		   TEXT({!$Record.Auto_Renewal_Status_Core__c})
+		)
+	)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>AutoRenewalStatusReasonCore</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.Has_SaaS_Products__c}, 
+IF(ISPICKVAL({!$Record.SBQQ__RenewalOpportunity__r.Auto_Renewal_Status_Core__c}, &quot;Excluded - Manually&quot;),
+		TEXT({!$Record.Auto_Renewal_Status_Reason_Core__c}),
+		&quot;Included - based on Account Flag&quot;
+	),
+IF({!$Record.RMA_Detected__c},  &apos;&apos;, 
+IF(ISPICKVAL({!$Record.SBQQ__RenewalOpportunity__r.Auto_Renewal_Status_Core__c}, &quot;Excluded - Manually&quot;),
+		  TEXT({!$Record.SBQQ__RenewalOpportunity__r.Auto_Renewal_Status_Reason_Core__c}) , 
+                  TEXT({!$Record.Auto_Renewal_Status_Reason_Core__c})
+	   )
+	)
+)</expression>
+    </formulas>
+    <interviewLabel>Contract After Save Operations {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Contract After Save Operations</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Recent Addon Order and Corresponding PO</description>
+        <name>Recent_Addon_Order_and_Corresponding_PO</name>
+        <label>Recent Addon Order and Corresponding PO</label>
+        <locationX>232</locationX>
+        <locationY>661</locationY>
+        <inputAssignments>
+            <field>Recent_Addon_Order__c</field>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.OrderNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Recent_Addon_PO__c</field>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.PoNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updates the contract record</description>
+        <name>Update_Contract_Record</name>
+        <label>Update Contract Record</label>
+        <locationX>526</locationX>
+        <locationY>516</locationY>
+        <connector>
+            <targetReference>Check_Order_Fulfillment</targetReference>
+        </connector>
+        <inputReference>Object_Contract_To_Be_Updated</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Order_fulfillment_Date</name>
+        <label>Update Order fulfillment Date</label>
+        <locationX>664</locationX>
+        <locationY>773</locationY>
+        <connector>
+            <targetReference>Auto_Renewals_Contract_Update_Oppty</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Order_Fulfillment_Date__c</field>
+            <value>
+                <elementReference>Contract_OrderFulfillmentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Orders__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Renewal_Opportunity</name>
+        <label>Update Renewal Opportunity</label>
+        <locationX>531</locationX>
+        <locationY>1002</locationY>
+        <inputAssignments>
+            <field>Auto_Renewal_Status_Core__c</field>
+            <value>
+                <elementReference>AutoRenewalStatuscore</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Auto_Renewal_Status_Reason_Core__c</field>
+            <value>
+                <elementReference>AutoRenewalStatusReasonCore</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.SBQQ__RenewalOpportunities__r</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>198</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Prepare_Object_to_be_updated</targetReference>
+        </connector>
+        <object>Contract</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>Contract_OrderFulfillmentDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>This is the contract to be updated</description>
+        <name>Object_Contract_To_Be_Updated</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Contract</objectType>
+    </variables>
+</Flow>

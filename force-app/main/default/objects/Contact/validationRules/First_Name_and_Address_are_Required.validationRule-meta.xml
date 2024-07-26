@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>First_Name_and_Address_are_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISNEW()&amp;&amp;
+CASE($Profile.Name,
+&quot;Apollo: Custom- Customer Services&quot;, 1,
+&quot;Apollo: Custom- Renewals Profile&quot;, 1,
+&quot;Apollo: Custom- Sales Profile&quot;, 1,
+&quot;Apollo: Custom- Marketing Profile&quot;, 1,
+&quot;Apollo: Custom- Sales_China Profile&quot;, 1,
+&quot;Apollo: Custom- Renewals_China&quot;, 1,
+&quot;Apollo: Custom- Sales Support Profile&quot;,1,
+0) == 1 &amp;&amp;
+
+OR(ISBLANK(MailingCountry),
+ISBLANK(FirstName))</errorConditionFormula>
+    <errorMessage>Please enter the Contact&apos;s First Name and Country.</errorMessage>
+</ValidationRule>

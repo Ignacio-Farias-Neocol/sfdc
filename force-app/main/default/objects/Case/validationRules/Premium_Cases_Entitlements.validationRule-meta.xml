@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Premium_Cases_Entitlements</fullName>
+    <active>false</active>
+    <description>Select an Entitlement if Case flag Is Premium is selected when cases</description>
+    <errorConditionFormula>ISBLANK(  EntitlementId   )&amp;&amp; If( Is_Premium_Support__c = True, True, False)</errorConditionFormula>
+    <errorDisplayField>EntitlementId</errorDisplayField>
+    <errorMessage>Please add an Entitlement to the case, as the case contains an asset with premium support</errorMessage>
+</ValidationRule>

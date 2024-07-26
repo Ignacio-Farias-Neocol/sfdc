@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Escalation_fields_required_for_XDR_Queue</fullName>
+    <active>true</active>
+    <description>When case owner is &apos;XDR Escalations&apos;, Escalation Reason, Escalation Description and XDR Escalation Team fields are required</description>
+    <errorConditionFormula>AND(
+RecordType.DeveloperName = &apos;Technical_Support&apos;,
+BEGINS(OwnerId, &apos;00G&apos;),
+NOT(ISPICKVAL(Status , &apos;Closed&apos;)),
+OR(
+ISBLANK(Escalation_Reason__c),
+ISBLANK(Escalation_Description__c),
+ISBLANK(TEXT(XDR_Escalation_Team__c))
+),
+Case_Owner_Queue_Name__c  == &apos;XDR Escalations&apos;
+)</errorConditionFormula>
+    <errorMessage>Escalation Reason, Escalation Description, XDR Escalation Team Required when TS case is escalated to XDR Escalations queue</errorMessage>
+</ValidationRule>

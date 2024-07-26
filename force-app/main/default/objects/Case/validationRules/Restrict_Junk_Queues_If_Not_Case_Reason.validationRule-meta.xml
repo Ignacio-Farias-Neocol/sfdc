@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Junk_Queues_If_Not_Case_Reason</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISCHANGED( OwnerId ), RecordType.DeveloperName = &apos;Technical_Support&apos;,
+OR(Owner:Queue.DeveloperName = &quot;Junk_Web_Messages_Japan&quot;,
+Owner:Queue.DeveloperName = &quot;Junk_Web_Messages_Americas&quot;,
+Owner:Queue.DeveloperName = &quot;Junk_Web_Messages_China&quot;,
+Owner:Queue.DeveloperName = &quot;Junk_Web_Messages_EMEA&quot;,
+Owner:Queue.DeveloperName = &quot;Junk_Cases&quot;), 
+NOT(ISPICKVAL(Case_Reason__c, &quot;No Resolution Possible&quot;)))</errorConditionFormula>
+    <errorMessage>Case reason must be &quot; No Resolution Possible&quot; to assign to Junk Queue.  Please move to Closed status when done</errorMessage>
+</ValidationRule>

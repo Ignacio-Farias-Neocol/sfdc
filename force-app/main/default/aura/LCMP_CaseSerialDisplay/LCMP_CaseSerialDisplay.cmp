@@ -1,0 +1,131 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="LCC_CaseSerialDisplay">
+    
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="caseSubscriptions" type="List"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="5"/> 
+    <!-- <aura:attribute name="serialRecord" type="Object"/> -->
+    <aura:attribute name="serialRecords" type="List"/>
+    <aura:attribute name="selectedRecords" type="List"/>
+    <aura:attribute name="selectedRows" type="List"/>
+    <aura:attribute name="selectedSerialId" type="String"/>
+    <aura:attribute name="selectedSubscriptions" type="List"/>    
+    <aura:attribute name="isSerialMadeNull" type="Boolean"/>
+    
+    <!-- handlers-->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>   
+    
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    <lightning:card>
+        <aura:set attribute="title">
+            <lightning:icon iconName="standard:case" size="small"/>
+            Serial(s) and Subscriptions
+        </aura:set>        
+        <aura:set attribute="actions">
+            <lightning:button label="Manage Subscriptions" onclick="{! c.openModel }"/>
+        </aura:set>
+        <div>
+            <div class="slds-grid slds-gutters slds-wrap">
+                <aura:iteration items="{!v.serialRecords}" var="serialRecord">
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="slds-m-left_small"><b>Serial Record</b></div>
+                        <div class="slds-m-left_small"><a href="{! '/' + serialRecord.Id}">{!serialRecord.Name}</a></div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div><b>Serial Number</b></div>
+                        <div>{!serialRecord.Serial_Number__c}</div>                                        
+                    </div>   
+                    <aura:iteration items="{!v.caseSubscriptions}" var="cs"> 
+                        <aura:if isTrue="{! cs.Serial__c == serialRecord.Id}"> 
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="slds-m-left_small slds-m-top_small slds-border_top">
+                                    <b>Subscription End Date</b>
+                                </div>
+                                <div class="slds-m-left_small">
+                                    <lightning:formattedDateTime value="{!cs.Subscription__r.SBQQ__EndDate__c}" year="numeric" month="short" day="numeric" />
+                                </div>  
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="slds-m-top_small slds-m-right_small slds-border_top">
+                                    <b>Subscription Name</b>
+                                </div>
+                                <div class="slds-m-right_small">
+                                    {!cs.Subscription__r.SBQQ__ProductName__c}
+                                </div>                                      
+                            </div>                         
+                        </aura:if>                  
+                    </aura:iteration>                    
+                </aura:iteration>                 
+            </div>        
+        </div>
+    </lightning:card>	
+    
+    <div class="slds-m-around_xx-large">
+        <!--Use aura:if tag to display/hide popup based on isModalOpen value-->  
+        <aura:if isTrue="{!v.isModalOpen}">
+            
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Manage Subscriptions</h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div onkeyup="{! c.handleKeyUp }">
+                                        <lightning:recordEditForm aura:id="recordEditForm" recordId="{!v.recordId}" objectApiName="Case">
+                                            <lightning:messages />
+                                            <lightning:inputField fieldName="Serial__c" onchange="{!c.onSerialChange}"/>                                            
+                                        </lightning:recordEditForm>
+                                    </div>                                    
+                                </div>
+                            </div>                                
+                            <div>
+                                <div style="height: 250px">
+                                    <!-- <h1>Selected Rows: {! v.selectedRowsCount }</h1> -->
+                                    <lightning:datatable
+                                                         columns="{! v.columns }"
+                                                         data="{! v.data }"
+                                                         keyField="Id"
+                                                         selectedRows="{! v.selectedRows }"
+                                                         onrowselection="{! c.updateSelectedText }"
+                                                         />
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand"
+                                          label="Save"
+                                          title="Save"
+                                          onclick="{!c.submitDetails}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </div>    
+    
+    <aura:html tag="style">
+        .slds-modal__container {
+        min-width: 70vw;
+        }
+    </aura:html>     
+</aura:component>

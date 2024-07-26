@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <description>Dummy assignment to prevent &apos;Your Flow Finished&apos; message</description>
+        <name>Dummy_Assignment</name>
+        <label>Dummy Assignment</label>
+        <locationX>831</locationX>
+        <locationY>346</locationY>
+        <assignmentItems>
+            <assignToReference>EndofFlow</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Assignment to initiate logout</description>
+        <name>Logout_Assignment</name>
+        <label>Logout Assignment</label>
+        <locationX>974</locationX>
+        <locationY>47</locationY>
+        <assignmentItems>
+            <assignToReference>LoginFlow_ForceLogout</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Checks if the users should be shown maintenance message or not.</description>
+        <name>Decision_Show_Maintenance_Message</name>
+        <label>Show Maintenance Message</label>
+        <locationX>607</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Dummy_Assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Show_Message</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Login_Flow_Attributes</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Maintenance_Message</targetReference>
+            </connector>
+            <label>Show Message</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if user needs to be logged out</description>
+        <name>Force_User_Logout</name>
+        <label>Force User Logout</label>
+        <locationX>796</locationX>
+        <locationY>48</locationY>
+        <defaultConnector>
+            <targetReference>Dummy_Assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Force_Logout</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Login_Flow_Attributes.Force_Logout__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Logout_Assignment</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Flow used in the Login Flow to display messages to users after they log in</description>
+    <interviewLabel>Internal Users Login Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Internal Users Login Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Login_Flow_Attributes</name>
+        <label>Get Login Flow Attributes</label>
+        <locationX>165</locationX>
+        <locationY>347</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decision_Show_Maintenance_Message</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Internal_User_Login_FLow</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>End_Date_Time__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Start_Date_Time__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Login_Flow_Attribute__mdt</object>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <description>Screen displaying the maintenance message</description>
+        <name>Screen_Maintenance_Message</name>
+        <label>Maintenance Message</label>
+        <locationX>614</locationX>
+        <locationY>45</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Force_User_Logout</targetReference>
+        </connector>
+        <fields>
+            <name>Message</name>
+            <fieldText>&lt;p&gt;System will be under maintenance from {!Get_Login_Flow_Attributes.Start_Date_Time__c} to {!Get_Login_Flow_Attributes.End_Date_Time__c}. &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!Get_Login_Flow_Attributes.Flow_Message__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>39</locationX>
+        <locationY>64</locationY>
+        <connector>
+            <targetReference>Get_Login_Flow_Attributes</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>EndofFlow</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Login Flow attribute that allows forced logout when set to true</description>
+        <name>LoginFlow_ForceLogout</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+</Flow>

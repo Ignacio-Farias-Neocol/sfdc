@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Remove_EOL_Products</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (
+TEXT(SBQQ__Quote__r.SBQQ__Type__c) = &apos;Renewal&apos;,
+TEXT(SBQQ__Quote__r.ApprovalStatus__c) = &apos;Approved&apos;,
+SBQQ__Quote__r.SBQQ__Primary__c  = true,
+SBQQ__Product__r.End_of_Life__c = true,
+SBQQ__Quote__r.Business_Group__c = &apos;Core&apos;)</errorConditionFormula>
+    <errorMessage>This Quote contains an End-of-Life (EOL) product. Please remove the product and recalculate.</errorMessage>
+</ValidationRule>

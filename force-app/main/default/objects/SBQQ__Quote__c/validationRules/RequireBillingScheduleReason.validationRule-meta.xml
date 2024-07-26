@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RequireBillingScheduleReason</fullName>
+    <active>true</active>
+    <description>Requires a value to be entered in the Billing Schedule Change Justification field if a value other than the default is entered in Billing Schedule.</description>
+    <errorConditionFormula>OR(
+    AND(Quote_Business_Group__c=&quot;Barracuda&quot;,
+        TEXT(Billing_Schedule__c)=&quot;Special Billing Schedule Request&quot;,
+        ISBLANK(Billing_Schedule_Change_Justification__c)),
+    AND(Quote_Business_Group__c=&quot;Sonian&quot;,
+        TEXT(Billing_Schedule__c)=&quot;Annual&quot;,
+        ISBLANK(Billing_Schedule_Change_Justification__c))
+)</errorConditionFormula>
+    <errorDisplayField>Billing_Schedule_Change_Justification__c</errorDisplayField>
+    <errorMessage>Please enter a Justification for the Billing Schedule change requested on this Quote.</errorMessage>
+</ValidationRule>

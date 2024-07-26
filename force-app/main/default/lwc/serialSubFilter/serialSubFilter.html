@@ -1,0 +1,189 @@
+<template>
+  <lightning-card title="Filters" icon-name="standard:calibration">
+    <!-- RESET Filters -->
+    <lightning-button
+      label="Reset Filters"
+      slot="actions"
+      onclick={resetFilters}
+    ></lightning-button>
+    <!-- RESET Filters -->
+    <lightning-layout horizontal-align="space" class="slds-p-around_x-small">
+      <!-- Search Key-->
+      <lightning-layout-item
+        size={layoutItemSize}
+        class="slds-box slds-box_x-small slds-m-right_xx-small filter-content"
+      >
+        <fieldset class="slds-form-element slds-form-element_compound">
+          <legend class="slds-form-element__legend slds-form-element__label">
+            <h2 class="header">Search</h2>
+          </legend>
+          <div class="slds-form-element__control">
+            <lightning-input
+              type="search"
+              onchange={handleSearchKeyChange}
+              class="slds-m-bottom_small"
+              label="Search Key"
+              value={searchKey}
+              field-level-help="Search Serial Number, Serial Product Name and Subscription Product Name"
+            ></lightning-input>
+          </div>
+        </fieldset>
+      </lightning-layout-item>
+      <!-- /Search Key-->
+      <!-- Date Range -->
+      <lightning-layout-item
+        size={layoutItemSize}
+        class="slds-box slds-box_x-small filter-content"
+      >
+        <fieldset class="slds-form-element slds-form-element_compound">
+          <legend class="slds-form-element__legend slds-form-element__label">
+            <h2 class="header">Serial Expiration Date</h2>
+          </legend>
+          <div class="slds-form-element__control">
+            <template if:true={showBusinessGroup}>
+              <div class="slds-form-element__row">
+                <div class="slds-size_2-of-2">
+                  <div class="slds-form-element">
+                    <lightning-input
+                      type="date"
+                      name="dateFrom"
+                      label="From"
+                      class="expDate"
+                      onchange={handleDateChange}
+                    ></lightning-input>
+                  </div>
+                </div>
+              </div>
+              <div class="slds-form-element__row">
+                <div class="slds-size_2-of-2">
+                  <div class="slds-form-element">
+                    <lightning-input
+                      type="date"
+                      name="dateTo"
+                      label="To"
+                      class="expDate"
+                      onchange={handleDateChange}
+                    ></lightning-input>
+                  </div>
+                </div>
+              </div>
+            </template>
+            <template if:false={showBusinessGroup}>
+              <div class="slds-form-element__row">
+                <div class="slds-size_1-of-2">
+                  <div class="slds-form-element">
+                    <lightning-input
+                      type="date"
+                      name="dateFrom"
+                      label="From"
+                      class="expDate"
+                      onchange={handleDateChange}
+                    ></lightning-input>
+                  </div>
+                </div>
+                <div class="slds-size_1-of-2">
+                  <div class="slds-form-element">
+                    <lightning-input
+                      type="date"
+                      name="dateTo"
+                      label="To"
+                      class="expDate"
+                      onchange={handleDateChange}
+                    ></lightning-input>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </fieldset>
+      </lightning-layout-item>
+      <!-- /Date Range -->
+      <!-- Status -->
+      <lightning-layout-item
+        size="4"
+        class="slds-box slds-box_x-small slds-m-left_xx-small filter-content"
+      >
+        <fieldset class="slds-form-element slds-form-element_stacked">
+          <legend class="slds-form-element__legend slds-form-element__label">
+            <h2 class="header">Serial Status</h2>
+          </legend>
+          <div class="slds-form-element__control">
+            <lightning-input
+              type="checkbox"
+              label="Active"
+              name="cbActive"
+              checked
+              class="statusCB"
+              onchange={handleStatusFilterChange}
+            ></lightning-input>
+            <lightning-input
+              type="checkbox"
+              label="Upcoming Renewal"
+              name="cbRenew"
+              checked
+              class="statusCB"
+              onchange={handleStatusFilterChange}
+            ></lightning-input>
+            <lightning-input
+              type="checkbox"
+              label="Expired/Replaced/Returned"
+              name="cbInactive"
+              checked
+              class="statusCB"
+              onchange={handleStatusFilterChange}
+            ></lightning-input>
+          </div>
+        </fieldset>
+      </lightning-layout-item>
+      <!-- /Status -->
+      <!-- Business Group -->
+      <template if:true={showBusinessGroup}>
+        <lightning-layout-item
+          size="2"
+          class="slds-box slds-box_x-small slds-m-left_xxx-small filter-content"
+        >
+          <fieldset class="slds-form-element slds-form-element_stacked">
+            <legend class="slds-form-element__legend slds-form-element__label">
+              <h2 class="header">Business Group</h2>
+            </legend>
+            <div class="slds-form-element__control">
+              <lightning-input
+                type="checkbox"
+                label="Core"
+                name="cbCore"
+                checked
+                class="businessGroupCB"
+                onchange={handleBusinessGroupFilterChange}
+              ></lightning-input>
+              <lightning-input
+                type="checkbox"
+                label="MSP"
+                name="cbMSP"
+                checked
+                class="businessGroupCB"
+                onchange={handleBusinessGroupFilterChange}
+              ></lightning-input>
+              <lightning-input
+                type="checkbox"
+                label="Sonian"
+                name="cbSonian"
+                checked
+                class="businessGroupCB"
+                onchange={handleBusinessGroupFilterChange}
+              ></lightning-input>
+              <lightning-input
+                type="checkbox"
+                label="None"
+                name="cbNoBG"
+                checked
+                class="businessGroupCB"
+                onchange={handleBusinessGroupFilterChange}
+              ></lightning-input>
+            </div>
+          </fieldset>
+        </lightning-layout-item>
+      </template>
+      <!-- /Business Group -->
+    </lightning-layout>
+  </lightning-card>
+</template>

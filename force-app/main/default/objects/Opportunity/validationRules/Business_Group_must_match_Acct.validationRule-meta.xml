@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Group_must_match_Acct</fullName>
+    <active>false</active>
+    <description>SFDC-13420: Validate Opportunity.Business_Group_c == Account.BusinessGroup__c</description>
+    <errorConditionFormula>AND(
+NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY ),
+TEXT(Business_Group__c) !=  Account.BusinessGroup__c)</errorConditionFormula>
+    <errorMessage>You may not have an Opportunity with a different business group than the Account.  Please go back to your Opportunity and select the appropriate Account.</errorMessage>
+</ValidationRule>

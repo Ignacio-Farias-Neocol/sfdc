@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Complete_Missing_Serial_Information</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR(RecordType.DeveloperName = &quot;Technical_Support&quot;,
+RecordType.DeveloperName = &quot;Professional_Services&quot;),
+TEXT(Status)!=&quot;Closed&quot;,
+ISBLANK(Serial__c) ,
+DateValue(CreatedDate) &gt; Date(2022,02,11) ,
+ISBLANK(Missing_Serial_Number__c),
+TEXT(Product_Family_List__c) !=&quot;Sonian&quot;,
+TEXT(Product_Family_List__c) !=&quot;Managed Workplace&quot;,
+TEXT(Product_Family_List__c) !=&quot;Echo Backup&quot;,
+TEXT(Product_Family_List__c) !=&quot;XDR&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Missing_Serial_Number__c</errorDisplayField>
+    <errorMessage>&apos;Serial&apos; (S-Record) or &apos;Missing Serial&apos; is required.</errorMessage>
+</ValidationRule>

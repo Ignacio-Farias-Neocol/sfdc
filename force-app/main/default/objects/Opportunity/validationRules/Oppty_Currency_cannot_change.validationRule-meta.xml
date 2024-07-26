@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Oppty_Currency_cannot_change</fullName>
+    <active>true</active>
+    <description>Opportunity&apos;s Currency cannot change if there is a Primary Quote</description>
+    <errorConditionFormula>NOT(ISBLANK(SBQQ__PrimaryQuote__c )) &amp;&amp;
+	ISCHANGED( CurrencyIsoCode )</errorConditionFormula>
+    <errorMessage>You can&apos;t change the Opportunity Currency when there is a Primary Quote attached.</errorMessage>
+</ValidationRule>

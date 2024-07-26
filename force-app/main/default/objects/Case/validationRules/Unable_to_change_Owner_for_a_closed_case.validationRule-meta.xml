@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Unable_to_change_Owner_for_a_closed_case</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+OR(
+(ISPICKVAL(Status,&quot;Cancelled&quot;)),(ISPICKVAL(Status,&quot;Closed&quot;))), ISCHANGED(OwnerId),(RecordType.DeveloperName = &apos;Partner_Success&apos;))</errorConditionFormula>
+    <errorMessage>You can&apos;t change a closed Case to a different owner.</errorMessage>
+</ValidationRule>

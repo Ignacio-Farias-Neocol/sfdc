@@ -1,0 +1,154 @@
+<template>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-modal="true">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header bold">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{label.header}</h1>
+                    <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">{subHeader}</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-grid slds-grid_align-center">
+                        <div class="slds-col slds-size_11-of-12">
+                            <div class="slds-box">
+                                <lightning-card  variant="Narrow">
+                                    <h3 slot="title" class="bold">
+                                        <lightning-icon icon-name="standard:question_feed" size="small" class="slds-m-right_small"></lightning-icon>
+                                        {label.modificationTypes}
+                                    </h3>
+                                    <div>
+                                        <div class="slds-grid slds-border_top slds-m-top_x-small slds-p-top_x-small slds-grid_align-center">
+                                            <div class="slds-col slds-size_3-of-12 bold"> 
+                                                {userCountLabel}
+                                            </div>
+                                            <div class="slds-col slds-size_8-of-12"> 
+                                                {label.modifyUserCountDesc}<br/>
+                                                {label.modifyUserCountDesc2}<br/>
+                                                {label.modifyUserCountDesc3}<br/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-border_top slds-m-top_x-small slds-p-top_x-small slds-grid_align-center">
+                                            <div class="slds-col slds-size_3-of-12 bold"> 
+                                                {coTermModifyEndDateLabel}
+                                            </div>
+                                            <div class="slds-col slds-size_8-of-12"> 
+                                                <lightning-formatted-rich-text value={label.modifyEndDateDesc}></lightning-formatted-rich-text>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-border_top slds-m-top_x-small slds-p-top_x-small slds-grid_align-center">
+                                            <div class="slds-col slds-size_3-of-12 bold"> 
+                                                {modifySubsLabel}
+                                            </div>
+                                            <div class="slds-col slds-size_8-of-12"> 
+                                                <lightning-formatted-rich-text value={label.addSubscriptionDesc}></lightning-formatted-rich-text>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-border_top slds-m-top_x-small slds-p-top_x-small slds-grid_align-center">
+                                            <div class="slds-col slds-size_3-of-12 bold"> 
+                                                {willNotRenewLabel}
+                                            </div>
+                                            <div class="slds-col slds-size_8-of-12"> 
+                                                <lightning-formatted-rich-text value={label.willNotRenewDesc}></lightning-formatted-rich-text>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-border_top slds-m-top_x-small slds-p-top_x-small slds-grid_align-center">
+                                            <div class="slds-col slds-size_3-of-12 bold"> 
+                                                {otherLabel}
+                                            </div>
+                                            <div class="slds-col slds-size_8-of-12"> 
+                                                <lightning-formatted-rich-text value={label.otherDesc}></lightning-formatted-rich-text>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-card>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-grid_align-center slds-var-m-around_medium">
+                        <div class="slds-col slds-size_11-of-12">
+                            <lightning-card  variant="Narrow">
+                                <h3 slot="title" class="bold">
+                                    <lightning-icon icon-name="standard:change_request" size="small" class="slds-m-right_small"></lightning-icon>
+                                    {label.selectionInstructions}
+                                </h3>
+                                <div class="slds-grid slds-grid_align-center">
+                                    <div class="slds-col slds-size_11-of-12">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                                                <lightning-input class="toplevelcheckbox" type="checkbox" data-id="changeUserCount" label={userCountLabel} onchange={handleChangeUserCount}></lightning-input>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" class="slds-size_4-of-4"> 
+                                                <div if:true={showChangeUserCount}>
+                                                    <lightning-input type="number" id="default1" placeholder={qtyVal} onchange={handleChangeUserCountDetail} class="slds-text-title_bold" value={userCount} label={label.userCountDetailsLabel} variant="label-inline"></lightning-input>
+                                                </div>
+                                            </lightning-layout-item>
+                                                
+                                            <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                                                    <lightning-input class="toplevelcheckbox" type="checkbox" data-id="coTerm" label={coTermModifyEndDateLabel} onchange={handleCoTerm}></lightning-input>
+                                            </lightning-layout-item>
+                
+                                            <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                                                <div if:true={showCoTerm}>
+                                                    <lightning-input type="date" id="default2" class="slds-text-title_bold" onchange={handleChangeCoTermModifyEndDate} value={coTermModifyEndDate} label={label.coTermModifyEndDateDetailLabel} variant="label-inline"></lightning-input>
+                                                </div>
+                                            </lightning-layout-item>
+                
+                                            <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                                                    <lightning-input class="toplevelcheckbox" type="checkbox" data-id="modifySubs" label={modifySubsLabel} onchange={handleModifSubs}></lightning-input>
+                                            </lightning-layout-item>
+
+                                            <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                                                <div if:true={showModifySubs}>
+                                                    <!-- <label class="slds-form-element__label slds-m-right_none" for="default3">{label.modifySubsDetailLabel}</label>            -->
+                                                    <lightning-textarea type="text" id="default3" class="slds-text-title_bold" onchange={handleChangeSubsDetail} value={subsDetail} maxlength="4000" label={label.modifySubsDetailLabel} variant="label-inline"></lightning-textarea>
+                                                </div>
+                                            </lightning-layout-item>
+                                        
+
+                                            <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                                                    <lightning-input class="toplevelcheckbox" type="checkbox" data-id="willNotRenew" label={willNotRenewLabel} onchange={handleWillNotRenew}></lightning-input>
+                                            </lightning-layout-item>
+
+                                            <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                                                    <div if:true={showWillNotRenew}>
+                                                        <lightning-checkbox-group variant="label-inline" id="willNotRenew" 
+                                                                                name="Will Not Renew Details" 
+                                                                                label={label.willNotRenewDetailLabel} 
+                                                                                options={willNotRenewOptions}
+                                                                                value={renewValues}
+                                                                                onchange={handleChangeWillNotRenew}>
+                                                        </lightning-checkbox-group>
+                                                    </div>
+                                                    </lightning-layout-item>
+                                                    
+                                            
+                                            <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                                                    <lightning-input class="toplevelcheckbox" type="checkbox" data-id="other" label={otherLabel} onchange={handleOther}></lightning-input>
+                                            </lightning-layout-item>
+                                            
+                                            <lightning-layout-item padding="around-small" class="slds-size_4-of-4">
+                                                <div if:true={showOther}>
+                                                    <lightning-textarea type="text" id="default5" class="slds-text-title_bold" onchange={handleChangeOtherDetail} value={otherDetail} maxlength="4000" label={label.otherDetailLabel} variant="label-inline"> </lightning-textarea>
+                                                </div>
+                                            </lightning-layout-item>
+                                        
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </lightning-card>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={hideModal} aria-label="Cancel and close">{label.cancel}</button>
+                    <button class="slds-button slds-button_brand" onclick={handleSubmit} >{label.submit}</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={spinnerVisibility}>
+        
+        <c-custom-spinner></c-custom-spinner>
+      
+    </template>
+</template>

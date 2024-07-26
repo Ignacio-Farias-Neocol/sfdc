@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Internal_Ticket_Pending_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL(Status, &apos;Internal Ticket Pending&apos;),
+ISBLANK(Internal_Ticket__c)
+)</errorConditionFormula>
+    <errorMessage>Please input the related Internal Ticket you are waiting on in the field &quot;Internal Ticket&quot; to select this stage</errorMessage>
+</ValidationRule>

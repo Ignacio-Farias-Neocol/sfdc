@@ -1,0 +1,288 @@
+<!-- Author: Saleforce Services
+     Date: 02/14/2021 
+    Description: Used to generate subscripion certificate for an order. Used by visualforce email template OrderSubCertNotification 801K0000002l6xgIAA-->
+<apex:component controller="OrderSubCertCompController" access="global" layout="none">
+  <apex:attribute name="thisOrder" 
+                  description="Order record for which certification is being generated." 
+                  type="Order" 
+                  required="required" 
+                  assignTo="{!certOrder}" />
+  <head>
+    <style type="text/css" media="print">
+      @page {
+        size: letter landscape;
+        border: 2px solid black;
+        font-family: Helvetica;
+        /* background-image: url('{!URLFOR($Resource.subCertBackground)}');
+        background-repeat: no-repeat;
+        background-position: center; */
+        /* background-size: cover; */
+        /* margin-top: 1in; */
+        @bottom-right {
+          content: counter(page) ' of ' counter(pages);
+        }
+      }
+
+      /*Style used by the section containing header information*/
+      .header-table {
+        width: 94%;
+        margin-left: 3%;
+        margin-right: 3%;
+      }
+
+      /*Style used by logo and header text section */
+      .logo-header-text-section{
+        width:40%;
+      }
+
+      /*Style for the Barracuda Logo*/
+      .logo {
+        text-align: left;
+        width: 100%;
+        font-size: 24px;
+        font-family: Helvetica;
+        margin-top: 15px;
+      }
+
+      /*Style for the Certificate of Subscription text*/
+      .header-text{
+        font-size: 28px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      /*Style used by the section showing information in the top right */
+      .header-fields-section{
+        width:60%; 
+        text-align:right;
+      }
+
+      /*Style used by the table displaying fields*/
+      .field-section-table{
+        float:right;
+        width:50%;
+      }
+
+      /*Style used by field label*/
+      td.field-label {
+        width: 30%;
+        text-align:right;
+        /* border: 1px solid black; */
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        color:#555555;
+        font-weight: bold;
+      }
+
+      /*Style used by field value*/
+      td.field-value {
+        width: 70%;
+        text-align:left;
+        /* border: 1px solid black; */
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        padding-left: 10px;
+      }      
+
+      /*Horizontal line used for separating sections*/
+      .horizontal-line{
+        background-color:#D4D4D3; 
+        height:1px; 
+        width:96%; 
+        margin:0 auto;
+      }
+
+      /*Table used to show the Serial header and subscription table*/
+      .serial-table{
+        border-radius: 25px;
+        border: 1px solid #D4D4D3;
+        margin-top: 10px;
+        width:96%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /*Style used for the header showing Product and Serial #*/
+      .serial-table-header {
+        background:#D4D4D3;
+        border: 1px solid #D4D4D3;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10px; 
+        width:96%;
+      }
+      
+      /*Style used for the header's left section*/
+      .serial-table-header-left {
+        padding-left: 10px;
+        text-align: left;
+        display: inline-block;
+        width:50%;
+      }
+
+      /*Style used for the header's right section*/
+      .serial-table-header-right {
+        text-align: left; 
+        display: inline-block; 
+        float:right; 
+        width:20%;
+      }
+
+      /*Style used for the serial header's label text*/
+      .serial-table-header-field-label{
+        font-size:10px; 
+        color:#555555;
+        padding-left: 0px;
+        margin-bottom: 0px;
+      }
+
+      /*Style used for the serial header's value text*/
+      .serial-table-header-field-value{
+        font-size:14px;
+        font-weight: normal;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+
+      /*Style used by the div containing subscription table*/
+      .sub-table-container {
+        text-align: left;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        padding: 10px;
+
+      }
+
+      /*Style used by subscription table*/
+      .sub-table {
+        width: 100%;
+        text-align: left;
+        border-spacing: 0px 1px;
+        border-collapse:collapse;
+      }
+
+      .sub-column-header {
+        border-bottom: 1px solid #D4D4D3;
+        font-weight: normal;
+        font-size: 10px;
+        text-transform: uppercase;
+        color: #555555;
+        padding-bottom: 5px; 
+      }
+
+      .sub-cell{
+        border-bottom: 1px dotted #D4D4D3;
+        padding-top: 3px;
+        padding-bottom: 5px;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+                
+  <body>
+    <!-- HEADER -->
+    <div>
+      <table class="header-table">
+        <tr>
+          <td class="logo-header-text-section">
+            <!-- HEADER LOGO AND CERT LABEL-->
+            <div class="logo">
+              <apex:image id="barracudaLogo" 
+                          value="{!$Resource.BarracudaLogo}" 
+                          width="153.41px" 
+                          height="49.5px" 
+                          alt="Barracuda Logo" />
+              <p class="header-text">Certificate of Subscriptions</p>
+            </div>
+            <!-- /HEADER LOGO AND CERT LABEL -->
+          </td>
+          <td class="header-fields-section">
+            <!-- HEADER FIELDS-->
+            <table class="field-section-table">
+              <tr>
+                <td class="field-label">Account:</td>
+                <td class="field-value">{!thisOrder.Account.Name}</td>
+              </tr>
+              <tr>
+                <td class="field-label">PO #:</td>
+                <td class="field-value">{!thisOrder.PoNumber}</td>
+              </tr>
+              <tr>
+                <td class="field-label">Quote #:</td>
+                <td class="field-value">{!thisOrder.SBQQ__Quote__r.Name}</td>
+              </tr>
+              <tr>  
+                <td class="field-label">Distributor: </td>
+                <td class="field-value">{!thisOrder.Active_Contract__r.Distributor__r.Name}</td>
+              </tr>
+              <tr> 
+                <td class="field-label">Partner: </td>
+                <td class="field-value">{!thisOrder.Active_Contract__r.Reseller__r.Name}</td>
+              </tr>
+            </table>
+            <!-- /HEADER FIELDS-->
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- /HEADER -->
+
+    <!-- HORIZONTAL LINE -->
+    <div class="horizontal-line"></div>
+    <!-- /HORIZONTAL LINE -->
+
+    <!-- SERIAL TABLES -->
+    <apex:repeat value="{!serialList}" var="serial">
+      <table class="serial-table">
+        <th class="serial-table-header">
+          <div class="serial-table-header-left">
+            <p class="serial-table-header-field-label">PRODUCT</p>
+            <!-- <p class="serial-table-header-field-value">{!serial.productName}</p> -->
+            <p class="serial-table-header-field-value">{!serial.productDes}</p>
+          </div>
+          
+          <div class="serial-table-header-right">
+            <p class="serial-table-header-field-label">SERIAL NUMBER</p>
+            <p class="serial-table-header-field-value">{!serial.serialNumber}</p>
+          </div>
+        </th>
+        <tr>
+          <td>
+            <div class="sub-table-container">
+              <table class="sub-table">
+                <tr>
+                  <th class="sub-column-header">Start Date</th>
+                  <th class="sub-column-header">End Date</th>
+                  <th class="sub-column-header">Capacity</th>
+                  <th class="sub-column-header">Subscription</th>
+                </tr>
+                <apex:repeat value="{!serial.subList}" var="sub" id="subRepeat">
+                  <tr>
+                    <td style="width:12%" class="sub-cell">
+                      <apex:outputText value="{0,date,MMM d',' yyyy}">
+                        <apex:param value="{!sub.startDate}" />
+                      </apex:outputText>
+                    </td>
+                    <td style="width:12%" class="sub-cell">
+                      <apex:outputText value="{0,date,MMM d',' yyyy}">
+                        <apex:param value="{!sub.endDate}" />
+                      </apex:outputText>
+                    </td>
+                    <td style="width:10%" class="sub-cell">
+                      <apex:outputText value="{0, number, ###,##0}">
+                        <apex:param value="{!sub.quantity}"
+                        />
+                      </apex:outputText>
+                    </td>
+                    <!-- <td style="width:66%" class="sub-cell">{!sub.productName}</td> -->
+                    <td style="width:66%" class="sub-cell">{!sub.productDes}</td>
+                  </tr>
+                </apex:repeat>
+              </table>
+            </div>  
+          </td>
+        </tr>
+      </table>
+    </apex:repeat>
+
+    <!-- /SERIAL TABLES -->
+  </body>
+</apex:component>

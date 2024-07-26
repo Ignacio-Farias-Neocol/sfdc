@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Serial_Number_if_Hardware_Ref</fullName>
+    <active>true</active>
+    <description>Require Serial Number if Appliance Line Type == Hardware Refresh</description>
+    <errorConditionFormula>ISPICKVAL(Appliance_Line_Type__c, &quot;Hardware Refresh&quot;) &amp;&amp; 
+ISBLANK(SBCF_Serial_Number__c ) &amp;&amp;
+ ISPICKVAL(SBQQ__Quote__r.SBQQ__Type__c , &quot;Amendment&quot;) &amp;&amp;
+ Business_Group__c=&quot;Core&quot;</errorConditionFormula>
+    <errorMessage>A Serial Number is required for Hardware Refresh.</errorMessage>
+</ValidationRule>

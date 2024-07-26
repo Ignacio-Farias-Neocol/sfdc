@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Community_User_Edit_Modification_Request</fullName>
+    <active>true</active>
+    <description>Partner Community User should not be able to Edit Modification Request fields after Submission SFDC-18377.</description>
+    <errorConditionFormula>IF(
+AND( RecordType.Name =&apos;Community Quote&apos; ,Is_Related_to_Logged_in_user_s_account__c = true,
+TEXT($User.UserType) = &apos;PowerPartner&apos;,
+OR(ISCHANGED(g_Change_User_Count__c),
+ISCHANGED(g_Change_User_Count_Details__c),
+ISCHANGED(g_Co_Term_Modify_End_Date__c),
+ISCHANGED(g_Co_Term_Modify_End_Date_Details__c),
+ISCHANGED(g_Modify_Subscriptions__c),
+ISCHANGED(g_Modify_Subscriptions_Detail__c),
+ISCHANGED(g_Will_Not_Renew__c),
+ISCHANGED(g_Will_Not_Renew_Details__c),
+ISCHANGED(g_Other__c),
+ISCHANGED(Status),
+ISCHANGED(g_Other_Details__c)))
+,TRUE,FALSE
+)</errorConditionFormula>
+    <errorMessage>The fields in your Modification Request cannot be edited after submission. Please use Chatter to post any additional comments to your request.</errorMessage>
+</ValidationRule>

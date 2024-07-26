@@ -1,0 +1,362 @@
+.THIS .logoContainer {
+    background-image: t('url(' + brandLogoImage  + ')');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 99;
+    cursor: pointer;
+    position: relative;
+    max-width: 100%;
+    max-height: 52px;
+    display: block;
+    outline: 0;
+    height: 50px;
+    margin-top: 10px;
+}
+
+.THIS #header-background {
+    background-color: #263146 !important;
+    position: absolute;
+    height: 50px;
+    opacity: 0.8;
+    width: 100%;
+    z-index: 5;
+}
+
+.THIS .container-header-outer {
+    width:100%;
+    background-color:#263146;
+}
+
+.THIS .container-header-inner {
+	margin:auto;
+    width:90%;
+    padding-left:20px;
+    position: relative;
+}   
+
+.THIS .cuda-header {
+    float:left;
+    width:20%;
+}
+
+.THIS .cuda-logo {
+    float:left;
+    padding:20px 20px 20px 0;
+}
+
+.THIS .searchRegion {
+    float:left;
+    width:50%;
+    padding-top:30px;
+}
+
+.THIS .snapinChatRegion {
+    float:center;
+    width:100%;
+}
+
+.THIS .profileMenuRegion {
+    float:left;
+    width:20%;
+    padding-top:40px;
+}
+
+.THIS .container-navbar-outer-blue2teal-gradient {
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 0;
+    cursor: pointer;
+    background-color: #00B098 !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    max-width: 100%;
+    max-height: 52px;
+    display: block;
+    outline: 0;
+    height: 50px; 
+    /*position: relative;
+    opacity: 0.8;*/
+}
+
+.THIS .container-navbar-inner {
+    margin:auto;
+    width:90%;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+.THIS .labelRegion {
+    float:left;
+    padding-top:10px;
+    width:25%;
+    font-family: "proxima-nova", sans-serif;
+    font-size: 1rem;
+    color: white !important; 
+    line-height: 1.0;
+}
+
+.THIS .navBarRegion {
+    float:left;
+    width:50%;
+    padding-top:2px;
+    padding-bottom:2px;
+}
+
+.THIS #leftNav {
+    text-align: center;
+    width: 45%;
+    float: left;
+    text-align: left;
+}
+
+.THIS #leftNav .cuda-logo {
+    display: inline;
+    vertical-align: super;
+}
+
+.THIS #leftNav .cuda-logo img {
+    vertical-align: text-bottom !important;
+}
+
+.THIS #leftNav .cuda-motto {
+    display: inline;
+    vertical-align: bottom;
+    margin-left: 1rem;
+}
+
+.THIS footer{
+    background-color: #263146;
+    color: #666;
+    padding: 1em 0.5em;
+    clear: both;
+}
+
+.THIS #footer-row-table {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 25px;
+    padding-top: 35px;
+}
+
+.THIS .footer-section {
+    vertical-align: top;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+}
+
+.THIS .footer-section li{
+    float: none !important;
+    margin-left: 0 !important;
+    padding: 0.15rem 0 !important;
+}
+
+.THIS footer {
+    display: block !important;
+}
+
+.THIS footer .nav{
+    display: block !important;
+}
+
+.THIS footer h5{
+    font-size: 1.1rem;
+    color: white; 
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-weight: 400;
+}
+
+.THIS footer .nav-link #view-more-link{
+    color: rgba(255,255,255,.8)!important;
+    font-size: 1rem;
+    font-weight: 100;
+    float: none;
+    padding: 1px 0;
+    display: block
+}
+
+.THIS footer a.nav-link:hover #view-more-link:hover{
+    color: #0088ce !important;
+}
+
+.THIS .nav-social{
+    padding-bottom: 7px;
+    padding-top: 10px;
+}
+
+.THIS .nav-social .nav-item{
+    text-align: left;
+}
+
+.THIS .nav-social a{
+    padding-right: 10px;
+    padding-left:  10px;
+}
+
+.THIS .special-nav-social{
+    display: inline-block;
+    float: left;
+    border-radius: 50%;
+    margin-right: 1rem;
+    color: #fff;
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 28px;
+    height: 28px;
+}
+
+.THIS .nav-social li {
+    line-height: 2.4;
+}
+
+.THIS .nav-social .nav-item{
+    padding: 4px 0;
+}
+.THIS .nav-social .nav-link{
+    padding: 1px 0px;
+}
+.THIS .nav-social img{
+    width: 1.25rem;
+}
+.THIS .nav-social-text{
+    text-align: left;
+    margin-left: 40px;
+}
+
+.THIS #copyright{
+    width: 27%;
+    margin-right: 7px;
+    padding-left: 50px;
+}
+
+.THIS #copyright a{
+    color: white !important;
+    font-size: 0.875rem;
+    line-height: 1;
+    font-weight: 400;
+    display: inline-block;
+    font-weight: 100;
+}
+.THIS #copyright em{
+    color: white !important;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 100;
+}
+
+.THIS #desktop-footer{
+    display: none;
+}
+.THIS #footer-logo-mobile{
+    width: 164px;
+    margin-bottom: 30px;
+}
+.THIS .footer-spacer{
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 0.75rem;
+    color: white;
+}
+
+/*MOBILE FOOTER*/
+.THIS #mobile-copyright{
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.THIS #mobile-copyright a{
+    color: white !important;
+    font-size: 0.75rem;
+    font-weight: 100;
+}
+
+.THIS #mobile-copyright em{
+    color: white !important;
+    font-size: 0.75rem;
+    font-weight: 100; 
+}
+.THIS .mobile-separator{
+    padding-left: 5px;
+    padding-right: 5px;
+    color: white;
+}
+
+.THIS #mobile-nav-socal{
+    padding-bottom: 12px;
+}
+
+.THIS #mobile-nav-socal .mobile-nav-socal-item{
+    width: 22px;
+    display: inline-block;
+    margin: 4px 9px;
+}
+
+@media (min-width: 576px) {
+
+    .THIS #footer-logo-mobile{
+      width: 200px;
+    }
+  
+    .THIS #mobile-nav-socal .mobile-nav-socal-item{
+      width: 25px;
+      margin: 0 14px;
+    }
+  
+    .THIS #mobile-nav-socal{
+      padding-bottom:20px;
+    }
+  
+  }
+  
+  @media (min-width: 992px) {
+    .THIS #mobile-footer{
+        display: none;
+      }
+      .THIS #desktop-footer{
+        display: block;
+      }
+      .THIS #footer-logo-desktop{
+        width: 250px;
+        margin-bottom: 30px;
+      }
+
+  }
+  
+  @media (min-width: 1200px) {
+    .THIS #footer-row-table{
+      display: flex;
+      justify-content: space-around;
+      padding-bottom: 25px;
+      padding-top: 35px;
+    }
+  }
+
+  @media screen and (max-width: 770px) {
+    .THIS .labelRegion {
+      visibility: hidden;
+      float:left;
+      padding-top:10px;
+      width:25%;
+      font-family: "proxima-nova", sans-serif;
+      font-size: 1rem;
+      color: white !important; 
+    }
+
+    .THIS .cuda-logo {
+        width: 150px;
+    }
+
+    .THIS .searchRegion {
+        padding-top:30px;
+        padding-left:100px;
+    }
+    
+    .THIS .profileMenuRegion {
+        float:right;
+        padding-top:30px;
+    }
+
+  }

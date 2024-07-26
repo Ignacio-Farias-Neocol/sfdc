@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Placement_of_Draft_Order</fullName>
+    <active>true</active>
+    <description>Prevents user from Placing an incomplete (un-activated, un-contracted) Order</description>
+    <errorConditionFormula>/*
+AND( 
+    TEXT(Status)=&quot;Placed&quot;,
+   
+       ISBLANK(ActivatedDate),
+       (ISBLANK(Contracted_Date_Time__c) &amp;&amp; ISBLANK( Assets_Created_Date_Time__c))
+      ) 
+
+)*/
+AND( 
+    TEXT(Status)=&quot;Placed&quot;,
+       ISBLANK(ActivatedDate),
+       (ISBLANK(Contracted_Date_Time__c) &amp;&amp; (Count_Subscriptions__c &gt; 0 &amp;&amp; Count_Assets__c &gt; 0))
+)</errorConditionFormula>
+    <errorMessage>You can&apos;t place an Order before it has been Activated. Please Activate the Order and try again.</errorMessage>
+</ValidationRule>

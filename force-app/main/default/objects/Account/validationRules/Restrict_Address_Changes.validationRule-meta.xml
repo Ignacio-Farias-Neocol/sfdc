@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Address_Changes</fullName>
+    <active>true</active>
+    <description>Only Customer Service, Sales Operations can modify the Address when record type is &apos;Customer or Partner&apos;.</description>
+    <errorConditionFormula>AND(
+  ISCHANGED(BillingAddress), 
+  OR(
+    RecordType.DeveloperName = &apos;Customer&apos;,
+    RecordType.DeveloperName = &apos;Partner&apos;
+   ),
+  NOT(
+     OR(
+       $Profile.Name = &apos;Apollo: Custom- Sales Operations&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Customer Services&apos;,
+       $Profile.Name = &apos;System Administrator&apos;,
+ $Permission.Billing_Address 
+     )
+   )
+)</errorConditionFormula>
+    <errorMessage>Sorry - Only Sales Operations and Customer Services can modify the Primary Business Address. Please open an internal ticket if you need to update this address.</errorMessage>
+</ValidationRule>

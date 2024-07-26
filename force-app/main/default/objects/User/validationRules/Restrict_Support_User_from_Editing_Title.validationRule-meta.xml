@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Support_User_from_Editing_Title</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT($Permission.Agent_Supervisor_Permission_Set),
+OR($Profile.Name=&apos;Apollo: Custom- Support Profile - Omni Channel&apos;,
+$Profile.Name=&apos;Apollo: Custom- Support Profile&apos;),
+ISCHANGED(Title) 
+)</errorConditionFormula>
+    <errorDisplayField>Title</errorDisplayField>
+    <errorMessage>Sorry, but you can&apos;t update the Title field. Please open an internal ticket to request the update.</errorMessage>
+</ValidationRule>

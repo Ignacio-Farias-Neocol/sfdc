@@ -1,0 +1,21 @@
+<!--
+  @description       : 
+  @author            : vinmai
+  @group             : 
+  @last modified on  : 05-15-2023
+  @last modified by  : Vinmai
+-->
+<template>
+	<template if:true={showLeads}>
+    <lightning-card class="slds-m-around_medium">
+        <div class="center"><b>EMAIL ALERT</b></div>
+				<ul>
+					<template for:each={leads} for:item="lead">
+						<li key={lead.Id}>
+							<p class="ex1"><b>Email is linked to a Lead: </b>  <a href={leadLink}>View Lead</a></p>
+						</li>
+					</template>
+				</ul>
+    </lightning-card>
+	</template>		
+</template>

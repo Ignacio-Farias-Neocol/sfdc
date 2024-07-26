@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Maximum_Desired_Term</fullName>
+    <active>true</active>
+    <description>Display an error if the desired term is greater than 60 months</description>
+    <errorConditionFormula>Desired_Term_Portal__c &gt; 60</errorConditionFormula>
+    <errorMessage>Desired term cannot be more than 60 months.</errorMessage>
+</ValidationRule>

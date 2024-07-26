@@ -1,0 +1,71 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global" controller="CPQ_SubscriptionList_Controller" >
+    <aura:attribute name="recordId" type="String" access="public" />
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="primaryQuoteId" type="String" access="private" />
+    <aura:attribute name="record" type="Opportunity" access="public" />
+    
+    <aura:attribute name="gridColumns" type="List" access="private" />
+    <aura:attribute name="gridData" type="Object" access="private" />
+    
+    <aura:attribute name="gridColumns2" type="List" access="private" />
+    <aura:attribute name="gridData2" type="Object" access="private" />
+    
+    <aura:attribute name="inprogress" type="Boolean" access="private"/>
+    <aura:if isTrue="{!v.inprogress == true}">
+        <lightning:spinner variant="brand" size="large"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.pageReference != undefined}">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <lightning:breadcrumbs>
+                    <lightning:breadcrumb label="Opportunity" href="/006"/>
+                    <lightning:breadcrumb label="{!v.record.Name}" href="{!'/' + v.pageReference.state.c__recordId}"/>
+                </lightning:breadcrumbs>
+            </div>
+        </div>
+    </aura:if>
+    
+    <lightning:card title="{!'Renewable Subscriptions (' + v.gridData.length + ')'}" iconName="standard:custom" class="slds-card_boundary">
+        <aura:set attribute="actions">
+            <aura:if isTrue="{!v.gridData.length > 0}">
+                <lightning:button label="Edit Quote Lines" onclick="{!c.openLineEditor}" />
+            </aura:if>
+        </aura:set>
+        
+        <aura:if isTrue="{!v.gridData.length > 0}">
+            <lightning:datatable keyField="id" data="{! v.gridData }" columns="{! v.gridColumns }" hideCheckboxColumn="true"/>
+        </aura:if>
+        
+        <aura:set attribute="footer">
+            <aura:if isTrue="{!and(v.gridData.length > 0, v.pageReference == undefined)}">
+                <a class="slds-card__footer-action" onclick="{!c.openFullList}">View All
+                    <span class="slds-assistive-text">Renewable Subscriptions</span>
+                </a>
+            </aura:if>
+        </aura:set>
+    </lightning:card>
+    
+    <lightning:card title="{!'Amendable Subscriptions (' + v.gridData2.length + ')'}" iconName="standard:custom" class="slds-card_boundary">
+        <aura:set attribute="actions">
+            <aura:if isTrue="{!v.gridData2.length > 0}">
+                <lightning:button label="Edit Quote Lines" onclick="{!c.openLineEditor}" />
+            </aura:if>
+        </aura:set>
+        
+        <aura:if isTrue="{!v.gridData2.length > 0}">
+            <lightning:datatable keyField="id" data="{! v.gridData2 }" columns="{! v.gridColumns2 }" hideCheckboxColumn="true"/>
+        </aura:if>
+        
+        <aura:set attribute="footer">
+            <aura:if isTrue="{!and(v.gridData2.length > 0, v.pageReference == undefined)}">
+                <a class="slds-card__footer-action" onclick="{!c.openFullList}">View All
+                    <span class="slds-assistive-text">Amendable Subscriptions</span>
+                </a>
+            </aura:if>
+        </aura:set>
+    </lightning:card>
+</aura:component>

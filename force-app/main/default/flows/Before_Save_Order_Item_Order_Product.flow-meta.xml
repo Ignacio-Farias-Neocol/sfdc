@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <assignments>
+        <name>Update_Quote_line_Categorization</name>
+        <label>Update Quote line Categorization</label>
+        <locationX>982</locationX>
+        <locationY>373</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Quote_Line_Categorization__c</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.SBQQ__QuoteLine__r.Quote_Line_Categorization__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_the_blank_on_Quote_line_Categorization</name>
+        <label>Check the blank on Quote line Categorization</label>
+        <locationX>663</locationX>
+        <locationY>368</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Null_False</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__QuoteLine__r.Quote_Line_Categorization__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Quote_line_Categorization</targetReference>
+            </connector>
+            <label>Is Null False</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Before Save | Order Item(Order Product) {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Before Save | Order Item(Order Product)</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>650</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Check_the_blank_on_Quote_line_Categorization</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Quote_Line_Categorization__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>OrderItem</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

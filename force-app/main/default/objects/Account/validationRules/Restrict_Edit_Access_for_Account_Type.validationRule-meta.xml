@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Edit_Access_for_Account_Type</fullName>
+    <active>true</active>
+    <description>Should not Edit Account Type Except Customer Services , Sales Ops and  System admin</description>
+    <errorConditionFormula>AND(
+NOT(Bypass_Validation__c),
+NOT(ISNEW()), 
+ISCHANGED(Type), NOT( $Permission.Account_Type_Edit_Access)
+)</errorConditionFormula>
+    <errorMessage>Sorry - You do not have permission to change the Account Type.</errorMessage>
+</ValidationRule>

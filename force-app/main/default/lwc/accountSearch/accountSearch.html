@@ -1,0 +1,42 @@
+<template>
+  <lightning-card>
+      <div class="slds-m-around_medium">
+          <lightning-layout vertical-align="end" class="slds-m-bottom_small">
+              <lightning-layout-item flexibility="grow">
+                  <lightning-input
+                      type="search"
+                      onchange={handleKeyChange}
+                      label="Account Search"
+                      value={searchKey}
+                      field-level-help="Search Account Name or Username"
+                  ></lightning-input>
+              </lightning-layout-item>
+              <lightning-layout-item class="slds-p-left_xx-small">
+                  <lightning-button
+                      label="Search"
+                      onclick={handleSearch}
+                  ></lightning-button>
+              </lightning-layout-item>
+          </lightning-layout>
+          <template if:true={showMessage}>
+            <p><lightning-formatted-text value={message} ></lightning-formatted-text></p>
+          </template>
+          <template if:true={showRadioButton}>
+            <lightning-radio-group name="radioGroup"
+            options={radiobuttonOptions}
+            value={selectedValue}
+            type="radio"
+            onchange={handleRadioButtonSelection}></lightning-radio-group>
+          </template>
+      </div>
+      <template if:true={showSpinner}>
+        <div>
+          <lightning-spinner
+            alternative-text="Searching"
+            size="medium"
+            variant="brand"
+          ></lightning-spinner>
+        </div>
+      </template>      
+  </lightning-card>
+</template>

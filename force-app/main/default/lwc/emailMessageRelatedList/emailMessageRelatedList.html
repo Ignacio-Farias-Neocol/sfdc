@@ -1,0 +1,65 @@
+<template>
+  <template if:true={state.showRelatedList}>
+      <lightning-layout class="slds-m-top_x-small">
+          <article class="slds-card lightning-card">
+              <div class="slds-card__header slds-grid slds-theme_shade">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate ">
+                  <div class="slds-media__figure">
+                      <lightning-icon icon-name={state.iconName} size="small"></lightning-icon>
+                  </div>
+                  <div class="slds-media__body" style="position:relative;">
+                    <h2 class="slds-card__header-title">{state.title}
+                     <!-- <a class="slds-card__header-link" onclick={handleGotoRelatedList}>{state.title}</a> -->
+                      <div style="padding-left: 0.5rem;
+                        position: relative;
+                        top: -3px;">
+                        <button class="slds-button slds-button_icon slds-button slds-button_icon" aria-describedby="help" aria-disabled="true" title="Help">                              
+                          <lightning-icon icon-name="utility:help" alternative-text="Help!" 
+                            title="Help" size="x-small"></lightning-icon>
+                        </button>
+                        <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left slds-hide" role="tooltip" id="help" style="    position: absolute;
+                          bottom: 28px;
+                          left: -7px;
+                          width: 200px;">
+                            <div class="slds-popover__body">Inbound emails only. To view and reply use your email client.</div>
+                        </div>
+                    </div>
+
+                    <template if:true={moreRecords} >
+                      <template if:true={isViewAllOn} >
+                        <a style="position: absolute;
+                        right: 0px;
+                        font-size: 12px;" onclick={handleViewAll}>Collapse All</a>
+                      </template>
+                      <template if:false={isViewAllOn} >
+                        <a style="position: absolute;
+                        right: 0px;
+                        font-size: 12px;" onclick={handleViewAll}>View All</a>
+                      </template>
+                      
+                    </template>
+
+                    </h2>
+                  </div>
+                </header>
+              </div>
+              <template if:true={hasRecords}>
+                  <div style="overflow-y: auto; max-height: 300px">
+                      <lightning-datatable class="related-list"
+                                          columns={state.columns}
+                                          data={state.records}
+                                          key-field="Id"
+                                          hide-checkbox-column="true"
+                                          resize-column-disabled="true"
+                                          onrowaction={handleRowInlineEditAction}
+                                          onsave={handleInlineEditSave}>
+                      </lightning-datatable>   
+                  </div>
+                  <footer class="slds-card__footer">                    
+                  </footer>                            
+              </template>
+              
+            </article>                       
+      </lightning-layout>
+  </template>                          
+</template>

@@ -1,0 +1,17 @@
+<template>
+    <template if:true={spinnerVisibility}>
+        <div class="spinnerHolder">
+            <c-custom-spinner></c-custom-spinner>
+        </div>
+    </template>
+    <div class="slds-grid slds-grid_align-end slds-p-bottom_large">
+        <div class="slds-col slds-p-horizontal_xx-small">
+            <lightning-button variant="neutral" label="BACK" onclick={handlePrevious}>
+            </lightning-button>
+        </div>
+        <div class="slds-col slds-p-horizontal_xx-small">
+            <lightning-button variant="brand" label="START RENEWAL" onclick={handleNext}>
+            </lightning-button>
+        </div>
+    </div> 
+</template>

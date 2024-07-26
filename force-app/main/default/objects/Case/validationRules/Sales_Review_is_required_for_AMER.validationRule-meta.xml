@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Review_is_required_for_AMER</fullName>
+    <active>true</active>
+    <description>Make the Sales Review field mandatory for theater = AMER</description>
+    <errorConditionFormula>AND(
+      RecordType.DeveloperName  = &apos;Request_Quote&apos;,
+      OR(NOT( ISCHANGED( OwnerId ) ),ISNEW()),
+      ISBLANK(TEXT(Sales_Review__c)), 
+      Region_Theatre__c  = &apos;AMERICAS&apos;,
+      $User.Username  &lt;&gt;  $Label.Admin_Salesforce_Username,
+      OR(DATEVALUE (CreatedDate)  &gt;=  DATEVALUE ( $Label.Request_Quote_Created_Date ),ISNEW())
+)</errorConditionFormula>
+    <errorDisplayField>Sales_Review__c</errorDisplayField>
+    <errorMessage>Please select a value for Sales Review.</errorMessage>
+</ValidationRule>

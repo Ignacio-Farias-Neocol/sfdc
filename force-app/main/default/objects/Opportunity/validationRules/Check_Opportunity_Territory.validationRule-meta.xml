@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Opportunity_Territory</fullName>
+    <active>true</active>
+    <description>When Opp is moved to Order In Process ensure that the territory hierarchy of the end user Account/Current Opp is populated</description>
+    <errorConditionFormula>AND(
+ISCHANGED(StageName),
+OR(ISPICKVAL(StageName,&quot;Commit&quot;),
+ISPICKVAL(StageName,&quot;Order in Process&quot;),
+ISPICKVAL(StageName,&quot;Closed Won&quot;)),
+Auto_Renewal_Eligible_Core__c = FALSE,
+NOT(TEXT(Business_Group__c)= &quot;MSP&quot; &amp;&amp; SBQQ__RenewedContract__c &lt;&gt; NULL),
+ISBLANK(Territory_ID__c))</errorConditionFormula>
+    <errorMessage>To move this Opportunity to Order In Process, please open an internal ticket to populate the complete territory hierarchy</errorMessage>
+</ValidationRule>

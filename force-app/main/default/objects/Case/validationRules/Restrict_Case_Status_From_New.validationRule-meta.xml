@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Case_Status_From_New</fullName>
+    <active>true</active>
+    <description>Case cannot be moved from In Progress, Closed, Resolved</description>
+    <errorConditionFormula>OR (
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;Closed&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;New&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;Resolved&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;New&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;Vendor Hold&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;New&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;Waiting for Customer Response&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;New&apos;)),
+AND ( RecordType.DeveloperName = &apos;Community_Help&apos;,ISPICKVAL(Status, &apos;Waiting for Requester Response&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;New&apos;)),
+AND ( RecordType.DeveloperName = &apos;Community_Help&apos;,ISPICKVAL(Status, &apos;Closed&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;New&apos;)),
+AND ( RecordType.DeveloperName = &apos;Community_Help&apos;,ISPICKVAL(Status, &apos;Resolved&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;New&apos;)),
+AND ( RecordType.DeveloperName = &apos;Community_Help&apos;,ISPICKVAL(Status, &apos;Jira_Ticket_Opened&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;New&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>You can&apos;t move the Case Status. Please move the Case to &apos;In Progress&apos; then select status.</errorMessage>
+</ValidationRule>

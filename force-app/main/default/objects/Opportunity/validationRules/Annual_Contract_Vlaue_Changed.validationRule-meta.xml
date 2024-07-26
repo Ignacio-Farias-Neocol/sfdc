@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Annual_Contract_Vlaue_Changed</fullName>
+    <active>true</active>
+    <description>SFDC-17825
+SFDC-20654: Added an extra condition to skip this VR for MSP Opportunities. This change has been done manually post approval.</description>
+    <errorConditionFormula>AND (
+ISCHANGED(SBCF_Annual_Contract_Value2__c),
+!ISBLANK(SBQQ__PrimaryQuote__c), 
+SBCF_Annual_Contract_Value2__c &lt;&gt; SBCF_Annual_Contract_Value__c,
+NOT(ISPICKVAL(Business_Group__c , &apos;MSP&apos;)) 
+)</errorConditionFormula>
+    <errorDisplayField>SBCF_Annual_Contract_Value2__c</errorDisplayField>
+    <errorMessage>You can&apos;t enter an Annual Contract Value (ACV) because this Opportunity has a Primary Quote which calculates ACV automatically.</errorMessage>
+</ValidationRule>

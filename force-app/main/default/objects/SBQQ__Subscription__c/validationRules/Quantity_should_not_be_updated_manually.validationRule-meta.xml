@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quantity_should_not_be_updated_manually</fullName>
+    <active>true</active>
+    <description>Subscription Quantity should not be updated manually</description>
+    <errorConditionFormula>AND(
+ISCHANGED( SBQQ__Quantity__c ),
+NOT(OR(
+ $Profile.Name = &quot;System Administrator&quot;,
+$Profile.Name = &quot;Apollo: API&quot;,
+ $Permission.Edit_Quantity_on_Subscriptions 
+)))</errorConditionFormula>
+    <errorMessage>You can&apos;t manually update the Subscription quantity.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Level_Required</fullName>
+    <active>true</active>
+    <description>Project Apollo: Partner Level is required when Status = (Active OR Cancelled OR Credit Hold) AND Type = (Partner - Reseller OR Partner - Hybrid OR Partner - Referral)</description>
+    <errorConditionFormula>AND(
+ RecordType.DeveloperName = &apos;Partner&apos;,
+ OR( ISPICKVAL(Status__c, &apos;Active&apos;),
+     ISPICKVAL(Status__c, &apos;Cancelled&apos;),
+     ISPICKVAL(Status__c, &apos;Credit Hold&apos;)
+    ),
+ OR( ISPICKVAL(Type, &apos;Partner - Reseller&apos;),
+     ISPICKVAL(Type, &apos;Partner - Hybrid&apos;),
+     ISPICKVAL(Type, &apos;Partner - Referral&apos;)
+    ),
+ ISBLANK(TEXT(Partner_Level__c)) 
+)</errorConditionFormula>
+    <errorDisplayField>Partner_Level__c</errorDisplayField>
+    <errorMessage>Partner Level is required when Status is &apos;Active&apos;,  &apos;Cancelled&apos;, or &apos;Credit Hold&apos; AND Type is &apos;Partner - Reseller&apos;, &apos;Partner - Hybrid&apos;, OR &apos;Partner - Referral&apos;.</errorMessage>
+</ValidationRule>

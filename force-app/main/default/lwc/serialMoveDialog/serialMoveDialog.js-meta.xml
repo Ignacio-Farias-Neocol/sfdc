@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target> 
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="serialList" label="List of Serials" type="@salesforce/schema/Assigned_Serial__c[]" role="inputOnly"/>
+            <property name="subscriptionList" label="List of Subscriptions" type="@salesforce/schema/SBQQ__Subscription__c[]" role="inputOnly"/>
+            <property name="smbUsername" label="SMB Username" type="String" role="inputOnly"/>
+            <property name="partnerUsername" label="Target partner Username" type="String" role="inputOnly"/>
+            <property name="moveType" label="Serial move type" type="String" role="inputOnly"/>
+            <property name="serialMoveJSON" label="JSON String to be sent to API" type="String" role="outputOnly"/>
+            <property name="sfUpdateMessage" label="Result Message" type="String" role="outputOnly"/>
+            <property name="sfUpdateResult" label="Result" type="Boolean" role="outputOnly"/>
+            <property name="sfExitProcess" label="Exit Process" type="Boolean" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

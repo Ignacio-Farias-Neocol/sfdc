@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Denied_Deal_Registration_Comments</fullName>
+    <active>true</active>
+    <description>When a deal registration is denied you must complete the denied comments</description>
+    <errorConditionFormula>AND(ISPICKVAL( Disposition__c, &apos;Denied&apos;),ISBLANK(Deal_Registration_Denied_Comments__c))</errorConditionFormula>
+    <errorMessage>Please provide Comments for a denied Deal Registration.</errorMessage>
+</ValidationRule>

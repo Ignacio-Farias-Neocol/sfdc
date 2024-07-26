@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Comm_Cannot_Add_Billing_Address</fullName>
+    <active>true</active>
+    <description>Users in Customer community cannot submit a billing address</description>
+    <errorConditionFormula>$Profile.Name  = &apos;Apollo: Barracuda CCPlus Login Profile&apos; &amp;&amp;
+ispickval( Type__c, &apos;Billing&apos; )</errorConditionFormula>
+    <errorDisplayField>Type__c</errorDisplayField>
+    <errorMessage>We&apos;re really sorry, but you can&apos;t add or update your Billing Address through the Community site. Please Contact Customer Service.</errorMessage>
+</ValidationRule>

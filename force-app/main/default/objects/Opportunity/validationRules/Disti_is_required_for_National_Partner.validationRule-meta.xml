@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disti_is_required_for_National_Partner</fullName>
+    <active>true</active>
+    <description>If the  partner on Opportunity has the partner level as National , Distributor is  required.</description>
+    <errorConditionFormula>AND( NOT( Distributor_Override__c),
+Terr_Theater__c = &apos;AMERICAS&apos;,
+NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY ),
+OR(ISPICKVAL(Reseller__r.Partner_Level__c, &apos;National&apos;),
+ISPICKVAL(Reseller__r.Partner_Level__c, &apos;Premier National&apos;)),
+ISBLANK( Distributor__c ),
+AND(
+NOT( ISPICKVAL( StageName , &apos;Not Contacted&apos;) ),
+NOT( ISPICKVAL( StageName , &apos;Accepted&apos;) )
+),
+NOT(ISNEW())
+)</errorConditionFormula>
+    <errorMessage>The Partner/Reseller is a National or Premier National account, please add a Distributor Account and Contact to this Opportunity.</errorMessage>
+</ValidationRule>

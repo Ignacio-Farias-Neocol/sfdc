@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_is_Credit_Hold_Ordered_is_TRUE</fullName>
+    <active>true</active>
+    <description>Bill to accounts on the opportunity Status is Credit Hold and Ordered is true. This will ensure that the opportunity cannot be set to ordered while the accounts on credit hold</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Business_Group__c , &apos;Core&apos;),  
+NOT(ISBLANK( Bill_To_Account__c)),
+ISPICKVAL(Bill_To_Account__r.Status__c, &apos;Credit Hold&apos;),
+
+OR(
+ISPICKVAL(StageName, &apos;Order in Process&apos;),
+ISPICKVAL(StageName, &apos;Closed Won&apos;),
+SBQQ__Ordered__c = TRUE
+)
+)</errorConditionFormula>
+    <errorDisplayField>End_Customers_Under_an_MSP_Contract__c</errorDisplayField>
+    <errorMessage>The Bill To Account is on credit hold. Please alert your Account Contact that the credit hold must be resolved before you can place the Order.</errorMessage>
+</ValidationRule>

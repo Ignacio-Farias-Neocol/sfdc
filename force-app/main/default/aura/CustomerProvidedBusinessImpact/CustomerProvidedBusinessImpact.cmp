@@ -1,0 +1,18 @@
+<aura:component description="CustomerProvidedBusinessImpact" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="caseRecord" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      fields="Customers_Provided_Business_Impact__c"
+                      targetFields="{!v.caseRecord}"
+                      targetError="{!v.recordLoadError}"
+                      />	
+    
+    <aura:if isTrue="{!v.caseRecord.Customers_Provided_Business_Impact__c == 'Major Impact/Business Down'}">
+        <div class="card">
+            <h1 class="header">This Case has been marked as " Major Impact/ Business down'  if you require an immediate response,  please call support and reference ticket number"          
+            </h1>
+        </div>    
+    </aura:if>
+</aura:component>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Extended_Eval_Justification_Required</fullName>
+    <active>false</active>
+    <description>Requires user to enter a justification in the Extended Evaluation justification field when extending a contract.</description>
+    <errorConditionFormula>AND(
+    Contract_Extension_Length__c &gt; 0,
+    ISBLANK(Extended_Eval_Justification__c),
+    TEXT(SBQQ__Status__c)&lt;&gt;&quot;Draft&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Extended_Eval_Justification__c</errorDisplayField>
+    <errorMessage>Please enter a justification in the Extended Eval Justification field to continue.</errorMessage>
+</ValidationRule>

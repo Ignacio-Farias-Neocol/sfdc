@@ -1,0 +1,100 @@
+<apex:page standardController="Opportunity" extensions="FindOppDuplicatesExtension" showHeader="true" sidebar="true" docType="html-5.0">  
+    <style type="text/css" applyBodyTag="false">
+        <apex:slds id="slds-scope"/>
+        div.alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        div.alert-info {
+            color: #31708f;
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+        }       
+        div.alert-danger {
+            color: #a94442; 
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+        div.search-box {
+            width: 100%;
+            text-align: right;    
+            margin-bottom: 10px;        
+        }
+        input.input-search {
+            padding: 5px 10px;
+            border-radius: 19px;
+            border: 1px solid #a9a9a9;
+            width: 200px;
+        }
+    </style>
+    <apex:sectionHeader title="Opportunity" subtitle="{!Opportunity.Name} - Find Duplicates" />
+
+    <apex:outputPanel layout="block" rendered="{!AND(NOT(HasMergeAllOppPermission), NOT(HasMergeOwnOppPermission))}" styleClass="slds-scope">        
+        You have no right to merge any opportunity. Please contact your admin to add you to either "De-duplicate All Open Opportunity Permission" or "De-duplicate Open Opportunity Permission" permission set, if you need to merge your opportunities.
+    </apex:outputPanel>
+
+    <apex:outputPanel layout="block" styleClass="merge-opportunity" rendered="{!OR(HasMergeAllOppPermission, HasMergeOwnOppPermission)}" >
+        <div class="alert alert-danger" style="display: none"></div>        
+        <apex:form styleClass="slds-scope">
+            <apex:actionFunction name="searchOpportunity" action="{!retrieveOpportunity}" reRender="oppBlock" />
+            <div class="search-box" styleClass="slds-scope">
+                <apex:inputText value="{!Keyword}" styleClass="input-search" html-placeholder="Search opportunities" />
+            </div>
+            <apex:pageBlock title="Choose Opportunities to Merge" mode="detail" id="oppBlock" >
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Cancel" action="{!cancel}" />
+                    <apex:commandButton value="Next" action="{!next}" styleClass="btn-next" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!OpportunityList}" var="wrapper" styleClass="opp-list">
+                    <apex:column >
+                        <apex:inputCheckbox value="{!wrapper.IsSelected}" styleClass="opp-checkbox" />
+                    </apex:column>
+                    <apex:column headerValue="Opportunity Name" value="{!wrapper.Opp.Name}" />
+                    <apex:column headerValue="Opportunity Owner" value="{!wrapper.Opp.OwnerId}" />
+                    <apex:column headerValue="Account" value="{!wrapper.Opp.AccountId}" />
+                    <apex:column headerValue="Amount" value="{!wrapper.Opp.Amount}" />
+                    <apex:column headerValue="Stage" value="{!wrapper.Opp.StageName}" />
+                    <apex:column headerValue="Close Date" value="{!wrapper.Opp.CloseDate}" />
+                    <apex:column headerValue="Created By">
+                        {!wrapper.Opp.CreatedBy.Name},&nbsp;<apex:outputField value="{!wrapper.Opp.CreatedDate}" />
+                    </apex:column>
+                    <apex:column headerValue="Last Modified By">
+                        {!wrapper.Opp.LastModifiedBy.Name},&nbsp;<apex:outputField value="{!wrapper.Opp.LastModifiedDate}" />                    
+                    </apex:column>
+                </apex:pageBlockTable>
+                <div class="loading" style="display: none">
+                    <img src="/img/loading.gif" alt="Processing..." width="16" height="16" title="Processing..." />
+                    <span class="loadingText">Loading...</span>
+                </div>
+            </apex:pageBlock>
+        </apex:form>
+    </apex:outputPanel>
+
+    <script type="text/javascript" src="{!URLFOR($Resource.BARLib, '/BARLib/js/jquery-1.12.3.min.js')}" />
+    <script type="text/javascript">
+        (function($) {
+            $(function() {
+                $('.merge-opportunity').on('click', '.btn-next', function() {
+                    var selected = $('.opp-checkbox:checked');
+                    if(selected.length < 2) {
+                        $('.alert-danger').text('Please select at least two opportunities to merge.').show();
+                        return false;
+                    }       
+                    $('.alert-danger').hide();
+                    return true; 
+                });
+
+                $('.input-search').keydown(function(event) {
+                    if(event.keyCode == 13) {
+                        event.preventDefault();
+                        $('.opp-list tbody').remove();
+                        $('.loading').show();
+                        searchOpportunity();
+                    }
+                });
+            });
+        })(jQuery);
+    </script>
+</apex:page>

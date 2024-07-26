@@ -1,0 +1,10 @@
+.background-color{
+  background-color: #f3f2f2;
+}
+
+.spinnerHolder{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Support_Conversion_With_Opportunity</fullName>
+    <active>true</active>
+    <description>You cannot convert a Lead with an Opportunity</description>
+    <errorConditionFormula>AND (
+   IsConverted = TRUE,
+   NOT(ISBLANK(ConvertedOpportunityId)),
+   OR(
+     $Profile.Name = &apos;Apollo: Custom- Support Profile&apos;,
+     $Profile.Name = &apos;Apollo: Custom- Support Profile - Omni Channel&apos;
+   ) 
+)</errorConditionFormula>
+    <errorMessage>You can&apos;t convert a Lead with an Opportunity. Please click the &apos;Don&apos;t create an Opportunity upon conversion&apos; checkbox.</errorMessage>
+</ValidationRule>

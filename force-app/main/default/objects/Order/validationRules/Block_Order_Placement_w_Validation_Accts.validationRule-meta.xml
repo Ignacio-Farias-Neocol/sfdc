@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Order_Placement_w_Validation_Accts</fullName>
+    <active>true</active>
+    <description>Prevents user from Placing an order with Accounts that are of &quot;Validation&quot; record types</description>
+    <errorConditionFormula>AND( 
+    TEXT(Status)=&quot;Placed&quot;,
+    Bill_To_Account__r.RecordType.DeveloperName = &apos;Validation&apos;
+		
+)</errorConditionFormula>
+    <errorMessage>You can&apos;t place this Order because the Distributor, Reseller, or End User Account is a &apos;Validation&apos; record type. (Account Record Type must be &apos;Partner&apos; or &apos;Customer&apos;.)</errorMessage>
+</ValidationRule>

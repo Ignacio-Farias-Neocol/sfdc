@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mandate_Security_Vulnerbilty_Question</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(RecordType.Name = &apos;Technical Support&apos;,
+ISCHANGED(Status), ISPICKVAL(Closed_Case_Reason__c , &apos;Security Incident&apos;), 
+OR(ISPICKVAL(Status,&apos;Resolved&apos;), ISPICKVAL(Status,&apos;Closed&apos;)), 
+NOT(ISBLANK(Security_Vulnerability_Number__c)),
+OR( INCLUDES(How_was_the_issue_remediated__c, &apos;Patches &amp; Security Updates&apos;) , INCLUDES(How_was_the_issue_remediated__c, &apos;Spoke with Customer&apos;)),
+OR( ISPICKVAL(Is_the_Product_in_Production__c,&apos;&apos;),  ISPICKVAL(Migrated_off_Current_Product__c, &apos;&apos;)) 
+)</errorConditionFormula>
+    <errorMessage>Please fill out the required fields - &apos;Is the Product in Production?&apos; &amp; &apos;Migrated off Current Product?&apos;</errorMessage>
+</ValidationRule>

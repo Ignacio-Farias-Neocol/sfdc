@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Email_Security_Vendor_Domain</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT(ISBLANK(PRIORVALUE(Email_Security_Vendor_Domain_Name__c))),
+ISCHANGED(Email_Security_Vendor_Domain_Name__c)  ,
+NOT($Permission.Account_Email_Security_Vendor_Domain_Name_Edit_Access )
+)</errorConditionFormula>
+    <errorDisplayField>Email_Security_Vendor_Domain_Name__c</errorDisplayField>
+    <errorMessage>Sorry - You don&apos;t have permission to update the &apos;Email Security Vendor Domain&apos;.</errorMessage>
+</ValidationRule>

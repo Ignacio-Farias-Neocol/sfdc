@@ -1,0 +1,17 @@
+.search-table, td, th{border-collapse:collapse; border:1px solid #777;}
+
+td{padding:5px 10px; height:35px;}
+
+.search-table-outter { overflow-x: scroll; }
+
+.slds-col--padded.contentRegion.comm-layout-column{
+    height: 720px;
+    overflow-y: scroll;
+    margin-bottom: 1.4rem;
+    border: 1px solid #DDD;
+    border-radius: 0.3rem;
+}
+
+ul:not(.browser-default){
+    list-style-type : disc;
+}

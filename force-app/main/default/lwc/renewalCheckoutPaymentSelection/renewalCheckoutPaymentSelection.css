@@ -1,0 +1,6 @@
+label.slds-form-element__label{
+    font-weight: bold;
+}
+.slds-radio .slds-form-element__label{
+    font-size: 1.2rem !important;
+}

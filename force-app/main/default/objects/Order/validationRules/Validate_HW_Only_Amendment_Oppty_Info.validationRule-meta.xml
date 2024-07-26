@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_HW_Only_Amendment_Oppty_Info</fullName>
+    <active>true</active>
+    <description>Ensure HW Only Amendment Oppty has the correct Info from the original Order: Opportunity &gt; Asset HW Order. Deactivated 10/12/21 for return. Original HW owned by disti in JPN, sold to end user as replacement. Validation preventing return- CMATEUS</description>
+    <errorConditionFormula>IF( NOT(ISBLANK( Opportunity.Asset_HW_Order__c)) &amp;&amp; ISNEW(),
+	AND(
+		Opportunity.Asset_HW_Order__r.Opportunity.Reseller__c &lt;&gt; Opportunity.Reseller__c, 
+		Opportunity.Asset_HW_Order__r.Opportunity.Reseller_Contact__c &lt;&gt; Opportunity.Reseller_Contact__c, 
+		Opportunity.Asset_HW_Order__r.Opportunity.Distributor__c &lt;&gt; Opportunity.Distributor__c,
+		Opportunity.Asset_HW_Order__r.Opportunity.Distributor_Contact__c &lt;&gt; Opportunity.Distributor_Contact__c, 
+		Opportunity.Asset_HW_Order__r.Opportunity.Primary_Contact__c &lt;&gt; Opportunity.Primary_Contact__c,
+		Opportunity.Asset_HW_Order__r.Opportunity.AccountId &lt;&gt; Opportunity.AccountId,
+		Opportunity.Asset_HW_Order__r.Opportunity.Shipping_Address__c &lt;&gt; Opportunity.Shipping_Address__c, 
+		Opportunity.Asset_HW_Order__r.Opportunity.Billing_Address__c &lt;&gt; Opportunity.Billing_Address__c,
+                TEXT(Account.BillingCountryCode) != &apos;JP&apos;,
+                TEXT(Account.BillingCountryCode) != &apos;CN&apos;,
+                TEXT(Account.BillingCountryCode) != &apos;AU&apos;,
+                TEXT(Account.BillingCountryCode) != &apos;BR&apos;
+	),
+FALSE)</errorConditionFormula>
+    <errorMessage>Please be sure the Opportunity and Quote info matches the original Order. (Reseller, Distributor, Contacts, &amp; Billing/Shipping Addresses)</errorMessage>
+</ValidationRule>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Source_can_not_be_updated</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(Bypass_Validation__c),
+    NOT(ISNEW()),
+    OR(
+       $Profile.Name = &apos;Apollo: Custom- Marketing Profile&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Renewals Profile&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Sales Profile&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Sales_China Profile&apos;,
+       $Profile.Name = &apos;Apollo: Custom- Customer Services&apos;
+    ),
+    NOT($Permission.Lead_Source_Edit_Access),
+    OR(
+       NOT(ISBLANK(TEXT(PRIORVALUE(LeadSource)))) &amp;&amp; ISCHANGED(LeadSource) ,
+       NOT(ISBLANK(TEXT(PRIORVALUE(Most_Recent_Lead_Source__c )))) &amp;&amp; ISCHANGED(Most_Recent_Lead_Source__c  ),
+       NOT(ISBLANK(PRIORVALUE(Most_Recent_Lead_Source_Detail__c ))) &amp;&amp; ISCHANGED(Most_Recent_Lead_Source_Detail__c ),
+       NOT(ISBLANK(PRIORVALUE(Lead_Source_Detail__c ))) &amp;&amp; ISCHANGED( Lead_Source_Detail__c )
+    )
+)</errorConditionFormula>
+    <errorMessage>Sorry - You can&apos;t update the &apos;Lead Source&apos;, &apos;Most Recent Lead Source&apos;,
+&apos;Most Recent Lead Source Detail&apos; , or &apos;Lead Source Detail&apos;.</errorMessage>
+</ValidationRule>

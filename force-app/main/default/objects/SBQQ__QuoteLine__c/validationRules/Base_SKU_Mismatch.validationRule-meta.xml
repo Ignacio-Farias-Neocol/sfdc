@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Base_SKU_Mismatch</fullName>
+    <active>false</active>
+    <description>Prevents user from selecting a Revised Serial for demo that does not match the Base SKU of the demo conversion product.</description>
+    <errorConditionFormula>Base_SKU_Mismatch__c = TRUE</errorConditionFormula>
+    <errorMessage>The Base SKU of the Revised Serial selected does not match the Base SKU of the demo conversion product selected. Please select a Serial which matches your Demo Conversion&apos;s base SKU.</errorMessage>
+</ValidationRule>

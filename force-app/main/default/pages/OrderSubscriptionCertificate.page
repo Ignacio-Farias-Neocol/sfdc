@@ -1,0 +1,13 @@
+<apex:page standardController="Order" 
+           standardStylesheets="false" 
+           applyBodyTag="false" 
+           applyHtmlTag="false" 
+           sidebar="false"
+           showHeader="false" 
+           renderAs="pdf" 
+           contentType="application/pdf">         
+  <apex:variable var="breakAlways" value="page-break-before:always" />
+  <apex:variable var="breakAvoid" value="page-break-before:avoid" />
+  <apex:variable var="subPageNumber" value="{!0}" />
+  <c:OrderSubCertComponent thisOrder="{!Order}"/>
+</apex:page>

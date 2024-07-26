@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Live_Agent_Case_Owner</fullName>
+    <active>true</active>
+    <description>Cannot save web message without changing case owner from Live agent / System</description>
+    <errorConditionFormula>RecordType.DeveloperName = &quot;Web_Case&quot; &amp;&amp;  OwnerId = &quot;0058A0000013h1gQAA&quot;</errorConditionFormula>
+    <errorMessage>Please assign the web message to yourself before updating the web message.</errorMessage>
+</ValidationRule>

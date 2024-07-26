@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BlockDemoConversionLineType</fullName>
+    <active>false</active>
+    <description>Prevents user from selecting a Demo Conversion appliance line type for a non-demo conversion product</description>
+    <errorConditionFormula>AND(
+      SBQQ__Product__r.prod_subtype__c &lt;&gt;&quot;DC&quot;,
+      TEXT(Appliance_Line_Type__c) = &quot;Demo conversion&quot;
+)</errorConditionFormula>
+    <errorMessage>You may not select Demo Conversion as Appliance Line Type for a non-demo conversion sku.</errorMessage>
+</ValidationRule>

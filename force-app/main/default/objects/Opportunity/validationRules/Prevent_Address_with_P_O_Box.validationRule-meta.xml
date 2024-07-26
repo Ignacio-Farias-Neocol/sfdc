@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Address_with_P_O_Box</fullName>
+    <active>true</active>
+    <description>Shipping Street Field should not have a PO Box address</description>
+    <errorConditionFormula>(Text(StageName)= &quot;Closed Won&quot;)
+&amp;&amp;
+(
+CONTAINS( Ship_To_Street__c , &quot;PO Box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;Po Box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;P.o. Box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;po box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;p.o. box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;p.o. box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;po Box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;p.o. Box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;PO BOX&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;P.O. Box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;Po box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;P. O. Box&quot;)
+||
+CONTAINS( Ship_To_Street__c , &quot;PO BOx&quot;)
+)</errorConditionFormula>
+    <errorMessage>Aw, snap! We can&apos;t ship to a P.O. Box. Please update the the shipping address.</errorMessage>
+</ValidationRule>

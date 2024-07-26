@@ -1,0 +1,1427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <description>Sets default values for Auto Renewal fields</description>
+        <name>Assignment_Set_Auto_Renewal_Default_Values</name>
+        <label>Set Auto Renewal Default Values</label>
+        <locationX>490</locationX>
+        <locationY>659</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Auto_Renewal_Status_Core__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Auto_Renewal_Status_Core</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Auto_Renewal_Status_Reason_Core__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Auto_Renewal_Status_Reason_Core</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Opportunity_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets Renewal Owner</description>
+        <name>Assignment_Set_Renewal_Owner</name>
+        <label>Set Renewal Owner</label>
+        <locationX>490</locationX>
+        <locationY>3229</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__RenewalOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_System_Renewal_Owner_Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Default_Settings</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets Renewal Term</description>
+        <name>Assignment_Set_Renewal_Term</name>
+        <label>Set Renewal Term</label>
+        <locationX>644</locationX>
+        <locationY>2653</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__RenewalTerm__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Renewal_Term</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Core_Renewal_Owner</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update Auto Renewal Fields due to RMA Detected field change</description>
+        <name>RMA_Based_Auto_Renewal_Field_Update</name>
+        <label>RMA Based Auto Renewal Field Update</label>
+        <locationX>599</locationX>
+        <locationY>3733</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Auto_Renewal_Status_Core__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Auto_Renewal_Status_Reason_Core__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Has_SaaS_product_True</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update Auto Renewal Fields due to RMA Detected field change</description>
+        <name>RMA_Based_Auto_Renewal_Field_Update_0</name>
+        <label>RMA Based Auto Renewal Field Update</label>
+        <locationX>805</locationX>
+        <locationY>3982</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Auto_Renewal_Status_Core__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Included - Automatically</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Auto_Renewal_Status_Reason_Core__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Included - based on Account Flag</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Billing_Schedule</name>
+        <label>Set Billing Schedule</label>
+        <locationX>1150</locationX>
+        <locationY>228</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Billing_Schedule_Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Special Billing Schedule Request</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Has_Renewal_Quoted_Changed_to_True</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>SFDC-12774</description>
+        <name>Set_Contract_Renewed_By</name>
+        <label>Set Contract Renewed By</label>
+        <locationX>1331</locationX>
+        <locationY>945</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Contract_Renewed_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Opportunity_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>SFDC-15072</description>
+        <name>Set_Contract_Term</name>
+        <label>Set Contract Term</label>
+        <locationX>173</locationX>
+        <locationY>451</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NOC_Yearly_Contract_Total__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Set_Auto_Renewal_Default_Values</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set default values for the contract</description>
+        <name>Set_Default_Settings</name>
+        <label>Default Settings</label>
+        <locationX>797</locationX>
+        <locationY>3321</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__AmendmentRenewalBehavior__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Amendment_Renewal_Behavior</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__DisableAmendmentCoTerm__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Disable_Amendment_Co_term</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_RMA_Detected_True</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigns value to fields on Contract creation</description>
+        <name>Set_Fields_for_New_Contract</name>
+        <label>Set Fields for New Contract</label>
+        <locationX>551</locationX>
+        <locationY>299</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__RenewalOpportunityRecordTypeId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Renewal_Opportunity_RecordType_Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__DefaultRenewalContactRoles__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Contract_Term_Less_than_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets all Contract field values that depend on Opportunity</description>
+        <name>Set_Opportunity_Based_Values</name>
+        <label>Set Opportunity Based Values</label>
+        <locationX>644</locationX>
+        <locationY>1093</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Distributor__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Distributor</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Distributor_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Distributor_Contact</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Reseller</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Reseller_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Reseller_Contact</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Primary_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_End_User_Contact</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Billing_Aggregator__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Billing_Aggregator</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Business_Group</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Lead_Source__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity__r.LeadSource</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__AmendmentPricebookId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Amendment_PricebookId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__RenewalPricebookId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Renewal_PricebookId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__AmendmentOpportunityRecordTypeId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Amendment_Opportunity_Recordtype_Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Order_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set contract fields based on order billing address</description>
+        <name>Set_Values_Based_on_Billing_Address</name>
+        <label>Set Values Based on Billing Address</label>
+        <locationX>490</locationX>
+        <locationY>1549</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Billing_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Billing_Address</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.BillingStreet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.BillingStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.BillingCity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.BillingCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.BillingState</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.BillingState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.BillingStateCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.BillingStateCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.BillingPostalCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.BillingPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.BillingCountry</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.BillingCountryCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.BillingCountryCode</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Order_Shipping_Address</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set contract fields based on order billing address</description>
+        <name>Set_Values_Based_on_Shipping_Address</name>
+        <label>Set Values Based on Shipping Address</label>
+        <locationX>490</locationX>
+        <locationY>1885</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Shipping_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Contract_Shipping_Address</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ShippingStreet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.ShippingStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ShippingCity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.ShippingCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ShippingState</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.ShippingState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ShippingStateCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.ShippingStateCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ShippingPostalCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.ShippingPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ShippingCountry</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.ShippingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ShippingCountryCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Order__r.ShippingCountryCode</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Preserve_Bundle_Structure_Off</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Turns on preserve bundle structure</description>
+        <name>Turn_On_Preserve_Bundle_Structure</name>
+        <label>Turn On Preserve Bundle Structure</label>
+        <locationX>644</locationX>
+        <locationY>2317</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__PreserveBundleStructureUponRenewals__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Set_Core_Renewal_Term</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <description>Constant containing the text &apos;Core&apos;</description>
+        <name>CONSTANT_CORE</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Core</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Billing_Schedule_Update_Required</name>
+        <label>Billing Schedule Update Required?</label>
+        <locationX>986</locationX>
+        <locationY>464</locationY>
+        <defaultConnector>
+            <targetReference>Has_Renewal_Quoted_Changed_to_True</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CONSTANT_CORE</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__r.Billing_Schedule__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Special Billing Schedule Request</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Billing_Schedule</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the user record exists</description>
+        <name>Check_User_Exists</name>
+        <label>Check User Exists</label>
+        <locationX>622</locationX>
+        <locationY>3109</locationY>
+        <defaultConnector>
+            <targetReference>Set_Default_Settings</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No User</defaultConnectorLabel>
+        <rules>
+            <name>Yes_User_exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_System_Renewal_Owner_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Set_Renewal_Owner</targetReference>
+            </connector>
+            <label>User exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>SFDC-15072</description>
+        <name>Contract_Term_Less_than_1</name>
+        <label>Contract Term Less than 1?</label>
+        <locationX>297</locationX>
+        <locationY>310</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Set_Auto_Renewal_Default_Values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ContractTerm</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Contract_Term</targetReference>
+            </connector>
+            <label>Yes &lt; 1</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Has SaaS Product changed to true</description>
+        <name>Decision_Has_SaaS_product_True</name>
+        <label>Has SaaS Product Is True</label>
+        <locationX>796</locationX>
+        <locationY>3733</locationY>
+        <defaultConnectorLabel>Has SaaS Product False</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Has_SaaS_Product_True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Has_SaaS_Products__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Formula_Contract_Demo_Opp</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Formula_Auto_Renewal_Status_Core_Manually</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>RMA_Based_Auto_Renewal_Field_Update_0</targetReference>
+            </connector>
+            <label>Has SaaS Product True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if Opportuniy Value changed. If this a new Contract checks if Opportunity value is present or not.</description>
+        <name>Decision_Opportunity_Changed</name>
+        <label>Opportunity Changed?</label>
+        <locationX>776</locationX>
+        <locationY>973</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Order_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Opportunity_Changed</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__Opportunity__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Opportunity_Based_Values</targetReference>
+            </connector>
+            <label>Opportunity Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if Billing Address is present on the Order</description>
+        <name>Decision_Order_Billing_Address</name>
+        <label>Order Billing Address</label>
+        <locationX>622</locationX>
+        <locationY>1429</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Order_Shipping_Address</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Billing Address</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Update_Billing_Address</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4) AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__r.Billing_Address__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__r.Billing_Address__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__Order__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Unique_Contract_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Values_Based_on_Billing_Address</targetReference>
+            </connector>
+            <label>Update Billing Address</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if Order Value changed. If this a new Contract checks if Order value is present or not.</description>
+        <name>Decision_Order_Changed</name>
+        <label>Order Changed?</label>
+        <locationX>776</locationX>
+        <locationY>1309</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Preserve_Bundle_Structure_Off</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Order_Changed</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__Order__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Decision_Order_Billing_Address</targetReference>
+            </connector>
+            <label>Order Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if Shipping Address is present on the Order</description>
+        <name>Decision_Order_Shipping_Address</name>
+        <label>Order Shipping Address</label>
+        <locationX>622</locationX>
+        <locationY>1765</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Preserve_Bundle_Structure_Off</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Shipping Address</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Update_Shipping_Address</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4) AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__r.Shipping_Address__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__r.Shipping_Address__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__Order__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Unique_Contract_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Values_Based_on_Shipping_Address</targetReference>
+            </connector>
+            <label>Update Shipping Address</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if Renewal bundle structure has been turned off.</description>
+        <name>Decision_Preserve_Bundle_Structure_Off</name>
+        <label>Preserve Bundle Structure Off?</label>
+        <locationX>776</locationX>
+        <locationY>2197</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Set_Core_Renewal_Term</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Still On</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Turned_Off</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__PreserveBundleStructureUponRenewals__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Turn_On_Preserve_Bundle_Structure</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Turned Off</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if RMA Detected changed to true</description>
+        <name>Decision_RMA_Detected_True</name>
+        <label>RMA Detected Is True</label>
+        <locationX>789</locationX>
+        <locationY>3534</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Has_SaaS_product_True</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>RMA Detected False</defaultConnectorLabel>
+        <rules>
+            <name>Yes_RMA_Detected_True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.All_Subs_RMA__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Formula_Contract_Demo_Opp</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Formula_Auto_Renewal_Status_Core_Manually</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>RMA_Based_Auto_Renewal_Field_Update</targetReference>
+            </connector>
+            <label>RMA Detected True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Sets default values for Auto Renewal fields</description>
+        <name>Decision_Set_Auto_Renewal_Default_Values</name>
+        <label>Set Auto Renewal Default Values</label>
+        <locationX>622</locationX>
+        <locationY>541</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Opportunity_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do Not Set Default</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Set_Default</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Formula_Account_Business_Group</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Formula_Contract_Demo_Opp</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Set_Auto_Renewal_Default_Values</targetReference>
+            </connector>
+            <label>Set Default</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks condition to set renewal term for core contract</description>
+        <name>Decision_Set_Core_Renewal_Term</name>
+        <label>Set Core Renewal Term</label>
+        <locationX>776</locationX>
+        <locationY>2533</locationY>
+        <defaultConnector>
+            <targetReference>Set_Core_Renewal_Owner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do not set Renewal Term</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Set_Renewal_Term</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContractTerm</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContractTerm</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.ContractTerm</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Set_Renewal_Term</targetReference>
+            </connector>
+            <label>Set Renewal Term</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>SFDC-12774</description>
+        <name>Has_Renewal_Forecast_Changed_to_True</name>
+        <label>Has Renewal Forecast Changed to True</label>
+        <locationX>1491</locationX>
+        <locationY>520</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Opportunity_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Changed_to_True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewalForecast__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__RenewalForecast__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewalForecast__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewalQuoted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Contract_Renewed_By</targetReference>
+            </connector>
+            <label>Yes Changed to True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>SFDC-12774</description>
+        <name>Has_Renewal_Quoted_Changed_to_True</name>
+        <label>Has Renewal Quoted Changed to True</label>
+        <locationX>1257</locationX>
+        <locationY>415</locationY>
+        <defaultConnector>
+            <targetReference>Has_Renewal_Forecast_Changed_to_True</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Renewal_Quoted_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewalQuoted__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__RenewalQuoted__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewalQuoted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.SBQQ__RenewalOpportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Contract_Renewed_By</targetReference>
+            </connector>
+            <label>Yes Renewal Quoted Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Logic to be implemented if this is a new Contract</description>
+        <name>New_Contract_Record</name>
+        <label>New Contract Record</label>
+        <locationX>776</locationX>
+        <locationY>301</locationY>
+        <defaultConnector>
+            <targetReference>Billing_Schedule_Update_Required</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Existing Contract</defaultConnectorLabel>
+        <rules>
+            <name>New_Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Fields_for_New_Contract</targetReference>
+            </connector>
+            <label>New</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks condition to set renewal term for core contract</description>
+        <name>Set_Core_Renewal_Owner</name>
+        <label>Set Core Renewal Owner</label>
+        <locationX>776</locationX>
+        <locationY>2869</locationY>
+        <defaultConnector>
+            <targetReference>Set_Default_Settings</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do not set Renewal Owner</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Set_Renewal_Owner</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewalOwner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewalOwner__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__RenewalOwner__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_System_Renewal_Owner_Record</targetReference>
+            </connector>
+            <label>Set Renewal Owner</label>
+        </rules>
+    </decisions>
+    <description>Contains logic to be executed before the before trigger is executed.
+SFDC-14041,SFDC-14657
++ SFDC-16744 
++ SFDC-19040
+
+SFDC-20369: Marking SBQQ__DefaultRenewalContactRoles__c as FALSE for all new contracts getting created.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Creating formula for Account Business Group as before save flow does not support formula fields</description>
+        <name>Formula_Account_Business_Group</name>
+        <dataType>String</dataType>
+        <expression>Case({!$Record.Account.Type}, &quot;Partner - MSP&quot;,&quot;MSP&quot;,
+&quot;Partner - Sonian&quot;,&quot;Sonian&quot;,
+&quot;End User - Sonian&quot;, &quot;Sonian&quot;,
+&quot;Distributor - MSP&quot;, &quot;MSP&quot;,
+&quot;Partner - Referral&quot;, &quot;MSP&quot;,
+&quot;End User - MSP&quot;, &quot;MSP&quot;,
+&quot;Core&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Checks if Auto Renewal Status Core contains manually or not</description>
+        <name>Formula_Auto_Renewal_Status_Core_Manually</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(AND(NOT(ISBLANK(TEXT({!$Record.Auto_Renewal_Status_Core__c}))),CONTAINS(TEXT({!$Record.Auto_Renewal_Status_Core__c}), &apos;Manually&apos;)),TRUE,FALSE)</expression>
+    </formulas>
+    <formulas>
+        <description>Created this formula because before save doesn&apos;t allow usage of formula fields</description>
+        <name>Formula_Contract_Active_Contract</name>
+        <dataType>Number</dataType>
+        <expression>IF(AND(ISPICKVAL({!$Record.StatusCode},&apos;Activated&apos;), 
+              OR(AND(NOT({!$Record.SBQQ__Evergreen__c}),
+                               {!$Record.EndDate}&gt; TODAY()), 
+                      {!$Record.SBQQ__Evergreen__c})),
+    1,
+    0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Provides value for amendment opportunity recordtype id field</description>
+        <name>Formula_Contract_Amendment_Opportunity_Recordtype_Id</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.SBQQ__AmendmentOpportunityRecordTypeId__c}),
+     IF(ISPICKVAL({!$Record.SBQQ__Opportunity__r.Type}, &apos;Existing Business&apos;),
+          {!$Setup.CPQ_Ids__c.Oppty_Renewal_Record_Type_Id__c},
+          {!$Record.SBQQ__AmendmentOpportunityRecordTypeId__c}),
+{!$Record.SBQQ__AmendmentOpportunityRecordTypeId__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Provides amendment pricebook id value</description>
+        <name>Formula_Contract_Amendment_PricebookId</name>
+        <dataType>String</dataType>
+        <expression> {!$Setup.CPQ_Ids__c.CPQ_Price_Book__c}
+
+/*
+IF(ISBLANK($Record.SBQQ__AmendmentPricebookId__c),
+    Formula_Opp_Quote_Pricebook_Id,
+    $Record.SBQQ__AmendmentPricebookId__c)
+*/</expression>
+    </formulas>
+    <formulas>
+        <description>Provides amendment renewal behavior field value</description>
+        <name>Formula_Contract_Amendment_Renewal_Behavior</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.Business_Group__c} = &apos;MSP&apos;,
+     &apos;Earliest End Date&apos;,
+     &apos;Latest End Date&apos;)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for the contract field: Auto Renewal Status (Core)
+1.If SAAS is detected then Included always. If not, then check RMA
+2. If RMA detected on current contract then exclude permanently. If not, then check if SBQQ__Renew__c = true
+3. If  SBQQ__Renew__c = true and SBQQ__RenewedContract__r.RMA_Detected__c == true then Exclude permanently.
+4. If  SBQQ__Renew__c = true and SBQQ__RenewedContract__r.RMA_Detected__c == false then use SBQQ__Opportunity2__c value
+5. If SBQQ__Renew__c = false then use SBQQ__Opportunity2__c value
+6. If SBQQ__Opportunity2__c is blank then use Account&apos;s value</description>
+        <name>Formula_Contract_Auto_Renewal_Status_Core</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.SBQQ__Opportunity__c}),
+    &apos;&apos;,
+     IF(AND({!$Record.SBQQ__Opportunity__r.SBQQ__Renewal__c},
+            {!$Record.SBQQ__Opportunity__r.SBQQ__RenewedContract__r.All_Subs_RMA__c}, 
+             CONTAINS(TEXT({!$Record.SBQQ__Opportunity__r.SBQQ__RenewedContract__r.Auto_Renewal_Status_Core__c}),&apos;Included&apos;)),
+             &apos;Excluded - Automatically&apos;,
+     IF(ISBLANK(TEXT({!$Record.SBQQ__Opportunity__r.Auto_Renewal_Status_Core__c})),
+              &apos;&apos; ,
+              TEXT({!$Record.SBQQ__Opportunity__r.Auto_Renewal_Status_Core__c})
+          )
+     )
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for the contract field Auto Renewal Status Reason (Core)</description>
+        <name>Formula_Contract_Auto_Renewal_Status_Reason_Core</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.SBQQ__Opportunity__c}),
+   &apos;&apos;,
+     IF(AND({!$Record.SBQQ__Opportunity__r.SBQQ__Renewal__c},   
+        {!$Record.SBQQ__Opportunity__r.SBQQ__RenewedContract__r.All_Subs_RMA__c},
+         CONTAINS(TEXT({!$Record.SBQQ__Opportunity__r.SBQQ__RenewedContract__r.Auto_Renewal_Status_Core__c}),&apos;Included&apos;)),
+             &apos;Excluded - Automatically&apos;,
+     IF(ISBLANK(TEXT({!$Record.SBQQ__Opportunity__r.Auto_Renewal_Status_Reason_Core__c})),
+              &apos;&apos;,
+              TEXT({!$Record.SBQQ__Opportunity__r.Auto_Renewal_Status_Reason_Core__c})
+          )
+     )
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides billing address values for the contract</description>
+        <name>Formula_Contract_Billing_Address</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.SBQQ__Opportunity__c})), 
+	{!$Record.SBQQ__Opportunity__r.Billing_Address__c},
+	IF (NOT(ISBLANK({!$Record.SBQQ__Order__r.OpportunityId})), 
+		{!$Record.SBQQ__Order__r.Opportunity.Billing_Address__c},
+		{!$Record.SBQQ__Order__r.Billing_Address__c}
+	)
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides billing aggregator value for a contract</description>
+        <name>Formula_Contract_Billing_Aggregator</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISBLANK({!$Record.Unique_Contract_ID__c}),
+               NOT(ISBLANK({!$Record.SBQQ__Opportunity__r.SBCF_Billing_Aggregator__c}))),
+     {!$Record.SBQQ__Opportunity__r.SBCF_Billing_Aggregator__c},
+     NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides business group value for contract</description>
+        <name>Formula_Contract_Business_Group</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK(TEXT({!$Record.SBQQ__Opportunity__r.Business_Group__c}))),
+    TEXT({!$Record.SBQQ__Opportunity__r.Business_Group__c}),
+     {!$Record.Business_Group__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Formula to provice demo opp field value. Creating this fomula because before save flow does not allow formula fields.</description>
+        <name>Formula_Contract_Demo_Opp</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(AND(NOT(ISBLANK({!$Record.SBQQ__Opportunity__c})),
+            NOT(ISBLANK({!$Record.SBQQ__Opportunity__r.SBQQ__PrimaryQuote__c})),
+            NOT(ISBLANK({!$Record.SBQQ__Opportunity__r.SBQQ__PrimaryQuote__r.CountOfDemoProducts__c}))),
+            {!$Record.SBQQ__Opportunity__r.SBQQ__PrimaryQuote__r.CountOfDemoProducts__c} &gt; 0,
+            FALSE)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides Distributor field value for contract</description>
+        <name>Formula_Contract_Distributor</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISBLANK({!$Record.Unique_Contract_ID__c}),
+               NOT(ISBLANK({!$Record.SBQQ__Opportunity__r.Distributor__c}))),
+    {!$Record.SBQQ__Opportunity__r.Distributor__c},
+    NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides distributor contact field value for contract</description>
+        <name>Formula_Contract_Distributor_Contact</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISBLANK({!$Record.Unique_Contract_ID__c}) ,
+                NOT(ISBLANK({!$Record.SBQQ__Opportunity__r.Distributor_Contact__c}))),
+      {!$Record.SBQQ__Opportunity__r.Distributor_Contact__c},
+     NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides the end user contact value for the contract</description>
+        <name>Formula_Contract_End_User_Contact</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Primary_Contact__c}),
+     {!$Record.SBQQ__Opportunity__c.Primary_Contact__c},
+     {!$Record.Primary_Contact__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides primary product family for the contract</description>
+        <name>Formula_Contract_Primary_Product_Family</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISBLANK({!$Record.Unique_Contract_ID__c}),
+               NOT(ISBLANK(TEXT({!$Record.SBQQ__Opportunity__r.Primary_Product_Family_2__c})))),
+     TEXT({!$Record.SBQQ__Opportunity__r.Primary_Product_Family_2__c}),
+     NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for Renewal Opportunity Recordtype Id</description>
+        <name>Formula_Contract_Renewal_Opportunity_RecordType_Id</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISBLANK({!$Record.SBQQ__RenewalOpportunityRecordTypeId__c}),ISBLANK({!$Record.Unique_Contract_ID__c})),
+     {!$Setup.CPQ_Ids__c.Oppty_Renewal_Record_Type_Id__c},
+    {!$Record.SBQQ__RenewalOpportunityRecordTypeId__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for renewal owner field</description>
+        <name>Formula_Contract_Renewal_Owner</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.SBQQ__RenewalOwner__c}),
+     &apos;TEST&apos;,
+     {!$Record.SBQQ__RenewalOwner__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for Renewal PricebookId field</description>
+        <name>Formula_Contract_Renewal_PricebookId</name>
+        <dataType>String</dataType>
+        <expression> {!$Setup.CPQ_Ids__c.CPQ_Price_Book__c}
+
+/*
+IF(ISBLANK($Record.SBQQ__RenewalPricebookId__c),
+    Formula_Opp_Quote_Pricebook_Id,
+   $Record.SBQQ__RenewalPricebookId__c)
+*/</expression>
+    </formulas>
+    <formulas>
+        <description>Provides renewal term value</description>
+        <name>Formula_Contract_Renewal_Term</name>
+        <dataType>Number</dataType>
+        <expression>IF({!$Record.ContractTerm} &lt;= 6, {!$Record.ContractTerm}, Round({!$Record.ContractTerm} / 12.0, 0) * 12)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Provides Reseller field value for contract</description>
+        <name>Formula_Contract_Reseller</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISBLANK({!$Record.Unique_Contract_ID__c}),
+               NOT(ISBLANK({!$Record.SBQQ__Opportunity__r.Reseller__c}))),
+     {!$Record.SBQQ__Opportunity__r.Reseller__c},
+     NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides reseller contact field value for contract</description>
+        <name>Formula_Contract_Reseller_Contact</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISBLANK({!$Record.Unique_Contract_ID__c}),
+              NOT(ISBLANK({!$Record.SBQQ__Opportunity__r.Reseller_Contact__c}))),
+     {!$Record.SBQQ__Opportunity__r.Reseller_Contact__c},
+     NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides shipping address value for the contract</description>
+        <name>Formula_Contract_Shipping_Address</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.SBQQ__Opportunity__c})), 
+	{!$Record.SBQQ__Opportunity__r.Shipping_Address__c},
+	IF (NOT(ISBLANK({!$Record.SBQQ__Order__r.OpportunityId})), 
+		{!$Record.SBQQ__Order__r.Opportunity.Shipping_Address__c},
+		{!$Record.SBQQ__Order__r.Shipping_Address__c}
+	)
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides disable amendment coterm field value</description>
+        <name>Formula_Disable_Amendment_Co_term</name>
+        <dataType>Boolean</dataType>
+        <expression>IF({!$Record.Business_Group__c} = &apos;MSP&apos;,
+     TRUE,
+     FALSE)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides quote pricebook Id from opportunity. Creating this formula resource because before save flow does not allow usage of formula fields</description>
+        <name>Formula_Opp_Quote_Pricebook_Id</name>
+        <dataType>String</dataType>
+        <expression> {!$Setup.CPQ_Ids__c.CPQ_Price_Book__c}
+
+
+/* IF(NOT(ISBLANK($Record.SBQQ__Opportunity__c)), 
+     $Record.SBQQ__Opportunity__r.Pricebook2Id, 
+     IF(NOT(ISBLANK($Record.SBQQ__Quote__c)),
+          $Record.SBQQ__Quote__r.SBQQ__PricebookId__c,
+         $Setup.CPQ_Ids__c.Standard_Pricebook_Id__c)) */</expression>
+    </formulas>
+    <formulas>
+        <name>IsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Contract Before Save Operations {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Contract Before Save Operations</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get System Renewal Owner Record</description>
+        <name>Get_System_Renewal_Owner_Record</name>
+        <label>Get System Renewal Owner Record</label>
+        <locationX>622</locationX>
+        <locationY>2989</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_User_Exists</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Username</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>renewals_team@barracuda.com.prod</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>650</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>New_Contract_Record</targetReference>
+        </connector>
+        <object>Contract</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

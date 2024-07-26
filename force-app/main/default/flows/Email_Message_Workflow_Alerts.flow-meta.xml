@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <decisions>
+        <name>Is_Flow_Switch_Support_Active</name>
+        <label>Is Flow Switch Support Active?</label>
+        <locationX>336</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Active_Flow_Switch_Support</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Flow_Switch_Support</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Email_Message_Record_Fields</targetReference>
+            </connector>
+            <label>Active Flow Switch Support</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_Email_Message_Record_Fields</name>
+        <label>Update Email Message Record Fields</label>
+        <locationX>182</locationX>
+        <locationY>503</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Agent_Last_Outbound_Email</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6) AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ParentId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>500</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Incoming</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Technical Support</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Professional Services</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>EmailSubject</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Is_Externally_Visible_Field</targetReference>
+            </connector>
+            <label>Update Agent Last Outbound Email</label>
+        </rules>
+    </decisions>
+    <description>+ SFDC-19606</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>EmailSubject</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(&apos;Your Case &apos; + {!$Record.Parent.CaseNumber} + &apos; has been received&apos; == LEFT({!$Record.Subject}, 36), true, false)</expression>
+    </formulas>
+    <interviewLabel>Email Message Workflow Alerts {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Email Message Workflow Alerts</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Flow_Switch_Support</name>
+        <label>Get Flow Switch Support</label>
+        <locationX>336</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Flow_Switch_Support_Active</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Flow_Switch_Support__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Is_Externally_Visible_Field</name>
+        <label>Update Is Externally Visible Field</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <inputAssignments>
+            <field>IsExternallyVisible</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>210</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Flow_Switch_Support</targetReference>
+        </connector>
+        <object>EmailMessage</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

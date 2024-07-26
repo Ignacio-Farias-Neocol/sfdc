@@ -1,0 +1,4 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" >
+    <aura:attribute name="recordId" type="String" access="public"/>
+    <c:syncSubEnddatestoBOSLWC recordId="{!v.recordId}" onclose="{!c.close}"></c:syncSubEnddatestoBOSLWC>
+</aura:component>

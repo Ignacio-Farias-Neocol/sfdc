@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order_Type_N_Order_Line_Type_Do_Not_Matc</fullName>
+    <active>true</active>
+    <description>SFDC-16115
+Updated for SFDC-16683
+SFDC-16931</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Status, &apos;Activated&apos;),
+Count_RMA_Line_Type__c &gt; 0,
+NOT(CONTAINS(TEXT(SBCF_Order_Type__c), &apos;Return&apos;)),
+Quote_Business_Group__c != &apos;Barracuda MSP&apos;
+)</errorConditionFormula>
+    <errorMessage>Order Type and Order Line Type do not match. Please correct the Order Type.</errorMessage>
+</ValidationRule>

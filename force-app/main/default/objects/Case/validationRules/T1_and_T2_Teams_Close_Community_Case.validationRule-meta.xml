@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>T1_and_T2_Teams_Close_Community_Case</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( RecordType.DeveloperName = &apos;Community_Help&apos;,
+ISCHANGED( Status ) ,
+DateValue(CreatedDate) &gt;= Date(2023,12,04),
+$Permission.Tier_1_and_2_Teams_only ,
+ISPICKVAL(Status , &apos;Closed&apos;) ,
+OR(ISPICKVAL(Issue_Category__c, &apos;&apos;) , ISPICKVAL(Issue_Sub_Category__c, &apos;&apos;) ) )</errorConditionFormula>
+    <errorMessage>Issue Category &amp; Issue Sub-Category are required to move the case to closed</errorMessage>
+</ValidationRule>

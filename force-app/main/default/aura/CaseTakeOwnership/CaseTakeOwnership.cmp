@@ -1,0 +1,56 @@
+<aura:component description="CaseTakeOwnership" implements="force:hasRecordId,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes"
+                controller="CaseTakeOwnershipController">
+
+    <!-- This attribute saves the record ID -->
+    <aura:attribute name="recordId" type="String" />
+    <!-- This attribute saves the lightning action result -->
+    <aura:attribute name="result" type="String" />
+    <aura:attribute name="status" description="indicator if the ownership update is completed or not" type="boolean" default="false" />
+    <aura:attribute name="isDataLoading" description="indicator if loading is done" type="boolean" default="false" />
+	<aura:attribute name="caseRecord" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>  
+    
+	<lightning:notificationsLibrary aura:id="notifLib"/>    
+    
+    <force:recordData aura:id="recordLoader"
+    					recordId="{!v.recordId}"
+    					fields="Product_Family_List__c,Pick_Product_only_if_Essentials__c,RecordType.DeveloperName"
+    					targetFields="{!v.caseRecord}"
+                      targetError="{!v.recordLoadError}"/>    
+
+    <div class="c-container">
+
+        <aura:if isTrue="{!v.isDataLoading}">
+            <div class="slds-spinner_container">
+                <lightning:spinner aura:id="spinner" variant="brand" size="medium" alternativeText="Loading Data"/>
+            </div>
+        </aura:if>
+
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small">
+                <div class="header-column">
+
+                    <aura:if isTrue="{!v.status}">
+                        <!-- content renders if true -->
+                        <div class="container">
+                            {!v.result}
+                        </div>
+                        <aura:set attribute="else">
+                            <!-- content renders if false -->
+                            <div class="container">
+                                <!--
+                                <lightning:formattedText value="Do you want to take ownership of this case ?   " />
+                                -->
+
+                                <lightning:button class="slds-button_neutral" onclick="{!c.takeCaseOwnership}" label="Take Ownership" />
+                            </div>
+                        </aura:set>
+                    </aura:if>
+
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+
+
+</aura:component>

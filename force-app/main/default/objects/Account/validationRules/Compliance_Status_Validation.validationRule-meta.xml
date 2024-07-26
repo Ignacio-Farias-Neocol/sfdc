@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Compliance_Status_Validation</fullName>
+    <active>true</active>
+    <description>if compliance status = Banned or Suspect, then only Compliance user can move it out of those statuses</description>
+    <errorConditionFormula>AND ( 
+OR ( 
+ISCHANGED(  Compliance_Status__c ) &amp;&amp; ISPICKVAL( PRIORVALUE(Compliance_Status__c) , &apos;Banned&apos; ), 
+ISCHANGED(Compliance_Status__c) &amp;&amp; ISPICKVAL( PRIORVALUE(Compliance_Status__c) , &apos;Suspect&apos; ),
+ISCHANGED(Compliance_Status__c) &amp;&amp; ISPICKVAL( PRIORVALUE(Compliance_Status__c) , &apos;Pending&apos; )),
+ 
+ 
+AND ( 
+NOT ($UserRole.Name = &apos;Compliance&apos; ), 
+NOT ( $Profile.Name = &apos;System Administrator&apos;) ) , 
+NOT ( $Permission.Compliance_Access ) 
+)</errorConditionFormula>
+    <errorDisplayField>Compliance_Status__c</errorDisplayField>
+    <errorMessage>Only a Compliance User may update the Account record when the compliance status is Banned or Suspect</errorMessage>
+</ValidationRule>

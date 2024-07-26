@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DPL_Check_Required_for_Username_Update</fullName>
+    <active>true</active>
+    <description>This validation rule prevents users from updating username if the Account Compliance status is not Active.</description>
+    <errorConditionFormula>NOT(ISPICKVAL( Compliance_Status__c , &apos;Active&apos;)) &amp;&amp; ISCHANGED( User_na__c )</errorConditionFormula>
+    <errorMessage>Account should pass DPL check before updating Username.</errorMessage>
+</ValidationRule>

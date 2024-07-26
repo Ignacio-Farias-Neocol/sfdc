@@ -1,0 +1,11 @@
+<apex:page standardController="Lead" tabStyle="Lead" recordSetVar="SelectedLeads" >
+    
+    <apex:repeat value="{!SelectedLeads}" var="l" rendered="false">
+        {!l.Id} {!l.OwnerId}
+    </apex:repeat>
+    
+    <flow:interview name="Take_Ownership_of_Lead" finishLocation="{!URLFOR('/')}">
+        <apex:param name="Selected_Leads" value="{!Selected}"/>
+        <apex:param name="Current_User_Id" value="{!$User.Id}"/>
+    </flow:interview>
+</apex:page>

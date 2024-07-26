@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RMA_Status_Restrictions</fullName>
+    <active>true</active>
+    <description>Cannot submit for RMA when in NEW, RESOLVED, CLOSED, allow only in IP, WOC, VH</description>
+    <errorConditionFormula>AND( 
+NOT( ISPICKVAL( RMA_Type__c , &quot;&quot;)),
+( ISPICKVAL( L2_Approval_Status__c , &quot;&quot;)),
+
+ 
+OR (
+ISPICKVAL(Status,&apos;New&apos;),
+ISPICKVAL(Status,&apos;Resolved&apos;),
+ISPICKVAL(Status,&apos;Closed&apos;)
+)
+)</errorConditionFormula>
+    <errorDisplayField>Customer_Service_RMA_Status__c</errorDisplayField>
+    <errorMessage>To continue RMA Processing, move the Case to &apos;In Progress&apos;.</errorMessage>
+</ValidationRule>

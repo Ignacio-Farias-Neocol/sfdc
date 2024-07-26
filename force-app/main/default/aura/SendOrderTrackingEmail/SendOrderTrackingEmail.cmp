@@ -1,0 +1,15 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" controller="SendOrderTrackingEmailController">
+    <aura:attribute name ="userName" type="String"/>
+    <aura:attribute name ="result" type="Object"/>
+    <aura:attribute name ="recordId" type="String"/>
+    <div>
+        <aura:if isTrue="{! v.result.statusCode == '200'}">
+            <div><p style="color:green;"> {!v.result.message}</p></div>
+            <aura:set attribute="else">
+                <div><p style="color:red;"><aura:unescapedHtml value= "{!v.result.message}"/></p></div>
+            </aura:set>
+        </aura:if>
+        <lightning:textarea name="UserName" label="Enter email address. Separate multiple emails with commas, like a@b.edu, c@d.edu." value="{!v.userName}"/>
+        <lightning:button variant="brand" label="Send Email" title="Send Email" onclick="{! c.sendEmail }" />
+    </div>
+</aura:component>

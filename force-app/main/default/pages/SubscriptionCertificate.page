@@ -1,0 +1,175 @@
+<apex:page standardController="Serial__c" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" sidebar="false"
+  showHeader="false" renderAs="pdf" contentType="application/pdf" extensions="SubscriptionCertificateExtension">
+  <apex:variable var="breakAlways" value="page-break-before:always" />
+  <apex:variable var="breakAvoid" value="page-break-before:avoid" />
+  <apex:variable var="subPageNumber" value="{!0}" />
+  <head>
+    <style type="text/css" media="print">
+      @page {
+        size: letter landscape;
+        background-image: url('{!URLFOR($Resource.subCertBackground)}');
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-top: 1in;
+        @bottom-right {
+          content: counter(page) ' of ' counter(pages);
+        }
+      }
+
+      .content {
+        text-align: center;
+      }
+
+      .logo {
+        text-align: center;
+        width: 100%;
+        font-size: 24px;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-top: 75px;
+        /* padding-top: 50px; */
+      }
+
+      .product-name {
+        font-size: 18px;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .serial-info {
+        text-align: center;
+        font-size: 14px;
+        font-family: Arial, Helvetica, sans-serif;
+        padding-bottom: 50px;
+      }
+
+      table.serial-table-center {
+        width: 70%;
+        margin-left: 15%;
+        margin-right: 15%;
+        text-align: left;
+      }
+
+      td.field-label {
+        width: 22%;
+        font-weight: bold;
+      }
+
+      td.field-value {
+        width: 28%
+      }
+
+      .sub-table-container {
+        text-align: left;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+      }
+
+      table.sub-table-center {
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        text-align: left;
+      }
+
+      th.sub-column-header {
+        border-bottom: 1px solid black;
+        font-weight: bold;
+      }
+
+      .account {
+        font-size: 14px;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: left;
+      }
+
+      /* table, th, td{
+        border: 1px solid black;
+      } */
+    </style>
+  </head>
+
+  <body>
+
+    <div class="content">
+      <!-- LOGO -->
+      <div class="logo">
+        <apex:image id="barracudaLogo" value="{!$Resource.BarracudaLogo}" width="200" height="65" alt="Barracuda Logo" />
+        <h1>Certificate of Subscriptions</h1>
+      </div>
+      <!-- /LOGO -->
+
+      <!-- PRODUCT INFO -->
+      <!-- <p class="product-name">{!$CurrentPage.parameters.productName}</p> -->
+      <p class="product-name">{!Serial__c.Product__r.Name}</p>
+      <div class="serial-info">
+        <table class="serial-table-center">
+          <tr>
+            <td class="field-label">Account:</td>
+            <!-- <td class="field-value">{!accountName}</td> -->
+            <td class="field-value">{!Serial__c.Account__r.Name}</td>
+            <td class="field-label">{!partnerLabel}: </td>
+            <td class="field-value">{!partnerName}</td>
+            <!-- <td class="field-value">{!$CurrentPage.parameters.partner}</td> -->
+          </tr>
+          <tr>
+            <td class="field-label">SN#:</td>
+            <td class="field-value">{!Serial__c.Serial_Number__c}</td>
+            <td class="field-label">PO#: </td>
+            <td class="field-value">{!serial.Order__r.PoNumber}</td>
+          </tr>
+          <tr>
+            <td class="field-label">Barracuda Quote #:</td>
+            <td class="field-value">{!serial.Order__r.SBQQ__Quote__r.Name}</td>
+            <td class="field-label"></td>
+            <td class="field-value"></td>
+          </tr>
+        </table>
+      </div>
+      <!-- /PRODUCT INFO -->
+
+      <!-- Subscription Information -->
+      <apex:repeat value="{!subsArray}" var="subs" id="theSubList">
+        <apex:variable var="subPageNumber" value="{!subPageNumber+1}" />
+        <div style="{!IF(subPageNumber == 1, breakAvoid, breakAlways)}">
+
+          <!--  Main table with subs -->
+          <div class="sub-table-container">
+            <table class="sub-table-center">
+              <tr>
+                <th class="sub-column-header">Start Date</th>
+                <th class="sub-column-header">End Date</th>
+                <th class="sub-column-header">Capacity</th>
+                <th class="sub-column-header">Subscription</th>
+              </tr>
+              <apex:repeat value="{!subs}" var="item" id="subRepeat">
+                <tr>
+                  <td style="width:12%">
+                    <apex:outputText value="{0,date,MMM d',' yyyy}">
+                      <apex:param value="{!item.startDate}" />
+                    </apex:outputText>
+                  </td>
+                  <td style="width:12%">
+                    <apex:outputText value="{0,date,MMM d',' yyyy}">
+                      <apex:param value="{!item.endDate}" />
+                    </apex:outputText>
+                  </td>
+                  <td style="width:10%">
+                    <apex:outputText value="{0, number, ###,##0}">
+                      <apex:param value="{!item.quantity}"
+                      />
+                    </apex:outputText>
+                  </td>
+                  <!--Added as a part of SFDC-16472: START -->
+                  <!--<td style="width:66%">{!item.productName}</td>-->
+                  <td style="width:66%">{!item.productDescription}</td>
+                  <!--Added as a part of SFDC-16472: END -->
+                </tr>
+              </apex:repeat>
+            </table>
+          </div>
+        </div>
+      </apex:repeat>
+
+    </div>
+  </body>
+</apex:page>

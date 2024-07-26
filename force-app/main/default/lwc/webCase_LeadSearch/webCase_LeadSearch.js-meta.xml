@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>57</apiVersion>
+	<isExposed>true</isExposed>
+	<description>WebCase_LeadSearch on Live Chat and Web Case</description>
+	<targets>
+		<target>lightning__HomePage</target>
+		<target>lightning__RecordPage</target>
+		<target>lightning__AppPage</target>
+	</targets>
+</LightningComponentBundle>

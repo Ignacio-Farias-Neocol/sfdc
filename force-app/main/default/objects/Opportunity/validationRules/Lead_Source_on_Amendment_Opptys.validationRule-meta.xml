@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Source_on_Amendment_Opptys</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT(ISNEW()),
+OR(NOT(ISBLANK(SBQQ__AmendedContract__c)),
+NOT(ISBLANK(SBQQ__RenewedContract__c))),
+NOT(ISBLANK(Hot_List__c)),
+NOT(OR($Permission.Lead_Source_Edit_Access ,
+$Profile.Name = &apos;System Administrator&apos;)),
+ISCHANGED(LeadSource))</errorConditionFormula>
+    <errorMessage>Lead Source can not be updated. Please open a Salesforce internal ticket for support.</errorMessage>
+</ValidationRule>

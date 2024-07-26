@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Formatted_VAT_Number_Secondary_VAT</fullName>
+    <active>true</active>
+    <description>Checks VAT Number &amp; Secondary VAT Number (20 chars limit) has only alphanumeric and only a &quot;-&quot; or &quot;.&quot; as a possible symbols</description>
+    <errorConditionFormula>AND(
+   NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+   OR(
+     AND(
+       LEN(Secondary_VAT_Number__c) &gt; 0,
+       NOT(REGEX(Secondary_VAT_Number__c,&quot;^[a-zA-Z0-9 -.]+$&quot;))
+     ),
+     LEN(Secondary_VAT_Number__c) &gt; 20,
+     AND(
+       LEN(VAT_Number__c) &gt; 0,
+       NOT(REGEX(VAT_Number__c,&quot;^[a-zA-Z0-9 -.]+$&quot;))
+     ),
+     LEN(VAT_Number__c) &gt; 20
+   )
+)</errorConditionFormula>
+    <errorMessage>Please check that VAT Number &amp; Secondary VAT Number (20 chars limit) is alphanumeric with only a &apos;-&apos; or &apos;.&apos; entered as a symbols.</errorMessage>
+</ValidationRule>

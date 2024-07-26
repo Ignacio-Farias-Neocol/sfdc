@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Owned_by_a_Queue_cannot_be_resolved</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+LEFT(OwnerId,3) = &apos;00G&apos;, 
+ISCHANGED(Status),
+ISPICKVAL(Status, &quot;Resolved&quot;)
+)</errorConditionFormula>
+    <errorMessage>The Case can&apos;t be marked as resolved when Case owner is a Queue. Please assign the Case to a user, then move to &apos;Resolved&apos; (for surveys) or directly to &apos;Closed&apos;.</errorMessage>
+</ValidationRule>

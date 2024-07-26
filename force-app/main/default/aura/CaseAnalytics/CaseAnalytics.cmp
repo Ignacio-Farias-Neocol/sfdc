@@ -1,0 +1,30 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 11-01-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<aura:component controller="CaseAnalyticsContoller" implements="flexipage:availableForAllPageTypes,force:hasRecordId,lightning:isUrlAddressable" access="global" >
+    <lightning:workspaceAPI aura:id="workspace" />	
+    <aura:attribute name="focusedTabId" type="String"/>
+    <aura:attribute name="currentCaseId" type="String"/>
+    <aura:attribute name="caseAnalyticsId" type="String"/>
+    <aura:attribute name="creationStarted" type="Boolean"/>
+    <aura:attribute name="tabchanged" type="String"/>
+        <aura:attribute name="Closedtab" type="String"/>
+
+    <aura:attribute name="isConsole" type="boolean" default="false"></aura:attribute>
+    <aura:attribute name="isTrack" type="Boolean" default="false"/> 
+    <aura:attribute name="isInitDone" type="Boolean" default="false"/>      
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+   	<aura:handler event="lightning:tabFocused" action="{!c.onTabFocused}"/>
+    <aura:handler event="lightning:tabClosed" action="{!c.onTabClosed}"/>
+    
+    <aura:handler event="aura:locationChange" action="{!c.handleHashChange}"/>
+    
+    <aura:dependency resource="markup://force:editRecord" type="EVENT" />
+    <aura:handler event="force:refreshView" action="{!c.onRecordUpdate}" />
+
+</aura:component>

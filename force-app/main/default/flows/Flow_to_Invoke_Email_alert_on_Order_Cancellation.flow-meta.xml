@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Close_Parent_Opportunity</name>
+        <label>Close Parent Opportunity</label>
+        <locationX>50</locationX>
+        <locationY>575</locationY>
+        <actionName>CloseParentOppForCancelledOrders</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Send_Email_to_Commissions_Team</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>opptIDs</name>
+            <value>
+                <elementReference>$Record.OpportunityId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>CloseParentOppForCancelledOrders</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Send Email to Commissions Team if Order gets Cancelled</description>
+        <name>Send_Email_to_Commissions_Team</name>
+        <label>Send Email to Commissions Team</label>
+        <locationX>50</locationX>
+        <locationY>695</locationY>
+        <actionName>Order.Send_Email_Alert_on_Cancelled_Order</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Order.Send_Email_Alert_on_Cancelled_Order</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>If_Order_Cancelled</name>
+        <label>If Order Cancelled ?</label>
+        <locationX>182</locationX>
+        <locationY>455</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Order_Cancelled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Is_Order_Cancelled__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_Parent_Opportunity</targetReference>
+            </connector>
+            <label>Order Cancelled</label>
+        </rules>
+    </decisions>
+    <description>Send Email to Commissions Team if Order gets Cancelled and Close lost parent opportunities.</description>
+    <environments>Default</environments>
+    <interviewLabel>Flow to Invoke Email alert on Order Cancellation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Flow to Invoke Email alert on Order Cancellation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Order_Records</name>
+        <label>Get Order Records</label>
+        <locationX>182</locationX>
+        <locationY>335</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>If_Order_Cancelled</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Order_Records</targetReference>
+        </connector>
+        <object>Order</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

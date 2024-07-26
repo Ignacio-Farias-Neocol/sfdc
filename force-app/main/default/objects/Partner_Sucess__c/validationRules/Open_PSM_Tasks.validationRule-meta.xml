@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Open_PSM_Tasks</fullName>
+    <active>true</active>
+    <errorConditionFormula>and(Open_PSM_Task__c  &gt; 0,  ISPICKVAL( Status__c , &quot;Completed&quot;))</errorConditionFormula>
+    <errorMessage>Please complete all open Tasks.</errorMessage>
+</ValidationRule>

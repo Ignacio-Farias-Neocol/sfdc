@@ -1,0 +1,3145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <assignments>
+        <description>Set Approved RMA Return Owner</description>
+        <name>Assignment_Set_Approved_RMA_Return_Owner</name>
+        <label>Set Approved RMA Return Owner</label>
+        <locationX>715</locationX>
+        <locationY>5075</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__r.SBQQ__Opportunity__r.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Set quotes to draft</description>
+        <name>Assignment_Set_Quote_Draft</name>
+        <label>Set Quote Draft</label>
+        <locationX>578</locationX>
+        <locationY>2015</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.ApprovalStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Recalled</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Draft</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Uplevel_Downlevel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Determine_Quote_Stage</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Clear the Quote&apos;s Distributor Based Fields</description>
+        <name>Clear_Quote_Distributor_Based_Fields</name>
+        <label>Clear Quote Distributor Based Fields</label>
+        <locationX>710</locationX>
+        <locationY>2915</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_City__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_Country__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_Email_Address__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_Postal_Code__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_State__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_Street__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_Name__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Partner_Number__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Reseller_Based_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Clears value of Quote&apos;s Reseller Based Fields</description>
+        <name>Clear_Quote_Reseller_Based_Fields</name>
+        <label>Clear Quote Reseller Based Fields</label>
+        <locationX>710</locationX>
+        <locationY>3215</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_City__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_Country__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_Email_Address__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_Postal_Code__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_State__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_Street__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_Name__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Partner_Number__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Partner_Level__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Region__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Contact_Name__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Account_Based_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Populate Quote Billing Address from Opportunity</description>
+        <name>Populate_Quote_Billing_Address</name>
+        <label>Populate Quote Billing Address</label>
+        <locationX>1535</locationX>
+        <locationY>1175</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Billing_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Billing_Address__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Opportunity_Business_Group</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Populate Quote Billing Address from Opportunity when Billing Address changes</description>
+        <name>Populate_Quote_Billing_Address_On_Change</name>
+        <label>Populate Quote Billing Address On Change</label>
+        <locationX>578</locationX>
+        <locationY>3923</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__BillingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Billing_Address__r.City__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__BillingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Billing_Address__r.Country__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__BillingName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Billing_Address__r.Account__r.Bill_To_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__BillingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Billing_Address__r.Zip_Postal_Code__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__BillingStreet__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Billing_Address__r.Street__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__BillingState__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Billing_Address__r.State__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Bill_To_Account_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Billing_Address__r.Account__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Billing_Country_ISO_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Billing_Address__r.Country__r.Country_ISO__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Shipping_Address_Field_Set</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Populate Quote Shipping Address from Opportunity</description>
+        <name>Populate_Quote_Shipping_Address</name>
+        <label>Populate Quote Shipping Address</label>
+        <locationX>1535</locationX>
+        <locationY>875</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Shipping_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Shipping_Address__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Opportunity_Billing_Address</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Populate Quote Shipping Address from Opportunity when Shipping Address changes</description>
+        <name>Populate_Quote_Shipping_Address_On_Change</name>
+        <label>Populate Quote Shipping Address On Change</label>
+        <locationX>399</locationX>
+        <locationY>4131</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__ShippingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Shipping_Address__r.City__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__ShippingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Shipping_Address__r.Country__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__ShippingName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Shipping_Address__r.Account__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__ShippingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Shipping_Address__r.Zip_Postal_Code__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__ShippingStreet__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Shipping_Address__r.Street__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__ShippingState__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Shipping_Address__r.State__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Shipping_Country_ISO_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Shipping_Address__r.Country__r.Country_ISO__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Shipping_Contact_Changes</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set quote values for Barracuda QBG</description>
+        <name>Quote_Business_Group_Barracuda</name>
+        <label>Quote Business Group Barracuda</label>
+        <locationX>842</locationX>
+        <locationY>2615</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__QuoteTemplateId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Template_Id_Barracuda</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__DefaultTemplate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Default_Template_Barracuda</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Distributor_Based_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set quote values for MSP QBG</description>
+        <name>Quote_Business_Group_MSP</name>
+        <label>Quote Business Group MSP</label>
+        <locationX>578</locationX>
+        <locationY>2615</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__QuoteTemplateId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Setup.CPQ_Ids__c.MSP_Agreement__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__DefaultTemplate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Setup.CPQ_Ids__c.MSP_Agreement__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Edit_Lines_View__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>MSP</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__RenewalTerm__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Renewal_Term</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Distributor_Based_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set quote values for Sonian QBG</description>
+        <name>Quote_Business_Group_Sonian</name>
+        <label>Quote Business Group Sonian</label>
+        <locationX>314</locationX>
+        <locationY>2615</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__QuoteTemplateId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Template_Id_Sonian</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__DefaultTemplate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Default_Template_Sonian</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Edit_Lines_View__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sonian</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Distributor_Based_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the Quote field values when type is changed to Amendment</description>
+        <name>Quote_Values_for_Amendment</name>
+        <label>Quote Values for Amendment</label>
+        <locationX>3658</locationX>
+        <locationY>2975</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Previous_Order_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Previous_Order_Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Original_Contract_End_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Original_Contract_End_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Compare_Quote_RecordType_Values</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>SFDC-18050-18054: Multiple reseller: Setting Del Reg related fields values for Primary Quote.</description>
+        <name>Reset_Deal_Reg_Values</name>
+        <label>Reset Deal Reg Values</label>
+        <locationX>3658</locationX>
+        <locationY>1475</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Deal_Reg_Type2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Update_Deal_Reg_Type2</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Deal_Reg_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Deal_Reg_Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Deal_Reg_Tracking_No__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Deal_Reg_Tracking_No__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Deal_Reg_Expiration__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Deal_Reg_Exp_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Reseller_Changed_on_Quote</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Make distributor equal to opportunity reseller</description>
+        <name>Reset_Distributor</name>
+        <label>Reset Distributor</label>
+        <locationX>3658</locationX>
+        <locationY>2075</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__Distributor__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Distributor__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Distributor_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Billing_Address_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Reset Quote Billing Address from Opportunity when Billing Address for primary quote changes</description>
+        <name>Reset_Quote_Billing_Address_On_Change</name>
+        <label>Reset Quote Billing Address On Change</label>
+        <locationX>3658</locationX>
+        <locationY>2375</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Billing_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Billing_Address__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Shipping_Address_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Reset Quote Shipping Address from Opportunity when Shipping Address for primary quote changes</description>
+        <name>Reset_Quote_Shipping_Address_On_Change</name>
+        <label>Reset Quote Shipping Address On Change</label>
+        <locationX>3658</locationX>
+        <locationY>2675</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Shipping_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Shipping_Address__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Quote_Type_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Make reseller equal to opportunity reseller</description>
+        <name>Reset_Reseller</name>
+        <label>Reset Reseller</label>
+        <locationX>3658</locationX>
+        <locationY>1775</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Reseller__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Reseller_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Distributor_Changed_on_Quote</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>SFDC-18050: Multiple Reseller</description>
+        <name>Set_Bill_To_Account</name>
+        <label>Set Bill To Account</label>
+        <locationX>710</locationX>
+        <locationY>3707</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Bill_To_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Bill_To_Account</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__PrimaryContact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Primary_Contact</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Billing_Address_Field_Set</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>SFDC-19727</description>
+        <name>Set_Current_Max_Additional_Discount</name>
+        <label>Set Current Max Additional Discount</label>
+        <locationX>3658</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Current_MAX_Additional_Discount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.MAX_Additional_Discount__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ApprovalStatus_Changed_to_Approved</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>SFDC-19727</description>
+        <name>Set_Original_Max_Additional_Discount</name>
+        <label>Set Original Max Additional Discount</label>
+        <locationX>3658</locationX>
+        <locationY>1067</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Original_MAX_Additional_Discount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.MAX_Additional_Discount__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Compare_Quote_Opportunity_Values</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set Primary Contact</description>
+        <name>Set_Primary_Contact</name>
+        <label>Set Primary Contact</label>
+        <locationX>1667</locationX>
+        <locationY>659</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__PrimaryContact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Primary_Contact</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Primary_Contact_Email_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Primary_Contact_Email_Address</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Opportunity_Shipping_Address</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets quote to Approved</description>
+        <name>Set_Quote_Approved</name>
+        <label>Set Quote: Approved</label>
+        <locationX>314</locationX>
+        <locationY>2315</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Approved</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__WatermarkShown__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Quote_Business_Group</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets quote to Denied</description>
+        <name>Set_Quote_Denied</name>
+        <label>Set Quote: Denied</label>
+        <locationX>578</locationX>
+        <locationY>2315</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Denied</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Quote_Business_Group</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the value of Quote&apos;s Distributor Based Fields</description>
+        <name>Set_Quote_Distributor_Based_Fields</name>
+        <label>Set Quote Distributor Based Fields</label>
+        <locationX>446</locationX>
+        <locationY>2915</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_City__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Distributor__r.BillingCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_Country__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Distributor__r.BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_Email_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Distributor__r.Bill_To_Email__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_Postal_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Distributor__r.BillingPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Distributor__r.BillingState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_Street__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Distributor__r.BillingStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Bill_To_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Distributor__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Partner_Number__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Distributor__r.Partner_Number__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Reseller_Based_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets quote to Draft</description>
+        <name>Set_Quote_Draft</name>
+        <label>Set Quote: Draft</label>
+        <locationX>1106</locationX>
+        <locationY>2315</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Draft</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Quote_Business_Group</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets quote to In Review</description>
+        <name>Set_Quote_In_Review</name>
+        <label>Set Quote: In Review</label>
+        <locationX>50</locationX>
+        <locationY>2315</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Review</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Quote_Business_Group</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets quote to Presented</description>
+        <name>Set_Quote_Presented</name>
+        <label>Set Quote: Presented</label>
+        <locationX>842</locationX>
+        <locationY>2315</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Presented</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Quote_Business_Group</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the value of Quote&apos;s Reseller Based Fields</description>
+        <name>Set_Quote_Reseller_Based_Fields</name>
+        <label>Set Quote Reseller Based Fields</label>
+        <locationX>446</locationX>
+        <locationY>3215</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_City__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Reseller__r.BillingCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_Country__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Reseller__r.BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_Email_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Reseller__r.Bill_To_Email__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_Postal_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Reseller__r.BillingPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Reseller__r.BillingState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_Street__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Reseller__r.BillingStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Bill_To_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Reseller__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Partner_Number__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Partner_Number</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Partner_Level__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Reseller__r.Partner_Level__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Region__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Reseller__r.Terr_Region__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Contact_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBCF_Reseller__r.Bill_To_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Account_Based_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets Quote&apos;s record type based on the value defined in the Opportunity</description>
+        <name>Set_Record_Type</name>
+        <label>Set Record Type</label>
+        <locationX>710</locationX>
+        <locationY>1691</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Quote_Record_Type.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Record_Type_Name</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets Quote&apos;s record type name based on the recordtype</description>
+        <name>Set_Record_Type_Name</name>
+        <label>Set Record Type Name</label>
+        <locationX>710</locationX>
+        <locationY>1799</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.RecordType.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Net_Amount_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Shipping_Contact</name>
+        <label>Set Shipping Contact</label>
+        <locationX>397</locationX>
+        <locationY>4519</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Shipping_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Shipping_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Ship_To_Contact_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>textShippingContactName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Reset_Watermark_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set the value of watermark to true</description>
+        <name>Set_Watermark_Value</name>
+        <label>Set Watermark Value</label>
+        <locationX>578</locationX>
+        <locationY>4823</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__WatermarkShown__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Set_Approved_RMA_Return_Owner</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update quote fields that get their value from Opportunity Account</description>
+        <name>Update_Account_Based_Quote_Fields</name>
+        <label>Update Account Based Quote Fields</label>
+        <locationX>578</locationX>
+        <locationY>3515</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_City__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.BillingCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_Company__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_Country__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_End_User_Contact_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.BillingState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_Street__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.BillingStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_Zip__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.BillingPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Bill_To_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_categorization_check_box</name>
+        <label>Update categorization check box</label>
+        <locationX>3201</locationX>
+        <locationY>571</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Categorization_Line_Item__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>True</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Quote_PriorValue</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update quote fields that get their value from Opportunity</description>
+        <name>Update_Opportunity_Based_Quote_Fields</name>
+        <label>Update Opportunity Based Quote Fields</label>
+        <locationX>1667</locationX>
+        <locationY>551</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Opportunity_Owner_Manager_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Owner.ManagerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Deal_Reg_Type2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Deal_Reg_Type2</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Original_Order_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Original_Order_Start_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_City__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.BillingCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_Company__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_Country__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_End_User_Contact_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.BillingState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_Street__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.BillingStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.End_User_Contact_Zip__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Account.BillingPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Closed_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.CloseDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CurrencyIsoCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.CurrencyIsoCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Billing_Schedule__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Billing_Schedule</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Previous_Order_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Previous_Order_Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__SubscriptionTerm__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Subscription_Term</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Original_Contract_End_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Original_Contract_End_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__Distributor__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Distributor</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Partner_Level__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Partner_Level</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Partner_Number__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Partner_Number</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Region__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Region</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Contact_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Reseller_Contact_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Reseller</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Legacy_Data__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Legacy_Data</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Billing_Aggregator__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Billing_Aggregator</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Bill_To_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Quote_Bill_To_Account</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Reseller_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Reseller_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Distributor_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Distributor_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Deal_Reg_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Deal_Reg_Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Deal_Reg_Expiration__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Deal_Reg_Exp_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SBCF_Deal_Reg_Tracking_No__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Deal_Reg_Tracking_No__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Shipping_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Opportunity2__r.Shipping_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Ship_To_Contact_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>textShippingContactName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Primary_Contact</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>CONSTANT_BARRACUDA</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Barracuda</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CONSTANT_BARRACUDA_MSP</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Barracuda MSP</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CONSTANT_MSP</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MSP</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CONSTANT_SONIAN</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Sonian</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Check if Account Based fields need to be set or not</description>
+        <name>Account_Based_Fields</name>
+        <label>Account Based Fields</label>
+        <locationX>710</locationX>
+        <locationY>3407</locationY>
+        <defaultConnector>
+            <targetReference>Set_Bill_To_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Set_Account_Based_Fields</name>
+            <conditionLogic>(1 OR (2 AND 3)) AND 4 AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Account__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Account__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.SBQQ__Account__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Account__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Account__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_Based_Quote_Fields</targetReference>
+            </connector>
+            <label>Set Account Based Fields</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>SFDC-19727</description>
+        <name>ApprovalStatus_Approved</name>
+        <label>ApprovalStatus Approved</label>
+        <locationX>3790</locationX>
+        <locationY>659</locationY>
+        <defaultConnector>
+            <targetReference>ApprovalStatus_Changed_to_Approved</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Current_Max_Additional_Discount</targetReference>
+            </connector>
+            <label>Approved</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>SFDC-19727</description>
+        <name>ApprovalStatus_Changed_to_Approved</name>
+        <label>ApprovalStatus Changed to Approved</label>
+        <locationX>3790</locationX>
+        <locationY>959</locationY>
+        <defaultConnector>
+            <targetReference>Compare_Quote_Opportunity_Values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Changed_to_Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.ApprovalStatus__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Original_Max_Additional_Discount</targetReference>
+            </connector>
+            <label>Changed to Approved</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Take actions based on Quote Business Group</description>
+        <name>Check_Quote_Business_Group</name>
+        <label>Check Quote Business Group</label>
+        <locationX>710</locationX>
+        <locationY>2507</locationY>
+        <defaultConnector>
+            <targetReference>Distributor_Based_Fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>QBG_Sonian</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Formula_Quote_Quote_Business_Group</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CONSTANT_SONIAN</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Quote_Business_Group_Sonian</targetReference>
+            </connector>
+            <label>Sonian</label>
+        </rules>
+        <rules>
+            <name>QBG_Barracuda_MSP</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Formula_Quote_Quote_Business_Group</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CONSTANT_BARRACUDA_MSP</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Quote_Business_Group_MSP</targetReference>
+            </connector>
+            <label>Barracuda MSP</label>
+        </rules>
+        <rules>
+            <name>QBG_Barracuda</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Formula_Quote_Quote_Business_Group</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CONSTANT_BARRACUDA</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Quote_Business_Group_Barracuda</targetReference>
+            </connector>
+            <label>Barracuda</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Compares the current value of Quote Opportunity with values in the flow to determine changes</description>
+        <name>Compare_Quote_Opportunity_Values</name>
+        <label>Compare Quote Opportunity Values</label>
+        <locationX>3790</locationX>
+        <locationY>1259</locationY>
+        <defaultConnectorLabel>Unexpected Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Opportunity_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.SBQQ__Opportunity2__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Populated</targetReference>
+            </connector>
+            <label>Opportunity Changed</label>
+        </rules>
+        <rules>
+            <name>Opportunity_Not_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.SBQQ__Opportunity2__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Deal_Reg_Values_Changed</targetReference>
+            </connector>
+            <label>Opportunity Not Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Compares the current value of Quote RecordType with values in the flow to determine changes</description>
+        <name>Compare_Quote_RecordType_Values</name>
+        <label>Compare Quote RecordType Values</label>
+        <locationX>2206</locationX>
+        <locationY>1475</locationY>
+        <defaultConnectorLabel>Unexpected Outcome</defaultConnectorLabel>
+        <rules>
+            <name>RecordType_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.RecordTypeId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Record_Type_Name</targetReference>
+            </connector>
+            <label>RecordType Changed</label>
+        </rules>
+        <rules>
+            <name>RecordType_Not_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.RecordTypeId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Account_Changed</targetReference>
+            </connector>
+            <label>RecordType Not Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>SFDC-18050-18054: Multiple reseller: comparing Del Reg related fields values for Primary Quote.</description>
+        <name>Deal_Reg_Values_Changed</name>
+        <label>Deal Reg Values Changed</label>
+        <locationX>3790</locationX>
+        <locationY>1367</locationY>
+        <defaultConnector>
+            <targetReference>Reseller_Changed_on_Quote</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Changed</defaultConnectorLabel>
+        <rules>
+            <name>Changed</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5) AND 6 AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Deal_Reg_Type2__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.SBQQ__Opportunity2__r.Deal_Reg_Type__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Deal_Reg_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.SBQQ__Opportunity2__r.Deal_Reg_Status__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Deal_Reg_Expiration__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.SBQQ__Opportunity2__r.Deal_Reg_Exp_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Deal_Reg_Tracking_No__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.SBQQ__Opportunity2__r.Deal_Reg_Tracking_No__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.SBQQ__Primary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Reset_Deal_Reg_Values</targetReference>
+            </connector>
+            <label>Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the Billing Address changed</description>
+        <name>Decision_Billing_Address_Changed</name>
+        <label>Billing Address Changed</label>
+        <locationX>3790</locationX>
+        <locationY>2267</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Shipping_Address_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Primary_Billing_Address_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Address__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.Billing_Address__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Reset_Quote_Billing_Address_On_Change</targetReference>
+            </connector>
+            <label>Primary Billing Address Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Billing Address field is set. if yes, then update billing address</description>
+        <name>Decision_Billing_Address_Field_Set</name>
+        <label>Billing Address Field Set</label>
+        <locationX>710</locationX>
+        <locationY>3815</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Shipping_Address_Field_Set</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Billing_Address_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Billing_Address__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Address__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Quote_Billing_Address_On_Change</targetReference>
+            </connector>
+            <label>Billing Address Set</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Net Amount Changed</description>
+        <name>Decision_Net_Amount_Changed</name>
+        <label>Net Amount Changed</label>
+        <locationX>710</locationX>
+        <locationY>1907</locationY>
+        <defaultConnector>
+            <targetReference>Determine_Quote_Stage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Net_Amount_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__NetAmount__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.SBQQ__NetAmount__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Quote_PriorValue.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Permission.By_Pass_Quote_Stage_Status_Update_on_Net_Amount_Change</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Formula_Quote_MaxAdditionalDiscountChanged</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Set_Quote_Draft</targetReference>
+            </connector>
+            <label>Net Amount Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check to see if owner needs to be set on approved RMA return quote</description>
+        <name>Decision_Set_Approved_RMA_Return_Owner</name>
+        <label>Set Approved RMA Return Owner?</label>
+        <locationX>704</locationX>
+        <locationY>4819</locationY>
+        <defaultConnectorLabel>Do Not Update Owner</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Set_Approved_RMA_Return_Owner</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND (8 OR 9) AND 10 AND (11 OR 12) AND 13</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Amendment</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__r.SBQQ__Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__r.SBQQ__Opportunity__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Order_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New - Return</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Order_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Renewal - Return</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.ApprovalStatus__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.SBQQ__Status__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Set_Approved_RMA_Return_Owner</targetReference>
+            </connector>
+            <label>Set Approved RMA Return Owner</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the Shipping Address changed</description>
+        <name>Decision_Shipping_Address_Changed</name>
+        <label>Shipping Address Changed</label>
+        <locationX>3790</locationX>
+        <locationY>2567</locationY>
+        <defaultConnector>
+            <targetReference>Quote_Type_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Primary_Shipping_Address_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Shipping_Address__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.Shipping_Address__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Reset_Quote_Shipping_Address_On_Change</targetReference>
+            </connector>
+            <label>Primary Shipping Address Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Shipping Address field is set. if yes, then update billing address</description>
+        <name>Decision_Shipping_Address_Field_Set</name>
+        <label>Shipping Address Field Set</label>
+        <locationX>710</locationX>
+        <locationY>4115</locationY>
+        <defaultConnector>
+            <targetReference>Reset_Watermark_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No change</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Shipping_Address_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Shipping_Address__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Shipping_Address__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Quote_Shipping_Address_On_Change</targetReference>
+            </connector>
+            <label>Shipping Address Set</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines quote stage</description>
+        <name>Determine_Quote_Stage</name>
+        <label>Determine Quote Stage</label>
+        <locationX>710</locationX>
+        <locationY>2207</locationY>
+        <defaultConnector>
+            <targetReference>Check_Quote_Business_Group</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Status Update</defaultConnectorLabel>
+        <rules>
+            <name>Quote_In_Review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Quote_In_Review</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Quote: In Review</label>
+        </rules>
+        <rules>
+            <name>Quote_Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Quote_Approved</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Quote:Approved</label>
+        </rules>
+        <rules>
+            <name>Quote_Denied</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Quote_Denied</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Quote:Denied</label>
+        </rules>
+        <rules>
+            <name>Quote_Presented</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Count_Documents__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Quote_Presented</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Quote:Presented</label>
+        </rules>
+        <rules>
+            <name>Quote_Recalled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recalled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Quote_Draft</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Quote: Recalled</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Distributor Address fields need to be set or not</description>
+        <name>Distributor_Based_Fields</name>
+        <label>Distributor Based Fields</label>
+        <locationX>710</locationX>
+        <locationY>2807</locationY>
+        <defaultConnector>
+            <targetReference>Reseller_Based_Fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Set_Distributor_Based_Fields</name>
+            <conditionLogic>(1 OR (2 AND 3)) AND 4 AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Distributor__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Distributor__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.SBQQ__Distributor__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Distributor__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Distributor__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Quote_Distributor_Based_Fields</targetReference>
+            </connector>
+            <label>Set Distributor Based Fields</label>
+        </rules>
+        <rules>
+            <name>Clear_Distributor_Based_Fields</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Distributor__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.SBQQ__Distributor__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Distributor__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Distributor__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_Quote_Distributor_Based_Fields</targetReference>
+            </connector>
+            <label>Clear Distributor Based Fields</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Distributor was explicitly changed on Primary Quote</description>
+        <name>Distributor_Changed_on_Quote</name>
+        <label>Distributor Changed on Quote</label>
+        <locationX>3790</locationX>
+        <locationY>1967</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Billing_Address_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Changed</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Distributor_Changed</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Distributor__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.SBQQ__Opportunity2__r.Distributor__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Distributor_Contact__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.SBQQ__Opportunity2__r.Distributor_Contact__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Reset_Distributor</targetReference>
+            </connector>
+            <label>Distributor Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>SFDC-13419</description>
+        <name>Is_Account_Changed</name>
+        <label>Is Account Changed</label>
+        <locationX>2206</locationX>
+        <locationY>1583</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Net_Amount_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Account not Changed</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Account_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Account__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.SBQQ__Account__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Quote_PriorValue.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Set_Quote_Draft</targetReference>
+            </connector>
+            <label>Yes Account Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Logic to be implemented if this is a new Quote</description>
+        <name>New_Quote_Record</name>
+        <label>New Quote Record</label>
+        <locationX>2863</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Update_Categraztion_check_box</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Existing</defaultConnectorLabel>
+        <rules>
+            <name>New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Populated</targetReference>
+            </connector>
+            <label>New</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Opportunity Billing Address is populated</description>
+        <name>Opportunity_Billing_Address</name>
+        <label>Opportunity Billing Address</label>
+        <locationX>1667</locationX>
+        <locationY>1067</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Business_Group</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do Not Update Billing Address</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Update_Billing_Address</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.Billing_Address__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.Billing_Address__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Quote_Billing_Address</targetReference>
+            </connector>
+            <label>Update Billing Address</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Opportunity Business Group is populated</description>
+        <name>Opportunity_Business_Group</name>
+        <label>Opportunity Business Group</label>
+        <locationX>1667</locationX>
+        <locationY>1367</locationY>
+        <defaultConnector>
+            <targetReference>Compare_Quote_RecordType_Values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Business Group</defaultConnectorLabel>
+        <rules>
+            <name>Business_Group_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.Business_Group__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.Business_Group__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Quote_Record_Type</targetReference>
+            </connector>
+            <label>Business Group Present</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the Opportunity is populated or not</description>
+        <name>Opportunity_Populated</name>
+        <label>Opportunity Populated?</label>
+        <locationX>2266</locationX>
+        <locationY>443</locationY>
+        <defaultConnector>
+            <targetReference>Compare_Quote_RecordType_Values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Opportunity Null</defaultConnectorLabel>
+        <rules>
+            <name>Opportunity_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Opportunity_Based_Quote_Fields</targetReference>
+            </connector>
+            <label>Opportunity Not Null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Opportunity Shipping Address is populated</description>
+        <name>Opportunity_Shipping_Address</name>
+        <label>Opportunity Shipping Address</label>
+        <locationX>1667</locationX>
+        <locationY>767</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Billing_Address</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do Not Update Shipping Address</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Update_Shipping_Address</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.Shipping_Address__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.Shipping_Address__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Quote_Shipping_Address</targetReference>
+            </connector>
+            <label>Update Shipping Address</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Quote Primary Flag Was Changed</description>
+        <name>Primary_Flag_Changed</name>
+        <label>Primary Flag Changed</label>
+        <locationX>3460</locationX>
+        <locationY>551</locationY>
+        <defaultConnector>
+            <targetReference>ApprovalStatus_Approved</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Primary_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the Quote type changed</description>
+        <name>Quote_Type_Changed</name>
+        <label>Quote Type Changed</label>
+        <locationX>3790</locationX>
+        <locationY>2867</locationY>
+        <defaultConnector>
+            <targetReference>Compare_Quote_RecordType_Values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <rules>
+            <name>Changed_to_Amendment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Amendment</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.SBQQ__Type__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Quote_Values_for_Amendment</targetReference>
+            </connector>
+            <label>Changed to Amendment</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Ensures that Record Type record is not null</description>
+        <name>Record_Type_Check</name>
+        <label>Record Type Check</label>
+        <locationX>1128</locationX>
+        <locationY>1583</locationY>
+        <defaultConnectorLabel>Record Type Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Record_Type_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote_Record_Type</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Record_Type</targetReference>
+            </connector>
+            <label>Record Type Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Reseller Based fields need to be set or not</description>
+        <name>Reseller_Based_Fields</name>
+        <label>Reseller Based Fields</label>
+        <locationX>710</locationX>
+        <locationY>3107</locationY>
+        <defaultConnector>
+            <targetReference>Account_Based_Fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Set_Reseller_Based_Fields</name>
+            <conditionLogic>(1 OR (2 AND 3)) AND 4 AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Reseller__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Reseller__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.SBCF_Reseller__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Reseller__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Reseller__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Quote_Reseller_Based_Fields</targetReference>
+            </connector>
+            <label>Set Reseller Based Fields</label>
+        </rules>
+        <rules>
+            <name>Clear_Reseller_Based_Fields</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote_PriorValue</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Reseller__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Quote_PriorValue.SBCF_Reseller__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Reseller__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Reseller__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_Quote_Reseller_Based_Fields</targetReference>
+            </connector>
+            <label>Clear Reseller Based Fields</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Reseller was explicitly changed on Primary Quote</description>
+        <name>Reseller_Changed_on_Quote</name>
+        <label>Reseller Changed on Quote</label>
+        <locationX>3790</locationX>
+        <locationY>1667</locationY>
+        <defaultConnector>
+            <targetReference>Distributor_Changed_on_Quote</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Changed</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Reseller_Changed</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Reseller__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.SBQQ__Opportunity2__r.Reseller__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBCF_Reseller_Contact__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.SBQQ__Opportunity2__r.Reseller_Contact__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Reset_Reseller</targetReference>
+            </connector>
+            <label>Reseller Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Watermark needs to be reset or not</description>
+        <name>Reset_Watermark_Check</name>
+        <label>Reset Watermark Check</label>
+        <locationX>708</locationX>
+        <locationY>4453</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Set_Approved_RMA_Return_Owner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Reset_Watermark</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Watermark_Value</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Reset Watermark</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Bill to Ship to</description>
+        <name>Shipping_Contact_Changes</name>
+        <label>Shipping Contact Changes</label>
+        <locationX>387</locationX>
+        <locationY>4316</locationY>
+        <defaultConnector>
+            <targetReference>Reset_Watermark_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do Nothing</defaultConnectorLabel>
+        <rules>
+            <name>Primary_Quote</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Primary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Shipping_Contact</targetReference>
+            </connector>
+            <label>Primary Quote</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_Categraztion_check_box</name>
+        <label>Update Categraztion check box</label>
+        <locationX>3137</locationX>
+        <locationY>341</locationY>
+        <defaultConnector>
+            <targetReference>Quote_PriorValue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>True</name>
+            <conditionLogic>((1 AND 2) OR (3 AND 4)) AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.ApprovalStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.ApprovalStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Core</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_categorization_check_box</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <description>All updates to Quote before saving the record.
+SFDC-14864: Core CPQ: New CPQ Quote Template for Partner Level = National for Direct Orders and for Tech Data US
+SFDC-14319: Force Quotes to obtain reapproval after the AccountID for End User has changed
+SFDC-18050 : Multiple Reseller
+SFDC-18014-19196: New Quote Template Design for all the accounts (Reseller, Distributor, End User, National Direct)
+SFDC-19630 : Added New Conditions to Net Amount Changed
+SFDC-19727 : Added Steps to Set Current Max Additional discount
+SFDC-20084 : SPE discount Percentage change
+SFDC-20203: Updated Shipping Contact mapping on Quote
+SFDC-SFDC-20793,20792,20794
+SFDC-20836:- Remove Auto Renewal Quote status assignment in insert.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Multiple Reseller</description>
+        <name>Formula_Deal_Reg_Type2</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISBLANK(TEXT({!$Record.SBQQ__Opportunity2__r.Deal_Reg_Type__c})),TEXT({!$Record.SBQQ__Type__c}) != &quot;Renewal&quot;), &quot;Unregistered&quot;, TEXT({!$Record.SBQQ__Opportunity2__r.Deal_Reg_Type__c}) )</expression>
+    </formulas>
+    <formulas>
+        <description>Provide auto renewal eligible core value for the opportunity</description>
+        <name>Formula_Opp_Auto_Renewal_Eligible_Core</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(CONTAINS(TEXT({!$Record.SBQQ__Opportunity2__r.Auto_Renewal_Status_Core__c}), &quot;Included&quot;), TRUE, FALSE)</expression>
+    </formulas>
+    <formulas>
+        <description>Determine Quote RecordType based on Opportunity Business Group</description>
+        <name>Formula_Opportunity_Quote_RecordType_Name</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+TEXT({!$Record.SBQQ__Opportunity2__r.Business_Group__c}),
+&quot;Core&quot;, &quot;Barracuda_Quote&quot;,
+&quot;MSP&quot;, &quot;MSP_Agreement&quot;,
+&quot;Sonian&quot;, &quot;Sonian_Agreement&quot;,
+&quot;Barracuda_Quote&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Primary_Contact_Email_Address</name>
+        <dataType>String</dataType>
+        <expression>IF(OR(ISNULL({!$Record.Id}), {!$Record.SBQQ__Primary__c}),
+IF(AND(NOT(ISNULL({!$Record.SBQQ__Opportunity2__r.Distributor_Contact__c})),
+ {!$Record.SBQQ__Opportunity2__r.Bill_To_Account__c} = {!$Record.SBQQ__Opportunity2__r.Distributor__c}),
+ {!$Record.SBQQ__Opportunity2__r.Distributor_Contact__r.Email},
+  IF(AND(NOT(ISNULL({!$Record.SBQQ__Opportunity2__c.Reseller_Contact__c})),
+               {!$Record.SBQQ__Opportunity2__c.Bill_To_Account__c} = {!$Record.SBQQ__Opportunity2__c.Reseller__c}),
+          {!$Record.SBQQ__Opportunity2__r.Reseller_Contact__r.Email},
+           {!$Record.SBQQ__Opportunity2__r.Primary_Contact__r.Email})
+    ),{!$Record.Primary_Contact_Email_Address__c})</expression>
+    </formulas>
+    <formulas>
+        <description>SFDC-18050</description>
+        <name>Formula_Quote_Bill_To_Account</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.SBQQ__Distributor__c})), 
+       {!$Record.SBQQ__Distributor__c},
+       IF(NOT(ISBLANK({!$Record.SBCF_Reseller__c})), 
+           {!$Record.SBCF_Reseller__c},
+	   {!$Record.SBQQ__Account__c}
+      )
+  )</expression>
+    </formulas>
+    <formulas>
+        <description>Provides the Account type for the Bill to account tied to the opportunity of this quote</description>
+        <name>Formula_Quote_Bill_To_Account_Type</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK( {!$Record.SBQQ__Opportunity2__c})) &amp;&amp; NOT(ISBLANK( {!$Record.SBCF_Bill_To_Account__c})), 
+TEXT({!$Record.SBCF_Bill_To_Account__r.Type}),
+&quot;&quot; )</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for quote billing aggregator</description>
+        <name>Formula_Quote_Billing_Aggregator</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.SBQQ__Opportunity2__r.SBCF_Billing_Aggregator__c})),{!$Record.SBQQ__Opportunity2__r.SBCF_Billing_Aggregator__c}, NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides billing schedule value</description>
+        <name>Formula_Quote_Billing_Schedule</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+{!$Record.SBQQ__Opportunity2__r.Business_Group__c},
+&quot;Core&quot;, null,
+&quot;MSP&quot;, &quot;Monthly&quot;,
+&quot;Sonian&quot;, &quot;Monthly&quot;, 
+null
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides deal registration type for quote</description>
+        <name>Formula_Quote_Deal_Reg_Type</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.SBCF_Deal_Reg_Type__c }), TEXT({!$Record.SBQQ__Opportunity2__r.Deal_Reg_Type__c}), {!$Record.SBCF_Deal_Reg_Type__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Provides default template value for Barracuda QBG</description>
+        <name>Formula_Quote_Default_Template_Barracuda</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!Formula_Quote_Bill_To_Account_Type}, &quot;Distributor&quot;), 
+IF({!$Record.SBCF_Disti_Partner_Number__c} = &quot;103283&quot;, {!$Setup.CPQ_Ids__c.CDW_TechData_Template_Id__c}, {!$Setup.CPQ_Ids__c.Barracuda_Core_Disti_Quote__c}), 
+IF(AND({!$Record.SBQQ__Opportunity2__r.Distributor_Override__c} = TRUE, {!$Record.SBCF_Partner_Level__c} = &quot;National&quot;), 
+{!$Setup.CPQ_Ids__c.CDW_TechData_Template_Id__c},
+IF(CONTAINS({!Formula_Quote_Bill_To_Account_Type}, &quot;Customer&quot;), {!$Setup.CPQ_Ids__c.Barracuda_End_User_Template__c}, 
+{!$Setup.CPQ_Ids__c.Barracuda_Core_Quote__c})))</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Quote_Default_Template_Sonian</name>
+        <dataType>String</dataType>
+        <expression>CASE(TEXT({!$Record.Agreement_Template__c}),
+	   &apos;Standard Reseller&apos;,  {!$Setup.CPQ_Ids__c.Sonian_Reseller__c},
+           &apos;Direct Customer&apos;, {!$Setup.CPQ_Ids__c.Sonian_Direct_Agreement__c},
+           &apos;White Label&apos;, {!$Setup.CPQ_Ids__c.Sonian_White_Label__c},
+		&apos;&apos;)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides distributor value for quote</description>
+        <name>Formula_Quote_Distributor</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!$Record.SBQQ__Primary__c},
+               ISBLANK({!$Record.SBQQ__Distributor__c})),
+    {!$Record.SBQQ__Opportunity2__r.Distributor__c},
+    {!$Record.SBQQ__Distributor__c })</expression>
+    </formulas>
+    <formulas>
+        <description>Provides edit lines view for the quote</description>
+        <name>Formula_Quote_Edit_Lines_View</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+{!Formula_Quote_Quote_Business_Group},
+{!CONSTANT_SONIAN},{!CONSTANT_SONIAN},
+{!CONSTANT_BARRACUDA_MSP}, {!CONSTANT_MSP},
+&apos;&apos;)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides end user contact name value derived from Opportunity Primary Contact</description>
+        <name>Formula_Quote_End_User_Contact_Name</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISNULL({!$Record.SBQQ__Opportunity2__r.Primary_Contact__c})), {!$Record.SBQQ__Opportunity2__r.Primary_Contact__r.FirstName} &amp; &quot; &quot; &amp; {!$Record.SBQQ__Opportunity2__r.Primary_Contact__r.LastName}, {!$Record.End_User_Contact_Name__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Provides quote legacy data value</description>
+        <name>Formula_Quote_Legacy_Data</name>
+        <dataType>Boolean</dataType>
+        <expression>IF({!$Record.SBQQ__Opportunity2__r.Legacy_Data__c}, True, False)</expression>
+    </formulas>
+    <formulas>
+        <description>SFDC-19630 : To check if SPE(Additional Discount) is changed</description>
+        <name>Formula_Quote_MaxAdditionalDiscountChanged</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(OR({!$Record.Original_MAX_Additional_Discount__c} &lt;=0.09,ISBLANK({!$Record.Original_MAX_Additional_Discount__c})),{!$Record.MAX_Additional_Discount__c} &gt; 0.09,
+{!$Record.MAX_Additional_Discount__c} &gt; {!$Record.Original_MAX_Additional_Discount__c} + 0.04)</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Quote_Original_Contract_End_Date</name>
+        <dataType>Date</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__c})), 
+    {!$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__r.EndDate},
+    IF(NOT(ISBLANK({!$Record.SBQQ__Opportunity2__r.SBQQ__RenewedContract__c})), 
+		{!$Record.SBQQ__Opportunity2__r.SBQQ__RenewedContract__r.EndDate},
+	NULL  
+    )
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provide original order start date for quote</description>
+        <name>Formula_Quote_Original_Order_Start_Date</name>
+        <dataType>Date</dataType>
+        <expression>IF(ISBLANK({!$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__c}), 
+    {!$Record.Original_Order_Start_Date__c},
+    IF(ISBLANK({!$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__r.SBQQ__Order__c}),
+         {!$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__r.StartDate},
+         {!$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__r.SBQQ__Order__r.EffectiveDate})
+    )</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for Quote Partner Level</description>
+        <name>Formula_Quote_Partner_Level</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(NOT(ISBLANK({!$Record.SBQQ__Opportunity2__r.Reseller__c})),{!$Record.SBQQ__Primary__c}),
+TEXT({!$Record.SBQQ__Opportunity2__r.Reseller__r.Partner_Level__c}),
+NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides quote partner number value</description>
+        <name>Formula_Quote_Partner_Number</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.SBQQ__Primary__c},
+     IF(NOT(ISBLANK({!$Record.SBQQ__Opportunity2__r.Reseller__c})),
+          TEXT({!$Record.SBQQ__Opportunity2__r.Reseller__r.Partner_Number__c}),
+         NULL),
+     IF(NOT(ISBLANK({!$Record.SBCF_Reseller__c})),
+         TEXT({!$Record.SBCF_Reseller__r.Partner_Number__c}),
+         NULL)
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides Previous Order Id for a quote</description>
+        <name>Formula_Quote_Previous_Order_Id</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__c})), {!$Record.SBQQ__Opportunity2__r.SBQQ__AmendedContract__r.Previous_Order_ID__c}, IF(NOT(ISBLANK({!$Record.SBQQ__Opportunity2__r.SBQQ__RenewedContract__c})),{!$Record.SBQQ__Opportunity2__r.SBQQ__RenewedContract__r.Previous_Order_ID__c} , &apos;&apos;))</expression>
+    </formulas>
+    <formulas>
+        <description>Provides primary contact value for quote</description>
+        <name>Formula_Quote_Primary_Contact</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.SBQQ__Distributor__c})), 
+       {!$Record.SBCF_Distributor_Contact__c},
+       IF(NOT(ISBLANK({!$Record.SBCF_Reseller__c})), 
+           {!$Record.SBCF_Reseller_Contact__c},
+	   {!$Record.SBQQ__Opportunity2__r.Primary_Contact__c}
+      )
+  )</expression>
+    </formulas>
+    <formulas>
+        <description>Provides value for Quote Business Group</description>
+        <name>Formula_Quote_Quote_Business_Group</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.SBQQ__Opportunity2__c})),
+CASE(
+{!$Record.SBQQ__Opportunity2__r.Business_Group__c},
+&quot;Core&quot;, &quot;Barracuda&quot;,
+&quot;MSP&quot;, &quot;Barracuda MSP&quot;,
+&quot;Sonian&quot;, &quot;Sonian&quot;,
+&quot;Barracuda&quot;),
+&quot;Barracuda&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides quote region value</description>
+        <name>Formula_Quote_Region</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(NOT(ISBLANK({!$Record.SBQQ__Opportunity2__r.Reseller__c})),{!$Record.SBQQ__Primary__c}),
+{!$Record.SBQQ__Opportunity2__r.Reseller__r.Terr_Region__c},
+NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides quote renewal term value</description>
+        <name>Formula_Quote_Renewal_Term</name>
+        <dataType>Number</dataType>
+        <expression>CASE(TEXT({!$Record.SBCF_Renewal_Period__c}),
+&apos;1 Year&apos;, 12,
+&apos;1 Month&apos;, 1,
+&apos;3 Month&apos;, 3,
+&apos;6 Month&apos;, 6,
+0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Provides reseller value for the quote</description>
+        <name>Formula_Quote_Reseller</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!$Record.SBQQ__Primary__c},
+               ISBLANK({!$Record.SBCF_Reseller__c})),
+     {!$Record.SBQQ__Opportunity2__r.Reseller__c}, 
+     {!$Record.SBCF_Reseller__c })</expression>
+    </formulas>
+    <formulas>
+        <description>SFDC-18054 : Multiple Reseller</description>
+        <name>Formula_Quote_Reseller_Contact</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.SBQQ__Opportunity2__r.Reseller_Contact__c}</expression>
+    </formulas>
+    <formulas>
+        <description>Provides quote reseller contact name</description>
+        <name>Formula_Quote_Reseller_Contact_Name</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(NOT(ISBLANK({!$Record.SBQQ__Opportunity2__r.Reseller__c})),{!$Record.SBQQ__Primary__c}),
+{!$Record.SBQQ__Opportunity2__r.Reseller__r.Bill_To_Contact__c},
+NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Provides subscription term value for quote</description>
+        <name>Formula_Quote_Subscription_Term</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!$Record.SBQQ__SubscriptionTerm__c}) &amp;&amp; NOT(ISBLANK({!$Record.SBQQ__Opportunity2__r.SBQQ__RenewedContract__c})) &amp;&amp; ISPICKVAL({!$Record.SBQQ__Opportunity2__r.Business_Group__c},&apos;MSP&apos;),
+{!$Record.SBQQ__Opportunity2__r.SBQQ__RenewedContract__r.SBQQ__RenewalTerm__c}, 
+{!$Record.SBQQ__SubscriptionTerm__c}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>Formula_Quote_Template_Id_Barracuda</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!Formula_Quote_Bill_To_Account_Type}, &quot;Distributor&quot;), 
+IF({!$Record.SBCF_Disti_Partner_Number__c} = &quot;103283&quot;, {!$Setup.CPQ_Ids__c.CDW_TechData_Template_Id__c}, {!$Setup.CPQ_Ids__c.Barracuda_Core_Disti_Quote__c}), 
+IF(AND({!$Record.SBQQ__Opportunity2__r.Distributor_Override__c} = TRUE, {!$Record.SBCF_Partner_Level__c} = &quot;National&quot;), 
+{!$Setup.CPQ_Ids__c.CDW_TechData_Template_Id__c},
+IF(CONTAINS({!Formula_Quote_Bill_To_Account_Type}, &quot;Customer&quot;), {!$Setup.CPQ_Ids__c.Barracuda_End_User_Template__c}, 
+{!$Setup.CPQ_Ids__c.Barracuda_Core_Quote__c})))</expression>
+    </formulas>
+    <formulas>
+        <description>Provides the value of Quote Template Id for Sonian Quote Business Group</description>
+        <name>Formula_Quote_Template_Id_Sonian</name>
+        <dataType>String</dataType>
+        <expression>CASE(TEXT({!$Record.DocumentTemplate__c}),
+	   &apos;Reseller Agreement&apos;,  {!$Setup.CPQ_Ids__c.Sonian_Reseller__c},
+           &apos;Direct Agreement&apos;, {!$Setup.CPQ_Ids__c.Sonian_Direct_Agreement__c},
+           &apos;White Label Agreement&apos;, {!$Setup.CPQ_Ids__c.Sonian_White_Label__c},
+		{!$Setup.CPQ_Ids__c.Sonian_Reseller__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Update_Deal_Reg_Type2</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.SBQQ__Primary__c} = TRUE,
+IF(AND(ISBLANK(TEXT({!$Record.SBQQ__Opportunity2__r.Deal_Reg_Type__c})),TEXT({!$Record.SBQQ__Type__c}) != &quot;Renewal&quot;), &quot;Unregistered&quot;, TEXT({!$Record.SBQQ__Opportunity2__r.Deal_Reg_Type__c})),
+TEXT({!$Record.SBCF_Deal_Reg_Type2__c})
+)</expression>
+    </formulas>
+    <interviewLabel>Quote Before Save Operations {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Quote Before Save Operations</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the quote record to compare for changes</description>
+        <name>Quote_PriorValue</name>
+        <label>Quote PriorValue</label>
+        <locationX>3462</locationX>
+        <locationY>343</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Primary_Flag_Changed</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>SBQQ__Quote__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get Quote Record Type based on Opportunity Quote Record Type Name field</description>
+        <name>Quote_Record_Type</name>
+        <label>Quote Record Type</label>
+        <locationX>1128</locationX>
+        <locationY>1475</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Record_Type_Check</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Formula_Opportunity_Quote_RecordType_Name</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>SBQQ__Quote__c</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>2737</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>New_Quote_Record</targetReference>
+        </connector>
+        <object>SBQQ__Quote__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>textQuoteShippingName</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!$Record.Shipping_Contact__r.FirstName} {!$Record.Shipping_Contact__r.LastName}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>textShippingContactName</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!$Record.SBQQ__Opportunity2__r.Shipping_Contact__r.FirstName} {!$Record.SBQQ__Opportunity2__r.Shipping_Contact__r.LastName}</text>
+    </textTemplates>
+</Flow>

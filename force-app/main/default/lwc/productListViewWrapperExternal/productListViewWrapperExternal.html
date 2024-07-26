@@ -1,0 +1,62 @@
+<template>
+    <template if:true={spinnerVisibility}>
+        <div class="spinnerHolder">
+            <c-custom-spinner text-to-display={spinnerText}></c-custom-spinner>
+        </div>
+    </template>
+    <!-- <template if:false={spinnerVisibility}> -->
+        <lightning-layout multiple-rows="true">
+            <!-- FILTER SECTION -->
+            <lightning-layout-item size="12" class="slds-m-bottom_small">
+                <c-serial-sub-filter-external account-type={accounttype} onfilterchange={handleFilterChange}>
+                </c-serial-sub-filter-external>
+            </lightning-layout-item>
+            <!-- /FILTER SECTION -->
+
+            <!-- EXTERNAL VERSION -->
+            <template if:true={external}>
+                <!-- SERIAL/SUBSCRIPTIONS SECTION -->
+                <template if:false={showEmptyState}>
+                    <!-- <lightning-layout horizontal-align="space" size="12"> -->
+                        <div class="slds-align_absolute-center slds-m-bottom_x-small">
+                            <lightning-button icon-name="utility:jump_to_left" label="FIRST" class='slds-m-right_small slds-p-left_small' disabled={paginationDetails.previousDisabled} onclick={handleFirst}></lightning-button>
+                            <lightning-button icon-name="utility:left" label="PREVIOUS" class='slds-m-right_small' disabled={paginationDetails.previousDisabled} onclick={handlePrevious}></lightning-button>
+                            <lightning-combobox
+                                name="progress"
+                                label="Page"
+                                class='slds-m-right_small PageSelectors'
+                                value={filters.pageNumber}
+                                options={pageOptions}
+                                dropdown-alignment='bottom-right'
+                                onchange={handlePageChange}
+                                variant='label-hidden'>
+                            </lightning-combobox>            
+                            <lightning-button icon-name="utility:right" label="NEXT" icon-position="right" class='slds-m-right_small' disabled={paginationDetails.nextDisabled} onclick={handleNext}></lightning-button>
+                            <lightning-button icon-name="utility:jump_to_right" label="LAST" icon-position="right" class='slds-p-right_small slds-m-right_small' disabled={paginationDetails.nextDisabled} onclick={handleLast}></lightning-button>
+                        </div>
+                    <!-- </lightning-layout> -->
+                    <lightning-layout-item size="12">
+                        <lightning-layout>
+                            <!-- SERIAL LIST -->
+                            <lightning-layout-item size="12">
+                                <c-serial-tile-list-external serials={serialsToDisplay} account-type={accounttype} pagination-details={paginationDetails} onrequestcreated={handlerequestcreated}></c-serial-tile-list-external>
+                            </lightning-layout-item>
+                            <!-- /SERIAL LIST -->
+
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    
+                </template>
+                <!-- /SERIAL/SUBSCRIPTIONS SECTION -->
+                <template if:true={showEmptyState}>
+                    <lightning-layout-item size="12">
+                        <c-empty-state-illustration message={label.noSubsToDisplay}></c-empty-state-illustration>
+                    </lightning-layout-item>
+                </template>
+            </template>
+            <!-- /EXTERNAL VERSION -->
+
+        </lightning-layout>
+        
+    <!-- </template> -->
+</template>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Extended_Rate_Of_Return_Comments</fullName>
+    <active>true</active>
+    <description>This rule requires that a comment be entered if the Request Extended Rate Of Return field is populated and the opportunity is Closed Won.</description>
+    <errorConditionFormula>OR (
+    AND (
+         NOT(ISBLANK(TEXT(RequestExtendedRightOfReturn__c))),
+         ISBLANK(ExtendedRightOfReturnComments__c)
+        ),
+    AND (
+         NOT(ISPICKVAL(StageName, &apos;Closed Won&apos;)),
+         NOT(ISBLANK(ExtendedRightOfReturnComments__c))
+        )
+    )</errorConditionFormula>
+    <errorMessage>If the Opportunity is Closed Won and you are requesting an Extended Right of Return, please enter a reason for the request.  If the Opportunity is not Closed Won, please remove any comments from the &apos;Extended Right Of Return Comments&apos; field.</errorMessage>
+</ValidationRule>

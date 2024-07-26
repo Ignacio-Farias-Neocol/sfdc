@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_owner_cannot_be_external_users</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISCHANGED(OwnerId) &amp;&amp; (
+CONTAINS(Owner:User.Profile.Name, &quot;Partner&quot;)||
+CONTAINS(Owner:User.Profile.Name, &quot;CCPlus&quot;) )</errorConditionFormula>
+    <errorMessage>Owner must be an internal User. (It can&apos;t be a Partner or a Community user).</errorMessage>
+</ValidationRule>

@@ -1,0 +1,10 @@
+<aura:component implements="lightning:availableForFlowScreens">
+   <!-- Attributes that store $Flow.ActiveStages and $Flow.CurrentStage -->
+   <aura:attribute name="stages" type="String[]"/>
+   <aura:attribute name="currentStage" type="String"/>
+   <aura:attribute name="isLoaded" type="boolean" default="false"/>
+
+   <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+   {!v.body}
+</aura:component>

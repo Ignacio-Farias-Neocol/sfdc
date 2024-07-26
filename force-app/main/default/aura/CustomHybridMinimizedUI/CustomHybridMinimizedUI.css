@@ -1,0 +1,91 @@
+.THIS {
+    position: fixed;
+    left: auto;
+    bottom: 0;
+    right: 12px;
+    margin: 0;
+    height: 50.990px;
+    width: 195px;
+    max-height: 100%;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    flex-direction: center;
+    justify-content: center;
+    box-shadow: none;
+    pointer-events: all;
+    font-size: 16px;
+    font-family: "proxima-nova", sans-serif !important;
+   	cursor: pointer !important;
+    -webkit-font-smoothing: subpixel-antialiased;
+    border: none;
+    
+      bottom: -1200px;
+      animation: goUpPreChat 1s ease-out;
+      animation-fill-mode: forwards;
+    
+}
+
+.THIS .minimizedContainer{
+   border: none;
+   height:100%;
+   width:100%;
+   background-color: #00B098;
+   border: 1px solid rgba(255,255,255,.5);
+   overflow:hidden;
+}
+
+.THIS .messageContent {
+    display: block;
+    padding: 0 8px;
+    height: 100%;
+    color: rgb(255, 255, 255);
+    position:relative;
+    display: inline;
+    left:28px;
+    text-transform: capitalize;
+}
+
+.THIS .glare{
+    height:100%;
+    width:100%;
+    position: absolute;
+	left: 0px;
+    top: 0;
+    overflow: hidden;
+    
+}
+
+.THIS .glare:before {
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 0 29px 10px #ffffff;
+    content: "";
+    filter: blur(20px);
+    height: 140%;
+    left: -50%;
+    position: absolute;
+    top: 0;
+    transform: rotate(25deg);
+    z-index: 1000;
+    transition: all .8s;
+    opacity: .6;
+    animation: light 4.5s ease-out;
+    -webkit-animation: light 4.5s infinite ease-out;
+    animation-iteration-count: 5;
+    -webkit-animation-iteration-count: 5;
+    animation-delay: 2s;
+    -webkit-animation-delay: 2s;
+    overflow:hidden;
+}
+
+
+.THIS .minimizedPersonImage{
+      position: absolute;
+      margin-left: 10px;
+      bottom: 18px;
+      width: 61px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,176,152,1);
+      outline: rgba(255,255,255,0.3) 1px;
+      left: 0;
+    }

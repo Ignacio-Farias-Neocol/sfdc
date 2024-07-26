@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_users_to_Edit_Deal_Desk_Cases</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT(ISNEW()),
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+$User.Id &lt;&gt; OwnerId ,
+LEFT (OwnerId,3) &lt;&gt; &quot;00G&quot;,
+OR(
+ISCHANGED(Opportunity_for_SE_Cases__c), ISCHANGED(Renewal_End_Date__c), ISCHANGED(Renewal_Partner_of_Record__c), ISCHANGED(Models_Subs_to_quote__c), ISCHANGED(Subscription_Term_s__c),
+ISCHANGED(Promotions__c),
+ISCHANGED(Additional_Discount__c),
+ISCHANGED(Serial_RQ__c),
+ISCHANGED(Notes__c),
+ISCHANGED(Reseller__c),
+ISCHANGED(Distributor__c),
+ISCHANGED(Send_Quote_to__c),
+ISCHANGED(Deal_Registration__c),
+ISCHANGED(Deal_Reg_Tracking__c),
+ISCHANGED(Validity_date_of_pricing__c),
+ISCHANGED(AccountId)),
+(RecordType.DeveloperName=&apos;Request_Quote&apos;)
+)</errorConditionFormula>
+    <errorMessage>You can&apos;t edit your request after submission. Please &quot;at mention&quot; the Case Owner (example: @RSmith) in the Chatter section of this request with any changes.</errorMessage>
+</ValidationRule>

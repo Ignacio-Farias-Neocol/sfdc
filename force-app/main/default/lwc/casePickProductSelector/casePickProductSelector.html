@@ -1,0 +1,148 @@
+<template>
+    <div class="container">
+        <div class="inner-container">
+            <article  class="slds-card">
+                <div class="slds-card__header slds-grid" style="background: #f3f3f3;">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="standard:case" alternative-text="Case" title="Case">
+                            </lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2  class="slds-card__header-title">
+                                <a href="javascript:void(0);" title="Case Reasons Controller " class="slds-card__header-link slds-truncate">
+                                    <span class="card-title">Case Reasons Controller </span>
+                                </a>
+                            </h2>
+                        </div>
+                    </header>
+                </div>
+                <div class="slds-card__body slds-card__body_inner">
+                    <template if:true={showSpinner} >
+                        <div class="exampleHolder">
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </div>                         
+                    </template>
+                    <div class="slds-grid slds-wrap">                       
+                        <div class="slds-col slds-size_12-of-12">
+                            <template if:true={isUpdateFlow} >
+                                <template if:true={productFamilyPickListOption} >
+                                    <div class="slds-grid slds-hide slds-wrap">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <lightning-combobox
+                                                name="Product Family"
+                                                label="Product Family"
+                                                value={productFamilySelected}
+                                                placeholder="--None--"
+                                                options={productFamilyPickListOption}
+                                                onchange={handleProudctFamilyChange} ></lightning-combobox>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template if:true={pickProductPicklistOption} >
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <!--<lightning-combobox
+                                                name="Pick Product"
+                                                label="Pick Product"
+                                                value={pickProductSelected}
+                                                placeholder="--None--"
+                                                options={pickProductPicklistOption}
+                                                onchange={handlePickProductChange} ></lightning-combobox> -->
+                                                <template if:true={recordId} >
+                                                    <lightning-record-edit-form
+                                                        record-id={recordId}
+                                                        object-api-name="Case">
+                                                        <lightning-messages> </lightning-messages>
+                                                        <lightning-output-field field-name="Pick_Product_only_if_Essentials__c"></lightning-output-field>                                                
+                                                    </lightning-record-edit-form>
+                                                </template>            
+                                                                                    
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template if:true={caseReasonPicklistOption} >
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <lightning-combobox
+                                                name="Case Reason"
+                                                label="Case Reason"
+                                                value={caseReasonSelected}
+                                                placeholder="--None--"
+                                                options={caseReasonPicklistOption}
+                                                onchange={handleCaseReasonChange} ></lightning-combobox>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template if:true={casesubReasonPiklistOption} >
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <lightning-combobox
+                                                name="Sub Case Reason"
+                                                label="Sub Case Reason"
+                                                value={caseSubReasonSelected}
+                                                placeholder="--None--"
+                                                options={casesubReasonPiklistOption}
+                                                onchange={handleSubCaseReasonChange} ></lightning-combobox>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template if:true={caseClosedSubReasonPicklistOption} >
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <lightning-combobox
+                                                name="Closed Case Reason"
+                                                label="Closed Case Reason"
+                                                value={caseClosedReasonSelected}
+                                                placeholder="--None--"
+                                                options={caseClosedSubReasonPicklistOption}
+                                                onchange={handleClosedCaseReasonChange} ></lightning-combobox>
+                                        </div>
+                                    </div>
+                                </template>
+                                <div class="slds-grid slds-wrap slds-p-top_x-small">
+                                    <div class="slds-col slds-size_12-of-12">
+                                        <button class="slds-button slds-button_brand" onclick={handleUpdatePickProduct}>Update</button>
+                                        <!--<button class="slds-button slds-button_neutral" onclick={handleRefershUpdatePickProduct}>Refresh</button> -->
+                                    </div>
+                                </div>
+                            </template>
+                            <template if:false={isUpdateFlow} >
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_12-of-12">  
+                                            <template if:true={recordId} >
+                                                <lightning-record-form
+                                                    object-api-name="Case"
+                                                    record-id={recordId}
+                                                    fields={fields}
+                                                    mode="readonly"
+                                                >
+                                                </lightning-record-form>
+                                               <!-- <lightning-record-edit-form
+                                                    record-id={recordId}
+                                                    object-api-name="Case">
+                                                    <lightning-messages> </lightning-messages>
+                                                    <lightning-output-field field-name="Pick_Product_only_if_Essentials__c"></lightning-output-field>                                                
+                                                    <lightning-output-field field-name="Case_Reason__c"></lightning-output-field>                                                
+                                                    <lightning-output-field field-name="Closed_Case_Reason__c"></lightning-output-field>                                                
+                                                </lightning-record-edit-form>
+                                            -->
+                                            </template>                                                                                                
+                                        </div>
+                                    </div>                                                                                        
+                                <div class="slds-grid slds-wrap slds-p-top_x-small">
+                                    <div class="slds-col slds-size_12-of-12">
+                                        <button class="slds-button slds-button_brand" onclick={handleEditPickProduct}>Edit</button>                                        
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>  
+                </div>
+            </article>
+        </div>
+    </div>  
+
+
+</template>

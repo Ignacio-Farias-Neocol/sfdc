@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Order_Placement_No_DEPRECATED</fullName>
+    <active>false</active>
+    <description>This validation Rule was created as part of the SFDC-17225</description>
+    <errorConditionFormula>AND(
+NOT(ISBLANK(OpportunityId)), 
+ISCHANGED(Status),
+TEXT(Opportunity.Business_Group__c) = &apos;Core&apos;,
+$Profile.Name = &apos;Apollo: Custom- Customer Services&apos;,
+OR(
+(NOT(ISBLANK(Opportunity.Reseller__c))&amp;&amp;
+ISBLANK(Opportunity.Reseller__r.Partner_Number__c)),
+(NOT(ISBLANK(Opportunity.Distributor__c))&amp;&amp;
+ISBLANK(Opportunity.Distributor__r.Partner_Number__c))),
+OR(TEXT(Status)= &apos;Activated&apos;,
+TEXT(Status)= &apos;Placed&apos;))</errorConditionFormula>
+    <errorMessage>This order cannot be placed because the Partner Number is missing from either the Partner Account or the Distributor account. Please fill out the missing Partner Number to proceed.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AdvocateHub__ID_OR_UUID</fullName>
+    <active>true</active>
+    <description>ensure either Integer or UUID is passed to unique identifier</description>
+    <errorConditionFormula>ISNULL(AdvocateHub__ExternalId__c ) &amp;&amp; ISNULL( AdvocateHub__uuid__c  )</errorConditionFormula>
+    <errorMessage>One of ExternalID (Integer) or ExternalID (UUID) is required</errorMessage>
+</ValidationRule>

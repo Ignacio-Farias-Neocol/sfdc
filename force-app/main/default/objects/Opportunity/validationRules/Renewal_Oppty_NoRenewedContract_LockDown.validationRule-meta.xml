@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Renewal_Oppty_NoRenewedContract_LockDown</fullName>
+    <active>true</active>
+    <description>Disallow users from making changes in Renewed Optty with missing &quot;Renewed contract&quot; field.</description>
+    <errorConditionFormula>!ISNEW() &amp;&amp; RecordTypeId = &apos;012f2000001261k&apos; &amp;&amp;
+ISBLANK(SBQQ__RenewedContract__c) &amp;&amp; 
+ISBLANK(SBQQ__AmendedContract__c) &amp;&amp; 
+(ISCHANGED(Amount) ||
+(ISCHANGED(StageName) &amp;&amp;
+(ISPICKVAL(StageName, &apos;Closed Won&apos;) || PRIORVALUE(StageName) = &apos;Closed Won&apos;)) ||
+ISCHANGED(OwnerId))</errorConditionFormula>
+    <errorDisplayField>End_Customers_Under_an_MSP_Contract__c</errorDisplayField>
+    <errorMessage>Please be sure that your Opportunity is associated with the correct &apos;Renewed Contract&apos; to begin the sales cycle.</errorMessage>
+</ValidationRule>

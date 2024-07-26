@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Amendment_Source_MSP_only</fullName>
+    <active>false</active>
+    <description>deactivated as part of the Story SFDC-18680</description>
+    <errorConditionFormula>AND(RecordType.Name==&apos;MSP Agreement&apos;,ISBLANK(TEXT(Amendment_Source_MSP_only__c)),
+TEXT(SBQQ__Status__c) &lt;&gt; &quot;Draft&quot;, $Profile.Name == &quot;Apollo: Custom- Sales Profile&quot;, BEGINS($UserRole.Name, &quot;MSP - RAD&quot;) )</errorConditionFormula>
+    <errorMessage>Please select an &apos;Amendment Source&apos; before moving the Quote stage.</errorMessage>
+</ValidationRule>

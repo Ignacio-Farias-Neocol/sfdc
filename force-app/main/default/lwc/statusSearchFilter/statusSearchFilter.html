@@ -1,0 +1,10 @@
+<template>
+    <legend class="slds-form-element__legend slds-form-element__label">
+        <h2 class="header">Status</h2>
+      </legend>
+    <div class="slds-form-element__control">
+        <template for:each={statuses} for:item="status" for:index="index">
+            <lightning-input key={status} type="checkbox" label={status} name={index} class="statusCB" checked onchange={handleStatusFilterChange}></lightning-input>
+        </template>
+    </div>  
+</template>

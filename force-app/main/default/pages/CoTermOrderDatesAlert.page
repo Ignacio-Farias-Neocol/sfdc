@@ -1,0 +1,8 @@
+<apex:page standardController="Order" tabStyle="Order" >
+    <font color="red" size="3px">
+        
+        <apex:outputText rendered="{!IF(Order.Date_Validation_Alert__c==null,false,true)}">
+            {!Order.Date_Validation_Alert__c}
+        </apex:outputText>
+    </font>
+</apex:page>

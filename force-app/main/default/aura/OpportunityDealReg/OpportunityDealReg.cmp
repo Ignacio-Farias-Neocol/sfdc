@@ -1,0 +1,55 @@
+<!--
+ - Created by iyeung on 1/3/19.
+ -->
+
+<aura:component controller="WebIntegrationController"  implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" description="OpportunityDealReg" >
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="status" description="indicator if there is any validation error" type="boolean" default="false" />
+    <aura:attribute name="success_message" description="success message" type="String" default="" />
+    <aura:attribute name="failure_message" description="failure message" type="String" default="" />
+    <aura:attribute name="approval_comments" description="approval comments" type="String" default="" />
+    <aura:attribute name="isDataLoading" description="indicator if loading is done" type="boolean" default="false" />
+
+    <div>
+        
+            <div class="slds-is-relative" >
+
+                <!-- for data loading indicator -->
+                <aura:if isTrue="{!v.isDataLoading}">
+                <lightning:spinner aura:id="spinner" variant="brand" size="medium" alternativeText="Loading Data"/>
+                </aura:if>
+
+
+                <div class="container">
+                    <h2 class="header">Submit for Deal Registration Approval</h2>
+                    <lightning:textarea name="comment"  value="{!v.approval_comments}"  placeholder="Enter the comments here... " maxlength="4000" />
+                </div>
+
+                <ui:button aura:id="submitButton" disabled="false" label="Submit" press="{!c.handleSubmitButtonClick}"/>
+
+
+                <div class="container">
+                    <aura:if isTrue="{!v.status}">
+                        <!-- content renders if true -->
+                        <div class="container">
+                        {!v.success_message}
+                </div>
+                        <aura:set attribute="else">
+                            <!-- content renders if false -->
+                            <div class="container">
+                                {!v.failure_message}
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </div>
+
+
+            </div>
+
+
+
+
+    </div>
+
+</aura:component>

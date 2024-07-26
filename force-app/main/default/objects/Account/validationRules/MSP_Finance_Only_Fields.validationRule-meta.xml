@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MSP_Finance_Only_Fields</fullName>
+    <active>true</active>
+    <description>Only MSP Finance users can edit these account fields.</description>
+    <errorConditionFormula>NOT( $Permission.MSP_Finance_Users ) &amp;&amp;
+OR(
+	ISCHANGED(MSP_Bill_Day__c ),
+	ISCHANGED(Billing_Aggregator__c)
+)</errorConditionFormula>
+    <errorMessage>The &apos;Bill Day&apos; and &apos;Billing Aggregator&apos; fields are only editable by MSP Finance users. Please contact your Admin for changes.</errorMessage>
+</ValidationRule>

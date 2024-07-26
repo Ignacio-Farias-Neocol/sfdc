@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Creation_Banned_Compliance_Check</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+OR(RecordType.DeveloperName = &apos;Technical_Support&apos;,
+RecordType.DeveloperName = &apos;Professional_Services&apos;,
+RecordType.DeveloperName = &apos;Web_Case&apos;), 
+ ISNEW(),
+Is_Account_Banned__c)</errorConditionFormula>
+    <errorMessage>This case cannot be created as the status for the contact or accounts is set as Banned</errorMessage>
+</ValidationRule>

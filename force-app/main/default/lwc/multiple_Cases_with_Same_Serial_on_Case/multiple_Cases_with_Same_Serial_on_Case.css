@@ -1,0 +1,63 @@
+/* Component CSS */
+.case-header {
+	margin-bottom: 10px;
+}
+
+.details-status{
+  position: relative;
+  left: 100px;
+  align-items: 10px;
+}
+.details-CreatedDate{
+  position: relative;
+  align-items: 10px;
+  left: 58px;
+}
+.details-Subject{
+  position: relative;
+  align-items: 10px;
+  left: 91px;
+}
+.details-Owner{
+  position: relative;
+  align-items: 10px;
+  left: 96px;
+}
+
+.slds-m-around_medium {
+		margin: 10px;
+}
+
+.slds-text-heading_medium {
+		font-size: 18px;
+		font-weight: bold;
+		margin-bottom: 5px;
+}
+.slds-m-top_medium {
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		height: 100%;
+}
+
+.slds-modal__header {
+		background-color: #f3f2f2;
+		padding: 10px;
+		border-bottom: 1px solid #ccc;
+}
+.slds-modal__header h2 {
+		font-size: 20px;
+		font-weight: bold;
+}
+.slds-modal__content {
+		max-height: 400px;
+		overflow-y: auto;
+}
+.slds-modal__footer {
+		padding: 10px;
+		text-align: right;
+}
+.slds-modal__container {
+	max-width: 90% !important;
+	width: 90% !important;
+}

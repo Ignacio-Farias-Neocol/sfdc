@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Contact_Required_When_SkoutQuote</fullName>
+    <active>true</active>
+    <description>Service Contact is required when the quote/oppty includes a Skout product</description>
+    <errorConditionFormula>AND(TEXT(Business_Group__c)=&apos;MSP&apos;,
+ISCHANGED(StageName),
+OR(ISPICKVAL(StageName,&quot;Order in Process&quot;),ISPICKVAL(StageName,&quot;Closed Won&quot;)),
+SKOUT_Products__c &gt; 0,
+ISBLANK(Service_Contact__c),
+ISBLANK(SBQQ__RenewedContract__c)
+)</errorConditionFormula>
+    <errorMessage>Please add a Service Contact. (Required when the Quote/Oppty includes a Skout product.)</errorMessage>
+</ValidationRule>

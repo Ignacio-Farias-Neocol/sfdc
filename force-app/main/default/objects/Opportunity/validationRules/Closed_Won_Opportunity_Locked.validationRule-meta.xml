@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Won_Opportunity_Locked</fullName>
+    <active>true</active>
+    <description>Locked opportunities cannot be changed by other users, only system administrators can edit closed opportunities.</description>
+    <errorConditionFormula>AND(
+   NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+   ISCHANGED(StageName),
+   TEXT(PRIORVALUE(StageName)) = &apos;Closed Won&apos;,
+   NOT(
+     $Profile.Name = &apos;System Administrator&apos;)
+)</errorConditionFormula>
+    <errorMessage>Only system administrators can edit closed won opportunities. Please reach out to SFDC support for assistance.</errorMessage>
+</ValidationRule>

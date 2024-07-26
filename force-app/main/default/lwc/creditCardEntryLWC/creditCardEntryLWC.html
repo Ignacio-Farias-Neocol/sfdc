@@ -1,0 +1,13 @@
+<template>
+    <template if:true={status}>
+        <div class="container">
+            {success_message}
+        </div>
+    </template>
+
+    <template if:false={status}>
+        <div class="container">
+            {failure_message}
+        </div>
+    </template>
+</template>

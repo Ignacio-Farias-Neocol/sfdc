@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Internal_Case_Status_Owner</fullName>
+    <active>false</active>
+    <description>Users can&apos;t edit the Status or Owner of an internal ticket unless they are the owner or have the internal ticket permission set</description>
+    <errorConditionFormula>RecordType.DeveloperName = &quot;Case_Internal_Ticket_Record_Type&quot; &amp;&amp;
+$User.Id &lt;&gt; OwnerId &amp;&amp;
+NOT( $Permission.Internal_Ticket_Ops_User ) &amp;&amp;
+OR(
+ ISCHANGED(Status),
+ ISCHANGED(OwnerId)
+)</errorConditionFormula>
+    <errorMessage>You do not have the level of permissions to change the Case Status or change the Case Owner</errorMessage>
+</ValidationRule>

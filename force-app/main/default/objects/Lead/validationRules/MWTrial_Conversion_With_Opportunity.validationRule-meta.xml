@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MWTrial_Conversion_With_Opportunity</fullName>
+    <active>true</active>
+    <description>You cannot convert a Lead with an Opportunity</description>
+    <errorConditionFormula>AND (
+   PRIORVALUE(IsConverted) = FALSE,
+   IsConverted = TRUE,
+   NOT(ISBLANK(ConvertedOpportunityId)),
+   Primary_Hot_List__r.MQL_Detail__c =  $CustomMetadata.MW_Setting__mdt.MSP_MW_Trial_Program_Name.Value__c
+)</errorConditionFormula>
+    <errorMessage>You can&apos;t convert an MW Trial Lead with an Opportunity. Please select the &apos;Don&apos;t create an Opportunity upon conversion&apos; checkbox.</errorMessage>
+</ValidationRule>

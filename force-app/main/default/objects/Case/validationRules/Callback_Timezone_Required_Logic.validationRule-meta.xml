@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Callback_Timezone_Required_Logic</fullName>
+    <active>true</active>
+    <description>Callback Timezone should be required only when the comm user has selected:
+
+ 
+
+Date/Time or Next Available in Callback details section</description>
+    <errorConditionFormula>AND(ISPICKVAL(Callback_TimeZone__c, &quot;&quot;),
+(RecordType.DeveloperName = &apos;Web_Case&apos;),
+(Created_by_Community_User__c = true),
+(OR(Next_Available__c = true,NOT(ISBLANK(Callback_Date_Time__c )))))</errorConditionFormula>
+    <errorMessage>Please specify the Callback Timezone.</errorMessage>
+</ValidationRule>

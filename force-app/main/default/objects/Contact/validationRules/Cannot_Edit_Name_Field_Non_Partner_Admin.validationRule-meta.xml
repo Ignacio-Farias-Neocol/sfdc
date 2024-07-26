@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Edit_Name_Field_Non_Partner_Admin</fullName>
+    <active>true</active>
+    <description>https://bugs.cudaops.com/browse/SFDC-12046</description>
+    <errorConditionFormula>AND
+   (
+ NOT(ISNEW()),
+ OR(
+       ($Profile.Name=&apos;Barracuda Partner Affiliate&apos;),
+       ($Profile.Name=&apos;Barracuda Partner Core&apos;),
+       ($Profile.Name=&apos;Barracuda Partner Hybrid&apos;),
+       ($Profile.Name=&apos;Barracuda Partner MSP&apos;),
+       ($Profile.Name=&apos;Barracuda Partner Distributor&apos;),
+       ($Profile.Name=&apos;Apollo: Barracuda CCPlus Login Profile&apos;)
+    ),
+ OR(
+		ISCHANGED(FirstName),ISCHANGED(LastName),ISCHANGED(MiddleName),ISCHANGED(Email)
+    )
+    )</errorConditionFormula>
+    <errorMessage>We&apos;re sorry, but you do not have permissions to edit these field(s). Please reach out to community_help@barracuda.com for assistance.</errorMessage>
+</ValidationRule>

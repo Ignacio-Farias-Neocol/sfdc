@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Limit_Size_Format_Phone</fullName>
+    <active>true</active>
+    <description>Check Phone (21 chars limit) has only numbers &amp; phone symbols (pluses, hyphens, and parentheses).
+SFDC-20687: Made this VR specific, so that it gets fired only when contact&apos;s phone is changed for an existing contact or a new contact gets created.</description>
+    <errorConditionFormula>AND(  
+ NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+ NOT($Permission.BYPASS_FOR_MARKETO),
+OR(
+   ISNEW(),
+  ISCHANGED(Phone)
+  ), 
+ OR(
+    AND(
+       LEN(Phone) &gt; 0,
+       NOT(REGEX(Phone,&quot;[0-9+ ()-]+&quot;))
+    ),
+    LEN(Phone) &gt; 21
+  )
+)</errorConditionFormula>
+    <errorDisplayField>Phone</errorDisplayField>
+    <errorMessage>Please check that Phone (21 chars limit) has only numbers &amp; phone symbols (plus signs, hyphens, and parentheses).</errorMessage>
+</ValidationRule>

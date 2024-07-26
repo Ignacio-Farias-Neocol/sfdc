@@ -1,0 +1,17 @@
+<template>
+    <template if:true={hasRenewedContract}>
+        <div class="slds-grid slds-grid_align-end">
+            <div class="slds-col slds-p-horizontal_xx-small">
+                <lightning-button label="Go to Renewed Contract" onclick={navigateToContract}>
+                </lightning-button>
+            </div>
+        </div> 
+    </template>
+    <template if:false={hasRenewedContract}>
+        <div class="slds-grid slds-grid_align-end">
+            <div class="slds-col slds-p-horizontal_xx-small">
+                The Opportunity does not have a Renewed Contract
+            </div>
+        </div> 
+    </template>
+</template>

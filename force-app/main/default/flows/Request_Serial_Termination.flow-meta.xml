@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <description>Dummy assignment created to end the flow</description>
+        <name>End_the_Flow</name>
+        <label>End the Flow</label>
+        <locationX>1064</locationX>
+        <locationY>324</locationY>
+        <assignmentItems>
+            <assignToReference>Text_End_Flow</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <choices>
+        <description>Indicates that the user does not want to terminate the serial</description>
+        <name>Radiobutton_Choice_No_Termination</name>
+        <choiceText>No, I do no want to request termination.</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <description>Indicates user wants to request termination</description>
+        <name>Radiobutton_Choice_Yes_Termination</name>
+        <choiceText>Yes, Request termination of the Serial</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <decisions>
+        <description>Check user&apos;s decision.</description>
+        <name>Decision_Check_User_Selection</name>
+        <label>Decision: Check User Selection</label>
+        <locationX>666</locationX>
+        <locationY>50</locationY>
+        <defaultConnector>
+            <targetReference>End_the_Flow</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Exit Process</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Request_Termination</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Radiobutton_Choice_Yes_Termination</leftValueReference>
+                <operator>WasSelected</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Set_Status_To_Pending_Termination</targetReference>
+            </connector>
+            <label>Yes, Request Termination</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the serial was fetched</description>
+        <name>Decision_Serial_Fetch</name>
+        <label>Decision Serial Fetch</label>
+        <locationX>46</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Serial_Record_Fetch_Result</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Serial Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Serial_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>thisSerial</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Design_MSP_Check</targetReference>
+            </connector>
+            <label>Serial Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the Status is Active. Cannot request termination for an inactive status.</description>
+        <name>Decision_Status_Check</name>
+        <label>Decision Status Check</label>
+        <locationX>265</locationX>
+        <locationY>430</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Status_Validation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Serial is not Active</defaultConnectorLabel>
+        <rules>
+            <name>Active_Serial</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>thisSerial.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Serial_Termination_Confirmation</targetReference>
+            </connector>
+            <label>Active Serial</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if this is an MSP Serial</description>
+        <name>Design_MSP_Check</name>
+        <label>Design MSP Check</label>
+        <locationX>265</locationX>
+        <locationY>615</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Non_MSP_Serial</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non MSP Serial</defaultConnectorLabel>
+        <rules>
+            <name>MSP_Serial</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>thisSerial.Business_Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MSP</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Decision_Status_Check</targetReference>
+            </connector>
+            <label>MSP Serial</label>
+        </rules>
+    </decisions>
+    <description>Flow to all users to request Serial Termination.</description>
+    <interviewLabel>Request Serial Termination {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Request Serial Termination</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Get status field for the serial record.</description>
+        <name>Get_Serial_Record</name>
+        <label>Get Serial Record</label>
+        <locationX>54</locationX>
+        <locationY>220</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decision_Serial_Fetch</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Serial__c</object>
+        <outputReference>thisSerial</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>Business_Group__c</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update the status to Pending Transformation</description>
+        <name>Update_Set_Status_To_Pending_Termination</name>
+        <label>Update: Set Status To Pending Termination</label>
+        <locationX>1058</locationX>
+        <locationY>45</locationY>
+        <connector>
+            <targetReference>End_the_Flow</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Pending Termination</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Serial__c</object>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>1208</locationX>
+        <locationY>42</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;Error: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Non_MSP_Serial</name>
+        <label>Screen: Non MSP Serial</label>
+        <locationX>539</locationX>
+        <locationY>613</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorMessage_Non_MSP_Serial</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;﻿Serial termination can only be requested for MSP serials.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen to show that Serial record was not found</description>
+        <name>Screen_Serial_Record_Fetch_Result</name>
+        <label>Screen: Serial Record Fetch Result</label>
+        <locationX>54</locationX>
+        <locationY>588</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Serial_Record_Fetch_Error_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Did not find Serial record for the given record Id.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen to confirm user&apos;s request to confirm Serial Termination</description>
+        <name>Screen_Serial_Termination_Confirmation</name>
+        <label>Screen: Serial Termination Confirmation</label>
+        <locationX>273</locationX>
+        <locationY>47</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decision_Check_User_Selection</targetReference>
+        </connector>
+        <fields>
+            <name>Radiobutton_Serial_Termination_Confirmation</name>
+            <choiceReferences>Radiobutton_Choice_Yes_Termination</choiceReferences>
+            <choiceReferences>Radiobutton_Choice_No_Termination</choiceReferences>
+            <dataType>Boolean</dataType>
+            <fieldText>Are you sure you want to terminate the serial?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen to show that Serial is not Active</description>
+        <name>Screen_Status_Validation</name>
+        <label>Screen: Status Validation</label>
+        <locationX>539</locationX>
+        <locationY>429</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Status_Not_Active_Error_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Serial should be Active to request termination.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>54</locationX>
+        <locationY>46</locationY>
+        <connector>
+            <targetReference>Get_Serial_Record</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Serial Record Id for which termination request needs to be submitted</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Text_End_Flow</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The Serial which is being requested to be terminated.</description>
+        <name>thisSerial</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Serial__c</objectType>
+    </variables>
+</Flow>

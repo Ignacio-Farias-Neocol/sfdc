@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>Check_Record_Type</name>
+        <label>Check Record Type</label>
+        <locationX>840</locationX>
+        <locationY>479</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Record_Type1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Professional Services</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Flow_Switch_Support_Active</targetReference>
+            </connector>
+            <label>Check Record Type</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>If Flow Switch Support Active Run the Flow else end execution of Flow</description>
+        <name>Is_Flow_Switch_Support_Active</name>
+        <label>Is Flow Switch Support Active?</label>
+        <locationX>840</locationX>
+        <locationY>695</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Flow_Switch_Support_Active1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Flow_Switch_Support</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>mainUpdate</targetReference>
+            </connector>
+            <label>Is Flow Switch Support Active</label>
+        </rules>
+    </decisions>
+    <description>SFDC-18124 - Workflow Rule Professional Services Status update for CSAT</description>
+    <environments>Default</environments>
+    <interviewLabel>Professional Services Status update for CSAT {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Professional Services Status update for CSAT</label>
+    <migratedFromWorkflowRuleName>Professional Services Status update for CSAT</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get Custom Metadata Flow Switch Support</description>
+        <name>Get_Flow_Switch_Support</name>
+        <label>Get Flow Switch Support</label>
+        <locationX>840</locationX>
+        <locationY>359</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Flow_Switch_Support__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>708</locationX>
+        <locationY>815</locationY>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Resolved</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>714</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_Flow_Switch_Support</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>(1 OR 2)</filterLogic>
+        <filters>
+            <field>Send_CSAT__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>YES</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Send_CSAT__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NO</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

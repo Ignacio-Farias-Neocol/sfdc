@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <decisions>
+        <name>Is_New_Address_from_Community</name>
+        <label>Is New Address from Community</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Is False Primary and Not from Community</defaultConnectorLabel>
+        <rules>
+            <name>New_Address_from_Community</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsNewAddressFromCommunity</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Status</targetReference>
+            </connector>
+            <label>New Address from Community</label>
+        </rules>
+    </decisions>
+    <description>This has been removed from Address Management after flow to before flow.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Is_Primary_True</name>
+        <dataType>Boolean</dataType>
+        <expression>OR (
+  AND(ISNEW(), {!$Record.Primary__c} = TRUE),
+  AND(ISCHANGED({!$Record.Primary__c}), {!$Record.Primary__c} = TRUE)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>IsNewAddressFromCommunity</name>
+        <dataType>Boolean</dataType>
+        <expression>AND (
+   ISNEW(),
+     BEGINS({!$Profile.Name},  &apos;Barracuda Partner&apos;)
+   )</expression>
+    </formulas>
+    <interviewLabel>Set Status for New Address From Community {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Set Status for New Address From Community</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Status</name>
+        <label>Update Status</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Pending</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_New_Address_from_Community</targetReference>
+        </connector>
+        <object>Address__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

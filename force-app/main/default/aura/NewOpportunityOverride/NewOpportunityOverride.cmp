@@ -1,0 +1,6 @@
+<aura:component controller="NewOpportunityCheckController" implements="lightning:actionOverride,lightning:hasPageReference,force:hasSObjectName" >  
+
+    <aura:handler name="render" value="{!this}" action="{!c.doInit}"/>
+    <lightning:navigation aura:id="navService"/>
+
+</aura:component>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Deleted_Locked</fullName>
+    <active>true</active>
+    <description>Is Deleted check box can only be changed by System Admin or Sales Operations</description>
+    <errorConditionFormula>AND( 
+ Is_Deleted__c = TRUE,
+ NOT(
+   OR($Profile.Name = &apos;Apollo: Custom- Sales Operations&apos;,
+      $Profile.Name = &apos;System Administrator&apos;,
+      $Profile.Name = &apos;Apollo: API&apos;
+    )
+ )
+)</errorConditionFormula>
+    <errorMessage>Sorry, you can&apos;t make any updates to this credit card. Please contact Support.</errorMessage>
+</ValidationRule>

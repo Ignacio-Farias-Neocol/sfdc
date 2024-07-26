@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ordered_can_not_be_set_manually</fullName>
+    <active>true</active>
+    <description>Only CS or Sys admin can set the Ordered field manually</description>
+    <errorConditionFormula>AND(ISCHANGED( SBQQ__Ordered__c ), 
+ISPICKVAL(Business_Group__c , &apos;Core&apos;),  
+OR( 
+$Profile.Name = &apos;Apollo: Custom- Sales Profile&apos;, 
+$Profile.Name = &apos;Apollo: Custom- Renewals Profile&apos;, 
+$Profile.Name = &apos;Apollo: Custom- Sales_China Profile&apos;
+
+))</errorConditionFormula>
+    <errorMessage>Sorry - You cannot mark &apos;Ordered&apos; manually. The record will update automatically once the Opportunity is Closed Won.</errorMessage>
+</ValidationRule>

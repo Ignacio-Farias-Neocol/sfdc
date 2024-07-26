@@ -1,0 +1,27 @@
+<aura:component >
+    <aura:attribute name="selectedValue" type="String" />
+    <aura:attribute name="reasons" type="List" />
+    <aura:attribute name="subscription" type="SBQQ__Subscription__c" />
+    <tr>
+        <td>
+            <ui:outputText value="{! v.subscription.Product_Code__c}"/>
+        </td>
+        <td>
+            <ui:outputText value="{! v.subscription.SBCF_Serial_Number__c}"/>
+        </td>
+        <td>
+            <!--ui:inputText value="{! subscription.SBQQ__OptionType__c}"/-->
+            <lightning:select  value="{!v.subscription.AnnotationReason__c}">
+                <option text="choose one.." value =" "/>
+                <aura:iteration items="{!v.reasons}" var="option">
+                    <aura:if isTrue="{!v.subscription.AnnotationReason__c == option}">
+                        <option text="{!option}"  value="{!option}" selected ="{selected}" />
+                        <aura:set attribute="else">
+                            <option text="{!option}"  value="{!option}" />
+                        </aura:set>
+                    </aura:if> 
+                </aura:iteration>
+            </lightning:select>
+        </td>
+    </tr>
+</aura:component>

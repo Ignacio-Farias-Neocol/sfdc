@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Close_Oppty_After_Contract_Expire</fullName>
+    <active>true</active>
+    <description>SFDC-10239 cannot close/won an amendment if the contract has expired.</description>
+    <errorConditionFormula>AND( 
+	ISPICKVAL(Business_Group__c, &quot;MSP&quot;), 
+	OR(/*SFDC-13690: check Oppty Closed date too */
+		SBQQ__PrimaryQuote__r.SBQQ__StartDate__c &gt; SBQQ__AmendedContract__r.SBQQ__ExpirationDate__c,
+		CloseDate &gt; SBQQ__AmendedContract__r.SBQQ__ExpirationDate__c
+	),
+	NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY),
+	ISPICKVAL(StageName, &apos;Closed Won&apos;)
+)</errorConditionFormula>
+    <errorMessage>Sorry - You can&apos;t move an Amendment Opportunity to Closed Won if the Contract has expired.</errorMessage>
+</ValidationRule>

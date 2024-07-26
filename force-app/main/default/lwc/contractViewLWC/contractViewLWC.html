@@ -1,0 +1,114 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 09-14-2020
+  @last modified by  : 
+  Modifications Log 
+-->
+<template>
+    <template if:true={showModalButton}>
+        <div class="slds-box slds-box_xx-small">
+        <div class="slds-clearfix">
+        <lightning-button variant="brand" label="Download" icon-name="utility:download" icon-position="right" onclick={showModal} class="slds-float_right" > </lightning-button>  
+</div>
+</div> 
+    </template>
+    <div data-id="customarea" class="custom-area slds-card" style="min-height:500px;height:100%;">
+        <template if:true={isLoaded}>
+            <template for:each={contractWrapperList} for:item="contractWrapper">
+                <div key={contractWrapper.contractNumber} style="padding: 0.4rem;margin: 0.4rem;border: 2px solid #DDD;border-radius: 0.3rem;background: #d5ddf3;">
+                    <div style="font-size: medium;"><b>Contract Number: {contractWrapper.contractNumber} </b></div>
+                    <template for:each={contractWrapper.serialWrapList} for:item="serial">
+                        <div key={serial.serialNumber} style="padding: 0.4rem;background: #eff4fc;border-radius: 0.3rem;"><b>Serial: {serial.serialNumber}</b></div>
+                        <div class="search-table-outter wrapper" style="margin: 0 0 0 1.5rem;" key={serial.serialNumber}>
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered search-table inner" style="margin-top: 0.2rem" width="100%">
+                                <tr class="slds-text-heading_label">
+                                    <th>Account name</th>
+                                    <th>Parent Product</th>
+                                    <th>Product Name</th>
+                                    <th style="white-space:normal">Subscription Start Date</th>
+                                    <th style="white-space:normal">Subscription End Date</th>
+                                    <th>PO Number</th>
+                                    <th>Quote Number</th>
+                                    <th style="white-space:normal">Terms (in Months)</th>
+                                    <th>Quantity</th>
+                                    <th>Country</th>
+                                    <th>State</th>
+                                    <th>Distributor</th>
+                                    <th>Reseller</th>
+                                    <template if:true={serial.showField}>
+                                        <th style="white-space:normal">Reseller Level</th>
+                                    </template>
+                                    <th>FulFillment Date</th>
+                                </tr>
+                                <template for:each={serial.subWrapList} for:item="sub">
+                                    <tr key={sub.id} class="slds-hint-parent">
+                                        <td>{sub.accountName}</td>
+                                        <td>{sub.parentProduct}</td>
+                                        <td>{sub.productName}</td>
+                                        <td>{sub.contractStartDate}</td>
+                                        <td>{sub.contractEndDate}</td>
+                                        <td>{sub.mPOnumber}</td>
+                                        <td>{sub.quoteNumber}</td>
+                                        <td>{sub.terms}</td>
+                                        <td>{sub.mQuantity}</td>
+                                        <td>{sub.country}</td>
+                                        <td>{sub.state}</td>
+                                        <td>{sub.distAccountName}</td>
+                                        <td>{sub.resellerAccountName}</td>
+                                        <template if:true={serial.showField}>
+                                            <td>{sub.resellerLevel}</td>
+                                        </template>
+                                        <td>{sub.fulfillmentDate}</td>
+                                    </tr>
+                                </template>
+                            </table> 
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </template>
+        <template if:true={error}>
+            {error}
+        </template>
+        <div if:false={isLoaded}>
+            <lightning-spinner
+                alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>
+    </div>
+    <template if:true={openModal}>  
+        <div class="slds-modal slds-fade-in-open slds-backdrop">  
+          <div class="slds-modal__container">  
+            <!------HEADER Section-->  
+            <div class="slds-modal__header">  
+              <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"  
+                variant="bare-inverse" onclick={closeModal} class="slds-modal__close">  
+              </lightning-button-icon>  
+              <h2></h2>  
+            </div>  
+            <!------Body Section-->  
+            <div class="slds-modal__content slds-p-around_medium">    
+                <p style="font-weight:bold;" class="slds-text-heading_medium slds-align_absolute-center">Terms and Conditions 
+                </p> <br/>
+                <p style="font-size:20px;" class="slds-text-heading_small">By downloading the Barracuda Serial Expiry Report (“Expiration Report”) You hereby agree to the following Terms and Conditions:</p>
+                <br/>
+                <ul style="list-style:initial;padding-left:30px;">
+                    <li>The Expiration Report is confidential information of Barracuda Networks (“Barracuda”) and may not be disclosed to any third party without Barracuda’s express written consent.</li>
+                    <li>You may only use the Expiration Report for Your own internal business purposes.</li>  
+                    <li>If the data contained in the Expiration Report is uploaded into any of Your systems, it will remain the sole property and confidential information of Barracuda.</li>
+                    <li>Any employee or agent of Your company who has access to this price list must be bound by a written confidentiality agreement which requires them to keep third party information confidential.</li>
+                    <li>These Terms and Conditions are in addition to any terms and conditions set forth in any other agreements between You and Barracuda. In the event of a conflict between these Terms and Conditions and the terms of any other agreement in place between You and Barracuda, these Terms and Conditions will prevail.</li>
+                </ul><br/>
+<lightning-input type="checkbox" label="I accept the Terms and Conditions" onchange={handleCheckBoxChange}></lightning-input>         
+            </div> 
+            <!------Footer Section-->  
+            <div class="slds-modal__footer">  
+              <lightning-button icon-name="utility:check" label="Confirm" variant="brand" onclick={accept}>  
+              </lightning-button>
+            </div>  
+          </div>  
+        </div>  
+      </template>
+</template>

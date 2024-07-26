@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Justification_is_required</fullName>
+    <active>true</active>
+    <description>Justification is required if there&apos;s an additional discount added.</description>
+    <errorConditionFormula>AND(
+ ISBLANK( Justification__c ) ,
+ NOT( ISBLANK( Additional_Discount__c ) ) 
+)</errorConditionFormula>
+    <errorMessage>Justification is required for any special discounts or other special terms. Please enter your reasoning for providing additional discount or taking the order direct.</errorMessage>
+</ValidationRule>

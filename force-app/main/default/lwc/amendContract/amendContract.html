@@ -1,0 +1,31 @@
+<template>
+   
+    <lightning-card if:false={valResult}>
+        <h3 slot="title">
+            <div class= "slds-text-color_error">
+            <lightning-icon icon-name="utility:error" alternative-text="Error!" variant="error" title="error variant">
+            </lightning-icon>
+           
+            <b>  Error while Creating Renewal/Amendment Opportunity</b>
+            </div>
+        </h3>
+        <div class="demo-only" style="padding:0.5rem;background:#f74f4f">
+            <div class="slds-text-color_inverse">
+        <h2 class="slds-text-heading_small slds-var-m-top_large" >
+          {message}
+        </h2>
+        </div>
+       
+    </div>
+       
+        <!-- <br>
+     
+        
+        <div class="spinner">
+            <template if:true={isLoading}>
+                 <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                 </lightning-spinner>
+            </template>
+        </div> -->
+    </lightning-card>
+</template>

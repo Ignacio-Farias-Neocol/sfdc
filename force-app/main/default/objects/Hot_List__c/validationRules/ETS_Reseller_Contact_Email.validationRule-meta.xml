@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ETS_Reseller_Contact_Email</fullName>
+    <active>true</active>
+    <description>For ETS Hot Lists, the rep needs to create or attach a Reseller Contact based on the Reseller Email  value.</description>
+    <errorConditionFormula>NOT(ISNEW()) &amp;&amp; 
+NOT(ISBLANK(Reseller_Contact_Email__c)) &amp;&amp; 
+ISBLANK( Reseller_Contact__c ) &amp;&amp; 
+NOT(ISBLANK(ETS_ID__c)) &amp;&amp;
+NOT(CONTAINS( $Profile.Name , &quot;Marketo&quot;)) &amp;&amp;
+NOT(CONTAINS( $Profile.Name , &quot;System Administrator&quot;))</errorConditionFormula>
+    <errorDisplayField>Reseller_Contact_Email__c</errorDisplayField>
+    <errorMessage>Please create a new Contact using the Reseller Contact Email. If an existing Contact already has that email address, add that Contact as the Reseller Contact.</errorMessage>
+</ValidationRule>

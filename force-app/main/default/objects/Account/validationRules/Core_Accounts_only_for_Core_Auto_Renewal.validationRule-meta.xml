@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Core_Accounts_only_for_Core_Auto_Renewal</fullName>
+    <active>false</active>
+    <errorConditionFormula>OR(Auto_Renewal_Eligible_CoreDEPRECATED__c,
+NOT( ISPICKVAL(Auto_Renewal_Status_Core__c,&apos;&apos;) )) &amp;&amp;  NOT(ISPICKVAL(Type,&apos;Customer&apos;))</errorConditionFormula>
+    <errorMessage>Only Core accounts can be selected for autorenewal</errorMessage>
+</ValidationRule>

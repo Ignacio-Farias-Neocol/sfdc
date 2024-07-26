@@ -1,0 +1,29 @@
+<apex:component access="global" >
+  <apex:attribute name="thisOrder" 
+                  description="Order record for which email is being sent." 
+                  type="Order" />
+                  
+  <p style="font-family:Arial;font-size:15px">Hello Commissions Team,</p>
+  <p style="font-family:Arial;font-size:15px">The follow order has been cancelled.</p>
+    <br/><br/>
+      <table style="font-family:Arial;font-size:15px;color:#42525f;width:100%">
+        <tr>
+          <td><b>Order Number:&nbsp;</b><a href="{!$Label.Salesforce_Org_Base_URL}{!thisOrder.id}">{!thisOrder.OrderNumber}</a></td>
+        </tr>
+        <tr>
+          <td><b>Amount USD:&nbsp;</b>{!thisOrder.TotalAmount}</td>
+        </tr>
+        <tr>
+          <td><b>Amount Converted:&nbsp;</b>{!thisOrder.Order_Amount_Converted__c}</td>
+        </tr>
+        <tr>
+          <td><b>Account Name :&nbsp;</b><a href="{!$Label.Salesforce_Org_Base_URL}{!thisOrder.AccountId}">{!thisOrder.Account.Name}</a></td>
+        </tr>
+        <tr>
+          <td><b>Opportunity :&nbsp;</b><a href="{!$Label.Salesforce_Org_Base_URL}{!thisOrder.OpportunityId}">{!thisOrder.Opportunity.Name}</a></td>
+        </tr>
+        <tr>
+           <td><b>Quote:&nbsp;</b><a href="{!$Label.Salesforce_Org_Base_URL}{!thisOrder.SBQQ__Quote__c}">{!thisOrder.SBQQ__Quote__r.Name}</a></td>
+        </tr>
+      </table>
+</apex:component>

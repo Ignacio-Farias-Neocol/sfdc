@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DEPRECATEDModel_Series_before_PriceQuote</fullName>
+    <active>false</active>
+    <description>Model Series is needed before the Validation Stage</description>
+    <errorConditionFormula>ispickval(  Model_Series__c  , &apos;&apos;) &amp;&amp; 
+( 
+
+ISPICKVAL( StageName , &apos;Validation&apos; ) || 
+ISPICKVAL( StageName , &apos;Tech Evaluation&apos; ) || 
+ISPICKVAL( StageName , &apos;Negotiation&apos; ) || 
+ISPICKVAL( StageName , &apos;Commit&apos; ) || 
+ISPICKVAL( StageName , &apos;Order in Process&apos; ) || 
+ISPICKVAL( StageName , &apos;Closed Won&apos; ) || 
+ISPICKVAL( StageName , &apos;Closed Lost&apos; ) 
+) 
+&amp;&amp;
+
+not (
+
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;ArchiveOne&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Backup Server/Service&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Barracuda Cloud Security Guardian&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Barracuda Content Shield&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Barracuda Reporting Server Vx&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Barracuda Total Email Protection&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Barracuda Total Email Security&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;C2C-PST&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Cloud to Cloud Backup&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Content Shield Service&apos; ) || 
+
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Control Center Vx&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Control Server&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Copy&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;CudaCam&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;CudaDrive&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Echo&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Echo Backup&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Flex&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Managed Backup Appliance&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Managed Firewall&apos; ) || 
+
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Managed Intronis Backup&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;MaX Compression&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Message Archiver AWS&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Misc. Parts&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;NextGen Firewall&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Other&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Phone System&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Reporting Server Vx&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Sonian&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Sonian Archiving Service&apos; ) || 
+
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Sookasa&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;SSL-VPN&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;SSL-VPN Vx&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;WAF-as-a-Service&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;WAF Control Center Vx&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Web Application Firewall AWS&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Web Application Firewall Azure&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Web Application Firewall GCP&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Web Security Service Connector&apos; ) || 
+ISPICKVAL(  Primary_Product_Family_2__c  , &apos;Zscaler&apos; ) 
+
+) &amp;&amp; SBQQ__Renewal__c == FALSE &amp;&amp;
+RecordType.DeveloperName &lt;&gt; &apos;Renewal&apos; &amp;&amp;
+RecordType.DeveloperName &lt;&gt; &apos;Locked_Renewal&apos; &amp;&amp; 
+NOT($Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY)</errorConditionFormula>
+    <errorDisplayField>Model_Series__c</errorDisplayField>
+    <errorMessage>Model Series is required before moving the Opportunity to any stage beyond the Validation Stage.</errorMessage>
+</ValidationRule>

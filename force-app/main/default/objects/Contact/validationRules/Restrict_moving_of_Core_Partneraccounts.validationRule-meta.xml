@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_moving_of_Core_Partneraccounts</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISCHANGED(AccountId ),
+NOT($Permission.Access_to_update_partner_accounts_from_Contacts), 
+NOT(ISNEW()),
+ISPICKVAL(Account.Type, &apos;Partner - Reseller&apos;),
+NOT( ISBLANK(Account.Partner_Number__c)) ,
+OR(
+ISPICKVAL(Partner_Portal_Access__c, &apos;Administrator&apos;), 
+ISPICKVAL(Partner_Portal_Access__c, &apos;Manager&apos;),
+ISPICKVAL(Partner_Portal_Access__c, &apos;Salesperson&apos;),
+ISPICKVAL(Partner_Portal_Access__c, &apos;Marketing&apos;),
+ISPICKVAL(Partner_Portal_Access__c, &apos;DMR Deal Reg&apos;) 
+ ))</errorConditionFormula>
+    <errorMessage>Partner - Reseller Contacts with Core Partner Portal access can&apos;t be moved. Please create a Relationship instead.</errorMessage>
+</ValidationRule>

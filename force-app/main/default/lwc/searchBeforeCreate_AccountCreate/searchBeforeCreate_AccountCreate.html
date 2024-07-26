@@ -1,0 +1,331 @@
+<!--
+            @author            : Joe Jamjom
+            @last modified on  : 2023-09-30
+            @last modified by  : Joe Jamjom
+            @description       : Main Component with logic related to Account create Functionality
+-->
+
+<template >
+    <c-search-before-create_-base title-string={titleString} super-title-string={superTitleString}
+        show-spinner={showSpinner}>
+            <span slot="searchForm">
+                <div class="slds-box form-container">
+
+                    <lightning-record-edit-form data-id='accountSearch' object-api-name={objectApiName} onload={handleOnLoad} record-type-id={recordTypeId} density="compact" >
+                        <div class="slds-p-around_medium lgc-bg">
+                            <lightning-helptext content='To view additional results try removing the suffix at the end of the company name, i.e. “Acme” instead of “Acme Inc”.'></lightning-helptext>
+                        </div>
+                        <lightning-input-field field-name={nameField} disabled={accNameDisabled}> </lightning-input-field>
+                        <!-- <lightning-input-field field-name={typefield} disabled={accTypeDisabled} required> </lightning-input-field> --> <!--SFDC-20955-->
+                        <lightning-input-field field-name={phoneField} disabled={accPhoneDisabled} class="slds-hide"> </lightning-input-field>
+                        <lightning-input-field field-name={dunsField} disabled={accDunsDisabled} > </lightning-input-field>
+                        <lightning-input-field field-name={websiteField} disabled={accWebsiteDisabled}></lightning-input-field>
+                        <div class="slds-form-element slds-form-element_horizontal">
+                        <!-- <label class="slds-form-element__label">Street</label> -->
+                        <div class="slds-form-element__control">
+                            <lightning-output-field field-name={streetField}  variant="label-hidden" disabled={accStreetDisabled} class="slds-hide"></lightning-output-field>
+                        </div>
+                        <!-- <label class="slds-form-element__label"><abbr title="required" class="slds-required">*</abbr>Country</label> -->
+                        <lightning-combobox name="Country" label="Country" value={selectedCountry}
+                            placeholder="Select Country" options={countries} onchange={handleCountry} disabled={accCountryDisabled} required variant="label-inline">
+                        </lightning-combobox >
+                        <!-- <div class="slds-form-element__control">
+                            <lightning-combobox name="Country" value={selectedCountry}
+                            placeholder="Select Country" options={countries} onchange={handleCountry} disabled={accCountryDisabled} variant="label-inline" required>
+                            </lightning-combobox >
+                        </div><br> -->
+                        <!-- <label class="slds-form-element__label">City</label> -->
+                        <div class="slds-form-element__control">
+                            <lightning-input-field field-name={cityField}  variant="label-hidden" disabled={accCityDisabled} class="slds-hide"> </lightning-input-field>
+                        </div><br>
+                        <!-- <label class="slds-form-element__label">State</label> -->
+                        <div class="slds-form-element__control">
+                            <lightning-input-field field-name={stateField}  variant="label-hidden" disabled={accStateDisabled} class="slds-hide"> </lightning-input-field>
+                        </div><br>
+                        <!-- <label class="slds-form-element__label">Zip/Postal Code</label> -->
+                        <div class="slds-form-element__control">
+                            <lightning-input-field field-name={postalcodeField} variant="label-hidden" disabled={accZipDisabled} class="slds-hide"> </lightning-input-field>
+                        </div><br>
+                        <!-- <label class="slds-form-element__label">Currency</label> -->
+                        <div class="slds-form-element__control">
+                            <lightning-input-field field-name={currencyfield} variant="label-hidden" disabled={accCurrencyDisabled} class="slds-hide"> </lightning-input-field>
+                        </div><br>
+                          </div>
+
+                        <span class="slds-align_absolute-center">
+                            <lightning-button variant="neutral" label="Search" title="Search"
+                                onclick={handleSearch} disabled={accSeachBtnDisabled}></lightning-button>
+                        </span>
+                    </lightning-record-edit-form>
+                </div>
+            </span>
+
+            <!-- ACCOUNTS RESULTS PAGE -->
+            <span slot="content">
+                <c-search-before-create_-page page-name={ACCOUNT_RESULTS_PAGE} current-page={currentPage} results-page-header={ACCOUNT_PAGE_HEADER}>
+                    <span slot="actions">
+                        <lightning-button label="Search D&B / Create New Account" data-next-page={ACCOUNT_ENRICH_PAGE}
+                            onclick={navigateToPage} class="slds-button_stretch slds-size_4-of-12" disabled={createDisabled}></lightning-button>
+                    </span>
+                    <span slot="pageContent">
+                        <div if:true={accountResults}>
+                            <lightning-datatable
+                                key-field="id"
+                                data={accountResults}
+                                columns={ACCOUNT_COLUMNS}
+                                selected-rows={selectedAccountIdRow}
+                                onrowselection={selectAccount}
+                                max-row-selection="1"
+                                default-sort-direction={defaultSortDirection}
+                                sorted-by={sortedBy}
+                                onrowaction={handleRowActions}
+                                sorted-direction={sortDirection} onsort={onHandleSort}>
+                            </lightning-datatable>
+
+                        </div>
+                        <div class="slds-box" if:true={isAccounttableEmpty}>
+                            <p>No records found </p>
+                        </div>
+                    </span>
+                    <span slot="navigation">
+                        <lightning-button label="Cancel" onclick={navigateToAccount}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Select this Account"
+                            onclick={navigateToRecord} class="slds-m-left_x-small" disabled={acctbtndisabled}></lightning-button>
+                    </span>
+                </c-search-before-create_-page>
+            </span>
+        <!-- ACCOUNTS RESULTS PAGE -->
+
+         <!-- Account Clone Page -->
+         <span slot="content">
+            <c-search-before-create_-page page-name={ACCOUNT_CLONE_PAGE} current-page={currentPage}
+                results-page-header={ACCOUNT_CLONE_PAGE_HEADER}>
+                <span slot="actions">
+                </span>
+                <span slot="pageContent">
+                    <template if:true={selectedAccount}>
+                        <lightning-tile type="media">
+                            <p class="slds-truncate"><b>{selectedAccount.Name}</b></p>
+                            <span slot="media">
+                                <lightning-avatar alternative-text={selectedAccount.Name}
+                                    fallback-icon-name="standard:account">
+                                </lightning-avatar>
+                                <!-- <lightning-icon icon-name="standard:account"></lightning-icon> -->
+                            </span>
+                            </br>
+                            <dl class="slds-dl_horizontal">
+                                <dt class="slds-dl_horizontal__label">
+                                    <p class="slds-truncate">Website:</p>
+                                </dt>
+                                <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                                    <p class="slds-truncate">{selectedAccount.Website}</p>
+                                </dd>
+                                <dt class="slds-dl_horizontal__label">
+                                    <p class="slds-truncate">Primary Business State/Province:</p>
+                                </dt>
+                                <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                                    <p class="slds-truncate">{selectedAccount.BillingState}</p>
+                                </dd>
+                                <dt class="slds-dl_horizontal__label">
+                                    <p class="slds-truncate">Primary Business Country:</p>
+                                </dt>
+                                <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                                    <p class="slds-truncate">{selectedAccount.BillingCountry}</p>
+                                </dd>
+                            </dl>
+                        </lightning-tile>
+                    </template>
+                    <!-- Account Clone Form -->
+                    <lightning-record-edit-form object-api-name="Account">
+                        <template for:each={accountCloneFields} for:item="fieldItem">
+                            <lightning-input-field key={fieldItem.fieldName} field-name={fieldItem.fieldName}
+                                value={fieldItem.value} data-id={ACCOUNT_CLONE_ID}>
+                            </lightning-input-field>
+                        </template>
+                        <!-- <template for:each={accountCloneFields} for:item="fieldItem">
+                                    <lightning-input-field key={fieldItem} field-name={fieldItem}></lightning-input-field>
+                                </template> -->
+
+                        <!-- Add more fields -->
+                        <lightning-button-menu icon-name="utility:add" onselect={addCloneFieldHandler}>
+                            <template for:each={fieldOptionsWithLabels} for:item="fieldOptionItem">
+                                <lightning-menu-item key={fieldOptionItem.apiName} value={fieldOptionItem.apiName}
+                                    label={fieldOptionItem.label}></lightning-menu-item>
+                            </template>
+                        </lightning-button-menu>
+                    </lightning-record-edit-form>
+                </span>
+                <span slot="navigation">
+                    <lightning-button label="Previous" data-next-page={leadId} onclick={navigateToPrevious}
+                        class="slds-var-m-left_x-small"></lightning-button>
+                    <lightning-button variant="brand" label="Continue" onclick={handleNewRecord} data-form-id={ACCOUNT_CLONE_ID}
+                        class="slds-var-m-left_x-small slds-button_brand"></lightning-button>
+                </span>
+            </c-search-before-create_-page>
+        </span>
+        <!-- Account Clone Page -->
+
+        <!-- ACCOUNTS ENRICHMENT RESULTS PAGE -->
+
+        <span slot="content">
+            <c-search-before-create_-page page-name={ACCOUNT_ENRICH_PAGE} current-page={currentPage} results-page-header={ACCOUNT_ENRICH_HEADER}>
+                <span slot="actions">
+                    <lightning-button label="Create New Account" data-next-page={ACCOUNT_CREATE_PAGE}
+                        onclick={navigateToPage} class="slds-m-left_x-small"></lightning-button>
+                </span>
+                <span slot="pageContent">
+                    <div if:true={accountEnrichResults}>
+                        <lightning-datatable
+                            key-field="id"
+                            data={accountEnrichResults}
+                            columns={ENRICH_COLUMNS}
+                            max-row-selection="1"
+                            selected-rows={selectedAccountIdRow}
+                            onrowselection={selectAccount}
+                            default-sort-direction={defaultSortDirection}
+                            sorted-by={sortedBy}
+                            sorted-direction={sortDirection} onsort={onHandleSort}>
+                        </lightning-datatable>
+                    </div>
+                    <div class="slds-box" if:true={isAccountEnrichtableEmpty}>
+                        <p>No records found </p>
+                    </div>
+                </span>
+                <span slot="navigation">
+                    <lightning-button label="Cancel" onclick={navigateToAccount}
+                        class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button label="Previous" onclick={navigateToPrevious}
+                    class="slds-var-m-left_x-small"></lightning-button>
+                    <lightning-button variant="brand" label="Select this Account" data-next-page={ACCOUNT_CREATE_PAGE}
+                        onclick={navigateToPage} class="slds-button_brand" disabled={acctbtndisabled}></lightning-button>
+                </span>
+            </c-search-before-create_-page>
+        </span>
+
+        <!-- ACCOUNTS ENRICHMENT RESULTS PAGE -->
+
+        <!-- NEW ACCOUNT PAGE -->
+        <span slot="content">
+            <c-search-before-create_-page page-name={ACCOUNT_CREATE_PAGE} current-page={currentPage} results-page-header={ACCOUNT_CREATION_HEADER}>
+                <span slot="actions">
+    </span>
+    <span slot="pageContent">
+        <lightning-record-edit-form object-api-name={objectApiName} record-type-id={recordTypeId}>
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <!-- <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field  field-name="Name"  value ={accountname} disabled={disabledFields.Name}> </lightning-input-field>
+            <lightning-input-field  field-name="ParentId"  value ={parentid} disabled={disabledFields.Parent_Account_ID__c}> </lightning-input-field>
+        </div>
+
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field  field-name="Phone" value ={phone} disabled={disabledFields.Phone}> </lightning-input-field>
+            <lightning-input-field  field-name="DUNS_Number__c" value ={dunsnum} disabled={disabledFields.DUNS_Number__c}> </lightning-input-field>
+        </div>
+
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field  field-name="Type" value ={Type} disabled={disabledFields.Type}> </lightning-input-field>
+            <lightning-input-field  field-name="BusinessGroup__c" value ={busgroup} disabled={disabledFields.Type}> </lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field  field-name="Website" value ={website} disabled={disabledFields.Website}> </lightning-input-field>
+            <lightning-input-field  field-name="NumberOfEmployees" value ={employeecount} disabled={disabledFields.NumberOfEmployees}> </lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field  field-name="CurrencyIsoCode" value ={currency} disabled={disabledFields.CurrencyIsoCode}> </lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field  field-name="Industry" value ={industry} disabled={disabledFields.Industry}> </lightning-input-field>
+        </div>
+
+        <div class="slds-col slds-size_1-of-1">
+           <b> Address Information</b>
+        </div>
+
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field  field-name="BillingStreet" value ={street}> </lightning-input-field>
+
+            <lightning-input-field  field-name="BillingCountry" value ={country}> </lightning-input-field>
+            <lightning-input-field  field-name="BillingCity" value ={city}> </lightning-input-field>
+        </div>
+
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field  field-name="BillingState" value ={state}> </lightning-input-field>
+            <lightning-input-field  field-name="BillingPostalCode" value ={zip}> </lightning-input-field>
+        </div>                                -->
+
+        <!-- here -->
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="Name"  value ={accountname} disabled={disabledFields.Name}> </lightning-input-field>
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="Type" value ={Type} disabled={disabledFields.Type} required> </lightning-input-field>
+            <!-- <lightning-input-field  field-name="ParentId"  value ={parentid} disabled={disabledFields.Parent_Account_ID__c}> </lightning-input-field> -->
+        </div>
+
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="CurrencyIsoCode" value ={currency} disabled={disabledFields.CurrencyIsoCode}> </lightning-input-field>
+
+            <!-- <lightning-input-field  field-name="Phone" value ={phone} disabled={disabledFields.Phone}> </lightning-input-field> -->
+        </div>
+
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="D_B_DUNS_Number__c" value ={dunsnum} disabled={disabledFields.DUNS_Number__c}> </lightning-input-field>
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="Industry" value ={industry} disabled={disabledFields.Industry}> </lightning-input-field>
+
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="BusinessGroup__c" value ={busgroup} disabled={disabledFields.Type}> </lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="Website" value ={website} disabled={disabledFields.Website}> </lightning-input-field>
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="NumberOfEmployees" value ={employeecount} disabled={disabledFields.NumberOfEmployees}> </lightning-input-field>
+        </div>
+
+        <div class="slds-col slds-size_1-of-1">
+           <b> Address Information</b>
+        </div>
+
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="BillingStreet" value ={street}
+                onchange={handleAddressFieldChange} required> </lightning-input-field>
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="BillingCity" value ={city}
+                onchange={handleAddressFieldChange} required> </lightning-input-field>
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="BillingPostalCode" value ={zip}
+                onchange={handleAddressFieldChange} required> </lightning-input-field>
+        </div>
+
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-combobox data-id={ACCOUNT_FORM_ID} name="Country" label="Country" value={selectedCountry}
+                placeholder="Select Country" options={countries} onchange={handleCountry} required>
+            </lightning-combobox>
+            <div class="slds-p-top_small">
+            <lightning-combobox data-id={ACCOUNT_FORM_ID} name="State" label="State" value={selectedState}
+                placeholder="Select State" options={states} onchange={handleState}> </lightning-combobox>
+            </div>
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="DUNS_Number__c" value={dunsnum}
+                class="slds-hide"></lightning-input-field>
+            <lightning-input-field data-id={ACCOUNT_FORM_ID} field-name="Creation_Source_Audit__c" value={creationSourceAudit}
+                class="slds-hide"></lightning-input-field>
+        </div>
+        <!-- here -->
+    </div>
+        </lightning-record-edit-form>
+    </span>
+    <span slot="navigation">
+        <lightning-button label="Cancel" onclick={navigateToAccount}
+            class="slds-m-left_x-small"></lightning-button>
+        <lightning-button label="Previous" onclick={navigateToPrevious}
+            class="slds-var-m-left_x-small"></lightning-button>
+        <lightning-button variant="brand" label="Save"
+          onclick={handleNewRecord} data-form-id={ACCOUNT_FORM_ID} class="slds-var-m-left_x-small" ></lightning-button>
+    </span>
+</c-search-before-create_-page>
+</span>
+        <!-- NEW ACCOUNT PAGE -->
+
+                        <!-- Close Modal Button -->
+                        <div class="slds-m-top_large slds-text-align_center">
+                            <lightning-button label="Done" onclick={closeModal} variant="brand"></lightning-button>
+                        </div>
+                    </span>
+                </c-search-before-create_-page>
+            </span>
+    </c-search-before-create_-base>
+</template>

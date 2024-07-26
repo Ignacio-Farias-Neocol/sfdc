@@ -1,0 +1,40 @@
+<template>
+  <fieldset class="slds-form-element slds-form-element_compound">
+    <legend class="slds-form-element__legend slds-form-element__label">
+      <h2 class="header">{labels.searchHeader}</h2>
+    </legend>
+    <template if:true={showTextSearch}>
+      <div class="slds-form-element__control">
+        <lightning-input
+          type="search"
+          onchange={handleTextKeyChange}
+          class="slds-m-bottom_small"
+          label={searchTextLabel}
+          value={searchTextString}
+        ></lightning-input>
+      </div>
+    </template>
+    <template if:true={showEndUserSearch}>
+      <div class="slds-form-element__control">
+        <lightning-input
+          type="search"
+          onchange={handleEndUserKeyChange}
+          class="slds-m-bottom_small"
+          label={labels.endUserFilterLabel}
+          value={searchEndUserString}
+        ></lightning-input>
+      </div>
+    </template>
+    <template if:true={showResellerSearch}>
+      <div class="slds-form-element__control">
+        <lightning-input
+          type="search"
+          onchange={handleResellerKeyChange}
+          class="slds-m-bottom_small"
+          label={labels.resellerFilterLabel}
+          value={searchResellerString}
+        ></lightning-input>
+      </div>
+    </template>
+  </fieldset>
+</template>

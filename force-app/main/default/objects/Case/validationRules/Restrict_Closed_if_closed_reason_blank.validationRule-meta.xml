@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Closed_if_closed_reason_blank</fullName>
+    <active>false</active>
+    <description>resctrict closing the case when Case closed reason is blank</description>
+    <errorConditionFormula>AND(
+OR(ISPICKVAL( Status , &quot;Resolved&quot;),ISPICKVAL( Status,&quot;Closed&quot;)),
+RecordType.DeveloperName = &quot;Technical_Support&quot;,
+ISPICKVAL( Closed_Case_Reason__c, &quot;&quot; ))</errorConditionFormula>
+    <errorDisplayField>Case_Closed_Reason_WM__c</errorDisplayField>
+    <errorMessage>Please add a case closed reason before marking the case as Resolved or Closed.</errorMessage>
+</ValidationRule>

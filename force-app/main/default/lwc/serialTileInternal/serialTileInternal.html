@@ -1,0 +1,134 @@
+<template>
+  <div class="slds-box">
+    <lightning-card variant="Narrow">
+      <!-- CARD HEADER -->
+      <div slot="title">
+        <h3 style="white-space: normal;">
+          <!--STATUS_ICON-->
+          <lightning-icon
+            icon-name={serial.iconDetail.statusIcon}
+            variant={serial.iconDetail.statusIconVariant}
+            size="small"
+            class="slds-m-right_small"
+            alternative-text={serial.iconDetail.statusIconAltText}
+            title={serial.iconDetail.statusIconTitle}
+          ></lightning-icon>
+          <!--/STATUS_ICON-->
+          <!--NAME-->
+          {serial.productName}
+          <!--/NAME-->
+        </h3>
+      </div>
+      <div slot="actions">
+        <!-- BUTTONS -->
+          <!-- VIEW SUBSCRIPTION -->
+          <lightning-button
+            label={subButtonLabel}
+            title={subButtonLabel}
+            onclick={showHideSubscription}
+            class="slds-m-right_xx-small"
+          ></lightning-button>
+          <!-- /VIEW SUBSCRIPTION -->
+          <!--CERTIFICATE_BUTTON-->
+          <c-certificate-button
+            btn-icon-name="utility:work_order_type"
+            btn-icon-alt-text="View Subscription Certificate"
+            btn-icon-title="View Subscription Certificate"
+            serial={serial}
+            page-name={pageName}
+            class="slds-float_right"
+            entity-id={entityId}
+            account-type={accountType}
+          >
+          </c-certificate-button>
+          <!--/CERTIFICATE_BUTTON-->
+        <!-- /BUTTONS -->
+      </div>
+      <!-- /CARD HEADER-->
+
+      <!--SERIAL_FIELDS-->
+      <div class="slds-m-around_medium">
+        <table>
+          <colgroup>
+            <col class="labelColumn">
+            <col class="leftValueColumn">
+            <col class="labelColumn">
+            <col class="rightValueColumn">
+          </colgroup>
+          <tr>
+            <td>Serial Number:</td>
+            <td>{serial.serialNumber}</td>
+            <td>Partner:</td>
+            <td>{serial.partner}</td>
+            <!-- Added as a part of SFDC-16035: START-->
+            <!--<td>Customer 360:</td>-->
+            <!--<td>{serial.customer360}</td>-->
+            <td><lightning-formatted-url value={serial.customer360} label="Customer 360" target="_blank" ></lightning-formatted-url></td>
+            <!-- Added as a part of SFDC-16035: END-->
+          </tr>
+          <tr>
+            <td>Expiration Date:</td>
+            <td><lightning-formatted-date-time
+              value={serial.contractEndDate}
+            ></lightning-formatted-date-time></td>
+            <td>Business Group:</td>
+            <td>{serial.businessGroup}</td>
+          </tr>
+        </table>
+        <!-- <dl class="slds-list_horizontal slds-wrap">
+          <dt
+            class="slds-item_label slds-text-color_weak"
+            title="Serial Number"
+          >
+            Serial Number:
+          </dt>
+          <dd
+            class="slds-item_detail slds-truncate"
+            title={serial.serialNumber}
+          >
+            {serial.serialNumber}
+          </dd>
+          <dt
+            class="slds-item_label slds-text-color_weak"
+            title="Partner of Record"
+          >
+            Partner:
+          </dt>
+          <dd
+            class="slds-item_detail slds-truncate"
+            title={serial.partnerOfRecord}
+          >
+            {serial.partner}
+          </dd>
+          <dt
+            class="slds-item_label slds-text-color_weak"
+            title="Expiration Date"
+          >
+            Expiration Date:
+          </dt>
+          <dd
+            class="slds-item_detail slds-truncate"
+            title={serial.contractEndDate}
+          >
+            <lightning-formatted-date-time
+              value={serial.contractEndDate}
+            ></lightning-formatted-date-time>
+          </dd>
+        </dl> -->
+      </div>
+      <!--/SERIAL_FIELDS-->
+
+      <!-- SUB TABLE -->
+      <div>
+        <template if:true={subVisible}>
+          <c-subscription-list
+          subscriptions={subs}
+          serial={serial}
+          account-type={accountType}
+        ></c-subscription-list>
+        </template> 
+      </div>
+      <!-- /SUB TABLE -->
+    </lightning-card>
+  </div>
+</template>

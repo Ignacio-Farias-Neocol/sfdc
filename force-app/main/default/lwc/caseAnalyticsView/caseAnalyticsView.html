@@ -1,0 +1,153 @@
+<template>
+    <div class="container">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_12-of-12">
+                <article class="slds-card lightning-card">
+                    <div class="slds-card__header slds-grid slds-theme_shade">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate ">
+                            <div class="slds-media__figure">
+                                <lightning-icon icon-name="standard:case" size="small"></lightning-icon>
+                            </div>
+                            <div class="slds-media__body" style="position:relative;">
+                                <h2 class="slds-card__header-title">
+                                    <a class="slds-card__header-link">Agent(s) Case Timer</a>
+                                    <div style="position: absolute;top: -14px;right: 0;">
+                                        <a href="javascript:void();" onclick={handleRefershData} title="Refres" >
+                                            <lightning-icon icon-name="action:refresh" alternative-text="refresh" size="xx-small">
+                                            </lightning-icon>
+                                        </a>
+                                    </div>
+                                   
+                                </h2>
+                            </div>
+                        </header>
+                    </div>
+                    
+                    <div style="overflow-y: auto; max-height: 300px">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+                            aria-labelledby="element-with-table-label other-element-with-table-label">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="User">User</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Agent Total Time">Agent Total Time</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Case Total Time">Case Total Time ({totalCaseTime})</div>
+                                    </th>                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template if:true={agentTimeList} >
+                                    <template for:each={agentTimeList} for:item="agentTime" >
+                                        <tr class="slds-hint-parent" key={agentTime.Id}>
+                                            <th data-label={agentTime.Name} scope="row">
+                                                <div class="slds-truncate" title={agentTime.Name}>
+                                                <a onclick={handleAgentClick} data-agentid={agentTime.Id} href="javascript:void();" tabindex="-1">{agentTime.Name}</a>
+                                                </div>
+                                            </th>
+                                            <td data-label={agentTime.Time}>
+                                                <div class="slds-truncate" title={agentTime.Time}>{agentTime.Time}</div>
+                                            </td>
+                                            <td data-label="Case Total Time">
+                                                
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    <footer class="slds-card__footer">
+                    </footer>
+
+                </article>
+            </div>
+        </div>
+
+        <template if:true={selectedAgenDataObj} >
+            <div class="slds-grid slds-wrap" style="margin-top: 20px;">
+                <div class="slds-col slds-size_12-of-12">
+                    <article class="slds-card lightning-card">
+                        <div class="slds-card__header slds-grid slds-theme_shade">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate ">
+                                <div class="slds-media__figure">
+                                    <lightning-icon icon-name="standard:case" size="small"></lightning-icon>
+                                </div>
+                                <div class="slds-media__body" style="position:relative;">
+                                    <h2 class="slds-card__header-title">
+                                        <a class="slds-card__header-link">{selectedAgenDataObj.Name}</a>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                        
+                        <div style="overflow-y: auto; max-height: 300px">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+                                aria-labelledby="element-with-table-label other-element-with-table-label">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="User">User</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Date">Date</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Start Time">Start Time</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="End Time">End Time</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Time">Time</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Case Total Time">Agent Total Time ({selectedAgenDataObj.agentTotalTime})</div>
+                                        </th>                                
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <template for:each={selectedAgenDataObj.selectedAgenDataList} for:item="selectedAgenData" >
+                                        <tr class="slds-hint-parent" key={selectedAgenData.Id}>
+                                            <th data-label={selectedAgenData.Name} scope="row">
+                                                <div class="slds-truncate" title={selectedAgenData.Name}>
+                                               <!--- <a data-agentid={selectedAgenData.Id} href="javascript:void();" tabindex="-1">{selectedAgenData.Name}</a>  -->
+                                               {selectedAgenData.Name}
+                                                </div>
+                                            </th>
+                                            <td data-label={selectedAgenData.Date}>
+                                                <div class="slds-truncate" title={selectedAgenData.Date}>{selectedAgenData.Date}</div>
+                                            </td>
+                                            <td data-label={selectedAgenData.startTime}>
+                                                <div class="slds-truncate" title={selectedAgenData.startTime}>{selectedAgenData.startTime}</div>
+                                            </td>
+                                            <td data-label={selectedAgenData.endTime}>
+                                                <div class="slds-truncate" title={selectedAgenData.endTime}>{selectedAgenData.endTime}</div>
+                                            </td>
+                                            <td data-label={selectedAgenData.Time}>
+                                                <div class="slds-truncate" title={selectedAgenData.Time}>{selectedAgenData.Time}</div>
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                        <footer class="slds-card__footer">
+                        </footer>
+
+                    </article>
+                </div>
+            </div>
+        </template>
+
+
+    </div>
+</template>

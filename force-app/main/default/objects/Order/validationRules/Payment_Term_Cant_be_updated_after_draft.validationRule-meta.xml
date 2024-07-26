@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Term_Cant_be_updated_after_draft</fullName>
+    <active>true</active>
+    <description>Restrict Payment term edit access after order is activated.</description>
+    <errorConditionFormula>AND(
+ ISCHANGED(SBQQ__PaymentTerm__c), 
+NOT($Permission.Edit_Payment_Term_on_Order),
+OR(
+TEXT(Status)=&quot;Activated&quot;,
+TEXT(Status)=&quot;Placed&quot; ))</errorConditionFormula>
+    <errorMessage>You can&apos;t change the Payment Term after the Order is activated.</errorMessage>
+</ValidationRule>

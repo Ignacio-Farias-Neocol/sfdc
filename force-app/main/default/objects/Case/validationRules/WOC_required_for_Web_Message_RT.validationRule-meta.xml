@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WOC_required_for_Web_Message_RT</fullName>
+    <active>true</active>
+    <description>SFDC-18775
+Web Message WOC Reason needs to be required</description>
+    <errorConditionFormula>AND(
+  ISPICKVAL(Status, &quot;Waiting for customer response&quot;),
+  RecordType.DeveloperName = &quot;Web_Case&quot;,
+  NOT(ISPICKVAL(WOC_Reason__c, &quot;Call back&quot;)),
+  NOT(ISPICKVAL(WOC_Reason__c, &quot;Contact Verification&quot;)),
+  NOT(ISPICKVAL(WOC_Reason__c, &quot;Pending Additional Information&quot;)),
+  NOT(ISPICKVAL(WOC_Reason__c, &quot;Resolution Offered&quot;)),
+  NOT(ISPICKVAL(WOC_Reason__c, &quot;Serial Verification&quot;)),
+  NOT(ISPICKVAL(WOC_Reason__c, &quot;Technical Support Related Questions&quot;))
+)</errorConditionFormula>
+    <errorMessage>Please select a WOC Reason to move the Case to Waiting for Customer Response</errorMessage>
+</ValidationRule>

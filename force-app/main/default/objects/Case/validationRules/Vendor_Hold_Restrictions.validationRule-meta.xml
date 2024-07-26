@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vendor_Hold_Restrictions</fullName>
+    <active>true</active>
+    <description>Cannot move to New, Resolved, Closed from Vendorhold</description>
+    <errorConditionFormula>OR ( 
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;Resolved&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;Vendor Hold&apos;)), 
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;Closed&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;Vendor Hold&apos;)), 
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(Status, &apos;New&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;Vendor Hold&apos;)) 
+
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Please move status to &apos;In Progress&apos;. You can&apos;t change the status to &apos;New&apos;, &apos;Resolved&apos; or &apos;Closed&apos;.</errorMessage>
+</ValidationRule>

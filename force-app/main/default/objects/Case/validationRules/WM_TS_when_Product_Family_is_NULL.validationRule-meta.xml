@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WM_TS_when_Product_Family_is_NULL</fullName>
+    <active>true</active>
+    <description>Cannot move from WM to TS when product family is blank</description>
+    <errorConditionFormula>AND(
+ ISCHANGED(RecordTypeId),
+ RecordType.DeveloperName = &apos;Technical_Support&apos;,
+ Serial__c = &apos;&apos;,
+ ISPICKVAL( Product_Family_List__c ,&apos;&apos;),
+ ISPICKVAL( Status ,&apos;New&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Product_Family_List__c</errorDisplayField>
+    <errorMessage>Please select a Product Family.</errorMessage>
+</ValidationRule>

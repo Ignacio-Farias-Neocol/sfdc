@@ -1,0 +1,1062 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Call MS API to send information to create username in ECHO</description>
+        <name>Action_MS_ECHO_API_Call</name>
+        <label>Action: MS ECHO API Call</label>
+        <locationX>314</locationX>
+        <locationY>1646</locationY>
+        <actionName>EchoPartnerHelper</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Decision_API_Result</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>accName</name>
+            <value>
+                <elementReference>thisAccount.Name</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>bccAuthDBAccountId</name>
+            <value>
+                <elementReference>thisAccount.BCC_AuthDB_Account_ID__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>bccAuthDBAdminId</name>
+            <value>
+                <elementReference>thisAccount.BCC_AuthDB_Admin_ID__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>billingAggregatorId</name>
+            <value>
+                <elementReference>Formula_BillingAggregator_bccAuthDBAccountId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>city</name>
+            <value>
+                <elementReference>thisAccountAddress.City__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>company</name>
+            <value>
+                <elementReference>thisAccount.Name</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>conEmail</name>
+            <value>
+                <elementReference>thisAccount.Primary_Contact_Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>conName</name>
+            <value>
+                <elementReference>thisAccount.Primary_Contact_Name__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>country</name>
+            <value>
+                <elementReference>thisAccountAddress.Country_Name__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>countryCode</name>
+            <value>
+                <elementReference>thisAccountAddress.Country_ISO__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>email</name>
+            <value>
+                <elementReference>thisAccount.Bill_To_Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>extension</name>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>fax</name>
+            <value>
+                <elementReference>thisAccount.Fax</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>name</name>
+            <value>
+                <elementReference>thisAccount.Bill_To_Contact__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>partner</name>
+            <value>
+                <elementReference>Formula_BillingAggregator_Username</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>partnerCurrency</name>
+            <value>
+                <elementReference>thisAccount.CurrencyIsoCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>phone</name>
+            <value>
+                <elementReference>thisAccount.Bill_To_Phone__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>planId</name>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>pricingPlanIds</name>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sfAccountId</name>
+            <value>
+                <elementReference>thisAccount.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>state</name>
+            <value>
+                <elementReference>thisAccountAddress.State_ISO__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>streetAddress</name>
+            <value>
+                <elementReference>thisAccountAddress.Street__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>streetAddress2</name>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>streetAddress3</name>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>streetAddress4</name>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>username</name>
+            <value>
+                <elementReference>echo_username</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>zip</name>
+            <value>
+                <elementReference>thisAccountAddress.Zip_Postal_Code__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>EchoPartnerHelper</nameSegment>
+        <outputParameters>
+            <assignToReference>apiCallMessage</assignToReference>
+            <name>message</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>apiCallResult</assignToReference>
+            <name>result</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <description>Dummy assignment created to end the flow</description>
+        <name>End_the_Flow</name>
+        <label>End the Flow</label>
+        <locationX>1282</locationX>
+        <locationY>1166</locationY>
+        <assignmentItems>
+            <assignToReference>Text_End_Flow</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <choices>
+        <description>Exit the username creation process</description>
+        <name>Radiobutton_Choice_No_Exit</name>
+        <choiceText>No, Exit the username creation process.</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <description>Go ahead with the creation of username</description>
+        <name>Radiobutton_Choice_Yes_Proceed</name>
+        <choiceText>Yes, Proceed with username creation.</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <decisions>
+        <description>Check if the user has edit access to the Account record</description>
+        <name>Check_User_Record_Edit_Access</name>
+        <label>Check User Record Edit Access</label>
+        <locationX>1981</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Account_Record_Edit_Access</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Edit Access</defaultConnectorLabel>
+        <rules>
+            <name>Has_Edit_Access</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecordAccessId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordAccessId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Decision_DPL_Check</targetReference>
+            </connector>
+            <label>Has Edit Access</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the user wants to proceed with the Account currency or exit</description>
+        <name>Decision_Account_Currency_Check</name>
+        <label>Decision Account Currency Check</label>
+        <locationX>1161</locationX>
+        <locationY>1046</locationY>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Proceed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Radiobutton_Choice_Yes_Proceed</leftValueReference>
+                <operator>WasSelected</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Primary_Billing_Address</targetReference>
+            </connector>
+            <label>Yes, Proceed</label>
+        </rules>
+        <rules>
+            <name>No_Exit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Radiobutton_Choice_No_Exit</leftValueReference>
+                <operator>WasSelected</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End_the_Flow</targetReference>
+            </connector>
+            <label>No Exit</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the account was fetched</description>
+        <name>Decision_Account_Fetch</name>
+        <label>Decision Account Fetch</label>
+        <locationX>2247</locationX>
+        <locationY>326</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Account_Record_Fetch_Result</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Account Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Account_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>thisAccount</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Account_Access_Record</targetReference>
+            </connector>
+            <label>Account Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if all values required for API call have been populated in the Account. Username and password will validated after the input screen</description>
+        <name>Decision_Account_Information_Validation</name>
+        <label>Decision Account Information Validation</label>
+        <locationX>535</locationX>
+        <locationY>1406</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Values_Missing</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Values missing</defaultConnectorLabel>
+        <rules>
+            <name>Values_are_present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>thisAccount.Bill_To_Contact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>thisAccount.Name</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>thisAccountAddress.Street__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>thisAccountAddress.City__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Formula_Address_State_Required</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>thisAccountAddress.Zip_Postal_Code__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>thisAccountAddress.Country_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>thisAccountAddress.Country_ISO__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>thisAccount.Bill_To_Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>thisAccount.Bill_To_Phone__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>thisAccount.Initial_BCC_Admin__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Username_Password</targetReference>
+            </connector>
+            <label>Values are present</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Primary Billing Address for the given account was found or not</description>
+        <name>Decision_Address_Fetch</name>
+        <label>Decision Address Fetch</label>
+        <locationX>776</locationX>
+        <locationY>1286</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Address_Record_Fetch_Result</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Address Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Address_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>thisAccountAddress</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Decision_Account_Information_Validation</targetReference>
+            </connector>
+            <label>Address Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check is the API call is successful or not</description>
+        <name>Decision_API_Result</name>
+        <label>Decision API Result</label>
+        <locationX>314</locationX>
+        <locationY>1766</locationY>
+        <defaultConnector>
+            <targetReference>API_Result_Failure_Message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>API Failed</defaultConnectorLabel>
+        <rules>
+            <name>API_Successful</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>apiCallResult</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Username_Password</targetReference>
+            </connector>
+            <label>API Successful</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the Account has passed DPL Check</description>
+        <name>Decision_DPL_Check</name>
+        <label>Decision DPL Check</label>
+        <locationX>1713</locationX>
+        <locationY>686</locationY>
+        <defaultConnector>
+            <targetReference>Screen_DPL_Check_Validation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>DPL Check Not Passed</defaultConnectorLabel>
+        <rules>
+            <name>DPL_Check_Passed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>thisAccount.Compliance_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Decision_Existing_Username</targetReference>
+            </connector>
+            <label>DPL Check Passed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the username field is already populated.</description>
+        <name>Decision_Existing_Username</name>
+        <label>Decision Existing Username</label>
+        <locationX>1441</locationX>
+        <locationY>806</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Username_Check_Validation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Username is populated</defaultConnectorLabel>
+        <rules>
+            <name>Username_Is_Empty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>thisAccount.User_na__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Account_Currency_Check</targetReference>
+            </connector>
+            <label>Username Is Empty</label>
+        </rules>
+    </decisions>
+    <description>Creates ECHO username and password based on the value passed to MS API.
+Changes are made on top of previous version as a part of SFDC-18360.
+Added a check for the field, &quot;Initial BCC Admin&quot; as a part of SFDC-19787
+
+Modified the final screen as part of SFDC-20717. The Success and Failure screens are separated. The Success screen doesn&apos;t show the Previous button, whereas the failure screen will show it.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Formula determining if the state field is required or not</description>
+        <name>Formula_Address_State_Required</name>
+        <dataType>Boolean</dataType>
+        <expression>IF({!thisAccountAddress.Country_ISO__c} = &apos;US&apos;, ISBLANK({!thisAccountAddress.State_ISO__c}), false)</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_BillingAggregator_bccAuthDBAccountId</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!thisAccount.Billing_Aggregator__c}), &apos;&apos;, {!thisAccount.Billing_Aggregator__r.BCC_AuthDB_Account_ID__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Determines the billing aggregator user name for the account</description>
+        <name>Formula_BillingAggregator_Username</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!thisAccount.Billing_Aggregator__c}), &apos;&apos;, {!thisAccount.Billing_Aggregator__r.User_na__c})</expression>
+    </formulas>
+    <formulas>
+        <description>If partner created date exists then use that date else use current date.</description>
+        <name>Formula_PartnerCreatedDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(ISBLANK({!thisAccount.Partner_Created_Date_MSP__c}), {!$Flow.CurrentDate}, {!thisAccount.Partner_Created_Date_MSP__c})</expression>
+    </formulas>
+    <interviewLabel>Create ECHO Username {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create ECHO Username</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Get access record to check users edit access</description>
+        <name>Get_Account_Access_Record</name>
+        <label>Get Account Access Record</label>
+        <locationX>1981</locationX>
+        <locationY>446</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_User_Record_Edit_Access</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>thisAccount.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>HasEditAccess</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>UserRecordAccess</object>
+        <outputAssignments>
+            <assignToReference>RecordAccessId</assignToReference>
+            <field>RecordId</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the account record related to the passed ID</description>
+        <name>Get_Account_Record</name>
+        <label>Get Account Record</label>
+        <locationX>2247</locationX>
+        <locationY>206</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decision_Account_Fetch</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>thisAccount</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Bill_To_Contact__c</queriedFields>
+        <queriedFields>Bill_To_Email__c</queriedFields>
+        <queriedFields>Bill_To_Phone__c</queriedFields>
+        <queriedFields>Compliance_Status__c</queriedFields>
+        <queriedFields>User_na__c</queriedFields>
+        <queriedFields>Fax</queriedFields>
+        <queriedFields>CurrencyIsoCode</queriedFields>
+        <queriedFields>Billing_Aggregator__c</queriedFields>
+        <queriedFields>Partner_Created_Date_MSP__c</queriedFields>
+        <queriedFields>BCC_AuthDB_Account_ID__c</queriedFields>
+        <queriedFields>Primary_Contact_Name__c</queriedFields>
+        <queriedFields>Primary_Contact_Email__c</queriedFields>
+        <queriedFields>BCC_AuthDB_Admin_ID__c</queriedFields>
+        <queriedFields>Initial_BCC_Admin__c</queriedFields>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the Billing Address from the Address__c</description>
+        <name>Get_Primary_Billing_Address</name>
+        <label>Get Primary Billing Address</label>
+        <locationX>776</locationX>
+        <locationY>1166</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decision_Address_Fetch</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Primary__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Billing</stringValue>
+            </value>
+        </filters>
+        <object>Address__c</object>
+        <outputReference>thisAccountAddress</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>City__c</queriedFields>
+        <queriedFields>Country_ISO__c</queriedFields>
+        <queriedFields>Country_Name__c</queriedFields>
+        <queriedFields>State_ISO__c</queriedFields>
+        <queriedFields>Zip_Postal_Code__c</queriedFields>
+        <queriedFields>Street__c</queriedFields>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update username password on the record</description>
+        <name>Update_Username_Password</name>
+        <label>Update Username Password</label>
+        <locationX>50</locationX>
+        <locationY>1886</locationY>
+        <connector>
+            <targetReference>API_Result_Success_Message</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Screen_Record_Update_Fault</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Partner_Created_Date_MSP__c</field>
+            <value>
+                <elementReference>Formula_PartnerCreatedDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>User_na__c</field>
+            <value>
+                <elementReference>echo_username</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <screens>
+        <name>API_Result_Failure_Message</name>
+        <label>API Result Failure Message</label>
+        <locationX>536</locationX>
+        <locationY>1862</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>API_Result_Failure_Message_3</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(194, 57, 52);&quot;&gt;{!apiCallMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>apiCallResult</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>API_Result_Success_Message</name>
+        <label>API Result Success Message</label>
+        <locationX>50</locationX>
+        <locationY>2120</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>API_Result_Success_Message_3</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(2, 126, 70);&quot;&gt;{!apiCallMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>apiCallResult</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Asks the customer if they want to proceed with the current Account currency</description>
+        <name>Screen_Account_Currency_Check</name>
+        <label>Screen: Account Currency Check</label>
+        <locationX>1161</locationX>
+        <locationY>926</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decision_Account_Currency_Check</targetReference>
+        </connector>
+        <fields>
+            <name>Question_Account_currency</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);&quot;&gt;Username will be created in {!thisAccount.CurrencyIsoCode}  currency and cannot be changed. &lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Radiobutton_Group_Account_Currency</name>
+            <choiceReferences>Radiobutton_Choice_Yes_Proceed</choiceReferences>
+            <choiceReferences>Radiobutton_Choice_No_Exit</choiceReferences>
+            <dataType>Boolean</dataType>
+            <defaultSelectedChoiceReference>Radiobutton_Choice_Yes_Proceed</defaultSelectedChoiceReference>
+            <fieldText>Do you want to proceed?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen to show that user does not have access to edit Account record.</description>
+        <name>Screen_Account_Record_Edit_Access</name>
+        <label>Screen: Account Record Edit Access</label>
+        <locationX>2250</locationX>
+        <locationY>686</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Account_Record_Fetch_Error_Message_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;You don&apos;t have edit access to this account. Please contact the account owner or the help desk. &lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen to show that Account record was not found</description>
+        <name>Screen_Account_Record_Fetch_Result</name>
+        <label>Screen: Account Record Fetch Result</label>
+        <locationX>2514</locationX>
+        <locationY>446</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Account_Record_Fetch_Error_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Did not find Account record for the given record Id.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Address record not found error displaying screen</description>
+        <name>Screen_Address_Record_Fetch_Result</name>
+        <label>Screen: Account Record Fetch Result</label>
+        <locationX>1018</locationX>
+        <locationY>1406</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Address_Record_Fetch_Error_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Did not find Primary Billing Address for this Account.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen to show that Account has not passed DPL check.</description>
+        <name>Screen_DPL_Check_Validation</name>
+        <label>Screen: DPL Check Validation</label>
+        <locationX>2416</locationX>
+        <locationY>811</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>DPL_Check_Fail_Error_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Account should pass  DPL check before requesting Username creation.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Shows error messages when record update fails.</description>
+        <name>Screen_Record_Update_Fault</name>
+        <label>Screen Record Update Fault</label>
+        <locationX>314</locationX>
+        <locationY>2006</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Record_Update_Error_Display_Message</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Error updating Account record&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>rollback</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Rollback_Error_Display_Message</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Error rolling back changes&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>rollback</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Record_Update_Fault_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen to show error message related to Username check validation</description>
+        <name>Screen_Username_Check_Validation</name>
+        <label>Screen: Username Check Validation</label>
+        <locationX>1722</locationX>
+        <locationY>926</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_Username_Populated</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Username is already populated. Cannot create a new Username for this Account.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Username_Password</name>
+        <label>Screen: Username Password</label>
+        <locationX>314</locationX>
+        <locationY>1526</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Action_MS_ECHO_API_Call</targetReference>
+        </connector>
+        <fields>
+            <name>echo_username</name>
+            <dataType>String</dataType>
+            <fieldText>Username</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Username Should be a min of 3 characters and a max of 16 characters long.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;May contain alphabets a-z.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;May contain number 0-9.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;May contain underscore _. May not begin or end with an underscore nor have a double underscore __.&lt;/span&gt;&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Username should meet following criteria:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Should be ALL lowercase&lt;/li&gt;&lt;li&gt;   Should be a min of 3 characters and a max of 16 characters long&lt;/li&gt;&lt;li&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;May contain alphabets a-z&lt;/li&gt;&lt;li&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;May contain number 0-9&lt;/li&gt;&lt;li&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;May contain underscore _. It may not begin or end with an underscore nor have a double underscore __.&lt;/li&gt;&lt;/ul&gt;</errorMessage>
+                <formulaExpression>REGEX({!echo_username}, &quot;^[a-z0-9_](?!_|.*__|.*?_$)\\w{3,16}$&quot;)</formulaExpression>
+            </validationRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Screen to show the error message for missing values</description>
+        <name>Screen_Values_Missing</name>
+        <label>Screen Values Missing</label>
+        <locationX>754</locationX>
+        <locationY>1526</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Validation_Error_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;﻿Ensure that following Account and Address values are populated before creating username.&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Account Fields&lt;ul&gt;&lt;li&gt;Cuda Core Billing Contact&lt;/li&gt;&lt;li&gt;Bill To Email&lt;/li&gt;&lt;li&gt;Bill To Phone&lt;/li&gt;&lt;li&gt;Initial BCC Admin&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Primary Billing Address Fields&lt;ul&gt;&lt;li&gt;Street&lt;/li&gt;&lt;li&gt;City&lt;/li&gt;&lt;li&gt;State&lt;/li&gt;&lt;li&gt;Zip/Postal Code&lt;/li&gt;&lt;li&gt;Country&lt;/li&gt;&lt;li&gt;Country ISO&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>2121</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_Account_Record</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Message returned by the API Call</description>
+        <name>apiCallMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Determines if the API call was successful or not</description>
+        <name>apiCallResult</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>RecordId from UserRecordAccess record</description>
+        <name>RecordAccessId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Account Record Id for which the username is being created</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Determines if a rollback has been initiated</description>
+        <name>rollback</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Variable to be used in the assignment to end the flow</description>
+        <name>Text_End_Flow</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>thisAccount</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <description>Stores the primary billing address of the account</description>
+        <name>thisAccountAddress</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Address__c</objectType>
+    </variables>
+</Flow>

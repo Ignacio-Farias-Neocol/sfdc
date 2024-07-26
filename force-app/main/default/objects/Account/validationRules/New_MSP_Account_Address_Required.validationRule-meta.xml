@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_MSP_Account_Address_Required</fullName>
+    <active>true</active>
+    <description>New MSP Account records should be required to have all address field completed.</description>
+    <errorConditionFormula>AND(
+   ISNEW(),
+   NOT(ISPICKVAL(Type,&apos;Aggregate&apos;)),
+   ISPICKVAL($User.Business_Group__c, &apos;MSP&apos;),
+   OR (
+      ISBLANK(BillingStreet),
+      ISBLANK(BillingCity),
+      ISPICKVAL(BillingCountryCode, &apos;&apos;),
+
+      AND( CONTAINS(&apos;DZ,AR,AM,AU,AT,AZ,A2,BD,BY,BE,BA,BR,BN,BG,CA,IC,CN,HR,CY,CZ,DK,EN,EE,FO,FI,FR,GE,DE,GR,GL,GU,GG,HO,HU,IN,ID,IL,IT,JP,JE,KZ,KR,KO,KG,LV,LI,LT,LU,MK,MG,M3,MY,MH,MQ,YT,MX,MN,ME,NL,NZ,NB,NO,PK,PH,PL,PO,PT,PR,RE,RU,SA,SF,CS,SG,SK,SI,ZA,ES,LK,NT,SX,UV,VL,SE,CH,TW,TJ,TH,TU,TN,TR,TM,VI,UA,GB,US,UY,UZ,VA,VN,WL,YA&apos;, TEXT(BillingCountryCode)), ISBLANK(BillingPostalCode)), 
+
+      AND( CONTAINS(&apos;US,CA&apos;, TEXT(BillingCountryCode)), ISPICKVAL(BillingStateCode, &apos;&apos;))
+   )
+)</errorConditionFormula>
+    <errorMessage>Please complete the Primary Business Address.</errorMessage>
+</ValidationRule>

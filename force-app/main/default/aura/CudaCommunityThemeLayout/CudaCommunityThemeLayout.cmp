@@ -1,0 +1,235 @@
+<aura:component controller="CudaCommunityThemeLayoutController" implements="forceCommunity:themeLayout" access="global" description="Community theme that is styled and customized for Barracuda">
+    <aura:attribute name="search" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="profileMenu" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="navBar" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="newFooter" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="communityName" type="String" default="The Barracuda Customer Community"/>
+    <aura:attribute name="siteUrl" type="String"/>
+    <aura:attribute name="webSite1" type="String" default="Threat Intelligence"/>
+    <aura:attribute name="linkWebSite1" type="String" default="https://csi.barracuda.com/"/>
+    <aura:attribute name="webSite2" type="String" default="MSP Solutions"/>
+    <aura:attribute name="linkWebSite2" type="String" default="https://barracudamsp.com/?setc=_kk&amp;mrm=Cudacom&amp;mrmd=CudaReferral-Website-Footer"/>
+    <aura:attribute name="webSite3" type="String" default=""/>
+    <aura:attribute name="linkWebSite3" type="String" default=""/>
+    <aura:attribute name="webSite4" type="String" default=""/>
+    <aura:attribute name="linkWebSite4" type="String" default=""/>
+    <aura:attribute name="webSite5" type="String" default=""/>
+    <aura:attribute name="linkWebSite5" type="String" default=""/>
+    <aura:attribute name="webSite6" type="String" default=""/>
+    <aura:attribute name="linkWebSite6" type="String" default=""/>
+    <aura:attribute name="webSite7" type="String" default=""/>
+    <aura:attribute name="linkWebSite7" type="String" default=""/>
+    <aura:attribute name="siteMap1" type="String" default=""/>
+    <aura:attribute name="linkSiteMap1" type="String" default=""/>
+    <aura:attribute name="siteMap2" type="String" default=""/>
+    <aura:attribute name="linkSiteMap2" type="String" default=""/>
+    <aura:attribute name="siteMap3" type="String" default=""/>
+    <aura:attribute name="linkSiteMap3" type="String" default=""/>
+    <aura:attribute name="siteMap4" type="String" default=""/>
+    <aura:attribute name="linkSiteMap4" type="String" default=""/>
+    <aura:attribute name="siteMap5" type="String" default=""/>
+    <aura:attribute name="linkSiteMap5" type="String" default=""/>
+    <aura:attribute name="siteMap6" type="String" default=""/>
+    <aura:attribute name="linkSiteMap6" type="String" default=""/>
+    <aura:attribute name="siteMap7" type="String" default=""/>
+    <aura:attribute name="linkSiteMap7" type="String" default=""/>
+   
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="container-page" aria-hidden="true">
+        <!-- Main Header Area -->
+        <div class="container-header-outer">
+            <div class="container-header-inner">
+                <div class="cuda-header">
+                    <div class="cuda-logo">
+                        <img src="{!$Resource.Barracuda_Resources + '/assets/images/logo_barracuda_primary_strapline_reversed.svg'}" alt="Barracuda logo" height="75" width="150" style="width:210px;"/>
+                    </div>
+                </div>
+                <div class="searchRegion">
+                    {!v.search}
+                </div>
+                <div class="profileMenuRegion">
+                    {!v.profileMenu}
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+        </div>   
+        <!-- End: Main Header Area -->
+        
+        <!-- Navbar Area -->
+        <div class="container-navbar-outer-blue2teal-gradient">
+            <div class="container-navbar-inner">
+                <div class="labelRegion">{!v.communityName}</div>
+                <div class="navBarRegion">{!v.navBar}</div>
+            </div>
+        </div>
+        <!-- End: Navbar Area -->   
+        
+        <!-- Main Content Area -->
+        <div class="mainContentArea">
+            <div class="mainContentArea-inner">
+                {!v.body}
+            </div>
+        </div>
+        <!-- End: Main Content Area -->
+
+        <!-- Footer -->
+        <div class="snapinChatRegion">
+                {!v.newFooter}
+        </div>
+        <footer>
+            <div id="desktop-footer" class="container">
+                <div class="" id="footer-row-table">
+                    <div id="copyright" class="">
+                        <div class="container">
+                            <img src="{!$Resource.Barracuda_Resources + '/assets/images/logo_barracuda_primary_reversed.svg'}" alt="Barracuda logo" id="footer-logo-desktop"/>
+                            <br/><a href="https://www.barracuda.com/company/legal/privacy">Privacy Policy</a>
+                            <span class="footer-spacer">&#124;</span>
+                            <a href="https://www.barracuda.com/legal/terms">Website Terms &amp; Conditions</a> 
+                            <br/><em>&#169;2003 - 2018 Barracuda Networks, Inc. <br/> All rights reserved.</em>
+                        </div>
+                    </div>
+                    <div class="footer-section">
+                        <h5>Site Map</h5>
+                        <ul class="nav">
+                            <aura:if  isTrue="{!and(not(empty(v.siteMap1)), not(empty(v.linkSiteMap1)))}">
+                                <li class="nav-item"><a class="nav-link" href="{!v.linkSiteMap1}">{!v.siteMap1}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.siteMap2)), not(empty(v.linkSiteMap2)))}">
+                                <li class="nav-item"><a class="nav-link" href="{!v.linkSiteMap2}">{!v.siteMap2}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.siteMap3)), not(empty(v.linkSiteMap3)))}">
+                                <li class="nav-item"><a class="nav-link" href="{!v.linkSiteMap3}">{!v.siteMap3}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.siteMap4)), not(empty(v.linkSiteMap4)))}">
+                                <li class="nav-item"><a class="nav-link" href="{!v.linkSiteMap4}">{!v.siteMap4}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.siteMap5)), not(empty(v.linkSiteMap5)))}">
+                                <li class="nav-item"><a class="nav-link" href="{!v.linkSiteMap5}">{!v.siteMap5}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.siteMap6)), not(empty(v.linkSiteMap6)))}">
+                                <li class="nav-item"><a class="nav-link" href="{!v.linkSiteMap6}">{!v.siteMap6}</a></li>
+                            </aura:if> 
+                            <aura:if  isTrue="{!and(not(empty(v.siteMap7)), not(empty(v.linkSiteMap7)))}">
+                                <li class="nav-item"><a class="nav-link" href="{!v.linkSiteMap7}">{!v.siteMap7}</a></li>
+                            </aura:if>     
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h5>Our Websites</h5>
+                        <ul class="nav">
+                            <aura:if  isTrue="{!and(not(empty(v.webSite1)), not(empty(v.linkWebSite1)))}">
+                                <li class="nav-item"><a class="nav-link" target="_blank" href="{!v.linkWebSite1}">{!v.webSite1}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.webSite2)), not(empty(v.linkWebSite2)))}">
+                                <li class="nav-item"><a class="nav-link" target="_blank" href="{!v.linkWebSite2}">{!v.webSite2}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.webSite3)), not(empty(v.linkWebSite3)))}">
+                                <li class="nav-item"><a class="nav-link" target="_blank" href="{!v.linkWebSite3}">{!v.webSite3}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.webSite4)), not(empty(v.linkWebSite4)))}">
+                                <li class="nav-item"><a class="nav-link" target="_blank" href="{!v.linkWebSite4}">{!v.webSite4}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.webSite5)), not(empty(v.linkWebSite5)))}">
+                                <li class="nav-item"><a class="nav-link" target="_blank" href="{!v.linkWebSite5}">{!v.webSite5}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.webSite6)), not(empty(v.linkWebSite6)))}">
+                                <li class="nav-item"><a class="nav-link" target="_blank" href="{!v.linkWebSite6}">{!v.webSite6}</a></li>
+                            </aura:if>
+                            <aura:if  isTrue="{!and(not(empty(v.webSite7)), not(empty(v.linkWebSite7)))}">
+                                <li class="nav-item"><a class="nav-link" target="_blank" href="{!v.linkWebSite7}">{!v.webSite7}</a></li>
+                            </aura:if>
+                        </ul>
+                        <h5 style="padding-top: 34px;">Contact Us</h5>
+                        <ul class="nav">
+                            <li class="nav-item"><a class="nav-link phone-fade" href="tel:+18882684772">Phone: +1 888 268 4772</a></li>
+                            <li class="nav-item"><a class="nav-link" href="https://www.barracuda.com/contact/salesrep">Contact Sales</a></li>
+                            <li class="nav-item"><a class="nav-link" href="mailto:support@barracuda.com">Contact Support</a></li>
+                        </ul><a id="view-more-link" href="https://www.barracuda.com/company/contact">View More</a>
+                    </div>
+                    <div class="footer-section">
+                        <h5>Connect</h5>
+                        <ul class="nav nav-social">
+                            <li class="nav-item">
+                                <a class="nav-link" target="social" href="https://www.barracuda.com/facebook">
+                                    <div class="special-nav-social"><img src="{!$Resource.Barracuda_Resources + '/assets/images/icon_facebook.svg'}"/></div>
+                                    <div class="nav-social-text">Facebook</div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" target="social" href="https://www.barracuda.com/twitter">
+                                    <div class="special-nav-social"><img src="{!$Resource.Barracuda_Resources + '/assets/images/icon_twitter.svg'}"/></div>
+                                    <div class="nav-social-text">Twitter</div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" target="social" href="https://youtube.com/barracuda">
+                                    <div class="special-nav-social"><img src="{!$Resource.Barracuda_Resources + '/assets/images/icon_youtube.svg'}"/></div>
+                                    <div class="nav-social-text">YouTube</div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" target="social" href="https://www.barracuda.com/linkedin">
+                                    <div class="special-nav-social"><img src="{!$Resource.Barracuda_Resources + '/assets/images/icon_linkedin.svg'}"/></div>
+                                    <div class="nav-social-text">LinkedIn</div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://blog.barracuda.com">
+                                    <div class="special-nav-social"><img src="{!$Resource.Barracuda_Resources + '/assets/images/icon_instagram.svg'}"/></div>
+                                    <div class="nav-social-text">Instagram</div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://blog.barracuda.com">
+                                    <div class="special-nav-social"><img src="{!$Resource.Barracuda_Resources + '/assets/images/icon_barracuda_blog.svg'}"/></div>
+                                    <div class="nav-social-text">Corporate Blog</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-footer" class="container">
+                <div>
+                    <!-- copyright -->
+                    <div id="mobile-copyright">
+                        <div class="container">
+                            <div class="mobile-logo-container">
+                                <img src="{!$Resource.Barracuda_Resources + '/assets/images/logo_barracuda_primary_reversed.svg'}" alt="Barracuda logo" id="footer-logo-mobile"/>
+                                <br/>
+                            </div>
+                            <div id="mobile-nav-socal">
+                                <div class="mobile-nav-socal-item">
+                                    <img class="" src="{!$Resource.Barracuda_Resources + '/assets/images/icon_facebook.svg'}"/>
+                                </div>
+                                <div class="mobile-nav-socal-item">
+                                    <img class="" src="{!$Resource.Barracuda_Resources + '/assets/images/icon_twitter.svg'}"/>
+                                </div>
+                                <div class="mobile-nav-socal-item">
+                                    <img class="" src="{!$Resource.Barracuda_Resources + '/assets/images/icon_youtube.svg'}"/>
+                                </div>
+                                <div class="mobile-nav-socal-item">
+                                    <img class="" src="{!$Resource.Barracuda_Resources + '/assets/images/icon_linkedin.svg'}"/>
+                                </div>
+                                <div class="mobile-nav-socal-item">
+                                    <img class="" src="{!$Resource.Barracuda_Resources + '/assets/images/icon_instagram.svg'}"/>
+                                </div>
+                                <div class="mobile-nav-socal-item">
+                                    <img class="" src="{!$Resource.Barracuda_Resources + '/assets/images/icon_barracuda_blog.svg'}"/>
+                                </div>
+                            </div>
+                            <div style="font-weight: 100;">
+                                <a href="https://www.barracuda.com/company/legal/privacy">Privacy Policy</a>
+                                <span class="mobile-separator">&#124;</span>
+                                <a href="https://www.barracuda.com/legal/terms">Website Terms &amp; Conditions</a> 
+                                <br/><em>&#169; 2003 - 2018 Barracuda Networks, Inc. All rights reserved.</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End: Footer -->
+    </div>
+</aura:component>

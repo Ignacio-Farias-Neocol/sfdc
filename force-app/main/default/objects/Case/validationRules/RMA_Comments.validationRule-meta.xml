@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RMA_Comments</fullName>
+    <active>true</active>
+    <description>When a RMA Type is selected, a comment must be added in the RMA Comment field.</description>
+    <errorConditionFormula>AND( ISBLANK( RMA_Comments__c) ,
+NOT( ISPICKVAL( RMA_Type__c , &quot;&quot;)) 
+)</errorConditionFormula>
+    <errorDisplayField>RMA_Comments__c</errorDisplayField>
+    <errorMessage>*** Please enter a comment for RMA ***</errorMessage>
+</ValidationRule>

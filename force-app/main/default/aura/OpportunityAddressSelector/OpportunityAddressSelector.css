@@ -1,0 +1,6 @@
+.THIS.slds-modal__container  {
+    width: 90% !important;
+    max-width: 80% !important; 
+    height:90% !important;
+    max-height:80% !important;
+ }

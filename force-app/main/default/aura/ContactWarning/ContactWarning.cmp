@@ -1,0 +1,20 @@
+<aura:component description="ContactWarning"  implements="force:lightningQuickAction,force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+    
+    <div class="card">
+        <h1 class="header"> Contact Status Warning </h1>
+        <lightning:recordViewForm recordId="{!v.recordId}"
+                                  objectApiName="Case">
+            
+            <div class="slds-grid slds-wrap fields">
+                
+                <div class="slds-col slds-size_1-of-1 fieldName">
+                    <lightning:outputField fieldName="Contact_Status__c"/>
+                </div>
+                
+                <div class="fields text">
+                    <span> <i> Please verify contact status to continue. </i> </span>
+                </div>
+            </div>
+        </lightning:recordViewForm>
+    </div>
+</aura:component>

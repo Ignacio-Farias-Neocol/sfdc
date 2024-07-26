@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <description>This flow is Referenced at &quot;Create Quote&quot; button on the Opportunity. Display Error Message when clicked the Create Quote button on Amendment or Renewal Opportunities.</description>
+    <interviewLabel>Quote Creation Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Quote Creation Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <screens>
+        <name>New_Quote_Creation_Error</name>
+        <label>New Quote Creation Error</label>
+        <locationX>450</locationX>
+        <locationY>70</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 20px; color: rgb(166, 0, 0);&quot;&gt;You may not create a quote directly from a renewal or amendment Opportunity. Please return to the Contract and follow the steps to either create an amendment, follow the steps in the Upsell widget or create a renewal quote.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>New_Quote_Creation_Error</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+</Flow>

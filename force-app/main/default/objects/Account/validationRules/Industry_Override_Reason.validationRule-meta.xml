@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Industry_Override_Reason</fullName>
+    <active>true</active>
+    <description>When updating the Employee Override, ensure to include the Justification Reason</description>
+    <errorConditionFormula>AND(
+ISCHANGED(Industry_Override__c),
+TEXT(Industry_Override__c) &lt;&gt; NULL,
+TEXT(Industry_Override_Reason__c) = NULL,
+OR(
+$Profile.Name = &apos;Apollo: Custom- Sales Profile&apos;,
+$Profile.Name = &apos;Apollo: Custom- Sales_China Profile&apos;,
+$Profile.Name = &apos;Apollo: Custom- Sales Operations&apos;,
+$Profile.Name = &apos;Apollo: Custom- Sales Engineers Profile&apos;,
+$Profile.Name = &apos;Apollo: Custom- Renewals Profile&apos;,
+$Profile.Name = &apos;Apollo: Custom- Customer Services&apos;,
+$Profile.Name = &apos;Apollo: Custom - Customer Success Profile&apos;,
+$Profile.Name = &apos;Apollo: Custom- Sales Support Profile&apos;,
+$Profile.Name = &apos;System Administrator&apos;
+)
+)</errorConditionFormula>
+    <errorMessage>Please complete the &apos;Industry Override Reason&apos;.</errorMessage>
+</ValidationRule>

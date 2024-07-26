@@ -1,0 +1,18 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" >
+    <!-- <aura:html tag="style">
+        .slds-modal__container{
+        width: 95%;
+        max-width: 70rem;
+        }
+        
+        .modal-body{
+        height : 500px !important;
+        max-height: 500px !important;
+        }
+    </aura:html>  -->
+    <!-- <div class="exampleHolder">
+    <lightning:spinner alternativeText="Loading" size="small" />
+    </div> -->
+    <aura:attribute name="recordId" type="String" access="public"/>
+    <c:sendSubCert recordId="{!v.recordId}" onclose="{!c.close}"></c:sendSubCert>
+</aura:component>

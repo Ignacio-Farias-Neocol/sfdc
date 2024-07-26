@@ -1,0 +1,37 @@
+<template>
+    <template if:true={showModal}>
+        <c-modal onclosedialog={handleDialogClose}>
+            <span slot="header">{header}</span>
+            <slot>
+                <lightning-record-edit-form
+                                class="record-form"
+                                record-id={recordId}
+                                object-api-name={sobjectApiName}
+                                onsuccess={handleSuccess}>
+            <div  class="slds-grid slds-gutters_small slds-p-left_medium slds-p-right_medium">
+                 <div class="slds-col slds-has-flexi-truncate" role="listitem">
+                     <lightning-output-field field-name="Name"></lightning-output-field>
+                 </div>
+                  <div class="slds-col slds-has-flexi-truncate" role="listitem">
+                 <lightning-input-field field-name="Case__c" value={csid}></lightning-input-field>
+             </div>
+            </div>
+            <div  class="slds-grid slds-gutters_small slds-p-left_medium slds-p-right_medium">
+            
+                 <div class="slds-col slds-has-flexi-truncate" role="listitem">
+                     <lightning-input-field field-name="Bcc_User_Emails__c"></lightning-input-field>
+                 </div>
+                 <div class="slds-col slds-has-flexi-truncate" role="listitem"></div>
+            </div>
+           
+ </lightning-record-edit-form>
+               </slot>
+            <lightning-modal-footer>
+                <lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={handleClose} ></lightning-button>
+                <lightning-button variant="brand" label="Save" title="Save" onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
+             </lightning-modal-footer> 
+           
+             
+        </c-modal>
+    </template>
+</template>

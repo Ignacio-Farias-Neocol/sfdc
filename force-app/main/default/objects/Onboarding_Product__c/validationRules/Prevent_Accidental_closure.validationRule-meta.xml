@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Accidental_closure</fullName>
+    <active>true</active>
+    <errorConditionFormula>and(
+or(Open_Tasks__c &gt; 0, Number_of_Contacts__c &lt;1),
+text(Status__c) = &quot;Completed&quot;,and(NOT(ISBLANK(Opt_out_reason__c)), text(Status__c) = &quot;Opted-Out&quot;) 
+
+)</errorConditionFormula>
+    <errorMessage>Sorry, you can&apos;t complete an onboarding until you have completed all tasks and added at least one contact.</errorMessage>
+</ValidationRule>

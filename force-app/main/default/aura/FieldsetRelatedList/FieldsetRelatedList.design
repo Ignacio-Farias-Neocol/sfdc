@@ -1,0 +1,29 @@
+<!--
+ - Created by rsieve on 6/13/18.
+ -->
+<!-- example
+
+$Lightning.createComponent("c:FieldsetRelatedList", {"recordId": QuoteId,
+                    "sObjectName": "SBQQ__Quote__c",
+                    "relatedField": "SBQQ__QuoteLine__c.SBQQ__Quote__c",
+                    "fieldset": "TreeGrid",
+                    "groupBy": "SBQQ__RequiredBy__c",
+                    "keyField": "Id",
+                    "icon": "custom:custom93",
+                    "headerName": "Quote Lines"},
+
+-->
+
+
+<design:component label="Configure Fieldset RelatedList">
+
+    <design:attribute name="relatedField" datasource="apex://RelatedObjectPicklist"/>
+    <design:attribute name="relatedFieldAlt" />
+    <design:attribute name="fieldset" />
+    <design:attribute name="groupBy" />
+    <design:attribute name="keyField" default="Id" />
+    <design:attribute name="icon" />
+    <design:attribute name="headerName" />
+    <design:attribute name="explicitRecordId" />
+    <design:attribute name="displayFormat" />
+</design:component>

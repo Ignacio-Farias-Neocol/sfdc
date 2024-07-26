@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Banned_Compliance_Status</fullName>
+    <active>true</active>
+    <description>ONLY user with compliance permission set should be allowed to edit the Status to &quot;banned&quot;, or from &quot;banned&quot; to another status.</description>
+    <errorConditionFormula>AND( 
+OR (ISNEW(), ISCHANGED( Status__c )), 
+OR (ISPICKVAL(PRIORVALUE( Status__c ), &quot;Banned&quot;), ISPICKVAL( Status__c ,&quot;Banned&quot;)), 
+NOT($Permission.Contact_and_Account_Compliance_Status) 
+)</errorConditionFormula>
+    <errorMessage>Only Compliance users can change the Status to &apos;Banned&apos; or from &apos;Banned&apos; to another Status.</errorMessage>
+</ValidationRule>

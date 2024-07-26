@@ -1,0 +1,70 @@
+<!--
+  @author            : Ramya Munukuntla
+  @last modified on  : 2023-07-25
+  @last modified by  : Ramya Munukuntla
+  @Description       : The Page subcomponent contains the structure for each page displayed in the Content section of the Base Component
+-->
+<template>
+	<template if:true={isCurrentPage}>	
+		<div class="slds-box" style="height:100%;">
+    	<lightning-layout multiple-rows="true">
+		 <lightning-layout-item padding="" size="12" >
+	<lightning-layout>
+		<!--<lightning-layout-item class="slds-text-align_center" size="12">
+			<div class="slds-text-heading_medium slds-align_absolute-center" style="font-weight: bold;">{resultsPageHeader}</div>
+		</lightning-layout-item>-->
+		<lightning-layout-item class="" size="12">
+		<div class="slds-page-header slds-page-header_related-list" style="border-bottom-right-radius: unset;
+		border-bottom-left-radius: unset;">
+			<div class="slds-page-header__row">
+			  <div class="slds-page-header__col-title titleStyle">
+				<div class="slds-media">
+				  <div class="slds-media__body">
+					<div class="slds-page-header__name">
+					  <div class="slds-page-header__name-title">
+						<h1>
+						  <span class="slds-page-header__title slds-truncate">{resultsPageHeader}</span>
+						</h1>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <div class="slds-page-header__col-actions">
+				<div class="slds-page-header__controls">
+				  <div class="slds-page-header__control">
+					<ul class="slds-button-group-list">
+					  <li>
+						<lightning-button-group>
+							<slot name="actions"></slot>
+						</lightning-button-group>
+					  </li>
+					</ul>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</lightning-layout-item>	
+	</lightning-layout>
+	<lightning-layout>
+		<!--<lightning-layout-item   class="slds-text-align_right" size="12">
+			<lightning-button-group>
+			<slot name="actions"></slot>
+			</lightning-button-group>
+		</lightning-layout-item>-->	
+</lightning-layout>
+		    </lightning-layout-item>
+		<lightning-layout-item padding="" class="" size="12">
+			<slot name="pageContent"></slot>
+		</lightning-layout-item>	
+		<lightning-layout-item padding="" class="slds-m-top_medium" size="12">
+			<lightning-button-group class="slds-float_right">
+				<slot name="navigation"></slot>
+			</lightning-button-group>
+		</lightning-layout-item>
+	</lightning-layout>
+</div>
+	</template>
+	
+</template>

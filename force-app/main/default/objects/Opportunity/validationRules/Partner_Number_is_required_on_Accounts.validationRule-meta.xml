@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Number_is_required_on_Accounts</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED(StageName), 
+ISPICKVAL(StageName, &apos;Closed Won&apos;),
+NOT(ISBLANK(Bill_To_Account__c)),
+OR(
+TEXT(Bill_To_Account__r.Type)=&quot;Partner - Reseller&quot;,
+TEXT(Bill_To_Account__r.Type)=&quot;Distributor - Core&quot;),
+TEXT(Bill_To_Account__r.Partner_Level__c)&lt;&gt;&quot;Affiliate&quot;,
+ISBLANK(Bill_To_Account__r.Partner_Number__c))</errorConditionFormula>
+    <errorMessage>This Opportunity cannot be Closed Won because the Partner Number is missing from the Bill To Account.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,259 @@
+<template>
+    
+    <template if:true={feedItemList} >
+        <div class="container">
+            <div class="inner-container">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_12-of-12">
+
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_12-of-12">
+                                <div class="main-title">
+                                Portal Communication
+                                </div>
+                            </div>
+                        </div>
+                   
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_12-of-12">
+                                <template if:true={recordId} >
+                                    <lightning-record-edit-form record-id={recordId} object-api-name="Case" onload={onloadCaseHandler}>
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_12-of-12">
+                                                <div class="slds-form">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                    <label class="slds-form-element__label" for="horizontal-input-id-01" style="max-width: 100%;font-weight: 800;height: 40px;font-size: 14px;color: black;font-weight: bold;font-size:small;">Preferred Contact Method:</label>
+                                                    <div class="slds-form-element__control" style="padding-top: 3px;                                       
+                                                            font-size: small;">
+                                                            {prefredContactMethod}
+                                                    </div>
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                        </div>      
+
+                                        <div class="slds-grid slds-wrap" style="margin-top : -20px">
+                                            <div class="slds-col slds-size_12-of-12">
+                                                <div class="slds-form">                                               
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <label class="slds-form-element__label" for="horizontal-input-id-01" style="max-width: 60%;font-weight: 6800;height: 40px;font-size: 14px;color: black;font-weight: bold;font-size:small;">Business Impact:</label>
+                                                        <div class="slds-form-element__control" style="padding-top: 3px;                                                
+                                                        font-size: small;
+                                                        padding-left: 20%;">
+                                                            {businessImpact}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>  
+
+                                        <template if:true={isCustomerCaseClouser} >
+                                            <div class="slds-grid slds-wrap" style="margin-top : 15px">
+                                                <div class="slds-col slds-size_12-of-12">
+                                                    <div class="case-clouser-msg">
+                                                       COMMUNITY REQUEST FOR CASE CLOSURE
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-wrap" style="margin-top : 6px">
+                                                <div class="slds-col slds-size_12-of-12">
+                                                    <div class="slds-form">                                               
+                                                        <div class="slds-form-element slds-form-element_vertical">
+                                                            <label class="slds-form-element__label" for="horizontal-input-id-01" style="font-weight: 6800;font-size: 14px;color: black;font-weight: bold;font-size:small;">Community Request Close Reason</label>
+                                                            <div class="slds-form-element__control" style="padding-top: 0px;                                                
+                                                            font-size: small;
+                                                            ">
+                                                                {communityRequestCloseReason}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                            <div class="slds-grid slds-wrap" style="margin-top : 5px">
+                                                <div class="slds-col slds-size_12-of-12">
+                                                    <div class="slds-form">                                               
+                                                        <div class="slds-form-element slds-form-element_vertical">
+                                                            <label class="slds-form-element__label" for="horizontal-input-id-01" style="font-weight: 6800;font-size: 14px;color: black;font-weight: bold;font-size:small;">Close Reason Comments</label>
+                                                            <div class="slds-form-element__control" style="padding-top: 0px;                                                
+                                                            font-size: small;
+                                                            ">
+                                                                {closeReasonComments}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </template>
+                                        
+                                        
+                                    </lightning-record-edit-form>
+                                </template>
+                            </div>
+                        </div>
+                        <!-- Start SFDC- 18849-->
+                        <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_12-of-12 slds-text-align_center">
+                            <div if:true={hasAttachment}><br/>
+                            <p style="color: red;background: #efe8e8;font-size: larger;font-weight: 500;border-radius: 3px;"> Attachment added via the portal</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end SFDC- 18849-->
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_12-of-12">
+                                <template if:true={feedItemList} >
+
+                                    <div class="slds-feed">
+                                        <ul class="slds-feed__list">
+                                            <template for:each={feedItemList} for:item="feedItem" >
+                                                <li class="slds-feed__item" key={feedItem.feedItemId}>
+                                                    <article class="slds-post">
+                                                        <header class="slds-post__header slds-media">
+                                                            <div class="slds-media__figure">
+                                                                <a href="#" class="slds-avatar slds-avatar_circle slds-avatar_large">
+                                                                    <img alt={feedItem.userName} src={feedItem.smallPhotoURL} title={feedItem.userName} />
+                                                                </a>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                                                    <p class="slds-truncate" title={feedItem.userName}>
+                                                                        <a href="#">{feedItem.userName}</a>
+                                                                    </p>                                                              
+                                                                </div>
+                                                                <p class="slds-text-body_small">
+                                                                    <a href="#" title={feedItem.agoDate} class="slds-text-link_reset">{feedItem.agoDate}</a>
+                                                                </p>
+                                                            </div>
+                                                        </header>
+                                                        <div class="slds-post__content slds-text-longform" style="margin-bottom: 0px;">                                                        
+                                                            <div class="slds-comment__content slds-text-longform">
+                                                                <lightning-formatted-rich-text value={feedItem.commentBody}></lightning-formatted-rich-text>                                                                        
+                                                                <!-- Start SFDC- 18849-->
+                                                                                <div if:true={feedItem.relatedRecordId} for:each={feedItem.relatedRecordId} for:item="attach" key={feedItem}>
+                                                                                    <div key={attach} style="color:red;">Click <a onclick={previewHandler} data-id={attach}  style="color:red;">here</a> to view Attachment added via portal
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- End SFDC- 18849-->
+                                                                
+                                                            </div>                                                        
+                                                        </div>
+                                                    </article>
+
+                                                    <div class="slds-feed__item-comments" style="margin-left: 10%;">
+                                                        
+
+                                                        <ul>
+                                                            <template for:each={feedItem.feedCommentWrpList} for:item="feedComment" >
+                                                                <li key={feedComment.feedCommentId}>
+                                                                    <article class="slds-comment slds-media slds-hint-parent">
+                                                                        <div class="slds-media__figure">
+                                                                            <a href="#" class="slds-avatar slds-avatar_circle slds-avatar_medium">
+                                                                                <img alt={feedComment.userName} src={feedComment.smallPhotoURL}
+                                                                                    title={feedComment.userName} />
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="slds-media__body">
+                                                                            <header class="slds-media slds-media_center">
+                                                                                <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                                                                    <p class="slds-truncate" title={feedComment.userName}>
+                                                                                        <a href="#">{feedComment.userName}</a>
+                                                                                    </p>                                
+                                                                                </div>
+                                                                            </header>
+                                                                            <div class="slds-comment__content slds-text-longform">
+                                                                                <lightning-formatted-rich-text value={feedComment.commentBody}></lightning-formatted-rich-text>    
+                                                                                 <!-- Start SFDC- 18849-->
+                                                                                <div if:true={feedComment.relatedRecordId} for:each={feedComment.relatedRecordId} for:item="attach" key={feedComment}>
+                                                                                    <div key={attach}  style="color:red;">Click <a onclick={previewHandler} data-id={attach} style="color:red;">here</a> to view Attachment added via portal
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- End SFDC- 18849-->
+                                                                            </div>
+                                                                            <footer>
+                                                                                <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">                                                                    
+                                                                                    <li class="slds-item">{feedComment.agoDate}</li>
+                                                                                </ul>
+                                                                            </footer>
+                                                                        </div>
+                                                                    </article>
+                                                                </li>
+
+                                                            </template>
+                                                        </ul>
+                                                        <div class="slds-media slds-comment slds-hint-parent">
+                                                            <div class="slds-media__figure">
+                                                                <a class="slds-avatar slds-avatar_circle slds-avatar_medium" href="#">
+                                                                    <img alt={currentUser.Name} src={currentUser.SmallPhotoUrl} title={currentUser.Name} />
+                                                                </a>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                          
+                                                                        <div if:true={isLoading}>
+                                                        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                                                        </div>
+                                                                <!--<template if:true={isActiveComment} > -->
+                                                                    <div data-commentcollapse={feedItem.feedItemId} class="slds-publisher slds-publisher_comment slds-is-active slds-has-focus slds-hide">
+                                                                        <label class="slds-assistive-text">Write a comment</label>
+                                                                       <!--<textarea data-feeditemid={feedItem.feedItemId} onchange={handleChatComment} class="slds-publisher__input slds-input_bare slds-text-longform"
+                                                                            placeholder="Write a comment…"></textarea>-->
+                                                                        <!-- Start SFDC- 18849-->
+                                                                         <div if:false={isLoading}>
+                                                                         <lightning-input-rich-text variant="bottom-toolbar" onfocus={handlefocusComment} data-feeditemid={feedItem.feedItemId} formats={allowedFormats} onchange={handleChatComment} placeholder="Write a comment…">
+                                                                             
+                                                                             
+                                                                             <lightning-rich-text-toolbar-button-group slot="toolbar" aria-label="Template Button Group">
+                                                                                 <lightning-rich-text-toolbar-button
+                                                                                    icon-name="utility:upload"
+                                                                                    icon-alternative-text="Upload Attachment"
+                                                                                    onclick={hanldlefileUpload}
+                                                                                    
+                                                                                    onpopupclickout={handlePopupClickout}
+                                                                                >
+                    
+                                                                                 </lightning-rich-text-toolbar-button>
+                                                                             </lightning-rich-text-toolbar-button-group>
+                                                                             
+                                                                             </lightning-input-rich-text> 
+                                                                             </div>   
+                                                                             <p>{file.name}</p>
+                                                                        <div class="slds-publisher__actions slds-grid slds-grid_align-spread">
+                                                                            <ul class="slds-grid">   
+                                                                            </ul>
+                                                                            <button data-feeditemid={feedItem.feedItemId} class="slds-button slds-button_brand" onclick={handleCreateComment} >Comment</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End SFDC- 18849-->
+                                                                <!--</template> -->
+                                                                <!--<template if:false={isActiveComment} > -->
+                                                                    <div data-commentexpend={feedItem.feedItemId} class="slds-publisher slds-publisher_comment">
+
+                                                                        <label class="slds-assistive-text">Write a comment</label>
+                                                                        <textarea data-feeditemid={feedItem.feedItemId} onchange={handleChatComment} class="slds-publisher__input slds-input_bare slds-text-longform"
+                                                                            placeholder="Write a comment…" onfocus={handlefocusComment}></textarea>
+                                                                        <!--<lightning-input-rich-text onfocus={handlefocusComment} data-feeditemid={feedItem.feedItemId} formats={allowedFormats} onchange={handleChatComment} placeholder="Write a comment…"></lightning-input-rich-text>    -->
+                                                                        <div class="slds-publisher__actions slds-grid slds-grid_align-spread">
+                                                                            <ul class="slds-grid">   
+                                                                            </ul>
+                                                                            <button data-feeditemid={feedItem.feedItemId} class="slds-button slds-button_brand" onclick={handleCreateComment} >Comment</button>
+                                                                        </div>
+                                                                    </div>
+                                                                <!--</template> -->
+                                                                
+                                                            </div>
+                                                        </div>
+
+                                                    
+                                                    </div>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

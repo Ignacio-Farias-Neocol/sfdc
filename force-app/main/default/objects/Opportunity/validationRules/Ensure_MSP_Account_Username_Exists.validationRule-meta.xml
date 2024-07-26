@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ensure_MSP_Account_Username_Exists</fullName>
+    <active>true</active>
+    <description>For MSP opportunities, ensure Username is filled on Account</description>
+    <errorConditionFormula>AND(
+	ISPICKVAL(StageName, &apos;Closed Won&apos;),
+	NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY ),
+	ISPICKVAL(Business_Group__c,&apos;MSP&apos;),
+	OR(
+		AND(
+			NOT(ISBLANK(AccountId)),
+			OR(
+				AND( /* no Hotlist, and username is blank too */
+					ISBLANK(Account.User_na__c),
+					ISBLANK(Hot_List__c)
+				),
+				AND( /*has hot list, but trial username(s) are blank, for MWP and IBU */
+					NOT(ISBLANK(Hot_List__c)),
+					ISBLANK(Hot_List__r.Trial_Username__c),
+					ISBLANK(Hot_List__r.IBU_Username__c),
+					ISBLANK(Account.User_na__c) /* and no Account username too. */
+				)			
+			)
+		),
+		AND(
+		NOT(ISBLANK(Reseller__c)),
+		ISBLANK(Reseller__r.User_na__c)
+		),
+		AND(
+		NOT(ISBLANK(Distributor__c)),
+		ISBLANK(Distributor__r.User_na__c)
+		),
+		AND(
+		NOT(ISBLANK(SBCF_Billing_Aggregator__c)),
+		ISBLANK(SBCF_Billing_Aggregator__r.User_na__c),
+		Record_Type__c == &quot;New Business&quot;
+		)
+	)
+)</errorConditionFormula>
+    <errorMessage>The Maestro Username is required for the MSP Account(s) when an Opportunity is Closed Won.</errorMessage>
+</ValidationRule>

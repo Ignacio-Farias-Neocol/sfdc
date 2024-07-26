@@ -1,0 +1,161 @@
+<apex:component access="global" >
+    <apex:attribute name="orderSO" 
+                    description="This is the Order SObject." 
+                    type="Order" />
+    <apex:attribute name="asPDFAttachment" 
+                    description="Where is it used." 
+                    type="Boolean" />
+
+<table style="font-family:Arial;font-size:20px;margin-top:20px;color:#42525f;width:100%; background-color:#f2f2f2;">
+    <tr>
+        <td style="color:grey"><apex:image id="Logo" width="150px" value="{!IF(asPDFAttachment=TRUE, 'https://barracuda2018.my.salesforce.com/resource/1578002621000/BarracudaLogo', 'https://barracuda2018.my.salesforce.com/servlet/servlet.ImageServer?id=015f2000002xyvf&oid=00Df2000001LA50&lastMod=1550892259000')}" /></td>
+        <td style="color:grey; text-align:right;">Fulfillment Confirmation </td>
+    </tr>
+ </table>
+
+
+<p style="font-family:Arial;font-size:15px">We are pleased to inform you that your Barracuda Networks products shown below have been Fulfilled.</p>
+
+<div style="border-bottom:1px solid #ccc;padding-bottom:20px">
+    <div style="display:block;margin-top:20px;margin-bottom:20px;">
+        <table style="font-family:Arial;font-size:12px;color:#42525f;width:100%">
+            <tr>
+                <td><b>Order #:&nbsp;</b>{!orderSO.OrderNumber}</td>
+                <td></td>
+                <td><b>Date:&nbsp;</b>{!TEXT(orderSO.EffectiveDate)}</td>
+            </tr>
+            <tr>
+                <td style="border-bottom:1px solid #ccc"><b>PO #:&nbsp;</b>{!orderSO.PONumber}</td>
+                <td style="border-bottom:1px solid #ccc"></td>
+                <td style="border-bottom:1px solid #ccc"></td>
+            </tr>
+            
+            <tr>
+                <td style="padding-top:20px"><b>Bill To:</b></td>
+                <td style="padding-top:20px"><b>Ship To:</b></td>
+                <td style="padding-top:20px"><b>End User:</b></td>
+            </tr>
+            
+            <tr>
+                <td style="line-height: normal;">{!orderSO.Bill_To_Account__r.Name}</td>
+                <td style="line-height: normal;">{!orderSO.Ship_To_Account__r.Name}</td>
+                <td style="line-height: normal;">{!orderSO.Account.Name}</td>
+            </tr>
+            
+            <tr>
+                <td style="line-height: normal;">{!orderSO.Bill_To_Contact__c}</td>
+                <td style="line-height: normal;">{!orderSO.Ship_To_Contact__c}</td>
+                <td style="line-height: normal;">{!orderSO.End_User_Contact__r.Name}</td>
+            </tr>
+            
+            <tr>
+                <td style="line-height: normal;">{!orderSO.BillingStreet}</td>
+                <td style="line-height: normal;">{!orderSO.ShippingStreet}</td>
+                <td style="line-height: normal;">{!orderSO.Account.BillingStreet}</td>
+            </tr>
+            
+            <tr>
+                <td style="line-height: normal;">{!orderSO.BillingCity + ', ' + orderSO.BillingState + ' ' + orderSO.BillingPostalCode}</td>
+                <td style="line-height: normal;">{!orderSO.ShippingCity + ', ' + orderSO.ShippingState + ' ' + orderSO.ShippingPostalCode}</td>
+                <td style="line-height: normal;">{!orderSO.Account.BillingCity + ', ' + orderSO.Account.BillingState + ' ' + orderSO.Account.BillingPostalCode}</td>
+            </tr>
+
+            <tr>
+                <td style="line-height: normal;">{!orderSO.BillingCountry}</td>
+                <td style="line-height: normal;">{!orderSO.ShippingCountry}</td>
+                <td style="line-height: normal;">{!orderSO.Account.BillingCountry}</td>
+            </tr>
+        </table>
+    </div>
+
+    <table cellspacing="0" border="0" style="font-family:Arial;width:100%;border-color:white">
+        <thead style="font-size:16px;color:white;font-weight:bold;background-color:#42525f;">
+            <tr>
+                <th style="text-align:left;white-space:nowrap;padding:15px">Item Description</th>
+            </tr>
+        </thead>
+
+        <tbody style="font-size:13px">
+            <!-- <apex:repeat var="oi" value="{!orderSO.OrderItems}"> -->
+                <apex:repeat var="serial" value="{!orderSO.Serials__r}">
+                <tr>
+                    <td style="white-space:nowrap;padding:5px">{!IF(ISBLANK(serial.Parent_Product_Name__c), serial.Base_Product_SKU__c, serial.Parent_Product_Name__c)} (Serial Number: <apex:outputField value="{!serial.Serial_Number__c}"/>)</td>
+                </tr>
+                 <tr style="{!IF(ISBLANK(serial.License_Token_Information__c), 'display:none;', '')}">
+                    <td style="padding:5px">&nbsp;&nbsp;&nbsp;&nbsp;License Token: <apex:outputField value="{!serial.License_Token_Information__c}"/></td>
+                </tr>   
+                 <tr style="{!IF(ISBLANK(serial.Tracking_Number__c), 'display:none;', '')}">
+                    <td style="padding:5px;">&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputField value="{!serial.Tracking_Number__c}"/></td>
+                </tr> 
+                <tr style="{!IF(ISBLANK(serial.Popkey__c), 'display:none;', '')}">
+                    <td style="padding:5px">&nbsp;&nbsp;&nbsp;&nbsp;Popkey: <apex:outputField value="{!serial.Popkey__c}"/></td>
+                </tr>                   
+            </apex:repeat>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td style="background-color:#42525f;"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <!-- Message to download VM Image. This is conditional and should be shown only if virtual products exist -->
+    <div style="{!IF(orderSO.Has_Virtual_Products__c, '', 'display:none;') + 'font-family:Arial;font-size:15px;margin-top:5px'}">
+        <apex:outputText value="{!$Label.VM_Image_Download}"/> 
+        <a href="{!$Label.VM_Image_Download_Link}" 
+           title="{!$Label.VM_Image_Download_Link + ' ' + $Label.VM_Image_Link_Tooltip}" 
+           style="font-weight: bold">here</a>
+        <br/>
+        <apex:outputText value="{!$Label.VM_Additional_Text}"/>
+    </div>
+    <!-- /Message to download VM Image. This is conditional and should be shown only if virtual products exist-->
+</div>
+<div>
+    <p style="font-family:Arial;font-size:16px;"><b>Contact Information</b></p>
+    <p style="font-family:Arial;font-size:12px;">Barracuda Networks</p>
+    <p style="font-family:Arial;font-size:12px;">3175 S. Winchester Blvd</p>
+    <p style="font-family:Arial;font-size:12px;">Campbell, CA 95008</p>
+    <p style="font-family:Arial;font-size:12px;">United States</p>
+    <p style="font-family:Arial;font-size:12px;">408-342-5400 phone</p>
+    <p style="font-family:Arial;font-size:12px;">408-342-1061 fax</p>
+    <p style="font-family:Arial;font-size:12px;">Customer_Services@barracuda.com</p>
+</div>
+<hr></hr>
+<div>
+    <p style="font-family:Arial;padding-top:15px;padding-bottom:20px;">Thank you for your order.</p>
+</div>
+<div>
+<!-- put image links here -->
+
+    <table style="width:100%">
+        <tr>
+            <!-- CloudGen Firewall Image & link -->
+            <td style="line-height: normal;width:30%;"><a href="https://www.barracuda.com/products/cloudgenfirewall"><img border="0" alt="Barracuda Firewall" src="https://barracuda2018.my.salesforce.com/servlet/servlet.ImageServer?id=0155x000002rEdG&oid=00Df2000001LA50" width="180px"></img></a></td>
+            <!-- Load Balancer Image & link -->
+            <td style="line-height: normal;width:30%;"><a href="https://www.barracuda.com/products/loadbalancer"><img border="0" alt="Load Balancer" src="https://barracuda2018.my.salesforce.com/servlet/servlet.ImageServer?id=0155x000002rEdH&oid=00Df2000001LA50" width="180px"></img></a></td>
+            <!-- Backup Image & link -->
+            <td style="line-height: normal;width:30%;"><a href="https://www.barracuda.com/products/backup"><img border="0" alt="Barracuda Backup" src="https://barracuda2018.my.salesforce.com/servlet/servlet.ImageServer?id=0155x000002rEdF&oid=00Df2000001LA50" width="180px"></img></a></td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <!-- Facebook Image & link -->
+            <td style="line-height: normal;width:30%;text-align:right;"><a href="https://www.facebook.com/BarracudaNetworks"><img border="0" alt="Facebook Logo" src="https://barracuda2018.my.salesforce.com/servlet/servlet.ImageServer?id=0155x000002rEdI&oid=00Df2000001LA50" width="130px"></img></a>&nbsp;&nbsp;&nbsp;</td>
+            <!-- Twitter Image & link -->
+            <td style="line-height: normal;width:30%;align:left;"><a href="https://twitter.com/barracuda"><img border="0" alt="Twitter Logo" src="https://barracuda2018.my.salesforce.com/servlet/servlet.ImageServer?id=0155x000002rEdJ&oid=00Df2000001LA50" width="130px"></img></a></td>
+        </tr>
+    </table>
+</div>
+
+<div>
+<p style="font-family:Arial;font-size:14px;">Get all the latest cyber security industry news directly in your inbox</p>
+<p style="font-family:Arial;font-size:14px;">Subscribe to the Barracuda blog for daily or weekly updates: </p>
+
+<p style="font-family:Arial;font-size:14px;"><a href="https://blog.barracuda.com/subscription">https://blog.barracuda.com/subscription</a></p>
+
+<!--p style="font-family:Arial;font-size:8px;">This e-mail and any attachments to it contain confidential and proprietary material of Barracuda, its affiliates or agents, and is solely for the use of the intended recipient. Any review, use, disclosure, distribution or copying of this transmittal is prohibited except by or on behalf of the intended recipient. If you have received this transmittal in error, please notify the sender and destroy this e-mail and any attachments and all copies, whether electronic or printed.
+</p-->
+</div>
+
+</apex:component>

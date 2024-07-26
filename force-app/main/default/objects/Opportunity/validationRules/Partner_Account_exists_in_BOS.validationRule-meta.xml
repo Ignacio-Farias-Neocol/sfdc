@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Account_exists_in_BOS</fullName>
+    <active>false</active>
+    <description>Check to see if the Shared Partner Account flag is set to TRUE</description>
+    <errorConditionFormula>AND( 
+ISCHANGED(StageName), 
+ISPICKVAL(StageName, &apos;Closed Won&apos;), 
+OR(Reseller__r.RecordType.DeveloperName = &apos;Partner&apos;,Distributor__r.RecordType.DeveloperName = &apos;Partner&apos;), 
+NOT(Reseller__r.Shared_Partner_Account__c),
+NOT(Distributor__r.Shared_Partner_Account__c)
+)</errorConditionFormula>
+    <errorMessage>Please check to ensure that the Partner Account has been shared with BOS before attempting order placement.</errorMessage>
+</ValidationRule>

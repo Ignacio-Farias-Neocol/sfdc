@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mandate_Security_Vulnerbilty_Number</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(RecordType.Name = &apos;Technical Support&apos;,
+ISCHANGED(Status),
+ISPICKVAL(Closed_Case_Reason__c , &apos;Security Incident&apos;), 
+OR(ISPICKVAL(Status,&apos;Waiting for Customer Response&apos;),ISPICKVAL(Status , &apos;Vendor Hold&apos;),ISPICKVAL(Status,&apos;Resolved&apos;), ISPICKVAL(Status,&apos;Closed&apos;)), 
+ISBLANK(Security_Vulnerability_Number__c))</errorConditionFormula>
+    <errorMessage>Please add Security Vulnerability Number before moving case.</errorMessage>
+</ValidationRule>

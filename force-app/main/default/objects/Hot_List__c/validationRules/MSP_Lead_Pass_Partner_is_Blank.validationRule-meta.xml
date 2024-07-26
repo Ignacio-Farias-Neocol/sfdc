@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MSP_Lead_Pass_Partner_is_Blank</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISBLANK(MSP_Lead_Pass_Partner__c),
+NOT(ISBLANK(MSP_Lead_Pass_Partner_Contact_Name__c)))</errorConditionFormula>
+    <errorMessage>Please enter an MSP Lead Pass Partner value.</errorMessage>
+</ValidationRule>

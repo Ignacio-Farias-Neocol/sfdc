@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Core_New_Renewal_No_Negative_Amt</fullName>
+    <active>true</active>
+    <description>Core Orders cannot be created with a Negative Amount.</description>
+    <errorConditionFormula>IF(AND(
+	/*ISBLANK(Opportunity.SBQQ__AmendedContract__c),*/
+        AND(NOT(ISBLANK(SBQQ__Quote__c)),
+            NOT(CONTAINS( TEXT(SBQQ__Quote__r.SBCF_Order_Type__c), &apos;Return&apos;))), /* no RMA lines */
+        TEXT(Opportunity.Business_Group__c) = &apos;Core&apos;,
+	 Opportunity.Amount &lt; 0),
+	 TRUE, 
+	 FALSE)</errorConditionFormula>
+    <errorMessage>For New/Renewal Core Quotes, you can&apos;t create an Order with a negative Amount.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Assign_Account</name>
+        <label>Assign Account</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SBQQ__Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__Quote__r.SBQQ__Account__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <interviewLabel>Set Account on Quote Group {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Set Account on Quote Group</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Assign_Account</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SBQQ__Account__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>SBQQ__QuoteLineGroup__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

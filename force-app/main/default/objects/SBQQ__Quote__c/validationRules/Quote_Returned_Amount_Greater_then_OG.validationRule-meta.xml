@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quote_Returned_Amount_Greater_then_OG</fullName>
+    <active>false</active>
+    <description>SFDC-9949, returned amt cannot exceed original Order&apos;s Amt.</description>
+    <errorConditionFormula>IF(
+	AND(
+		SBQQ__CustomerAmount__c &lt; 0,	
+		ISPICKVAL(SBQQ__Type__c, &quot;Amendment&quot;),	
+		Quote_Business_Group__c  == &quot;Barracuda&quot;,	
+		OR(
+			ISPICKVAL(SBCF_Order_Type__c , &quot;New - Return&quot;),
+			ISPICKVAL(SBCF_Order_Type__c , &quot;Renewal - Return&quot;)
+		),
+		(-1 * SBQQ__CustomerAmount__c) &gt;  SBQQ__Opportunity2__r.SBQQ__AmendedContract__r.SBQQ__Opportunity__r.Amount,
+		NOT(ISBLANK(SBQQ__Opportunity2__r.SBQQ__AmendedContract__r.SBQQ__Opportunity__c))
+	), 
+	TRUE, FALSE)</errorConditionFormula>
+    <errorMessage>The Returned Total Amount cannot be greater then the original Order&apos;s amount for an return order. Please fix your quote&apos;s total.</errorMessage>
+</ValidationRule>

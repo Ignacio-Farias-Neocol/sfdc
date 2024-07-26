@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Other_Subcategory</fullName>
+    <active>true</active>
+    <description>Prompt the user to type details if they choose &quot;Other:&quot; as the Ticket Category</description>
+    <errorConditionFormula>ISPICKVAL(Ticket_Category__c, &quot;Other:&quot;) &amp;&amp;
+ ISBLANK(Other__c)</errorConditionFormula>
+    <errorDisplayField>Other__c</errorDisplayField>
+    <errorMessage>Please specify the Ticket Subcategory, or choose a different Ticket Category.</errorMessage>
+</ValidationRule>

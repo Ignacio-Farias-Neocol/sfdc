@@ -1,0 +1,80 @@
+<template>
+  <template if:true={spinnerVisibility}>      
+    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+  </template>
+  <lightning-card>
+    <div slot="title" class="slds-m-top_medium">
+      <lightning-icon icon-name="standard:fulfillment_order" size="small" class="slds-media__figure"></lightning-icon>
+      {labels.orderReviewHeader}
+    </div>
+    <div class="slds-grid slds-gutters slds-m-around_medium">
+      <div class="slds-m-around_xx-small slds-size_1-of-2">
+        <lightning-tile label={labels.shippingAddress}>
+          <p>
+            {shippingAccountName}
+          </p>
+          <p>
+            {shippingStreet}
+          </p>
+          <p>
+            {shippingAddressString}
+          </p>
+        </lightning-tile>
+        <lightning-tile label={labels.billingAddress}>
+          <p>
+            {billingAccountName}
+          </p>
+          <p>
+            {billingStreet}
+          </p>
+          <p>
+            {billingAddressString}
+          </p>
+        </lightning-tile>
+      </div>
+      <div class="slds-m-around_xx-small slds-size_1-of-2">
+        <template if:true={poNumber}>
+          <lightning-tile label={labels.paymentInformation}>
+            <dl class="slds-dl_horizontal">
+              <dt class="slds-dl_horizontal__label">
+                <p class="slds-truncate">{labels.poNumber}:</p>
+              </dt>
+              <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                <p class="slds-truncate">{poNumber}</p>
+              </dd>
+            </dl>
+          </lightning-tile>
+        </template>
+        <template if:true={selectedCreditCard}>
+          <lightning-tile label={labels.paymentInformation}>
+            {cardDetails}
+          </lightning-tile>
+        </template>
+      </div>
+    </div>
+    <template if:true={isDataLoaded}>
+      <c-serial-tile-list-external
+        serials={serials}
+        is-read-only={isReadOnly}
+        account-type="none"
+        serial-sub-map={serialSubs.serialSubMap}
+      ></c-serial-tile-list-external>
+    </template>
+    <div slot="footer">
+        <lightning-button variant="neutral" 
+          label="PREVIOUS"
+          onclick={handlePrevious}
+          disabled={modificationDisabled}
+          class="slds-p-horizontal_xx-small"
+        >
+        </lightning-button>
+        <lightning-button variant="brand" 
+          label="SUBMIT ORDER"
+          onclick={processOrder}
+          disabled={modificationDisabled}
+          class="slds-p-horizontal_xx-small"
+        >
+        </lightning-button>
+    </div>
+  </lightning-card>
+</template>

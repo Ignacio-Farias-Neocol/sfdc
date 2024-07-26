@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order_Start_Date_Must_Not_In_Future</fullName>
+    <active>true</active>
+    <errorConditionFormula>Opportunity.RecordType.Name != &apos;Renewal&apos; &amp;&amp; ISPICKVAL(Opportunity.Business_Group__c, &apos;Core&apos;) &amp;&amp; ISCHANGED(EffectiveDate) &amp;&amp; EffectiveDate &gt; Order_Placement_Date__c</errorConditionFormula>
+    <errorDisplayField>EffectiveDate</errorDisplayField>
+    <errorMessage>Yikes! You can&apos;t make the Order Start Date later than Order placement date.</errorMessage>
+</ValidationRule>

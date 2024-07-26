@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mandate_WOC_Reason_when_status_is_WOC</fullName>
+    <active>true</active>
+    <description>Mandate WOC reason field when agents moves case to WOC</description>
+    <errorConditionFormula>AND(
+DateValue(CreatedDate) &gt; Date(2022, 08,02 ),
+OR(RecordType.DeveloperName = &apos;Technical_Support&apos;),
+ISPICKVAL(Status , &apos;Waiting for Customer Response&apos;),
+ISPICKVAL(WOC_Reason__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorMessage>Missing a WOC Reason, a Case Reason, or a Close Case Reason.</errorMessage>
+</ValidationRule>

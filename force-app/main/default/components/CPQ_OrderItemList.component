@@ -1,0 +1,48 @@
+<apex:component controller="CPQ_OrderItemList_Controller" access="global">
+    <apex:attribute name="OrderSO" description="Input Order Object" type="Order" assignTo="{!record}" />
+    <apex:attribute name="title" description="Table Title" type="String"/>
+    <apex:attribute name="listname" description="The right values are: RMA Replace Serials" type="String" assignTo="{!listtype}"/>
+
+    <apex:outputText value="{!title}" /><br/>
+    <br/>
+    <br/>
+    <apex:outputPanel rendered="{!listname = 'RMA Replace Serials'}">
+        <apex:repeat value="{!RMAReplaceSerials}" var="serial" >
+            <table border="0">
+                <tr>
+                    <td><apex:outputText value="Serial #:" /></td>
+                    <td><apex:outputField value="{!serial.SBCF_Serial_Number__c}" /></td>
+                </tr>
+
+                <tr>
+                    <td><apex:outputText value="{!$ObjectType.SBQQ__QuoteLine__c.Fields.RMA_Reason__c.Label & ': '}" /></td>
+                    <td><apex:outputField value="{!serial.RMA_Reason__c}" /></td>
+                </tr>
+
+                <tr>
+                    <td><apex:outputText value="{!$ObjectType.SBQQ__QuoteLine__c.Fields.SKU__c.Label & ': '}" /></td>
+                    <td><apex:outputField value="{!serial.SBQQ__ProductCode__c}" /></td>
+                </tr>
+
+                <tr>
+                    <td><apex:outputText value="Quantity:" /></td>
+                    <td><apex:outputField value="{!serial.SBQQ__EffectiveQuantity__c}" /></td>
+                </tr>
+
+                <tr>
+                    <td><apex:outputText value="RMA Number Needed: " /></td>
+                    <td><apex:outputText value="{!IF(serial.Needs_Serial__c == true, 'YES', 'NO')}" /></td>
+                </tr>
+
+                <tr>
+                    <td><apex:outputText value="Send RMA To: " /></td>
+                    <td><apex:outputText value="ICemail@intronis.com" /></td>
+                </tr>
+            </table><br/>
+            <br/>
+            Serial Record Can Be Found&nbsp;<apex:outputlink value="{!BaseURL + '/' + serial.SBQQ__UpgradedAsset__r.BNCPQ_Serial__c}">Here</apex:outputlink>.
+            <br/>
+            <br/>
+        </apex:repeat>
+    </apex:outputPanel>
+</apex:component>

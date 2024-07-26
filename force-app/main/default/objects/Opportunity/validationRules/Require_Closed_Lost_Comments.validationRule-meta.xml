@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Closed_Lost_Comments</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+TEXT(StageName) = &quot;Closed Lost&quot;,
+ISBLANK(SBQQ__AmendedContract__c),
+TEXT(Type)&lt;&gt; &quot;New Business&quot;,
+NOT( ISBLANK(SBQQ__RenewedContract__c)),
+TEXT(Closed_Lost_Reason__c) &lt;&gt; &quot;Duplicate&quot;,
+NOT( 
+OR(
+$Profile.Name = &apos;Apollo: Custom- Sales Operations&apos;,
+$Profile.Name = &apos;System Administrator&apos;,
+$Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY )),
+LEN(Closed_Lost_Reason_Comment__c)=0,
+OR(Terr_Theater__c = &quot;AMERICAS&quot;,
+Terr_Theater__c	= &quot;APAC&quot;,
+AND(Terr_Theater__c = &quot;EMEA&quot;, Amount &gt;= 5000))
+)</errorConditionFormula>
+    <errorMessage>Please share with us a &quot;Closed Lost Reason Comment&quot; (Because sharing is caring!)</errorMessage>
+</ValidationRule>

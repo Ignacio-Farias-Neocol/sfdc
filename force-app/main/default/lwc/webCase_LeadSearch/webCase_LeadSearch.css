@@ -1,0 +1,10 @@
+.center {
+  text-align: center;
+	width: 50%;
+	color: red;
+	padding: 15px;
+}
+p.ex1 {
+ text-align: center;
+  padding-left: 15px;
+}

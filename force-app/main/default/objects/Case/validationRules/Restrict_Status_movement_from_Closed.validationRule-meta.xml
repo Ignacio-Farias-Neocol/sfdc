@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Status_movement_from_Closed</fullName>
+    <active>true</active>
+    <description>this rule restricts case status transition from Closed to any other status</description>
+    <errorConditionFormula>OR (
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(PRIORVALUE(Status), &apos;Closed&apos;), ISPICKVAL((Status),&apos;In Progress&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(PRIORVALUE(Status), &apos;Closed&apos;), ISPICKVAL((Status),&apos;New&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(PRIORVALUE(Status), &apos;Closed&apos;), ISPICKVAL((Status),&apos;Vendor Hold&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(PRIORVALUE(Status), &apos;Closed&apos;), ISPICKVAL((Status),&apos;Resolved&apos;)),
+AND ( RecordType.DeveloperName = &apos;Technical_Support&apos;,ISPICKVAL(PRIORVALUE(Status), &apos;Closed&apos;), ISPICKVAL((Status),&apos;Waiting for Customer Response&apos;))
+
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>You can&apos;t change the staus on a Closed Case. Please create a new Case.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DEPRICATED_Account_on_Credit_Hold</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND(
+NOT( $Permission.BYPASS_ALL_VALIDATIONS_ON_OPPTY ),
+	IF(Business_Group__c == &apos;Core&apos; &amp;&amp; NOT(ISBLANK(SBQQ__Opportunity2__c)) &amp;&amp; NOT(ISBLANK(SBQQ__Opportunity2__r.Bill_To_Account__c)),
+		ISPICKVAL(SBQQ__Opportunity2__r.Bill_To_Account__r.Status__c, &apos;Credit Hold&apos;),
+	OR(
+		ISPICKVAL( SBQQ__Account__r.Status__c, &apos;Credit Hold&apos;),
+		ISPICKVAL( SBQQ__Distributor__r.Status__c , &apos;Credit Hold&apos;),
+		ISPICKVAL( SBCF_Reseller__r.Status__c , &apos;Credit Hold&apos;)
+	)
+	)
+)</errorConditionFormula>
+    <errorMessage>You may not quote using an account which is on Credit Hold. Contact Finance for assistance.</errorMessage>
+</ValidationRule>

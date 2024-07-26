@@ -1,0 +1,34 @@
+<!-- subscriptionRelatedListLWC.html -->
+<template>
+    <lightning-card title="Serial Active Subscriptions" icon-name="standard:custom">
+        <template if:true={showLoading}>
+            <div class="slds-align_absolute-center slds-text-title_bold">
+               Loading...
+            </div>
+          </template> 
+        <template if:false={showLoading}>
+            <template if:true={showTable}>
+                <lightning-datatable
+                key-field="id"
+                    data={sdata}
+                    columns={scolumns}
+                    hide-checkbox-column	
+                ></lightning-datatable>
+                <template if:false={isRelatedListPageDisplay}>
+                <div class="slds-align_absolute-center">
+                        <lightning-button
+                            variant="base"
+                            label="View All"
+                            title="View All Action"
+                            onclick={handleOnIconClick}
+                        ></lightning-button></div>
+                </template>
+            </template>
+            <template if:false={showTable}>
+                <div class="slds-align_absolute-center">
+                    No Active Subscriptions
+                </div>
+            </template>
+        </template>
+    </lightning-card>
+</template>

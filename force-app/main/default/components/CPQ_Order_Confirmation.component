@@ -1,0 +1,123 @@
+<apex:component access="global" >
+    <apex:attribute name="orderSO" 
+                    description="This is the Order SObject." 
+                    type="Order" />
+    <apex:attribute name="asPDFAttachment" 
+                    description="Where is it used." 
+                    type="Boolean" />
+    
+    <table style="font-family:Proxima Nova;font-size:18px;margin-top:20px;color:#42525f;width:100%; background-color:#f2f2f2;">
+        <tr>
+            <td style="color:grey"><apex:image id="Logo" width="30%" value="{!IF(asPDFAttachment=TRUE, 'https://barracuda2018.my.salesforce.com/resource/1578002621000/BarracudaLogo', 'https://barracuda2018.my.salesforce.com/servlet/servlet.ImageServer?id=015f2000002xyvf&oid=00Df2000001LA50&lastMod=1550892259000')}" /></td>
+            <td style="color:grey; text-align:right;">ORDER CONFIRMATION </td>
+        </tr>
+    </table>
+    
+    
+    <p style="font-family:Proxima Nova;font-size:15px">We are pleased to inform you that your Barracuda Networks order has been received and processed. You will receive an invoice when your order has been fulfilled and an additional email with your shipping information. Please review the order confirmation details and if there are any changes, contact us immediately. If you need to make changes or if you have questions please reach out to: <a href = "mailto:customer_services@barracuda.com">customer_services@barracuda.com</a> or call<a href="tel:++1888268477">+1 888 268 4772</a></p>
+    
+    
+    
+    <div style="border-bottom:1px solid #ccc;padding-bottom:20px">
+        <div style="display:block;margin-top:20px;margin-bottom:20px;">
+            <table style="font-family:Proxima Nova;font-size:16px;color:#42525f;width:100%">
+                <tr>
+                    <td style="border-bottom:1px solid #ccc"><b>PO #:&nbsp;</b>{!orderSO.PONumber}</td>
+                    <td style="border-bottom:1px solid #ccc"><b>Quote #:&nbsp;</b>{!orderSO.SBQQ__Quote__r.Name}</td>
+                    <td style="border-bottom:1px solid #ccc"><b>Date:&nbsp;</b>{!TEXT(orderSO.EffectiveDate)}</td>
+                    <td style="border-bottom:1px solid #ccc"></td>
+                </tr>
+                
+                <tr>
+                    <td style="padding-top:20px"><b>Bill To:</b></td>
+                    <td style="padding-top:20px"><b>Ship To:</b></td>
+                    <td style="padding-top:20px"><b>Reseller:</b></td>  
+                    <td style="padding-top:20px"><b>End User:</b></td>
+                </tr>
+                
+                <tr>
+                    <td style="line-height: normal;">{!orderSO.Bill_To_Account__r.Name}</td>
+                    <td style="line-height: normal;">{!orderSO.Ship_To_Account__r.Name}</td>
+                    <td style="line-height: normal;">{!orderSO.SBQQ__Quote__r.SBCF_Reseller_Bill_To_Name__c}</td>
+                    <td style="line-height: normal;">{!orderSO.Account.Name}</td>
+                </tr>
+                
+                <tr>
+                    <td style="line-height: normal;">{!orderSO.Bill_To_Contact__c}</td>
+                    <td style="line-height: normal;">{!orderSO.Ship_To_Contact__c}</td>
+                    <td style="line-height: normal;">{!orderSO.SBQQ__Quote__r.SBCF_Reseller_Contact_Name__c}</td>
+                    <td style="line-height: normal;">{!orderSO.End_User_Contact__r.Name}</td>
+                </tr>
+                
+                <tr>
+                    <td style="line-height: normal;">{!orderSO.BillingStreet}</td>
+                    <td style="line-height: normal;">{!orderSO.ShippingStreet}</td>
+                    <td style="line-height: normal;">{!orderSO.SBQQ__Quote__r.SBCF_Reseller_Bill_To_Street__c}</td>
+                    <td style="line-height: normal;">{!orderSO.Account.BillingStreet}</td>
+                </tr>
+                
+                <tr>
+                    <td style="line-height: normal;">{!orderSO.BillingCity + ', ' + orderSO.BillingState + ' ' + orderSO.BillingPostalCode}</td>
+                    <td style="line-height: normal;">{!orderSO.ShippingCity + ', ' + orderSO.ShippingState + ' ' + orderSO.ShippingPostalCode}</td>
+                    <td style="line-height: normal;">{!orderSO.SBQQ__Quote__r.SBCF_Reseller_Bill_To_City__c + ', ' + orderSO.SBQQ__Quote__r.SBCF_Reseller_Bill_To_State__c + ' ' + orderSO.SBQQ__Quote__r.SBCF_Reseller_Bill_To_Postal_Code__c}</td>
+                    <td style="line-height: normal;">{!orderSO.Account.BillingCity + ', ' + orderSO.Account.BillingState + ' ' + orderSO.Account.BillingPostalCode}</td>
+                </tr>
+                
+                <tr>
+                    <td style="line-height: normal;">{!orderSO.BillingCountry}</td>
+                    <td style="line-height: normal;">{!orderSO.ShippingCountry}</td>
+                    <td style="line-height: normal;">{!orderSO.SBQQ__Quote__r.SBCF_Reseller_Bill_To_Country__c}</td>
+                    <td style="line-height: normal;">{!orderSO.Account.BillingCountry}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <table cellspacing="0" border="1" style="font-family:Proxima Nova;width:100%;border-color:white">
+            <thead style="font-size:16px;color:white;font-weight:bold;background-color:#42525f;">
+                <tr>
+                    <th style="text-align:left;white-space:nowrap;padding:15px;padding-right:20px">Part #</th>
+                    <th style="text-align:left;white-space:nowrap;padding:15px">Part Description</th>
+                    <th style="padding:15px">Qty</th>
+                    <th style="padding:15px">Term Quantity</th>
+                    <th style="text-align:right;white-space:nowrap;padding:15px">Ext Final Price</th>
+                </tr>
+            </thead>
+            
+            <tbody style="font-size:13px">
+                <apex:repeat var="oi" value="{!orderSO.OrderItems}">
+                    <apex:outputPanel rendered="{!IF(oi.SBQQ__QuoteLine__r.New_Sub_Existing_Serial__c==TRUE && oi.SBQQ__QuoteLine__r.SBQQ__Hidden__c==False, true, false)}">
+                        <tr>
+                            <td style="white-space:nowrap;padding:5px"><apex:outputField value="{!oi.SBQQ__QuoteLine__r.Output_Product_Code__c}"/></td>
+                            <td style="overflow-wrap:normal;padding:5px;">
+                                <apex:outputField value="{!oi.SBQQ__QuoteLine__r.Output_Product_Description__c}"/><br></br>
+                                <apex:outputText style="{!If(ISNULL(oi.SBCF_Serial_Number__c),'display:None','display:inline')}" value="SN "/>
+                                <apex:outputField style="{!If(ISNULL(oi.SBCF_Serial_Number__c),'display:None','display:inline')}" value="{!oi.SBCF_Serial_Number__c}"/>
+                                <apex:outputField value="{!oi.SBQQ__QuoteLine__r.Output_Effective_Dates__c}"/>
+                            </td>
+                            <td style="text-align:right;padding:5px"><apex:outputField value="{!oi.SBQQ__QuoteLine__r.SBCF_Document_Capacity__c}"/></td>
+                            <td style="text-align:right;padding:5px"><apex:outputField value="{!oi.SBQQ__QuoteLine__r.SBCF_Document_Term__c}"/></td>
+                            <td style="text-align:right;padding:5px"><apex:outputField value="{!oi.SBQQ__QuoteLine__r.SBCF_Document_Total_Price__c}"/></td>
+                        </tr>   
+                    </apex:outputPanel>
+                </apex:repeat>
+            </tbody>
+            
+            <tfoot>
+                <tr>
+                    <td style="background-color:#42525f;"></td>
+                    <td style="background-color:#42525f;"></td>
+                    <td style="background-color:#42525f;"></td>
+                    <td style="background-color:#42525f;"></td>
+                    <td style="white-space:nowrap;text-align:right;padding:5px;background-color:#ccc;"><apex:outputField value="{!orderSO.SBQQ__Quote__r.SBQQ__NetAmount__c}"/></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    
+    <p style="font-family:Proxima Nova; ̰;padding-top:15px;padding-bottom:20px;">Thank you for your order!</p>
+    
+    <ul style="padding:20px;font-family:Proxima Nova;font-size:14px;">
+        <li><div>This order is governed solely by the Terms and Conditions available at: <a href="https://www.barracuda.com/company/legal/prd_trm">https://www.barracuda.com/company/legal/prd_trm</a>. No other terms and conditions will apply unless the parties have executed a written purchase agreement covering the products or services on this order. Any preprinted or additional terms on the Customer's purchase order are rejected and will not apply.</div></li>
+        <li><div>You are responsible for all sales taxes, withholding taxes, value added taxes, import and export taxes and any other similar taxes imposed by any federal, state, provincial or local governmental entity of this purchase.</div></li>
+    </ul>
+</apex:component>
