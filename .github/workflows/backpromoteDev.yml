@@ -1,4 +1,4 @@
-name: Salesforce CI/CD to Sandbox
+name: Salesforce CI/CD to Sandbox - Back Promote
 
 on:
   push:
