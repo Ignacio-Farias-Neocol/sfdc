@@ -1,0 +1,52 @@
+name: Salesforce CI/CD to Sandbox
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Salesforce CLI 
+      run: |
+        npm install @salesforce/cli --global
+
+    - name: Set Environment Variables # Storing authentication and target org as environment variables.
+      run: |
+        if [[ "${GITHUB_REF}" == "refs/heads/main" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' && "${{ github.event.pull_request.head.ref }}" == "Prod" ]]; then
+          echo "SFDX_AUTH_URL=${{ secrets.SFDX_SANDBOX_AUTH_URL }}" >> $GITHUB_ENV         
+          echo "TARGET_ORG=CudaPartnerPro" >> $GITHUB_ENV 
+        fi
+
+    - name: Fail if Not main or merging branch is not 'Prod'
+      if: ${{ !env.SFDX_AUTH_URL }}
+      run: |
+        echo "This workflow is only configured for the sfdc/main branch when merging from 'Prod'."
+        exit 1
+
+    - name: Authenticate to Sandbox # Storing authentication and target org as environment variables.
+      env:
+        SFDX_AUTH_URL: ${{ secrets.SFDX_SANDBOX_AUTH_URL }}
+      run: |
+        echo $SFDX_AUTH_URL > sfdx_auth_url.txt
+        sfdx auth:sfdxurl:store -f sfdx_auth_url.txt --alias $TARGET_ORG
+
+    - name: Fetch all test classes # Retrieve Neocol created test classes.
+      run: |
+        sfdx force:data:soql:query -q "SELECT Name FROM ApexClass WHERE NamespacePrefix = null AND Name LIKE '%Test%' AND Name LIKE 'NEO_%'" --target-org $TARGET_ORG --result-format csv > allTests.csv
+
+    - name: Extract test class names # Convert the csv values to blank spaces separated values. 
+      run: |
+        tail -n +2 allTests.csv | awk -F, '{print $1}' | paste -sd, - | tr ',' ' ' > testClassesToRun.txt
+        cat testClassesToRun.txt
+
+    - name: Deploy to Salesforce Sandbox # Deploy changes and run specified tests.
+      run: |
+        testClasses=$(cat testClassesToRun.txt)
+        sfdx project deploy start --manifest manifest/package.xml --target-org $TARGET_ORG --test-level RunSpecifiedTests --tests $testClasses
