@@ -3,7 +3,7 @@ name: Salesforce CI/CD to Sandbox
 on:
   push:
     branches:
-      - main
+      - staging-neocol-2024
 
 jobs:
   build:
@@ -19,20 +19,20 @@ jobs:
 
     - name: Set Environment Variables #Storing authentication and target org as environment variables.
       run: |
-        if [[ "${GITHUB_REF}" == "refs/heads/main" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' ]]; then
-          echo "SFDX_AUTH_URL=${{ secrets.SFDX_SANDBOX_AUTH_URL }}" >> $GITHUB_ENV         
-          echo "TARGET_ORG=CudaPartnerPro" >> $GITHUB_ENV 
+        if [[ "${GITHUB_REF}" == "refs/heads/staging-neocol-2024" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' ]]; then
+          echo "SFDX_AUTH_URL=${{ secrets.SFDX_STAGING_AUTH }}" >> $GITHUB_ENV         
+          echo "TARGET_ORG=CudaStaging" >> $GITHUB_ENV 
         fi
 
     - name: Fail if Not main
-      if: ${{ !env.SFDX_AUTH_URL }}
+      if: ${{ !env.SFDX_STAGING_AUTH }}
       run: |
         echo "This workflow is only configured for the sfdc/main."
         exit 1
 
     - name: Authenticate to Sandbox #Storing authentication and target org as environment variables.
       env:
-        SFDX_AUTH_URL: ${{ secrets.SFDX_SANDBOX_AUTH_URL }}
+        SFDX_AUTH_URL: ${{ secrets.SFDX_STAGING_AUTH }}
       run: |
         echo $SFDX_AUTH_URL > sfdx_auth_url.txt
         sfdx auth:sfdxurl:store -f sfdx_auth_url.txt --alias $TARGET_ORG
