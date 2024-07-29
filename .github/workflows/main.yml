@@ -30,7 +30,7 @@ jobs:
         
     - name: Authenticate to Sandbox #Storing authentication and target org as environment variables.
       env:
-        SFDX_AUTH_URL: $SFDX_AUTH_URL
+        SFDX_AUTH_URL: ${{ env.SFDX_AUTH_URL }}
       run: |
         echo $SFDX_AUTH_URL > sfdx_auth_url.txt
         sfdx auth:sfdxurl:store -f sfdx_auth_url.txt --alias $TARGET_ORG
