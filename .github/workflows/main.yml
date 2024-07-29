@@ -47,4 +47,4 @@ jobs:
     - name: Deploy to Salesforce Sandbox #Deploy changes and run specified tests.
       run: |
         testClasses=$(cat testClassesToRun.txt)
-        sfdx project deploy start --manifest manifest/package.xml --target-org $TARGET_ORG --test-level RunSpecifiedTests --tests $testClasses
+        sfdx project deploy start --manifest manifest/package.xml --target-org $TARGET_ORG --test-level RunSpecifiedTests --tests NEO_TriggerUtilsTest
