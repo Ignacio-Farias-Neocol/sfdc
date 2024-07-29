@@ -16,6 +16,7 @@
 ## Types of changes
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
 - [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] Chore (change which not adds functionality)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Refactor (non-breaking change that improves existing code or does not affect any existing features)
 
