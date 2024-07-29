@@ -3,7 +3,8 @@ name: Salesforce CI/CD to Sandbox
 on:
   push:
     branches:
-      - main
+      - staging-neocol-2024
+      - dev/Integration
 
 jobs:
   build:
@@ -19,27 +20,30 @@ jobs:
 
     - name: Set Environment Variables #Storing authentication and target org as environment variables.
       run: |
-        if [[ "${GITHUB_REF}" == "refs/heads/main" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' ]]; then
+        if [[ "${GITHUB_REF}" == "refs/heads/staging-neocol-2024" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' ]]; then
           echo "SFDX_AUTH_URL=${{ secrets.SFDX_SANDBOX_AUTH_URL }}" >> $GITHUB_ENV         
-          echo "TARGET_ORG=CudaPartnerPro" >> $GITHUB_ENV 
+          echo "TARGET_ORG=CudaStaging" >> $GITHUB_ENV 
+        elif [[ "${GITHUB_REF}" == "refs/heads/dev/Integration" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' ]]; then
+          echo "SFDX_AUTH_URL=${{ secrets.SFDX_DEVINTG_AUTH }}" >> $GITHUB_ENV         
+          echo "TARGET_ORG=CudadevIntg" >> $GITHUB_ENV 
         fi
 
     - name: Fail if Not main
-      if: ${{ !env.SFDX_AUTH_URL }}
+      if: ${{ !env.SFDX_STAGING_AUTH }}
       run: |
-        echo "This workflow is only configured for the sfdc/main."
+        echo "This workflow is only configured for the sfdc/staging-neocol-2024 or sfdc/dev/Integration."
         exit 1
 
     - name: Authenticate to Sandbox #Storing authentication and target org as environment variables.
       env:
-        SFDX_AUTH_URL: ${{ secrets.SFDX_SANDBOX_AUTH_URL }}
+        SFDX_AUTH_URL: $SFDX_AUTH_URL
       run: |
         echo $SFDX_AUTH_URL > sfdx_auth_url.txt
         sfdx auth:sfdxurl:store -f sfdx_auth_url.txt --alias $TARGET_ORG
 
     - name: Fetch all test classes #Retrieve Neocol created test classes.
       run: |
-        sfdx force:data:soql:query -q "SELECT Name FROM ApexClass WHERE NamespacePrefix = null AND Name LIKE '%Test%' AND Name LIKE 'NEO_%'" --target-org $TARGET_ORG --result-format csv > allTests.csv
+        sfdx force:data:soql:query -q "SELECT Name FROM ApexClass WHERE NamespacePrefix = null AND Name LIKE 'NEO_%' AND Name LIKE '%Test%'" --target-org $TARGET_ORG --result-format csv > allTests.csv
 
     - name: Extract test class names #Convert the csv values to blank spaces separated values. 
       run: |
