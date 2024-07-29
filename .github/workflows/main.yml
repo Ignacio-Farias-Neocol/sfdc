@@ -27,13 +27,7 @@ jobs:
           echo "SFDX_AUTH_URL=${{ secrets.SFDX_DEVINTG_AUTH }}" >> $GITHUB_ENV         
           echo "TARGET_ORG=CudadevIntg" >> $GITHUB_ENV 
         fi
-
-    - name: Fail if Not main
-      if: ${{ !env.SFDX_STAGING_AUTH }}
-      run: |
-        echo "This workflow is only configured for the sfdc/staging-neocol-2024 or sfdc/dev/Integration."
-        exit 1
-
+        
     - name: Authenticate to Sandbox #Storing authentication and target org as environment variables.
       env:
         SFDX_AUTH_URL: $SFDX_AUTH_URL
