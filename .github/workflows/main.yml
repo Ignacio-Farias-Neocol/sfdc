@@ -43,7 +43,7 @@ jobs:
 
     - name: Fetch all test classes #Retrieve Neocol created test classes.
       run: |
-        sfdx force:data:soql:query -q "SELECT Name FROM ApexClass WHERE NamespacePrefix = null AND Name LIKE '%Test%' AND Name LIKE 'NEO_%'" --target-org $TARGET_ORG --result-format csv > allTests.csv
+        sfdx force:data:soql:query -q "SELECT Name FROM ApexClass WHERE NamespacePrefix = null AND Name LIKE 'NEO_%' AND Name LIKE '%Test%'" --target-org $TARGET_ORG --result-format csv > allTests.csv
 
     - name: Extract test class names #Convert the csv values to blank spaces separated values. 
       run: |
