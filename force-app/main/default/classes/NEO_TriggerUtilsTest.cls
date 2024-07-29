@@ -2,7 +2,7 @@
  * @description       : Test Class for NEO_TriggerUtils
  * @author            : Ignacio F.
  * @group             : Neocol
- * @last modified on  : 07-25-2024
+ * @last modified on  : 07-29-2024
  * @last modified by  : Ignacio F.
 **/
 @isTest
