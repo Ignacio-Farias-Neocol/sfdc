@@ -3,7 +3,7 @@ name: Salesforce CI/CD to Sandbox - Back Promote
 on:
   push:
     branches:
-      - main
+      - dev-neocol-2024
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
 
     - name: Set Environment Variables # Storing authentication and target org as environment variables.
       run: |
-        if [[ "${GITHUB_REF}" == "refs/heads/main" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' && "${{ github.event.pull_request.head.ref }}" == "Prod" ]]; then
+        if [[ "${GITHUB_REF}" == "refs/heads/dev-neocol-2024" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' && "${{ github.event.pull_request.head.ref }}" == "main" ]]; then
           echo "SFDX_AUTH_URL=${{ secrets.SFDX_SANDBOX_AUTH_URL }}" >> $GITHUB_ENV         
           echo "TARGET_ORG=CudaPartnerPro" >> $GITHUB_ENV 
         fi
