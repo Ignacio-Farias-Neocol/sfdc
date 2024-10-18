@@ -23,7 +23,7 @@ jobs:
     - name: Install sfdxGit delta
       run: |
           echo y | sfdx plugins:install sfdx-git-delta
-          sfdx sgd:source:delta --to "HEAD" --from "HEAD^"  --ignore ignorefile --output "."
+          sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output "."
           cat package/package.xml
         
     - name: Set Environment Variables # Storing authentication and target org as environment variables.
