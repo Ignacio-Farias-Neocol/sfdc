@@ -18,8 +18,8 @@ jobs:
       run: |
         npm install @salesforce/cli --global
         sfdx plugins --core  # Verify that sgd plugin is installed
-        sf plugins install sfdx-git-delta --force
-
+        yes | sf plugins install sfdx-git-delta
+        
     - name: Set Environment Variables # Storing authentication and target org as environment variables.
       run: |
         if [[ "${GITHUB_REF}" == "refs/heads/staging-neocol-2024" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' ]]; then
