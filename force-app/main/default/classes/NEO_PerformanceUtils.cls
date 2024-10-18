@@ -5,7 +5,6 @@
  * @last modified on  : 07-26-2024
  * @last modified by  : Ignacio F.
 **/
-
 public with sharing class NEO_PerformanceUtils {
     
     // Define the current time, current CPU Time, Current DML Statements, and Current SOQL Queries
