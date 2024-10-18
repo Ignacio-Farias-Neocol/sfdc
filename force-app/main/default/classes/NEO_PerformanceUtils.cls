@@ -24,6 +24,8 @@ public with sharing class NEO_PerformanceUtils {
         this.currentHeapSize = Limits.getHeapSize();
     }
 
+
+
     // Create a method that calculates all the variables against the defined variables and debugs the result
     public void calculatePerformance() {
         // Get the current time
