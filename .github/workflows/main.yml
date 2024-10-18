@@ -47,4 +47,4 @@ jobs:
 
     - name: Deploy delta package to Salesforce Sandbox # Deploy only the delta changes.
       run: |
-        sfdx force:source:deploy -x  package/package.xml
+        sfdx project deploy start -x  package/package.xml --target-org $TARGET_ORG
