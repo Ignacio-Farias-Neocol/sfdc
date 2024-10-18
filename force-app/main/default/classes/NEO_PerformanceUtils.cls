@@ -46,6 +46,10 @@ public with sharing class NEO_PerformanceUtils {
         // Calculate the Heap Size difference
         Long heapSizeDifference = newHeapSize - currentHeapSize;
 
+
+
+
+
         System.debug('Time Difference: ' + timeDifference + 'ms');
         System.debug('CPU Time Difference: ' + cpuTimeDifference + 'ms');
         System.debug('DML Statements Difference: ' + dmlStatementsDifference);
