@@ -18,7 +18,7 @@ jobs:
       run: |
         npm install @salesforce/cli --global
         sfdx plugins --core  # Verify that sgd plugin is installed
-        sf plugins install sfdx-git-delta --no-prompt
+        sf plugins install sfdx-git-delta --force
 
     - name: Set Environment Variables # Storing authentication and target org as environment variables.
       run: |
