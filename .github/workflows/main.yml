@@ -14,11 +14,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install Salesforce CLI 
+    - name: Install Salesforce CLI and Delta Plugin
       run: |
         npm install @salesforce/cli --global
+        npm install sfdx-git-delta --global  # Installing sgd plugin
 
-    - name: Set Environment Variables #Storing authentication and target org as environment variables.
+    - name: Set Environment Variables # Storing authentication and target org as environment variables.
       run: |
         if [[ "${GITHUB_REF}" == "refs/heads/staging-neocol-2024" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' ]]; then
           echo "SFDX_AUTH_URL=${{ secrets.SFDX_SANDBOX_AUTH_URL }}" >> $GITHUB_ENV         
@@ -27,24 +28,19 @@ jobs:
           echo "SFDX_AUTH_URL=${{ secrets.SFDX_DEVINTG_AUTH }}" >> $GITHUB_ENV         
           echo "TARGET_ORG=CudadevIntg" >> $GITHUB_ENV 
         fi
-        
-    - name: Authenticate to Sandbox #Storing authentication and target org as environment variables.
+
+    - name: Authenticate to Sandbox # Using the stored environment variable to authenticate.
       env:
         SFDX_AUTH_URL: ${{ env.SFDX_AUTH_URL }}
       run: |
         echo $SFDX_AUTH_URL > sfdx_auth_url.txt
         sfdx auth:sfdxurl:store -f sfdx_auth_url.txt --alias $TARGET_ORG
 
-    - name: Fetch all test classes #Retrieve Neocol created test classes.
+    - name: Create delta package using sgd
       run: |
-        sfdx force:data:soql:query -q "SELECT Name FROM ApexClass WHERE NamespacePrefix = null AND Name LIKE 'NEO_%' AND Name LIKE '%Test%'" --target-org $TARGET_ORG --result-format csv > allTests.csv
+        sfdx sgd:source:delta --to HEAD --from HEAD^ --output ./delta
+        ls -al delta  # Verifying the delta directory
 
-    - name: Extract test class names #Convert the csv values to blank spaces separated values. 
+    - name: Deploy delta package to Salesforce Sandbox # Deploy only the delta changes.
       run: |
-        tail -n +2 allTests.csv | awk -F, '{print $1}' | paste -sd, - | tr ',' ' ' > testClassesToRun.txt
-        cat testClassesToRun.txt
-
-    - name: Deploy to Salesforce Sandbox #Deploy changes and run specified tests.
-      run: |
-        testClasses=$(cat testClassesToRun.txt)
-        sfdx project deploy start --manifest manifest/package.xml --target-org $TARGET_ORG --test-level RunSpecifiedTests --tests NEO_TriggerUtilsTest
+        sfdx force:source:deploy -x package/package.xml
