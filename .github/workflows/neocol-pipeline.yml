@@ -1,50 +1,52 @@
-name: Salesforce CI/CD to Sandbox
+name: Deploy to Salesforce
 
 on:
   push:
     branches:
-      - staging-neocol-2024
-      - dev/Integration
+      - Dev  # Define the branch to watch for pushes
 
 jobs:
-  build:
+  deploy:
+    name: Deploy to Salesforce
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    # Checkout the repository code
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-    - name: Install Salesforce CLI 
-      run: |
-        npm install @salesforce/cli --global
+    # Set up Node.js environment
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'  # Use the desired Node.js version
 
-    - name: Set Environment Variables #Storing authentication and target org as environment variables.
-      run: |
-        if [[ "${GITHUB_REF}" == "refs/heads/staging-neocol-2024" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' ]]; then
-          echo "SFDX_AUTH_URL=${{ secrets.SFDX_SANDBOX_AUTH_URL }}" >> $GITHUB_ENV         
-          echo "TARGET_ORG=CudaStaging" >> $GITHUB_ENV 
-        elif [[ "${GITHUB_REF}" == "refs/heads/dev/Integration" && "${{ github.repository }}" == 'Ignacio-Farias-Neocol/sfdc' ]]; then
-          echo "SFDX_AUTH_URL=${{ secrets.SFDX_DEVINTG_AUTH }}" >> $GITHUB_ENV         
-          echo "TARGET_ORG=CudadevIntg" >> $GITHUB_ENV 
-        fi
-        
-    - name: Authenticate to Sandbox #Storing authentication and target org as environment variables.
+    # Install Salesforce CLI
+    - name: Install Salesforce CLI
+      uses: salesforcecli/action@v1
+
+    # Install sfdx-delta and other project dependencies
+    - name: Install dependencies
+      run: npm install -g sfdx-delta
+
+    # Authenticate to Salesforce using the sfdx URL stored in GitHub Secrets
+    - name: Authenticate with Salesforce
+      run: sfdx auth:sfdxurl:store -f sfdx-url.txt
       env:
-        SFDX_AUTH_URL: ${{ env.SFDX_AUTH_URL }}
-      run: |
-        echo $SFDX_AUTH_URL > sfdx_auth_url.txt
-        sfdx auth:sfdxurl:store -f sfdx_auth_url.txt --alias $TARGET_ORG
+        SFDX_AUTH_URL: ${{ secrets.SFDX_SANDBOX_AUTH_URL }}
 
-    - name: Fetch all test classes #Retrieve Neocol created test classes.
+    # Create delta package with sfdx-delta
+    - name: Create delta package
       run: |
-        sfdx force:data:soql:query -q "SELECT Name FROM ApexClass WHERE NamespacePrefix = null AND Name LIKE 'NEO_%' AND Name LIKE '%Test%' LIMIT 1" --target-org $TARGET_ORG --result-format csv > allTests.csv
+        git fetch --depth=2 origin main
+        git diff --name-only ${{ github.event.before }} ${{ github.sha }} > files.txt
+        sfdx-delta -d force-app/ -r -f files.txt -o ./delta
 
-    - name: Extract test class names #Convert the csv values to blank spaces separated values. 
+    # Deploy the delta package to Salesforce
+    - name: Deploy delta package to Salesforce
       run: |
-        tail -n +2 allTests.csv | awk -F, '{print $1}' | paste -sd, - | tr ',' ' ' > testClassesToRun.txt
-        cat testClassesToRun.txt
-
-    - name: Deploy to Salesforce Sandbox #Deploy changes and run specified tests.
-      run: |
-        testClasses=$(cat testClassesToRun.txt)
-        sfdx project deploy start --manifest manifest/package.xml --target-org $TARGET_ORG --test-level RunSpecifiedTests --tests $testClasses
+        if [ -d "./delta" ]; then
+          sfdx force:source:deploy -p ./delta --checkonly -w 10
+        else
+          echo "No changes to deploy"
+        fi
