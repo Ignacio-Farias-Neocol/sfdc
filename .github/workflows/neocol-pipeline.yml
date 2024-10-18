@@ -3,7 +3,7 @@ name: Deploy to Salesforce
 on:
   push:
     branches:
-      - Dev  # Define the branch to watch for pushes
+      - main  # Define the branch to watch for pushes
 
 jobs:
   deploy:
@@ -15,25 +15,25 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Set up Node.js environment
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.x'  # Use the desired Node.js version
-
-    # Install Salesforce CLI
+    # Install Salesforce CLI manually
     - name: Install Salesforce CLI
-      uses: salesforcecli/action@v1
+      run: |
+        echo "Installing Salesforce CLI"
+        wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+        mkdir sfdx-cli
+        tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
+        ./sfdx-cli/install
+        sfdx --version  # Check the version to ensure it's installed
 
     # Install sfdx-delta and other project dependencies
-    - name: Install dependencies
+    - name: Install sfdx-delta
       run: npm install -g sfdx-delta
 
     # Authenticate to Salesforce using the sfdx URL stored in GitHub Secrets
     - name: Authenticate with Salesforce
-      run: sfdx auth:sfdxurl:store -f sfdx-url.txt
-      env:
-        SFDX_AUTH_URL: ${{ secrets.SFDX_SANDBOX_AUTH_URL }}
+      run: |
+        echo "${{ secrets.SFDX_SANDBOX_AUTH_URL }}" > sfdx-url.txt
+        sfdx auth:sfdxurl:store -f sfdx-url.txt
 
     # Create delta package with sfdx-delta
     - name: Create delta package
